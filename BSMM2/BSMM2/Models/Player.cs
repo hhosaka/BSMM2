@@ -1,40 +1,40 @@
-﻿using System;
+﻿using BSMM2.Services;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms.Internals;
 
-namespace BSMM2.Models
-{
-    public class Player
-    {
-        public bool Dropped { get; set; }
-        public string Name { get; set; }
-        public IList<Match> Matches { get; } = new List<Match>();
+namespace BSMM2.Models {
 
-        public IPoint Point
-        {
-            get
-            {
-                if (Matches.Any())
-                {
-                    return Matches.FirstOrDefault().GetPoint(this);//TODO tentative
-                }
-                return NullPoint.Instance;
-            }
-        }
+	public class Player {
+		public string Name { get; set; }
+		public bool Dropped { get; private set; }
+		public IList<Match> Matches { get; } = new List<Match>();
 
-        private bool HasByeMatch => false;//TODO TBD
-        private bool HasGapMatch => false;//TODO TBD
+		public IEnumerable<IPoint> Points => Matches.Select(match => match.GetPoint(this));
 
-        public bool HasMatched(Player player)
-        {
-            return Matches.Any(match => match.HasMatch(player));
-        }
+		public IEnumerable<IPoint> OpponentPoints => Matches.Select(match => match.GetOpponentPoint(this));
 
-        public Player(string name)
-        {
-            Name = name;
-        }
-    }
+		public bool HasByeMatch => Matches.Any(match => match.IsByeMatch);
+
+		public bool HasGapMatch => Matches.Any(match => match.IsGapMatch);
+
+		public bool HasMatched(Player player) {
+			return Matches.Any(match => match.HasMatch(player));
+		}
+
+		public int CompareTo(Player p) {
+			return Matches.FirstOrDefault(m => m.GetOpponent(this) == p)?.GetResult(this) ?? 0;
+		}
+
+		public void Drop() {
+			Dropped = true;
+		}
+
+		public Player(string name) {
+			Name = name;
+		}
+	}
 }
