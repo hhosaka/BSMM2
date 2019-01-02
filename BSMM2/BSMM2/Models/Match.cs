@@ -1,4 +1,6 @@
-﻿using BSMM2.Services;
+﻿using BSMM2.Modules.Rules;
+using BSMM2.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,52 +9,61 @@ using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 
+	[JsonObject]
 	public class Match {
 		public static readonly Player BYE = new Player("BYE");
 
-		private Result[] _results;
+		[JsonProperty]
+		public Score[] Results { get; private set; }
 
-		public IEnumerable<Result> Results => _results;
-
+		[JsonProperty]
 		public bool IsGapMatch { get; }
 
-		public bool HasMatch(Player player)
-			=> _results.Any(result => result.Player == player);
+		[JsonIgnore]
+		public bool IsFinished
+			=> !Results.Any(result => result.Point == null);
 
-		public bool IsByeMatch => _results.Any(result => result.Player == BYE);
+		[JsonIgnore]
+		public bool IsByeMatch
+			=> Results.Any(result => result.Player == BYE);
 
-		public void SetPoint(IPoint x, IPoint y) {
-			_results[0].SetPoint(x);
-			_results[1].SetPoint(y);
+		public void SetPoint(Point x, Point y) {
+			Results[0].SetPoint(x);
+			Results[1].SetPoint(y);
 		}
 
 		public void Commit() {
-			_results.ForEach(result => result.Player.Matches.Add(this));
+			Results.ForEach(result => result.Player.Matches.Add(this));
 		}
 
-		private Result GetPlayerResult(Player player)
-			=> _results.First(r => r.Player == player);
+		private Score GetPlayerResult(Player player)
+			=> Results.First(r => r.Player == player);
 
-		private Result GetOpponentResult(Player player)
-			=> _results.First(r => r.Player != player);
+		private Score GetOpponentResult(Player player)
+			=> Results.First(r => r.Player != player);
 
-		public IPoint GetPoint(Player player) => GetPlayerResult(player)?.Point;
+		public Point GetPoint(Player player)
+			=> GetPlayerResult(player)?.Point;
 
-		public Player GetOpponent(Player player) => GetOpponentResult(player)?.Player;
+		public Player GetOpponent(Player player)
+			=> GetOpponentResult(player)?.Player;
 
-		public IPoint GetOpponentPoint(Player player) => GetOpponentResult(player)?.Point;
+		public Point GetOpponentPoint(Player player)
+			=> GetOpponentResult(player)?.Point;
 
-		public int GetResult(Player player) {
-			return GetPoint(player)?.CompareTo(GetOpponentPoint(player)) ?? 0;
+		public int GetResult(Player player)
+			=> GetPoint(player)?.CompareTo(GetOpponentPoint(player)) ?? 0;
+
+		public Match() {
 		}
 
 		public Match(Rule rule, Player player1, Player player2) {
-			_results = new[] { new Result(player1), new Result(player2) };
+			Results = new[] { new Score(player2), new Score(player1) };
 			IsGapMatch = rule.CreateComparer().Compare(player1, player2) != 0;
 		}
 
 		public Match(Player player) {
-			_results = new[] { new Result(player), new Result(BYE) };
+			Results = new[] { new Score(player), new Score(BYE) };
 		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using BSMM2.Services;
+using BSMM2.Modules.Rules.SingleMatch;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,17 +9,60 @@ using System.Linq;
 
 namespace BSMM2.Models {
 
+	[JsonObject(nameof(Game))]
 	public class Game {
-		private string _title = "Player";
-		private readonly Rule _rule;
-		private readonly List<Player> _players = new List<Player>();
-		private readonly Stack<Round> _rounds = new Stack<Round>();
-		private DateTime _startTime;
 
-		public Game(Rule rule, int count) : this(rule) {
+		private enum STATUS { Matching, Lock, Playing };
+
+		[JsonProperty]
+		private static string _prefix;
+
+		[JsonProperty]
+		private readonly Rule _rule;
+
+		[JsonProperty]
+		private readonly List<Player> _players;
+
+		[JsonProperty]
+		private readonly Stack<Round> _rounds;
+
+		[JsonProperty]
+		private Round _activeRound;
+
+		[JsonProperty]
+		private STATUS _status;
+
+		[JsonProperty]
+		private DateTime? _startTime;
+
+		[JsonIgnore]
+		public TimeSpan? ElapsedTime
+			=> DateTime.Now - _startTime;
+
+		[JsonIgnore]
+		public IEnumerable<Player> PlayerList
+			=> _players.OrderByDescending(p => p, _rule?.CreateComparer());
+
+		[JsonIgnore]
+		public Round ActiveRound
+			=> _activeRound ?? Shuffle();
+
+		[JsonIgnore]
+		public IEnumerable<Round> Rounds
+			=> _rounds;
+
+		private string GenerateName(string name, int i) {
+			return string.Format("{0}{1:000}", name, i);
+		}
+
+		public Game(Rule rule, int count, string prefix = "Player") : this(rule) {
+			_prefix = prefix;
 			for (int i = 0; i < count; ++i) {
-				_players.Add(new Player(string.Format("{0}{1:000}", _title, i + 1)));
+				_players.Add(new Player(GenerateName(_prefix, i + 1)));
 			}
+		}
+
+		public Game() {
 		}
 
 		public Game(Rule rule, TextReader reader) : this(rule) {
@@ -29,52 +74,70 @@ namespace BSMM2.Models {
 
 		private Game(Rule rule) {
 			_rule = rule;
+			_players = new List<Player>();
+			_rounds = new Stack<Round>();
+			_status = STATUS.Matching;
+			_startTime = null;
 		}
 
 		public void Add(Player player) {
-			var index = _players.IndexOf(_players.Find(p => p.Name.CompareTo(player.Name) > 0));
-			if (index == -1) {
-				_players.Add(player);
-			} else {
-				_players.Insert(index, player);
+			_players.Add(player);
+		}
+
+		public void Add() {
+			for (int i = _players.Count() + 1; ; ++i) {
+				var name = GenerateName(_prefix, i);
+				if (!_players.Any(player => player.Name == name)) {
+					_players.Add(new Player(name));
+					return;
+				}
 			}
 		}
 
-		public void Delete(Player player) {
+		public void Remove(Player player) {
 			_players.Remove(player);
 		}
 
-		public IEnumerable<Player> PlayerList
-			=> _players.OrderByDescending(p => p, _rule.CreateComparer());
+		public bool CanExecuteShuffle()
+			=> _status == STATUS.Matching;
 
-		public Round ActiveRound { get; private set; }
-
-		private IEnumerable<Player> Shuffle(IEnumerable<Player> source) {
-#if DEBUG
-			return source;
-#else
-			return source.OrderBy(i => Guid.NewGuid());
-#endif
+		public Round Shuffle() {
+			return _activeRound = _rule?.MakeRound(PlayerList);
 		}
 
-		public bool Shuffle() =>
-			(ActiveRound = _rule.MakeRound(() => Shuffle(_players))) != null;
+		public bool CanExecuteStepToLock()
+			=> _status == STATUS.Matching;
 
-		public void Start() {
+		public void StepToLock() {
+			_status = STATUS.Lock;
+			ActiveRound.Lock = true;
+		}
+
+		public bool CanExecuteStepToPlaying()
+			=> _status != STATUS.Playing;
+
+		public void StepToPlaying() {
+			StepToLock();
+			ActiveRound.Commit();
+			_status = STATUS.Playing;
 			_startTime = DateTime.Now;
 		}
 
-		public TimeSpan ElapsedTime
-			=> _startTime - DateTime.Now;
+		public bool CanExecuteBackToMatching()
+			=> _status == STATUS.Lock;
 
-		public bool Matching() {
-			_rounds.Push(ActiveRound);
-			_startTime = DateTime.MinValue;
-			return Shuffle();
+		public void BackToMatching() {
+			_activeRound.Lock = false;
 		}
 
-		public IEnumerable<Round> Rounds => _rounds;
+		public bool CanExecuteStepToMatching()
+			=> _status == STATUS.Playing && _activeRound.IsFinished;
 
-		protected virtual int TryCount => 10;
+		public void StepToMatching() {
+			_status = STATUS.Matching;
+			_startTime = null;
+			_rounds.Push(ActiveRound);
+			Shuffle();
+		}
 	}
 }

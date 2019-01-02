@@ -1,4 +1,6 @@
-﻿using BSMM2.Services;
+﻿using BSMM2.Modules.Rules;
+using BSMM2.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,32 +10,45 @@ using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 
+	[JsonObject(nameof(Player))]
 	public class Player {
+
+		[JsonProperty]
 		public string Name { get; set; }
-		public bool Dropped { get; private set; }
-		public IList<Match> Matches { get; } = new List<Match>();
 
-		public IEnumerable<IPoint> Points => Matches.Select(match => match.GetPoint(this));
+		[JsonProperty]
+		public bool Dropped { get; set; }
 
-		public IEnumerable<IPoint> OpponentPoints => Matches.Select(match => match.GetOpponentPoint(this));
+		[JsonProperty]
+		public IList<Match> Matches { get; set; }
 
-		public bool HasByeMatch => Matches.Any(match => match.IsByeMatch);
+		[JsonIgnore]
+		public IEnumerable<Point> Points
+			=> Matches.Select(match => match.GetPoint(this));
 
-		public bool HasGapMatch => Matches.Any(match => match.IsGapMatch);
+		[JsonIgnore]
+		public IEnumerable<Point> OpponentPoints
+			=> Matches.Select(match => match.GetOpponentPoint(this));
 
-		public bool HasMatched(Player player) {
-			return Matches.Any(match => match.HasMatch(player));
-		}
+		[JsonIgnore]
+		public bool HasByeMatch
+			=> Matches.Any(match => match.IsByeMatch);
 
-		public int CompareTo(Player p) {
-			return Matches.FirstOrDefault(m => m.GetOpponent(this) == p)?.GetResult(this) ?? 0;
-		}
+		[JsonIgnore]
+		public bool HasGapMatch
+			=> Matches.Any(match => match.IsGapMatch);
 
-		public void Drop() {
-			Dropped = true;
+		public int? HasMatched(Player player)
+			=> Matches.FirstOrDefault(m => m.GetOpponent(this) == player)?.GetResult(this);
+
+		public void Drop()
+			=> Dropped = true;
+
+		public Player() {
 		}
 
 		public Player(string name) {
+			Matches = new List<Match>();
 			Name = name;
 		}
 	}
