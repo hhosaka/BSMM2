@@ -27,8 +27,12 @@ namespace BSMM2.Models {
 			=> Matches.Select(match => match.GetPoint(this));
 
 		[JsonIgnore]
+		public Point Point
+			=> Point.Sum(Matches.Select(match => match.GetPoint(this)));
+
+		[JsonIgnore]
 		public IEnumerable<Point> OpponentPoints
-			=> Matches.Select(match => match.GetOpponentPoint(this));
+				=> Matches.Select(match => match.GetOpponentPoint(this));
 
 		[JsonIgnore]
 		public bool HasByeMatch
