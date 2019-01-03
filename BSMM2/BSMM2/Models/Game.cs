@@ -41,7 +41,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public IEnumerable<Player> PlayerList
-			=> _players.OrderByDescending(p => p, _rule?.CreateComparer());
+			=> _players.OrderByDescending(p => p);
 
 		[JsonIgnore]
 		public Round ActiveRound

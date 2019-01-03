@@ -14,7 +14,7 @@ namespace BSMM2.Models {
 		public static readonly Player BYE = new Player("BYE");
 
 		[JsonProperty]
-		public Score[] Results { get; private set; }
+		public Result[] Results { get; private set; }
 
 		[JsonProperty]
 		public bool IsGapMatch { get; }
@@ -32,14 +32,13 @@ namespace BSMM2.Models {
 			Results[1].SetPoint(y);
 		}
 
-		public void Commit() {
-			Results.ForEach(result => result.Player.Matches.Add(this));
-		}
+		public void Commit()
+			=> Results.ForEach(result => result.Player.Commit(this));
 
-		private Score GetPlayerResult(Player player)
+		private Result GetPlayerResult(Player player)
 			=> Results.First(r => r.Player == player);
 
-		private Score GetOpponentResult(Player player)
+		private Result GetOpponentResult(Player player)
 			=> Results.First(r => r.Player != player);
 
 		public Point GetPoint(Player player)
@@ -57,13 +56,13 @@ namespace BSMM2.Models {
 		public Match() {
 		}
 
-		public Match(Rule rule, Player player1, Player player2) {
-			Results = new[] { new Score(player2), new Score(player1) };
-			IsGapMatch = rule.CreateComparer().Compare(player1, player2) != 0;
+		public Match(Player player1, Player player2) {
+			Results = new[] { new Result(player2), new Result(player1) };
+			IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
 		}
 
 		public Match(Player player) {
-			Results = new[] { new Score(player), new Score(BYE) };
+			Results = new[] { new Result(player), new Result(BYE) };
 		}
 	}
 }
