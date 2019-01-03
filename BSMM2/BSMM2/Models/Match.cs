@@ -27,7 +27,7 @@ namespace BSMM2.Models {
 		public bool IsByeMatch
 			=> Results.Any(result => result.Player == BYE);
 
-		public void SetPoint(Point x, Point y) {
+		public void SetPoint(Params x, Params y) {
 			Results[0].SetPoint(x);
 			Results[1].SetPoint(y);
 		}
@@ -41,23 +41,23 @@ namespace BSMM2.Models {
 		private Result GetOpponentResult(Player player)
 			=> Results.First(r => r.Player != player);
 
-		public Point GetPoint(Player player)
+		public Params GetPoint(Player player)
 			=> GetPlayerResult(player)?.Point;
 
 		public Player GetOpponent(Player player)
 			=> GetOpponentResult(player)?.Player;
 
-		public Point GetOpponentPoint(Player player)
+		public Params GetOpponentPoint(Player player)
 			=> GetOpponentResult(player)?.Point;
 
 		public int GetResult(Player player)
 			=> GetPoint(player)?.CompareTo(GetOpponentPoint(player)) ?? 0;
 
-		public Match() {
+		private Match() {// For Serializer
 		}
 
 		public Match(Player player1, Player player2) {
-			Results = new[] { new Result(player2), new Result(player1) };
+			Results = new[] { new Result(player1), new Result(player2) };
 			IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
 		}
 

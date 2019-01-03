@@ -14,25 +14,17 @@ namespace BSMM2.Models {
 	public class Player : IComparable<Player> {
 
 		[JsonProperty]
-		public string Name { get; set; }
+		public string Name { get; private set; }
 
 		[JsonProperty]
-		public bool Dropped { get; set; }
+		public bool Dropped { get; private set; }
 
 		[JsonProperty]
-		public IList<Match> Matches { get; set; }
+		public IList<Match> Matches { get; private set; }
 
 		[JsonIgnore]
-		public IEnumerable<Point> Points
-			=> Matches.Select(match => match.GetPoint(this));
-
-		[JsonIgnore]
-		public Point Point
-			=> Point.Sum(Matches.Select(match => match.GetPoint(this)));
-
-		[JsonIgnore]
-		public IEnumerable<Point> OpponentPoints
-				=> Matches.Select(match => match.GetOpponentPoint(this));
+		public Params Point
+			=> Params.Sum(Matches.Select(match => match.GetPoint(this)));
 
 		[JsonIgnore]
 		public bool HasByeMatch
@@ -63,7 +55,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public Player() {
+		private Player() {// For Serializer
 		}
 
 		public Player(string name) {

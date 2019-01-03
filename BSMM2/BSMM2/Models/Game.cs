@@ -45,7 +45,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public Round ActiveRound
-			=> _activeRound ?? Shuffle();
+			=> _activeRound ?? (_activeRound = Shuffle());
 
 		[JsonIgnore]
 		public IEnumerable<Round> Rounds
@@ -55,14 +55,14 @@ namespace BSMM2.Models {
 			return string.Format("{0}{1:000}", name, i);
 		}
 
+		private Game() {// For Serializer
+		}
+
 		public Game(Rule rule, int count, string prefix = "Player") : this(rule) {
 			_prefix = prefix;
 			for (int i = 0; i < count; ++i) {
 				_players.Add(new Player(GenerateName(_prefix, i + 1)));
 			}
-		}
-
-		public Game() {
 		}
 
 		public Game(Rule rule, TextReader reader) : this(rule) {
@@ -110,7 +110,7 @@ namespace BSMM2.Models {
 
 		public void StepToLock() {
 			_status = STATUS.Lock;
-			ActiveRound.Lock = true;
+			ActiveRound.Lock();
 		}
 
 		public bool CanExecuteStepToPlaying()
@@ -127,7 +127,7 @@ namespace BSMM2.Models {
 			=> _status == STATUS.Lock;
 
 		public void BackToMatching() {
-			_activeRound.Lock = false;
+			_activeRound.Unlock();
 		}
 
 		public bool CanExecuteStepToMatching()

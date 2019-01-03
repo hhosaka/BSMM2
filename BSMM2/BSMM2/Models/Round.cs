@@ -11,19 +11,23 @@ namespace BSMM2.Models {
 	public class Round {
 
 		[JsonProperty]
-		private readonly Match[] _matches;
+		public Match[] Matches { get; private set; }
 
 		[JsonProperty]
-		public bool Lock { get; set; }
+		public bool Locked { get; private set; }
 
 		[JsonIgnore]
 		public bool IsFinished
-			=> !_matches.Any(match => !match.IsFinished);
+			=> !Matches.Any(match => !match.IsFinished);
 
-		public Match[] Matches => _matches;
+		public void Lock()
+			=> Locked = true;
+
+		public void Unlock()
+	=> Locked = false;
 
 		public void Swap(int m1, int m2) {
-			Swap(_matches.ElementAt(m1), _matches.ElementAt(m2));
+			Swap(Matches.ElementAt(m1), Matches.ElementAt(m2));
 		}
 
 		public void Swap(Match m1, Match m2) {
@@ -33,15 +37,14 @@ namespace BSMM2.Models {
 		}
 
 		public void Commit() {
-			foreach (var match in _matches) {
-				Lock = true;
+			foreach (var match in Matches) {
+				Locked = true;
 				match.Commit();
 			}
 		}
 
 		public Round(IEnumerable<Match> matches) {
-			_matches = matches.ToArray();
-			Lock = false;
+			Matches = matches.ToArray();
 		}
 	}
 }
