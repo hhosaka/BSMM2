@@ -27,13 +27,11 @@ namespace BSMM2.Models {
 	=> Locked = false;
 
 		public void Swap(int m1, int m2) {
-			Swap(Matches.ElementAt(m1), Matches.ElementAt(m2));
+			Swap(Matches[m1], Matches[m2]);
 		}
 
 		public void Swap(Match m1, Match m2) {
-			var temp = m1.Results[0];
-			m1.Results[0] = m2.Results[0];
-			m2.Results[0] = temp;
+			m1.Swap(m2);
 		}
 
 		public void Commit() {

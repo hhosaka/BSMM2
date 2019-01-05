@@ -23,8 +23,8 @@ namespace BSMM2.Models {
 		public IList<Match> Matches { get; private set; }
 
 		[JsonIgnore]
-		public Params Point
-			=> Params.Sum(Matches.Select(match => match.GetPoint(this)));
+		public Result Point
+			=> Result.Sum(Matches.Select(match => match.GetPoint(this)));
 
 		[JsonIgnore]
 		public bool HasByeMatch
