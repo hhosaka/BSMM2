@@ -8,7 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using static BSMM2.Models.Rule;
 
-namespace BSMM2.Modules.Rules {
+namespace BSMM2.Modules.Rules.Match {
 
 	[JsonObject]
 	public abstract class Result : IComparable<Result> {

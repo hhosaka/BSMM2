@@ -1,4 +1,5 @@
 ﻿using BSMM2.Modules.Rules;
+using BSMM2.Modules.Rules.Match;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
@@ -23,7 +24,7 @@ namespace BSMM2.Models {
 		public IList<Match> Matches { get; private set; }
 
 		[JsonIgnore]
-		public Result Point
+		public Result Result//???
 			=> Result.Sum(Matches.Select(match => match.GetPoint(this)));
 
 		[JsonIgnore]
@@ -51,7 +52,7 @@ namespace BSMM2.Models {
 			} else if (other.Dropped) {
 				return 1;
 			} else {
-				return Point.CompareTo(other.Point);
+				return Result.CompareTo(other.Result);
 			}
 		}
 

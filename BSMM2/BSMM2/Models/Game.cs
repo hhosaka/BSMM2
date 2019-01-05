@@ -112,7 +112,7 @@ namespace BSMM2.Models {
 			=> _status == STATUS.Matching;
 
 		public Round Shuffle() {
-			return _activeRound = MakeRound(PlayerList, _rule.Compareres);
+			return _activeRound = MakeRound(_players, _rule);
 		}
 
 		public bool CanExecuteStepToLock()
@@ -154,10 +154,10 @@ namespace BSMM2.Models {
 			return source.OrderBy(i => Guid.NewGuid());
 		}
 
-		public Round MakeRound(IEnumerable<Player> source, IEnumerable<Func<Result, Result, int>> Compareres) {
-			for (var omitt = 0; omitt < Compareres.Count(); ++omitt) {
+		private Round MakeRound(IEnumerable<Player> source, Rule rule) {
+			for (var omitt = 0; omitt < rule.Compareres.Count(); ++omitt) {
 				for (int i = 0; i < TryCount; ++i) {
-					var round = Create(Shuffle(source).Where(p => !p.Dropped));
+					var round = Create(Shuffle(source).Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
 					if (round != null) {
 						return round;
 					}

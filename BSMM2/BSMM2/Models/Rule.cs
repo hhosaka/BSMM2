@@ -1,4 +1,5 @@
 ﻿using BSMM2.Modules.Rules;
+using BSMM2.Modules.Rules.Match;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
@@ -25,7 +26,7 @@ namespace BSMM2.Models {
 			public override int Compare(Player x, Player y) {
 				if (x != y) {
 					foreach (var comparer in _compareres) {
-						var result = comparer(x.Point, y.Point);
+						var result = comparer(x.Result, y.Result);
 						if (result != 0) {
 							return result;
 						}

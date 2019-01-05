@@ -1,4 +1,5 @@
 ﻿using BSMM2.Modules.Rules;
+using BSMM2.Modules.Rules.Match;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
@@ -89,7 +90,7 @@ namespace BSMM2.Models {
 
 		public Match(Player player1, Player player2) {
 			Results = new[] { new Record(player1), new Record(player2) };
-			IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
+			IsGapMatch = (player1.Result.MatchPoint != player2.Result.MatchPoint);
 		}
 
 		public Match(Player player) {
