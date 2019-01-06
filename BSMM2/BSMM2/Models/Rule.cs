@@ -14,12 +14,12 @@ namespace BSMM2.Models {
 	public class Rule {
 
 		[JsonIgnore]
-		public virtual IEnumerable<Func<object, object, int>> Compareres { get; }
+		public virtual IEnumerable<Func<IResult, IResult, int>> Compareres { get; }
 
 		private class TheComparer : Comparer<Player> {
-			private IEnumerable<Func<Result, Result, int>> _compareres;
+			private IEnumerable<Func<IResult, IResult, int>> _compareres;
 
-			public TheComparer(IEnumerable<Func<Result, Result, int>> compareres) {
+			public TheComparer(IEnumerable<Func<IResult, IResult, int>> compareres) {
 				_compareres = compareres;
 			}
 

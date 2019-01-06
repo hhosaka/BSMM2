@@ -155,12 +155,10 @@ namespace BSMM2.Models {
 		}
 
 		private Round MakeRound(IEnumerable<Player> source, Rule rule) {
-			for (var omitt = 0; omitt < rule.Compareres.Count(); ++omitt) {
-				for (int i = 0; i < TryCount; ++i) {
-					var round = Create(Shuffle(source).Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
-					if (round != null) {
-						return round;
-					}
+			for (int i = 0; i < TryCount; ++i) {
+				var round = Create(Shuffle(source).Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
+				if (round != null) {
+					return round;
 				}
 			}
 			return null;

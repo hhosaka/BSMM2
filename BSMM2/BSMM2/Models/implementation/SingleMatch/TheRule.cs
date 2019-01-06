@@ -12,7 +12,7 @@ namespace BSMM2.Modules.Rules.SingleMatch {
 	[JsonObject]
 	public class TheRule : Rule {
 
-		public override IEnumerable<Func<object, object, int>> Compareres
+		public override IEnumerable<Func<IResult, IResult, int>> Compareres
 			=> Result.Compareres;
 
 		public override ContentPage ContentPage
