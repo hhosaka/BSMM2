@@ -10,7 +10,7 @@ using Xamarin.Forms.Internals;
 namespace BSMM2.Modules.Rules.SingleMatch {
 
 	[JsonObject]
-	public class TheRule : Rule {
+	public class MatchRule : Rule {
 
 		public override IEnumerable<Func<IResult, IResult, int>> Compareres
 			=> Result.Compareres;

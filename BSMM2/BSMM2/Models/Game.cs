@@ -22,7 +22,7 @@ namespace BSMM2.Models {
 		private readonly Rule _rule;
 
 		[JsonProperty]
-		private readonly List<Player> _players;
+		private readonly Players _players;
 
 		[JsonProperty]
 		private readonly Stack<Round> _rounds;
@@ -50,10 +50,6 @@ namespace BSMM2.Models {
 			=> DateTime.Now - _startTime;
 
 		[JsonIgnore]
-		public IEnumerable<Player> PlayerList
-			=> _players.OrderByDescending(p => p);
-
-		[JsonIgnore]
 		public Round ActiveRound
 			=> _activeRound ?? (_activeRound = Shuffle());
 
@@ -61,58 +57,42 @@ namespace BSMM2.Models {
 		public IEnumerable<Round> Rounds
 			=> _rounds;
 
-		private string GenerateName(string name, int i) {
-			return string.Format("{0}{1:000}", name, i);
-		}
+		protected virtual Players CreatePlayers(int count, String prefix)
+			=> new Players(count, _prefix);
 
 		private Game() {// For Serializer
 		}
 
 		public Game(Rule rule, int count, string prefix = "Player") : this(rule) {
 			_prefix = prefix;
-			for (int i = 0; i < count; ++i) {
-				_players.Add(new Player(GenerateName(_prefix, i + 1)));
-			}
+			_players = CreatePlayers(count, prefix);
 		}
 
 		public Game(Rule rule, TextReader reader) : this(rule) {
 			string buf;
 			while ((buf = reader.ReadLine()) != string.Empty) {
-				_players.Add(new Player(buf));
+				_players.Add(buf);
 			}
 		}
 
 		private Game(Rule rule) {
 			_rule = rule;
-			_players = new List<Player>();
 			_rounds = new Stack<Round>();
 			_status = STATUS.Matching;
 			_startTime = null;
 		}
 
-		public void Add(Player player) {
-			_players.Add(player);
-		}
-
 		public void Add() {
-			for (int i = _players.Count() + 1; ; ++i) {
-				var name = GenerateName(_prefix, i);
-				if (!_players.Any(player => player.Name == name)) {
-					_players.Add(new Player(name));
-					return;
-				}
-			}
+			_players.Add();
 		}
 
-		public void Remove(Player player) {
-			_players.Remove(player);
-		}
+		public Players Players => _players;
 
 		public bool CanExecuteShuffle()
 			=> _status == STATUS.Matching;
 
 		public Round Shuffle() {
-			return _activeRound = MakeRound(_players, _rule);
+			return _activeRound = MakeRound(_players.Shuffle, _rule);
 		}
 
 		public bool CanExecuteStepToLock()
@@ -156,7 +136,7 @@ namespace BSMM2.Models {
 
 		private Round MakeRound(IEnumerable<Player> source, Rule rule) {
 			for (int i = 0; i < TryCount; ++i) {
-				var round = Create(Shuffle(source).Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
+				var round = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
 				if (round != null) {
 					return round;
 				}
