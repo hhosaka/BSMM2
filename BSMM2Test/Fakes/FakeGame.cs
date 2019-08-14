@@ -11,7 +11,7 @@ namespace BSMM2Test {
 		private class FakePlayers : Players {
 
 			public override IEnumerable<Player> Shuffle
-				=> Result;
+				=> Source;
 
 			public FakePlayers(int count, String prefix)
 				: base(count, prefix) {

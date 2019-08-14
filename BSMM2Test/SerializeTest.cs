@@ -44,24 +44,25 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest2() {
-			var game = new FakeGame(new MatchRule(), 6, _origin);
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, 6, _origin);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
-			game.ActiveRound.Matches[1].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
-			game.ActiveRound.Matches[2].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
+			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result(rule));
 
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result(rule));
 		}
 
 		[TestMethod]

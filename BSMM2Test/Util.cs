@@ -25,7 +25,8 @@ namespace BSMM2Test {
 		}
 
 		public static void Check(IEnumerable<int> expect, string origin, IEnumerable<Player> players) {
-			CollectionAssert.AreEqual(expect.ToArray(), players.Select(player => ConvId(origin, player.Name)).ToArray());
+			var result = players.Select(player => ConvId(origin, player.Name));
+			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
 		public static void Check(IEnumerable<int> expect, Round round) {
@@ -33,9 +34,20 @@ namespace BSMM2Test {
 		}
 
 		public static void Check(IEnumerable<int> expect, string origin, Round round) {
-			var buf = round.Matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name))).ToArray();
-			CollectionAssert.AreEqual(expect.ToArray(),
-				round.Matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name))).ToArray());
+			var result = round.Matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
+			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
+		}
+
+		private static String Message(IEnumerable<int> expect, IEnumerable<int> result) {
+			return "result=" + ToString(result) + " expected=" + ToString(expect);
+
+			String ToString(IEnumerable<int> array) {
+				var builder = new StringBuilder();
+				builder.Append("{");
+				array.ToList().ForEach(i => builder.Append(i.ToString() + ","));
+				builder.Append("}");
+				return builder.ToString();
+			}
 		}
 	}
 }

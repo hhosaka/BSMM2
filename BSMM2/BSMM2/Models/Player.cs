@@ -51,9 +51,11 @@ namespace BSMM2.Models {
 				return other.Dropped ? 0 : -1;
 			} else if (other.Dropped) {
 				return 1;
-			} else {
-				return Result.CompareTo(other.Result);
 			}
+			return 0;
+			//} else {
+			//	return Result.CompareTo(other.Result);
+			//}
 		}
 
 		private Player() {// For Serializer

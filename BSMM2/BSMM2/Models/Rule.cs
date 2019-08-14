@@ -24,7 +24,10 @@ namespace BSMM2.Models {
 			}
 
 			public override int Compare(Player x, Player y) {
-				if (x != y) {
+				var ret = x.CompareTo(y);
+				if (ret != 0) {
+					return ret;
+				} else {
 					foreach (var comparer in _compareres) {
 						var result = comparer(x.Result, y.Result);
 						if (result != 0) {

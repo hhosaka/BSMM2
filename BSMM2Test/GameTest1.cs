@@ -25,14 +25,14 @@ namespace BSMM2Test {
 
 			CollectionAssert.Equals(players, players.OrderByDescending(p => p, rule.CreateComparer()));
 
-			matches[0].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
-			matches[1].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
+			matches[0].SetPoint(rule.CreatePoints(Win));
+			matches[1].SetPoint(rule.CreatePoints(Win));
 
 			CollectionAssert.Equals(new[] { players[0], players[2], players[1], players[3] },
 				players.OrderByDescending(p => p, rule.CreateComparer()));
 
-			matches[0].SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
-			matches[1].SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
+			matches[0].SetPoint(rule.CreatePoints(Lose));
+			matches[1].SetPoint(rule.CreatePoints(Lose));
 
 			CollectionAssert.Equals(new[] { players[1], players[3], players[0], players[2] },
 				players.OrderByDescending(p => p, rule.CreateComparer()));
@@ -40,63 +40,64 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void GameAddPlayerTest() {
-			var game = new FakeGame(new MatchRule(), 4);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result);
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, 4);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
 			game.Players.Add("Player006");
-			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.Result);
+			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.Result(rule));
 
 			game.Players.Add("Player005");
-			Util.Check(new[] { 1, 2, 3, 4, 6, 5 }, game.Players.Result);
+			Util.Check(new[] { 1, 2, 3, 4, 6, 5 }, game.Players.Result(rule));
 
 			game.Players.Remove(1);
-			Util.Check(new[] { 1, 3, 4, 6, 5 }, game.Players.Result);
+			Util.Check(new[] { 1, 3, 4, 6, 5 }, game.Players.Result(rule));
 
 			game.Add();
-			Util.Check(new[] { 1, 3, 4, 6, 5, 6 }, game.Players.Result);
+			Util.Check(new[] { 1, 3, 4, 6, 5, 6 }, game.Players.Result(rule));
 		}
 
 		[TestMethod]
 		public void GameSequence1Test() {
-			var game = new FakeGame(new MatchRule(), 4);
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, 4);
 
 			game.Shuffle();
 
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
 			game.ActiveRound.Commit();
 
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
-			game.ActiveRound.Matches.ElementAt(0).SetPoint(
-				new SingleMatchResult(Win),
-				new SingleMatchResult(Lose));
+			game.ActiveRound.Matches.ElementAt(0).SetPoint(rule.CreatePoints(Win));
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result.ToArray());// TODO : ?
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
-			game.ActiveRound.Matches.ElementAt(1).SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
-			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result);
+			game.ActiveRound.Matches.ElementAt(1).SetPoint(rule.CreatePoints(Win));
+			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result(rule));
 
-			game.ActiveRound.Matches.ElementAt(0).SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
-			game.ActiveRound.Matches.ElementAt(1).SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetPoint(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(1).SetPoint(rule.CreatePoints(Lose));
 
-			Util.Check(new[] { 2, 4, 1, 3 }, game.Players.Result);
+			Util.Check(new[] { 2, 4, 1, 3 }, game.Players.Result(rule));
 
-			game.Players.Result.ElementAt(0).Drop();
+			game.Players.Result(rule).ElementAt(0).Drop();
 
-			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result);
+			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
 
 			game.Shuffle();
 
-			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result);
+			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
 			Util.Check(new[] { 4, 1, 3, -1 }, game.ActiveRound);
 		}
 
 		[TestMethod]
 		public void GameSequence2Test() {
-			var game = new FakeGame(new MatchRule(), 4);
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, 4);
 
 			// èâä˙ê›íËämîF
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
@@ -150,27 +151,27 @@ namespace BSMM2Test {
 
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 
-			game.ActiveRound.Matches[0].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
+			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Win));
 
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 
-			game.ActiveRound.Matches[1].SetPoint(new SingleMatchResult(Win), new SingleMatchResult(Lose));
+			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
 			game.StepToMatching();
-			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result);
+			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result(rule));
 			Util.Check(new[] { 1, 3, 2, 4 }, game.ActiveRound);
 			Assert.AreEqual(1, game.Rounds.Count());
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Rounds.First());
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
-			game.ActiveRound.Matches[1].SetPoint(new SingleMatchResult(Lose), new SingleMatchResult(Win));
+			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Lose));
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
-			Util.Check(new[] { 3, 1, 4, 2 }, game.Players.Result);
+			Util.Check(new[] { 3, 1, 4, 2 }, game.Players.Result(rule));
 		}
 	}
 }
