@@ -12,24 +12,27 @@ using static BSMM2.Models.Rule;
 namespace BSMM2.Modules.Rules.MultiMatch {
 
 	[JsonObject]
-	public class MultiMutciResult : Result {
+	public class MultiMutciResult : IMatchResult {
 
 		[JsonProperty]
-		private IEnumerable<Result> _paramsList;
+		private IEnumerable<IMatchResult> _paramsList;
 
 		[JsonIgnore]
-		public override int MatchPoint
+		public int MatchPoint
 			=> _paramsList.Sum(p => p.MatchPoint);
 
 		[JsonIgnore]
-		public override int LifePoint
+		public int LifePoint
 			=> _paramsList.Sum(p => p.LifePoint);
 
 		[JsonIgnore]
-		public override double WinPoint
+		public double WinPoint
 			=> _paramsList.Sum(p => p.WinPoint);
 
-		public MultiMutciResult(IEnumerable<Result> paramsList) {
+		public int Point
+			=> MatchPoint;
+
+		public MultiMutciResult(IEnumerable<IMatchResult> paramsList) {//TODO : tentative
 			_paramsList = paramsList;
 		}
 	}

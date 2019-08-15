@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Xamarin.Forms.Internals;
-using static BSMM2.Models.Rule.RESULT;
+using static BSMM2.Models.RESULT;
 
 namespace BSMM2Test {
 
@@ -42,6 +42,7 @@ namespace BSMM2Test {
 		public void GameAddPlayerTest() {
 			var rule = new MatchRule();
 			var game = new FakeGame(rule, 4);
+
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
 			game.Players.Add("Player006");

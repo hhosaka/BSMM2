@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Xamarin.Forms.Internals;
-using static BSMM2.Models.Rule.RESULT;
+using static BSMM2.Models.RESULT;
 using BSMM2.Modules.Rules;
 
 namespace BSMM2Test {
@@ -76,7 +76,7 @@ namespace BSMM2Test {
 				Count = count,
 				PlayerNamePrefix = playerName,
 				Entries = entries,
-				Rule = new Rule()
+				Rule = new MatchRule()
 			};
 
 			var serializer = new Serializer<Settings>();

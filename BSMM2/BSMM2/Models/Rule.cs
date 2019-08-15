@@ -11,45 +11,50 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Rule {
+	public abstract class Rule {
 
-		[JsonIgnore]
-		public virtual IEnumerable<Func<IResult, IResult, int>> Compareres { get; }
+		protected abstract int Compare(IMatchResult x, IMatchResult y, int level);
 
 		private class TheComparer : Comparer<Player> {
-			private IEnumerable<Func<IResult, IResult, int>> _compareres;
+			private Rule _rule;
+			private int _level;
 
-			public TheComparer(IEnumerable<Func<IResult, IResult, int>> compareres) {
-				_compareres = compareres;
+			public TheComparer(Rule rule, int level) {
+				_rule = rule;
+				_level = level;
 			}
 
 			public override int Compare(Player x, Player y) {
-				var ret = x.CompareTo(y);
-				if (ret != 0) {
-					return ret;
+				int ret = 0;
+				if (x == y) {
+					return 0;
 				} else {
-					foreach (var comparer in _compareres) {
-						var result = comparer(x.Result, y.Result);
-						if (result != 0) {
-							return result;
+					ret = Dropped();
+					if (ret == 0) {
+						ret = _rule.Compare(x.Result, y.Result, _level);
+						if (ret == 0) {
+							return ToComp(x.GetResult(y));
 						}
 					}
-					return x.GetResult(y) ?? 0;
 				}
-				return 0;
+				return ret;
+
+				int ToComp(RESULT? result) {
+					return result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
+				}
+
+				int Dropped() {
+					if (x.Dropped)
+						return y.Dropped ? 0 : -1;
+					else
+						return y.Dropped ? 1 : 0;
+				}
 			}
 		}
-
-		public enum RESULT { Win, Lose, Draw }
 
 		public virtual ContentPage ContentPage { get; }
 
-		public Comparer<Player> CreateComparer(int omitt = 0) {
-			var count = Compareres.Count() - omitt;
-			if (count > 0) {
-				return new TheComparer(Compareres);
-			}
-			return null;
-		}
+		public Comparer<Player> CreateComparer(int level = 0)
+			=> new TheComparer(this, level);
 	}
 }

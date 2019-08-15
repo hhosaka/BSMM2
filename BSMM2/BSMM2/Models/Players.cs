@@ -37,8 +37,10 @@ namespace BSMM2.Models {
 		public void Remove(int index)
 			=> _players.RemoveAt(index);
 
-		public IEnumerable<Player> Result(Rule rule)
-			=> _players.OrderByDescending(p => p, rule.CreateComparer());
+		public IEnumerable<Player> Result(Rule rule) {
+			_players.ForEach(p => p.Calc(rule));
+			return _players.OrderByDescending(p => p, rule.CreateComparer());
+		}
 
 		[JsonIgnore]
 		public virtual IEnumerable<Player> Shuffle

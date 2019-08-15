@@ -20,9 +20,9 @@ namespace BSMM2.Models {
 			public Player Player { get; }
 
 			[JsonProperty]
-			public Result Point { get; private set; }
+			public IMatchResult Point { get; private set; }
 
-			public void SetPoint(Result point)
+			public void SetPoint(IMatchResult point)
 				=> Point = point;
 
 			private Record() {// For Serializer
@@ -53,7 +53,7 @@ namespace BSMM2.Models {
 		public IEnumerable<string> PlayerNames
 			=> Results.Select(result => result.Player.Name);
 
-		public void SetPoint((Result, Result) points) {
+		public void SetPoint((IMatchResult, IMatchResult) points) {
 			Results[0].SetPoint(points.Item1);
 			Results[1].SetPoint(points.Item2);
 		}
@@ -73,24 +73,38 @@ namespace BSMM2.Models {
 		private Record GetOpponentResult(Player player)
 			=> Results.First(r => r.Player != player);
 
-		public Result GetPoint(Player player)
+		public IMatchResult GetPoint(Player player)
 			=> GetPlayerResult(player)?.Point;
 
 		public Player GetOpponent(Player player)
 			=> GetOpponentResult(player)?.Player;
 
-		public Result GetOpponentPoint(Player player)
+		public IMatchResult GetOpponentPoint(Player player)
 			=> GetOpponentResult(player)?.Point;
 
-		public int GetResult(Player player)
-			=> GetPoint(player)?.CompareTo(GetOpponentPoint(player)) ?? 0;
+		public RESULT? GetResult(Player player) {
+			var point = GetPoint(player)?.Point;
+			switch (point) {
+				case 3:
+					return RESULT.Win;
+
+				case 0:
+					return RESULT.Lose;
+
+				case 1:
+					return RESULT.Draw;
+
+				default:
+					return null;
+			}
+		}
 
 		private Match() {// For Serializer
 		}
 
 		public Match(Player player1, Player player2) {
 			Results = new[] { new Record(player1), new Record(player2) };
-			IsGapMatch = (player1.Result.MatchPoint != player2.Result.MatchPoint);
+			IsGapMatch = (player1.Result?.Point != player2.Result?.Point);
 		}
 
 		public Match(Player player) {

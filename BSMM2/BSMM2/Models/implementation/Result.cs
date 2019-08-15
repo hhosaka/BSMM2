@@ -10,57 +10,65 @@ using static BSMM2.Models.Rule;
 
 namespace BSMM2.Modules.Rules.Match {
 
-	[JsonObject]
-	public abstract class Result : IComparable<Result>, IResult {
-		public abstract int MatchPoint { get; }
+	internal class MatchResultTotal : IMatchResult {
 
-		public abstract int LifePoint { get; }
+		[JsonProperty]
+		public int MatchPoint { get; }
 
-		public abstract double WinPoint { get; }
+		[JsonProperty]
+		public int LifePoint { get; }
 
-		public static Func<IResult, IResult, int>[] Compareres { get; } = new Func<IResult, IResult, int>[]{
-			(p1,p2)=> ((Result)p1).CompareTo((Result)p2)
-		};
+		[JsonProperty]
+		public double WinPoint { get; }
 
-		public static Result Sum(IEnumerable<Result> points) {
-			int matchPoint = 0;
-			int lifePoint = 0;
+		[JsonIgnore]
+		public int Point => MatchPoint;
 
-			if (points.Any()) {
-				foreach (var point in points) {
-					matchPoint += point?.MatchPoint ?? 0;
-					lifePoint += point?.LifePoint ?? 0;
-				}
-				return new SingleMatchResult(matchPoint, (double)matchPoint / points.Count(), lifePoint);
-			}
-			return new SingleMatchResult(0, 0, 0);
-		}
-
-		public int CompareTo(Result other)
-			=> CompareTo(other, false, false);
-
-		private int CompareTo(Result other, bool ignoreLifePoint, bool ignoreWinPoint) {
-			int result = 0;
-			if (this != other) {
-				result = MatchPoint - other.MatchPoint;
-				if (result == 0) {
-					result = ignoreLifePoint ? 0 : LifePoint - other.LifePoint;
-					if (result == 0) {
-						result = ignoreWinPoint ? 0 : ConvDouble2Int(WinPoint - other.WinPoint);
+		public MatchResultTotal(IEnumerable<IResult> source) {
+			if (source.Any()) {
+				foreach (var data in source) {
+					var point = data as IMatchResult;
+					if (point != null) {
+						MatchPoint += point?.MatchPoint ?? 0;
+						LifePoint += point?.LifePoint ?? 0;
 					}
 				}
-			}
-			return result;
-
-			int ConvDouble2Int(double value) {
-				if (value == 0.0) {
-					return 0;
-				} else if (value > 0.0) {
-					return 1;
-				} else {
-					return -1;
-				}
+				WinPoint = (double)MatchPoint / source.Count();
 			}
 		}
+	}
+
+	internal class SingleMatchResult : IMatchResult {
+
+		[JsonIgnore]
+		public int MatchPoint
+			=> ResultValue == RESULT.Win ? 3 : ResultValue == RESULT.Lose ? 0 : 1;
+
+		[JsonIgnore]
+		public double WinPoint
+			=> ResultValue == RESULT.Win ? 1.0 : ResultValue == RESULT.Lose ? 0.0 : 0.5;
+
+		[JsonProperty]
+		public int LifePoint { get; }
+
+		[JsonProperty]
+		private RESULT ResultValue { get; }
+
+		[JsonIgnore]
+		public int Point => MatchPoint;
+
+		public SingleMatchResult(RESULT result, int lifePoint = 0) {
+			ResultValue = result;
+			LifePoint = lifePoint;
+		}
+	}
+
+	[JsonObject]
+	public interface IMatchResult : IResult {
+		int MatchPoint { get; }
+
+		int LifePoint { get; }
+
+		double WinPoint { get; }
 	}
 }

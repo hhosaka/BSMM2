@@ -24,8 +24,7 @@ namespace BSMM2.Models {
 		public IList<Match> Matches { get; private set; }
 
 		[JsonIgnore]
-		public Result Result//???
-			=> Result.Sum(Matches.Select(match => match.GetPoint(this)));
+		public IMatchResult Result { get; private set; }// = new SingleMatchResult(RESULT.Draw);//TODO : tentative
 
 		[JsonIgnore]
 		public bool HasByeMatch
@@ -35,7 +34,7 @@ namespace BSMM2.Models {
 		public bool HasGapMatch
 			=> Matches.Any(match => match.IsGapMatch);
 
-		public int? GetResult(Player player)
+		public RESULT? GetResult(Player player)
 			=> Matches.FirstOrDefault(m => m.GetOpponent(this) == player)?.GetResult(this);
 
 		public void Commit(Match match)
@@ -56,6 +55,10 @@ namespace BSMM2.Models {
 			//} else {
 			//	return Result.CompareTo(other.Result);
 			//}
+		}
+
+		public void Calc(Rule rule) {
+			Result = new MatchResultTotal(Matches.Select(match => match.GetPoint(this)));
 		}
 
 		private Player() {// For Serializer
