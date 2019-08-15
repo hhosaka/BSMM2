@@ -1,6 +1,5 @@
 ﻿using BSMM2.Models;
-using BSMM2.Modules.Rules.Match;
-using BSMM2.Modules.Rules.SingleMatch;
+using BSMM2.Models.Rules.Match;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using static BSMM2.Models.Rule;
 namespace BSMM2.Modules.Rules.MultiMatch {
 
 	[JsonObject]
-	public class MultiMutciResult : IMatchResult {
+	public class MultiMatchResult : IMatchResult {
 
 		[JsonProperty]
 		private IEnumerable<IMatchResult> _paramsList;
@@ -32,7 +31,7 @@ namespace BSMM2.Modules.Rules.MultiMatch {
 		public int Point
 			=> MatchPoint;
 
-		public MultiMutciResult(IEnumerable<IMatchResult> paramsList) {//TODO : tentative
+		public MultiMatchResult(IEnumerable<IMatchResult> paramsList) {//TODO : tentative
 			_paramsList = paramsList;
 		}
 	}

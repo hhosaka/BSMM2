@@ -25,7 +25,7 @@ namespace BSMM2.Models {
 			=> Locked = true;
 
 		public void Unlock()
-	=> Locked = false;
+			=> Locked = false;
 
 		public void Swap(int m1, int m2) {
 			Swap(Matches[m1], Matches[m2]);

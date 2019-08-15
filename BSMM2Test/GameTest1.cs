@@ -1,6 +1,6 @@
 using BSMM2.Models;
-using BSMM2.Modules.Rules;
-using BSMM2.Modules.Rules.SingleMatch;
+using BSMM2.Models.Rules;
+using BSMM2.Models.Rules.Match;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;

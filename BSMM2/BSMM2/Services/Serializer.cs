@@ -14,15 +14,23 @@ namespace BSMM2.Services {
 				TypeNameHandling = TypeNameHandling.Auto
 			};
 
+		public void Serialize(TextWriter w, T obj) {
+			w.Write(JsonConvert.SerializeObject(obj, settings));
+		}
+
 		public void Serialize(string filename, T obj) {
-			using (var outf = new StreamWriter(filename)) {
-				outf.Write(JsonConvert.SerializeObject(obj, settings));
+			using (var w = new StreamWriter(filename)) {
+				Serialize(w, obj);
 			}
 		}
 
+		public T Deserialize(TextReader r) {
+			return JsonConvert.DeserializeObject<T>(r.ReadToEnd(), settings);
+		}
+
 		public T Deserialize(string filename) {
-			using (var inf = new StreamReader(filename)) {
-				return JsonConvert.DeserializeObject<T>(inf.ReadToEnd(), settings);
+			using (var r = new StreamReader(filename)) {
+				return Deserialize(r);
 			}
 		}
 	}

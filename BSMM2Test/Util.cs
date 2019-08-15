@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.Modules.Rules.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

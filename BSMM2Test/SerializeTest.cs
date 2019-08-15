@@ -1,6 +1,5 @@
 using BSMM2.Models;
 using BSMM2.Services;
-using BSMM2.Modules.Rules.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using System;
@@ -12,6 +11,8 @@ using System.Threading;
 using Xamarin.Forms.Internals;
 using static BSMM2.Models.RESULT;
 using BSMM2.Modules.Rules;
+using System.Text;
+using BSMM2.Models.Rules.Match;
 
 namespace BSMM2Test {
 
@@ -27,7 +28,6 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest1() {
-			const string filename = "backup";
 			var game = new FakeGame(new MatchRule(), 6, _origin);
 
 			game.Shuffle();
@@ -35,9 +35,11 @@ namespace BSMM2Test {
 			game.ActiveRound.Swap(0, 1);
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound);
 
-			new Serializer<Game>().Serialize(filename, game);
+			var buf = new StringBuilder();
 
-			var result = new Serializer<Game>().Deserialize(filename);
+			new Serializer<Game>().Serialize(new StringWriter(buf), game);
+
+			var result = new Serializer<Game>().Deserialize(new StringReader(buf.ToString()));
 
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound);
 		}
@@ -67,7 +69,6 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void SaveSettings() {
-			var filename = "backup";
 			var entries = new[] { "123\r\n456", "abc\r\ndef" };
 			var playerName = "test";
 			var count = 123;
@@ -80,9 +81,10 @@ namespace BSMM2Test {
 			};
 
 			var serializer = new Serializer<Settings>();
+			var buf = new StringBuilder();
 
-			serializer.Serialize(filename, settings);
-			var result = serializer.Deserialize(filename);
+			serializer.Serialize(new StringWriter(buf), settings);
+			var result = serializer.Deserialize(new StringReader(buf.ToString()));
 
 			Assert.AreEqual(count, result.Count);
 			Assert.AreEqual(playerName, result.PlayerNamePrefix);

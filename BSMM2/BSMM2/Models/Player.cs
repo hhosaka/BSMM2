@@ -1,5 +1,5 @@
-﻿using BSMM2.Modules.Rules;
-using BSMM2.Modules.Rules.Match;
+﻿using BSMM2.Models.Rules;
+using BSMM2.Models.Rules.Match;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +24,7 @@ namespace BSMM2.Models {
 		public IList<Match> Matches { get; private set; }
 
 		[JsonIgnore]
-		public IMatchResult Result { get; private set; }// = new SingleMatchResult(RESULT.Draw);//TODO : tentative
+		public IMatchResult Result { get; private set; }
 
 		[JsonIgnore]
 		public bool HasByeMatch
@@ -52,9 +52,6 @@ namespace BSMM2.Models {
 				return 1;
 			}
 			return 0;
-			//} else {
-			//	return Result.CompareTo(other.Result);
-			//}
 		}
 
 		public void Calc(Rule rule) {

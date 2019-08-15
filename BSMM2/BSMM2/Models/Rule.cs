@@ -1,5 +1,5 @@
-﻿using BSMM2.Modules.Rules;
-using BSMM2.Modules.Rules.Match;
+﻿using BSMM2.Models.Rules;
+using BSMM2.Models.Rules.Match;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
