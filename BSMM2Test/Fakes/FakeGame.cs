@@ -1,6 +1,7 @@
 ﻿using BSMM2.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BSMM2Test {
@@ -15,18 +16,21 @@ namespace BSMM2Test {
 			public FakePlayers(int count, String prefix)
 				: base(count, prefix) {
 			}
-		}
 
-		protected override Players CreatePlayers(int count, String prefix) {
-			return new FakePlayers(count, prefix);
-		}
+			public FakePlayers(TextReader r)
+				: base(r) {
+			}
 
-		protected override IEnumerable<Player> Shuffle(IEnumerable<Player> source) {
-			return source;
+			private FakePlayers() {// For Serializer
+			}
 		}
 
 		public FakeGame(Rule rule, int count, string prefix = "Player")
-			: base(rule, count, prefix) {
+			: base(rule, new FakePlayers(count, prefix)) {
+		}
+
+		public FakeGame(Rule rule, TextReader r)
+			: base(rule, new FakePlayers(r)) {
 		}
 	}
 }

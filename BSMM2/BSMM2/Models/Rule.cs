@@ -39,9 +39,8 @@ namespace BSMM2.Models {
 				}
 				return ret;
 
-				int ToComp(RESULT? result) {
-					return result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
-				}
+				int ToComp(RESULT? result)
+					=> result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
 
 				int Dropped() {
 					if (x.Dropped)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
@@ -21,9 +22,22 @@ namespace BSMM2.Models {
 			}
 		}
 
+		private IEnumerable<Player> Generate(TextReader r) {
+			String buf;
+			while ((buf = r.ReadLine()) != null) {
+				if (!String.IsNullOrWhiteSpace(buf))
+					yield return new Player(buf);
+			}
+		}
+
 		public Players(int count = 4, String prefix = DEFAULT_PREFIX) {
 			_prefix = prefix;
 			_players = Generate(1, prefix, count).ToList();
+		}
+
+		public Players(TextReader r, String prefix = DEFAULT_PREFIX) {
+			_prefix = prefix;
+			_players = Generate(r).ToList();
 		}
 
 		public void Add(int count = 1, String prefix = DEFAULT_PREFIX) {

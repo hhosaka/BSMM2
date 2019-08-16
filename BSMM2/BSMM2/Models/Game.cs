@@ -15,10 +15,7 @@ namespace BSMM2.Models {
 		private enum STATUS { Matching, Lock, Playing };
 
 		[JsonProperty]
-		private static string _prefix;
-
-		[JsonProperty]
-		private readonly Rule _rule;
+		public Rule _rule;
 
 		[JsonProperty]
 		private readonly Players _players;
@@ -42,7 +39,7 @@ namespace BSMM2.Models {
 		public bool AcceptGapMatchDuplication { get; set; } = false;
 
 		[JsonProperty]
-		public virtual int TryCount { get; set; } = 10;
+		public virtual int TryCount { get; set; } = 100;
 
 		[JsonIgnore]
 		public TimeSpan? ElapsedTime
@@ -53,41 +50,25 @@ namespace BSMM2.Models {
 			=> _activeRound ?? (_activeRound = Shuffle());
 
 		[JsonIgnore]
+		public Players Players => _players;
+
+		[JsonIgnore]
 		public IEnumerable<Round> Rounds
 			=> _rounds;
-
-		protected virtual Players CreatePlayers(int count, String prefix)
-			=> new Players(count, _prefix);
 
 		private Game() {// For Serializer
 		}
 
-		public Game(Rule rule, int count, string prefix = "Player") : this(rule) {
-			_prefix = prefix;
-			_players = CreatePlayers(count, prefix);
-		}
-
-		public Game(Rule rule, TextReader reader) : this(rule) {
-			string buf;
-			while ((buf = reader.ReadLine()) != string.Empty) {
-				_players.Add(buf);
-			}
-		}
-
-		private Game(Rule rule) {
+		public Game(Rule rule, Players players) {
+			_players = players;
 			_rule = rule;
 			_rounds = new Stack<Round>();
 			_status = STATUS.Matching;
 			_startTime = null;
 		}
 
-		public void Add() {
-			_players.Add();
-		}
-
-		public Players Players => _players;
-
-		public bool CanExecuteShuffle()
+		[JsonIgnore]
+		public bool CanExecuteShuffle
 			=> _status == STATUS.Matching;
 
 		public Round Shuffle() {
@@ -127,10 +108,6 @@ namespace BSMM2.Models {
 			_startTime = null;
 			_rounds.Push(ActiveRound);
 			Shuffle();
-		}
-
-		protected virtual IEnumerable<Player> Shuffle(IEnumerable<Player> source) {
-			return source.OrderBy(i => Guid.NewGuid());
 		}
 
 		private Round MakeRound(IEnumerable<Player> source, Rule rule) {

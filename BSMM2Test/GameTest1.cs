@@ -3,6 +3,7 @@ using BSMM2.Models.Rules;
 using BSMM2.Models.Rules.Match;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Xamarin.Forms.Internals;
@@ -54,8 +55,20 @@ namespace BSMM2Test {
 			game.Players.Remove(1);
 			Util.Check(new[] { 1, 3, 4, 6, 5 }, game.Players.Result(rule));
 
-			game.Add();
+			game.Players.Add();
 			Util.Check(new[] { 1, 3, 4, 6, 5, 6 }, game.Players.Result(rule));
+		}
+
+		[TestMethod]
+		public void GameInitiateByListTest() {
+			var buf = "\r\nPlayer001\r\nPlayer002\r\n\r\nPlayer003\r\nPlayer004";
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, new StringReader(buf));
+
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+
+			game.Players.Add("Player006");
+			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.Result(rule));
 		}
 
 		[TestMethod]
@@ -109,7 +122,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			//　シャッフルできる
-			Assert.IsTrue(game.CanExecuteShuffle());
+			Assert.IsTrue(game.CanExecuteShuffle);
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 

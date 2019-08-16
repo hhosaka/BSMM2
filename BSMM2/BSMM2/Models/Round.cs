@@ -36,10 +36,8 @@ namespace BSMM2.Models {
 		}
 
 		public void Commit() {
-			foreach (var match in Matches) {
-				Locked = true;
-				match.Commit();
-			}
+			Locked = true;
+			Matches.ToList().ForEach(match => match.Commit());
 		}
 
 		public Round(IEnumerable<Match> matches) {
