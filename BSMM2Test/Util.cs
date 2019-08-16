@@ -28,12 +28,20 @@ namespace BSMM2Test {
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
-		public static void Check(IEnumerable<int> expect, Round round) {
-			Check(expect, DefaultOrigin, round);
+		public static void Check(IEnumerable<int> expect, MatchingList matchingList) {
+			Check(expect, DefaultOrigin, matchingList.Matches);
 		}
 
-		public static void Check(IEnumerable<int> expect, string origin, Round round) {
-			var result = round.Matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
+		public static void Check(IEnumerable<int> expect, Round round) {
+			Check(expect, DefaultOrigin, round.Matches);
+		}
+
+		//public static void Check(IEnumerable<int> expect, Match[] matches) {
+		//	Check(expect, DefaultOrigin, matches);
+		//}
+
+		public static void Check(IEnumerable<int> expect, string origin, Match[] matches) {
+			var result = matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 

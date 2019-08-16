@@ -24,7 +24,7 @@ namespace BSMM2.Models {
 		private readonly Stack<Round> _rounds;
 
 		[JsonProperty]
-		private Round _activeRound;
+		private MatchingList _matchingList;
 
 		[JsonProperty]
 		private STATUS _status;
@@ -46,8 +46,8 @@ namespace BSMM2.Models {
 			=> DateTime.Now - _startTime;
 
 		[JsonIgnore]
-		public Round ActiveRound
-			=> _activeRound ?? (_activeRound = Shuffle());
+		public MatchingList MatchingList
+			=> _matchingList ?? (_matchingList = Shuffle());
 
 		[JsonIgnore]
 		public Players Players => _players;
@@ -55,6 +55,9 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public IEnumerable<Round> Rounds
 			=> _rounds;
+
+		[JsonIgnore]
+		public Round ActiveRound => _rounds.Peek();
 
 		private Game() {// For Serializer
 		}
@@ -71,8 +74,8 @@ namespace BSMM2.Models {
 		public bool CanExecuteShuffle
 			=> _status == STATUS.Matching;
 
-		public Round Shuffle() {
-			return _activeRound = MakeRound(_players.Shuffle, _rule);
+		public MatchingList Shuffle() {
+			return _matchingList = new MatchingList(MakeRound(_players.Shuffle, _rule));
 		}
 
 		public bool CanExecuteStepToLock()
@@ -80,7 +83,7 @@ namespace BSMM2.Models {
 
 		public void StepToLock() {
 			_status = STATUS.Lock;
-			ActiveRound.Lock();
+			MatchingList.Locked = true;
 		}
 
 		public bool CanExecuteStepToPlaying()
@@ -88,7 +91,10 @@ namespace BSMM2.Models {
 
 		public void StepToPlaying() {
 			StepToLock();
-			ActiveRound.Commit();
+			var round = new Round(_matchingList.Matches);
+			round.Commit();
+			_rounds.Push(round);
+			_matchingList = null;
 			_status = STATUS.Playing;
 			_startTime = DateTime.Now;
 		}
@@ -97,29 +103,28 @@ namespace BSMM2.Models {
 			=> _status == STATUS.Lock;
 
 		public void BackToMatching() {
-			_activeRound.Unlock();
+			_matchingList.Locked = false;
 		}
 
 		public bool CanExecuteStepToMatching()
-			=> _status == STATUS.Playing && _activeRound.IsFinished;
+			=> _status == STATUS.Playing && ActiveRound.IsFinished;
 
 		public void StepToMatching() {
 			_status = STATUS.Matching;
 			_startTime = null;
-			_rounds.Push(ActiveRound);
 			Shuffle();
 		}
 
-		private Round MakeRound(IEnumerable<Player> source, Rule rule) {
+		private IEnumerable<Match> MakeRound(IEnumerable<Player> source, Rule rule) {
 			for (int i = 0; i < TryCount; ++i) {
-				var round = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
-				if (round != null) {
-					return round;
+				var matchingList = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
+				if (matchingList != null) {
+					return matchingList;
 				}
 			}
 			return null;
 
-			Round Create(IEnumerable<Player> players) {
+			IEnumerable<Match> Create(IEnumerable<Player> players) {
 				var results = new Queue<Match>();
 				var stack = new List<Player>();
 
@@ -136,13 +141,13 @@ namespace BSMM2.Models {
 				}
 				switch (stack.Count) {
 					case 0:
-						return new Round(results);
+						return results;
 
 					case 1: {
 							var p = stack.First();
 							if (AcceptByeMatchDuplication || !p.HasByeMatch) {
 								results.Enqueue(new Match(p));
-								return new Round(results);
+								return results;
 							}
 						}
 						break;
