@@ -18,12 +18,12 @@ namespace BSMM2.Models {
 		public bool IsFinished
 			=> !Matches.Any(match => !match.IsFinished);
 
-		public void Commit() {
-			Matches.ToList().ForEach(match => match.Commit());
+		public Round() {
 		}
 
 		public Round(IEnumerable<Match> matches) {
 			Matches = matches.ToArray();
+			Matches.ToList().ForEach(match => match.Commit());
 		}
 	}
 }

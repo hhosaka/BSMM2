@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 			Result = new MatchResultTotal(Matches.Select(match => match.GetPoint(this)));
 		}
 
-		private Player() {// For Serializer
+		public Player() {// For Serializer
 		}
 
 		public Player(string name) {

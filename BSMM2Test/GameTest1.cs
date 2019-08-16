@@ -83,7 +83,7 @@ namespace BSMM2Test {
 
 			game.StepToPlaying();
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
 			game.ActiveRound.Matches.ElementAt(0).SetPoint(rule.CreatePoints(Win));

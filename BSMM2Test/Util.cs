@@ -36,10 +36,6 @@ namespace BSMM2Test {
 			Check(expect, DefaultOrigin, round.Matches);
 		}
 
-		//public static void Check(IEnumerable<int> expect, Match[] matches) {
-		//	Check(expect, DefaultOrigin, matches);
-		//}
-
 		public static void Check(IEnumerable<int> expect, string origin, Match[] matches) {
 			var result = matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));

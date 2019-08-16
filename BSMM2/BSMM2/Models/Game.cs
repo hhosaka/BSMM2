@@ -47,7 +47,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public MatchingList MatchingList
-			=> _matchingList ?? (_matchingList = Shuffle());
+			=> _matchingList;
 
 		[JsonIgnore]
 		public Players Players => _players;
@@ -57,9 +57,14 @@ namespace BSMM2.Models {
 			=> _rounds;
 
 		[JsonIgnore]
-		public Round ActiveRound => _rounds.Peek();
+		public Round ActiveRound {
+			get {
+				if (_status != STATUS.Playing) throw new AccessViolationException();
+				return _rounds.Peek();
+			}
+		}
 
-		private Game() {// For Serializer
+		public Game() {// For Serializer
 		}
 
 		public Game(Rule rule, Players players) {
@@ -67,6 +72,7 @@ namespace BSMM2.Models {
 			_rule = rule;
 			_rounds = new Stack<Round>();
 			_status = STATUS.Matching;
+			_matchingList = Shuffle();
 			_startTime = null;
 		}
 
@@ -92,7 +98,6 @@ namespace BSMM2.Models {
 		public void StepToPlaying() {
 			StepToLock();
 			var round = new Round(_matchingList.Matches);
-			round.Commit();
 			_rounds.Push(round);
 			_matchingList = null;
 			_status = STATUS.Playing;

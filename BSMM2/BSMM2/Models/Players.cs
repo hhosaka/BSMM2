@@ -30,7 +30,10 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public Players(int count = 4, String prefix = DEFAULT_PREFIX) {
+		public Players() {
+		}
+
+		public Players(int count, String prefix = DEFAULT_PREFIX) {
 			_prefix = prefix;
 			_players = Generate(1, prefix, count).ToList();
 		}
