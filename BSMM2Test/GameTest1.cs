@@ -78,7 +78,7 @@ namespace BSMM2Test {
 
 			game.Shuffle();
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
 
 			game.StepToPlaying();
@@ -98,6 +98,7 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 2, 4, 1, 3 }, game.Players.Result(rule));
 
+			game.StepToMatching();
 			game.Players.Result(rule).ElementAt(0).Drop();
 
 			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
@@ -105,7 +106,7 @@ namespace BSMM2Test {
 			game.Shuffle();
 
 			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
-			Util.Check(new[] { 4, 1, 3, -1 }, game.MatchingList);
+			Util.Check(new[] { 4, 1, 3, -1 }, game.ActiveRound);
 		}
 
 		[TestMethod]
@@ -114,23 +115,23 @@ namespace BSMM2Test {
 			var game = new FakeGame(rule, 4);
 
 			// 初期設定確認
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
 			//　スワップできる
-			Assert.IsFalse(game.MatchingList.Locked);
-			game.MatchingList.Swap(0, 1);
-			Util.Check(new[] { 3, 2, 1, 4 }, game.MatchingList);
+			Assert.IsFalse(game.Locked);
+			(game.ActiveRound as Matching)?.Swap(0, 1);
+			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			//　シャッフルできる
 			Assert.IsTrue(game.CanExecuteShuffle);
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			game.MatchingList.Swap(game.MatchingList.Matches.ElementAt(0), game.MatchingList.Matches.ElementAt(1));
-			Util.Check(new[] { 3, 2, 1, 4 }, game.MatchingList);
+			(game.ActiveRound as Matching)?.Swap(game.ActiveRound.Matches.ElementAt(0), game.ActiveRound.Matches.ElementAt(1));
+			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
-			game.MatchingList.Swap(0, 1);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			(game.ActiveRound as Matching)?.Swap(0, 1);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
 			//　ロックしてみる
 			Assert.IsFalse(game.CanExecuteStepToMatching());
@@ -139,12 +140,14 @@ namespace BSMM2Test {
 			Assert.IsFalse(game.CanExecuteBackToMatching());
 			game.StepToLock();
 
-			Assert.IsTrue(game.MatchingList.Locked);
-			game.MatchingList.Swap(0, 1);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Assert.IsTrue(game.Locked);
+			(game.ActiveRound as Matching)?.Swap(0, 1);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
+			Assert.IsTrue(game.Locked);
 
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
+			Assert.IsTrue(game.Locked);
 
 			// マッチングに戻る
 			Assert.IsFalse(game.CanExecuteStepToMatching());
@@ -153,9 +156,9 @@ namespace BSMM2Test {
 			Assert.IsTrue(game.CanExecuteBackToMatching());
 			game.BackToMatching();
 
-			Assert.IsFalse(game.MatchingList.Locked);
+			Assert.IsFalse(game.Locked);
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
 			// 試合中にする
 			Assert.IsNull(game.ElapsedTime);
@@ -175,7 +178,7 @@ namespace BSMM2Test {
 
 			game.StepToMatching();
 			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result(rule));
-			Util.Check(new[] { 1, 3, 2, 4 }, game.MatchingList);
+			Util.Check(new[] { 1, 3, 2, 4 }, game.ActiveRound);
 			Assert.AreEqual(1, game.Rounds.Count());
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Rounds.First());
 

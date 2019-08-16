@@ -6,13 +6,28 @@ using System.Text;
 
 namespace BSMM2.Models {
 
-	public class MatchingList {
+	public interface IRound {
+		Match[] Matches { get; }
+	}
+
+	public class Matching : IRound {
 
 		[JsonProperty]
 		public Match[] Matches { get; private set; }
 
 		[JsonProperty]
 		public bool Locked { get; set; }
+
+		[JsonIgnore]
+		public bool IsFinished => throw new NotImplementedException();
+
+		public void Lock() {
+			Locked = true;
+		}
+
+		public void Unlock() {
+			Locked = false;
+		}
 
 		public void Swap(int m1, int m2) {
 			Swap(Matches[m1], Matches[m2]);
@@ -23,7 +38,7 @@ namespace BSMM2.Models {
 				m1.Swap(m2);
 		}
 
-		public MatchingList(IEnumerable<Match> matches) {
+		public Matching(IEnumerable<Match> matches) {
 			Matches = matches.ToArray();
 		}
 	}

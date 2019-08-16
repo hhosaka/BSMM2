@@ -31,9 +31,9 @@ namespace BSMM2Test {
 			var game = new FakeGame(new MatchRule(), 6, _origin);
 
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.MatchingList.Matches);
-			game.MatchingList.Swap(0, 1);
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.MatchingList.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			(game.ActiveRound as Matching)?.Swap(0, 1);
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 
 			var buf = new StringBuilder();
 
@@ -41,7 +41,7 @@ namespace BSMM2Test {
 
 			var result = new Serializer<Game>().Deserialize(new StringReader(buf.ToString()));
 
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.MatchingList.Matches);
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound.Matches);
 		}
 
 		[TestMethod]
@@ -49,7 +49,7 @@ namespace BSMM2Test {
 			var rule = new MatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.MatchingList.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 
 			game.StepToPlaying();
 

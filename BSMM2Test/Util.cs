@@ -28,11 +28,11 @@ namespace BSMM2Test {
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
-		public static void Check(IEnumerable<int> expect, MatchingList matchingList) {
+		public static void Check(IEnumerable<int> expect, Matching matchingList) {
 			Check(expect, DefaultOrigin, matchingList.Matches);
 		}
 
-		public static void Check(IEnumerable<int> expect, Round round) {
+		public static void Check(IEnumerable<int> expect, IRound round) {
 			Check(expect, DefaultOrigin, round.Matches);
 		}
 

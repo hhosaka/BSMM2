@@ -12,8 +12,6 @@ namespace BSMM2.Models {
 	[JsonObject(nameof(Game))]
 	public class Game {
 
-		private enum STATUS { Matching, Lock, Playing };
-
 		[JsonProperty]
 		public Rule _rule;
 
@@ -24,10 +22,7 @@ namespace BSMM2.Models {
 		private readonly Stack<Round> _rounds;
 
 		[JsonProperty]
-		private MatchingList _matchingList;
-
-		[JsonProperty]
-		private STATUS _status;
+		private IRound _activeRound;
 
 		[JsonProperty]
 		private DateTime? _startTime;
@@ -46,10 +41,6 @@ namespace BSMM2.Models {
 			=> DateTime.Now - _startTime;
 
 		[JsonIgnore]
-		public MatchingList MatchingList
-			=> _matchingList;
-
-		[JsonIgnore]
 		public Players Players => _players;
 
 		[JsonIgnore]
@@ -57,12 +48,10 @@ namespace BSMM2.Models {
 			=> _rounds;
 
 		[JsonIgnore]
-		public Round ActiveRound {
-			get {
-				if (_status != STATUS.Playing) throw new AccessViolationException();
-				return _rounds.Peek();
-			}
-		}
+		public IRound ActiveRound => _activeRound;
+
+		[JsonIgnore]
+		public bool Locked => (_activeRound as Matching)?.Locked == true;
 
 		public Game() {// For Serializer
 		}
@@ -71,53 +60,47 @@ namespace BSMM2.Models {
 			_players = players;
 			_rule = rule;
 			_rounds = new Stack<Round>();
-			_status = STATUS.Matching;
-			_matchingList = Shuffle();
 			_startTime = null;
+			Shuffle(true);
 		}
 
 		[JsonIgnore]
 		public bool CanExecuteShuffle
-			=> _status == STATUS.Matching;
+			=> _activeRound is Matching;
 
-		public MatchingList Shuffle() {
-			return _matchingList = new MatchingList(MakeRound(_players.Shuffle, _rule));
+		public void Shuffle(bool force = false) {
+			if (force || (_activeRound as Matching)?.Locked == false)
+				_activeRound = new Matching(MakeRound(_players.Shuffle, _rule));
 		}
 
 		public bool CanExecuteStepToLock()
-			=> _status == STATUS.Matching;
+			=> (_activeRound as Matching).Locked == false;
 
 		public void StepToLock() {
-			_status = STATUS.Lock;
-			MatchingList.Locked = true;
+			(_activeRound as Matching)?.Lock();
 		}
 
 		public bool CanExecuteStepToPlaying()
-			=> _status != STATUS.Playing;
+			=> _activeRound is Matching;
 
 		public void StepToPlaying() {
-			StepToLock();
-			var round = new Round(_matchingList.Matches);
-			_rounds.Push(round);
-			_matchingList = null;
-			_status = STATUS.Playing;
+			_activeRound = new Round(_activeRound.Matches);
 			_startTime = DateTime.Now;
 		}
 
 		public bool CanExecuteBackToMatching()
-			=> _status == STATUS.Lock;
+			=> (_activeRound as Matching).Locked == true;
 
-		public void BackToMatching() {
-			_matchingList.Locked = false;
-		}
+		public void BackToMatching()
+			=> (_activeRound as Matching)?.Unlock();
 
 		public bool CanExecuteStepToMatching()
-			=> _status == STATUS.Playing && ActiveRound.IsFinished;
+			=> (_activeRound as Round)?.IsFinished == true;
 
 		public void StepToMatching() {
-			_status = STATUS.Matching;
 			_startTime = null;
-			Shuffle();
+			_rounds.Push((Round)_activeRound);
+			Shuffle(true);
 		}
 
 		private IEnumerable<Match> MakeRound(IEnumerable<Player> source, Rule rule) {

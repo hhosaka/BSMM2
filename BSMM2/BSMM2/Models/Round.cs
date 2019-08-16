@@ -9,7 +9,7 @@ using System.Text;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Round {
+	public class Round : IRound {
 
 		[JsonProperty]
 		public Match[] Matches { get; private set; }
@@ -17,6 +17,18 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public bool IsFinished
 			=> !Matches.Any(match => !match.IsFinished);
+
+		[JsonIgnore]
+		public bool Locked {
+			get => throw new NotImplementedException();
+			set => throw new NotImplementedException();
+		}
+
+		public void Swap(int m1, int m2)
+			=> throw new NotImplementedException();
+
+		public void Swap(Match m1, Match m2)
+			=> throw new NotImplementedException();
 
 		public Round() {
 		}
