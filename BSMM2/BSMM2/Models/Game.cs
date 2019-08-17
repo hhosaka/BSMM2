@@ -9,7 +9,7 @@ using BSMM2.Modules.Rules;
 
 namespace BSMM2.Models {
 
-	[JsonObject(nameof(Game))]
+	[JsonObject]
 	public class Game {
 
 		[JsonProperty]
@@ -76,9 +76,8 @@ namespace BSMM2.Models {
 		public bool CanExecuteStepToLock()
 			=> (_activeRound as Matching).Locked == false;
 
-		public void StepToLock() {
-			(_activeRound as Matching)?.Lock();
-		}
+		public void StepToLock()
+			=> (_activeRound as Matching)?.Lock();
 
 		public bool CanExecuteStepToPlaying()
 			=> _activeRound is Matching;
@@ -104,10 +103,12 @@ namespace BSMM2.Models {
 		}
 
 		private IEnumerable<Match> MakeRound(IEnumerable<Player> source, Rule rule) {
-			for (int i = 0; i < TryCount; ++i) {
-				var matchingList = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer()));
-				if (matchingList != null) {
-					return matchingList;
+			for (int level = 0; level < rule.CompareDepth; ++level) {
+				for (int i = 0; i < TryCount; ++i) {
+					var matchingList = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer(level)));
+					if (matchingList != null) {
+						return matchingList;
+					}
 				}
 			}
 			return null;
@@ -117,40 +118,39 @@ namespace BSMM2.Models {
 				var stack = new List<Player>();
 
 				foreach (var p1 in players) {
-					if (!p1.Dropped) {
-						var p2 = PickOpponent(stack, p1);
-						if (p2 != null) {
-							stack.Remove(p2);
-							results.Enqueue(new Match(p2, p1));
-						} else {
-							stack.Add(p1);
-						}
+					var p2 = PickOpponent(stack, p1);
+					if (p2 != null) {
+						stack.Remove(p2);
+						results.Enqueue(new Match(p2, p1));
+					} else {
+						stack.Add(p1);
 					}
 				}
 				switch (stack.Count) {
 					case 0:
-						return results;
+						return results;//組み合わせ完了
 
-					case 1: {
+					case 1:// 1人余り
+						{
 							var p = stack.First();
 							if (AcceptByeMatchDuplication || !p.HasByeMatch) {
 								results.Enqueue(new Match(p));
-								return results;
+								return results;//1人不戦勝
 							}
 						}
 						break;
 				}
-				return null;
+				return null;//組み合わせを作れなかった。
 
 				Player PickOpponent(IEnumerable<Player> opponents, Player player) {
 					foreach (var opponent in opponents) {
-						if (player.GetResult(opponent) == null) {
+						if (player.GetResult(opponent) == null) {//対戦履歴なし
 							if (AcceptGapMatchDuplication || !player.HasGapMatch) {
-								return opponent;
+								return opponent;//対戦者認定
 							}
 						}
 					}
-					return null;
+					return null;//適合者なし
 				}
 			}
 		}

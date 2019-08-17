@@ -1,13 +1,8 @@
-﻿using BSMM2.Models.Rules;
-using BSMM2.Models.Rules.Match;
-using BSMM2.Services;
+﻿using BSMM2.Models.Rules.Match;
 using Newtonsoft.Json;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 

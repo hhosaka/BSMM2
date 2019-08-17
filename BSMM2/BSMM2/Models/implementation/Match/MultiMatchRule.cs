@@ -4,9 +4,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Xamarin.Forms;
-using Xamarin.Forms.Internals;
-using static BSMM2.Models.Rule;
 
 namespace BSMM2.Modules.Rules.MultiMatch {
 
@@ -27,6 +24,9 @@ namespace BSMM2.Modules.Rules.MultiMatch {
 		[JsonIgnore]
 		public double WinPoint
 			=> _paramsList.Sum(p => p.WinPoint);
+
+		[JsonIgnore]
+		public RESULT Result => throw new NotImplementedException();
 
 		public int Point
 			=> MatchPoint;

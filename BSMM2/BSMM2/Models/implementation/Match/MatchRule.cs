@@ -1,11 +1,8 @@
-﻿using BSMM2.Models;
-using BSMM2.Models.Rules.Match;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using static BSMM2.Models.RESULT;
 
 namespace BSMM2.Models.Rules.Match {
@@ -23,6 +20,9 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonIgnore]
 		public int Point => MatchPoint;
+
+		[JsonIgnore]
+		public RESULT Result => throw new NotImplementedException();
 
 		public MatchResultTotal(IEnumerable<IResult> source) {
 			if (source.Any()) {
@@ -42,23 +42,23 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonIgnore]
 		public int MatchPoint
-			=> ResultValue == RESULT.Win ? 3 : ResultValue == RESULT.Lose ? 0 : 1;
+			=> Result == RESULT.Win ? 3 : Result == RESULT.Lose ? 0 : 1;
 
 		[JsonIgnore]
 		public double WinPoint
-			=> ResultValue == RESULT.Win ? 1.0 : ResultValue == RESULT.Lose ? 0.0 : 0.5;
+			=> Result == RESULT.Win ? 1.0 : Result == RESULT.Lose ? 0.0 : 0.5;
 
 		[JsonProperty]
 		public int LifePoint { get; }
 
 		[JsonProperty]
-		private RESULT ResultValue { get; }
+		public RESULT Result { get; }
 
 		[JsonIgnore]
 		public int Point => MatchPoint;
 
 		public MatchResult(RESULT result, int lifePoint = 0) {
-			ResultValue = result;
+			Result = result;
 			LifePoint = lifePoint;
 		}
 	}
@@ -74,6 +74,7 @@ namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
 	public class MatchRule : Rule {
+		public override int CompareDepth => 3;
 
 		protected override int Compare(IMatchResult x, IMatchResult y, int level) {
 			switch (level) {

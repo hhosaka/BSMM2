@@ -6,10 +6,6 @@ using System.Text;
 
 namespace BSMM2.Models {
 
-	public interface IRound {
-		Match[] Matches { get; }
-	}
-
 	public class Matching : IRound {
 
 		[JsonProperty]

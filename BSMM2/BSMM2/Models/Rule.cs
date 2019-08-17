@@ -15,6 +15,8 @@ namespace BSMM2.Models {
 
 		protected abstract int Compare(IMatchResult x, IMatchResult y, int level);
 
+		public abstract int CompareDepth { get; }
+
 		private class TheComparer : Comparer<Player> {
 			private Rule _rule;
 			private int _level;
