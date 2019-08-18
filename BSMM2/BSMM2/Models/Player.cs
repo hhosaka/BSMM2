@@ -20,7 +20,13 @@ namespace BSMM2.Models {
 		private IResult _result;
 
 		[JsonIgnore]
+		private IResult _opponentResult;
+
+		[JsonIgnore]
 		public IResult Result => _result;
+
+		[JsonIgnore]
+		public IResult OpponentResult => _opponentResult;
 
 		[JsonIgnore]
 		public bool HasByeMatch
@@ -39,8 +45,11 @@ namespace BSMM2.Models {
 		public void Drop()
 			=> Dropped = true;
 
-		public void Reset(Rule rule)
+		public void CalcResult(Rule rule)
 			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));
+
+		public void CalcOpponentResult(Rule rule)
+			=> _opponentResult = rule.Sum(_matches.Select(match => match.GetOpponentResult(this)));
 
 		public Player() {// For Serializer
 		}

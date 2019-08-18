@@ -86,26 +86,22 @@ namespace BSMM2.Models.Rules.Match {
 			}
 		}
 
-		private static Func<IMatchResult, IMatchResult, int>[] comparers
-			= new Func<IMatchResult, IMatchResult, int>[] {
-						(x, y) => x.MatchPoint - y.MatchPoint,
-						(x, y) => x.LifePoint - y.LifePoint,
-						(x, y) => ConvDouble2Int(x.WinPoint - y.WinPoint),
+		private static IMatchResult Result(Player player)
+			=> (IMatchResult)player.Result;
+
+		private static IMatchResult OpponentResult(Player player)
+			=> (IMatchResult)player.OpponentResult;
+
+		protected override Func<Player, Player, int>[] Comparers
+			=> new Func<Player, Player, int>[] {
+						(x, y) => Result(x).MatchPoint - Result(y).MatchPoint,
+						(x, y) => Result(x).LifePoint - Result(y).LifePoint,
+						(x, y) => OpponentResult(x).MatchPoint - OpponentResult(y).MatchPoint,
+						(x, y) => OpponentResult(x).LifePoint - OpponentResult(y).LifePoint,
+						(x, y) => ConvDouble2Int(Result(x).WinPoint - Result(y).WinPoint),
 			};
 
-		protected override int Compare(IResult sx, IResult sy, int level) {
-			var x = sx as IMatchResult;
-			var y = sy as IMatchResult;
-			if (x != null && y != null) {
-				foreach (var comparer in comparers.Take(comparers.Count() - level)) {
-					var ret = comparer(x, y);
-					if (ret != 0) return ret;
-				}
-			}
-			return 0;
-		}
-
-		public (IMatchResult, IMatchResult) CreatePoints(RESULT player1Result) {
+		public (IResult, IResult) CreatePoints(RESULT player1Result) {
 			switch (player1Result) {
 				case Win:
 					return (new MatchResult(Win), new MatchResult(Lose));

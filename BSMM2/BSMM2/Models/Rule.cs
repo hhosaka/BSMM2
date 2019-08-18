@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
-
-		protected abstract int Compare(IResult x, IResult y, int level);
-
 		public abstract int CompareDepth { get; }
 
 		public abstract IResult Sum(IEnumerable<IResult> results);
@@ -27,11 +26,13 @@ namespace BSMM2.Models {
 				if (x == y) {
 					return 0;
 				} else {
-					ret = Dropped();
+					ret = IsDropped();
 					if (ret == 0) {
-						ret = _rule.Compare(x.Result, y.Result, _level);
-						if (ret == 0) {
-							return ToComp(x.GetResult(y));
+						if (x.Result != null && y.Result != null) {
+							ret = _rule.Compare(x, y, _level);
+							if (ret == 0) {
+								return ToComp(x.GetResult(y));
+							}
 						}
 					}
 				}
@@ -40,7 +41,7 @@ namespace BSMM2.Models {
 				int ToComp(RESULT? result)
 					=> result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
 
-				int Dropped() {
+				int IsDropped() {
 					if (x.Dropped)
 						return y.Dropped ? 0 : -1;
 					else
@@ -53,5 +54,15 @@ namespace BSMM2.Models {
 
 		public Comparer<Player> CreateComparer(int level = 0)
 			=> new TheComparer(this, level);
+
+		protected int Compare(Player sx, Player sy, int level) {
+			foreach (var comparer in Comparers.Take(Comparers.Count() - level)) {
+				var ret = comparer(sx, sy);
+				if (ret != 0) return ret;
+			}
+			return 0;
+		}
+
+		protected abstract Func<Player, Player, int>[] Comparers { get; }
 	}
 }

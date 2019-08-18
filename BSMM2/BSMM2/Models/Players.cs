@@ -67,7 +67,8 @@ namespace BSMM2.Models {
 		}
 
 		public void Reset(Rule rule) {
-			_players.ForEach(p => p.Reset(rule));
+			_players.ForEach(p => p.CalcResult(rule));
+			_players.ForEach(p => p.CalcOpponentResult(rule));
 		}
 
 		[JsonIgnore]
