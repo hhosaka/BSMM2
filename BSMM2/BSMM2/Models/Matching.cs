@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 		public Match[] Matches { get; private set; }
 
 		[JsonProperty]
-		public bool Locked { get; set; }
+		public bool Locked { get; private set; }
 
 		public void Lock()
 			=> Locked = true;

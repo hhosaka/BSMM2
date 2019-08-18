@@ -99,9 +99,10 @@ namespace BSMM2.Models {
 		}
 
 		private IEnumerable<Match> MakeRound() {
+			_players.Reset(_rule);
 			for (int level = 0; level < _rule.CompareDepth; ++level) {
 				for (int i = 0; i < TryCount; ++i) {
-					var matchingList = Create(_players.GetPlayers(_rule, level, false).Where(p => !p.Dropped));
+					var matchingList = Create(_players.GetSource(_rule, level).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;
 					}

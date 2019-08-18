@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BSMM2.Models {
 
 	[JsonObject(nameof(Player))]
-	public class Player : IComparable<Player> {
+	public class Player {
 
 		[JsonProperty]
 		public string Name { get; private set; }
@@ -39,17 +38,6 @@ namespace BSMM2.Models {
 
 		public void Drop()
 			=> Dropped = true;
-
-		public int CompareTo(Player other) {
-			if (this == other) {
-				return 0;
-			} else if (Dropped) {
-				return other.Dropped ? 0 : -1;
-			} else if (other.Dropped) {
-				return 1;
-			}
-			return 0;
-		}
 
 		public void Reset(Rule rule)
 			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));

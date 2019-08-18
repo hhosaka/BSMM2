@@ -76,46 +76,33 @@ namespace BSMM2.Models.Rules.Match {
 	public class MatchRule : Rule {
 		public override int CompareDepth => 3;
 
+		private static int ConvDouble2Int(double value) {
+			if (value == 0.0) {
+				return 0;
+			} else if (value > 0.0) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+
+		private static Func<IMatchResult, IMatchResult, int>[] comparers
+			= new Func<IMatchResult, IMatchResult, int>[] {
+						(x, y) => x.MatchPoint - y.MatchPoint,
+						(x, y) => x.LifePoint - y.LifePoint,
+						(x, y) => ConvDouble2Int(x.WinPoint - y.WinPoint),
+			};
+
 		protected override int Compare(IResult sx, IResult sy, int level) {
 			var x = sx as IMatchResult;
 			var y = sy as IMatchResult;
-			switch (level) {
-				case 0:
-					return Compare(true, true);
-
-				case 1:
-					return Compare(true, false);
-
-				case 2:
-					return Compare(false, false);
-
-				default:
-					throw new ArgumentException();
-			}
-
-			int Compare(bool countLifePoint, bool countWinPoint) {
-				int result = 0;
-				if (x != y) {
-					result = x.MatchPoint - y.MatchPoint;
-					if (result == 0 && countLifePoint) {
-						result = x.LifePoint - y.LifePoint;
-						if (result == 0 && countWinPoint) {
-							result = ConvDouble2Int(x.WinPoint - y.WinPoint);
-						}
-					}
-				}
-				return result;
-
-				int ConvDouble2Int(double value) {
-					if (value == 0.0) {
-						return 0;
-					} else if (value > 0.0) {
-						return 1;
-					} else {
-						return -1;
-					}
+			if (x != null && y != null) {
+				foreach (var comparer in comparers.Take(comparers.Count() - level)) {
+					var ret = comparer(x, y);
+					if (ret != 0) return ret;
 				}
 			}
+			return 0;
 		}
 
 		public (IMatchResult, IMatchResult) CreatePoints(RESULT player1Result) {

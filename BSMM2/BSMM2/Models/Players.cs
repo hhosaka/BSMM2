@@ -53,11 +53,21 @@ namespace BSMM2.Models {
 		public void Remove(int index)
 			=> _players.RemoveAt(index);
 
-		public IEnumerable<Player> GetPlayers(Rule rule, int level = 0, bool strictly = true) {
-			_players.ForEach(p => p.Reset(rule));
+		public IEnumerable<Player> GetPlayersByOrder(Rule rule)
+			=> GetPlayers(rule);
+
+		public IEnumerable<Player> GetSource(Rule rule, int level)
+			=> GetPlayers(rule, level, false, false);
+
+		private IEnumerable<Player> GetPlayers(Rule rule, int level = 0, bool strictly = true, bool reset = true) {
+			if (reset) Reset(rule);
 			IEnumerable<Player> result = _players;
 			if (!strictly) result = _players.OrderBy(i => Guid.NewGuid());
 			return _players.OrderByDescending(p => p, rule.CreateComparer());
+		}
+
+		public void Reset(Rule rule) {
+			_players.ForEach(p => p.Reset(rule));
 		}
 
 		[JsonIgnore]
