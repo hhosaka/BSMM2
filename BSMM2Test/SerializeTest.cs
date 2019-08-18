@@ -1,18 +1,12 @@
 using BSMM2.Models;
+using BSMM2.Models.Rules.Match;
 using BSMM2.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using Xamarin.Forms.Internals;
-using static BSMM2.Models.RESULT;
-using BSMM2.Modules.Rules;
 using System.Text;
-using BSMM2.Models.Rules.Match;
+using static BSMM2.Models.RESULT;
 
 namespace BSMM2Test {
 
@@ -58,13 +52,42 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetPlayersByOrder(rule));
 
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetPlayersByOrder(rule));
+		}
+
+		[TestMethod]
+		public void LoadSaveTest3() {
+			var rule = new MatchRule();
+			var game = new FakeGame(rule, 6, _origin);
+
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+
+			game.StepToPlaying();
+
+			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
+
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetPlayersByOrder(rule));
+
+			var application = new Application();
+			application.Game = game;
+
+			application.Save();
+			application.Game = null;
+			application.Load();
+
+			var game2 = application.Game;
+
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound.Matches);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.Players.GetPlayersByOrder(rule));
 		}
 
 		[TestMethod]

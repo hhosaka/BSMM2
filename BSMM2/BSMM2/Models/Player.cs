@@ -36,14 +36,14 @@ namespace BSMM2.Models {
 		public bool HasGapMatch
 			=> _matches.Any(match => match.IsGapMatch);
 
-		public RESULT? GetResult(Player player)
-			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
-
 		public void Commit(Match match)
 			=> _matches.Add(match);
 
 		public void Drop()
 			=> Dropped = true;
+
+		public RESULT? GetResult(Player player)
+			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		public void CalcResult(Rule rule)
 			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));

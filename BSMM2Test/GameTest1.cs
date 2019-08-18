@@ -1,8 +1,6 @@
 using BSMM2.Models;
-using BSMM2.Models.Rules;
 using BSMM2.Models.Rules.Match;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -44,19 +42,19 @@ namespace BSMM2Test {
 			var rule = new MatchRule();
 			var game = new FakeGame(rule, 4);
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Players.Add("Player006");
-			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Players.Add("Player005");
-			Util.Check(new[] { 1, 2, 3, 4, 6, 5 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4, 6, 5 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Players.Remove(1);
-			Util.Check(new[] { 1, 3, 4, 6, 5 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 4, 6, 5 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Players.Add();
-			Util.Check(new[] { 1, 3, 4, 6, 5, 6 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 4, 6, 5, 6 }, game.Players.GetPlayersByOrder(rule));
 		}
 
 		[TestMethod]
@@ -65,10 +63,10 @@ namespace BSMM2Test {
 			var rule = new MatchRule();
 			var game = new FakeGame(rule, new StringReader(buf));
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Players.Add("Player006");
-			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4, 6 }, game.Players.GetPlayersByOrder(rule));
 		}
 
 		[TestMethod]
@@ -79,33 +77,33 @@ namespace BSMM2Test {
 			game.Shuffle();
 
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.StepToPlaying();
 
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.ActiveRound.Matches.ElementAt(0).SetPoint(rule.CreatePoints(Win));
 
-			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 2, 3, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.ActiveRound.Matches.ElementAt(1).SetPoint(rule.CreatePoints(Win));
-			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.GetPlayersByOrder(rule));
 
 			game.ActiveRound.Matches.ElementAt(0).SetPoint(rule.CreatePoints(Lose));
 			game.ActiveRound.Matches.ElementAt(1).SetPoint(rule.CreatePoints(Lose));
 
-			Util.Check(new[] { 2, 4, 1, 3 }, game.Players.Result(rule));
+			Util.Check(new[] { 2, 4, 1, 3 }, game.Players.GetPlayersByOrder(rule));
 
 			game.StepToMatching();
-			game.Players.Result(rule).ElementAt(0).Drop();
+			game.Players.GetPlayersByOrder(rule).ElementAt(0).Drop();
 
-			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
+			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.GetPlayersByOrder(rule));
 
 			game.Shuffle();
 
-			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.Result(rule));
+			Util.Check(new[] { 4, 1, 3, 2 }, game.Players.GetPlayersByOrder(rule));
 			Util.Check(new[] { 4, 1, 3, -1 }, game.ActiveRound);
 		}
 
@@ -177,7 +175,7 @@ namespace BSMM2Test {
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
 			game.StepToMatching();
-			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.Result(rule));
+			Util.Check(new[] { 1, 3, 2, 4 }, game.Players.GetPlayersByOrder(rule));
 			Util.Check(new[] { 1, 3, 2, 4 }, game.ActiveRound);
 			Assert.AreEqual(1, game.Rounds.Count());
 			Util.Check(new[] { 1, 2, 3, 4 }, game.Rounds.First());
@@ -188,7 +186,7 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Lose));
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
-			Util.Check(new[] { 3, 1, 4, 2 }, game.Players.Result(rule));
+			Util.Check(new[] { 3, 1, 4, 2 }, game.Players.GetPlayersByOrder(rule));
 		}
 	}
 }

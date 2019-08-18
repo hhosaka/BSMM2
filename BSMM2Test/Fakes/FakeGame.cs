@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace BSMM2Test {
 
@@ -10,8 +9,8 @@ namespace BSMM2Test {
 
 		private class FakePlayers : Players {
 
-			public override IEnumerable<Player> Shuffle
-				=> Source;
+			protected override IEnumerable<Player> Source(IEnumerable<Player> players)
+				=> players;
 
 			public FakePlayers(int count, String prefix)
 				: base(count, prefix) {

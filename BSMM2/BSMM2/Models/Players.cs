@@ -10,10 +10,10 @@ namespace BSMM2.Models {
 		private const String DEFAULT_PREFIX = "Player";
 
 		[JsonProperty]
-		private String _prefix { get; set; }
+		private String _prefix;
 
 		[JsonProperty]
-		private List<Player> _players { get; set; }
+		private List<Player> _players;
 
 		private IEnumerable<Player> Generate(int start, string prefix, int count = 1) {
 			for (int i = 0; i < count; ++i) {
@@ -53,17 +53,20 @@ namespace BSMM2.Models {
 		public void Remove(int index)
 			=> _players.RemoveAt(index);
 
-		public IEnumerable<Player> GetPlayersByOrder(Rule rule)
-			=> GetPlayers(rule);
+		public void Remove(Player player)
+			=> _players.Remove(player);
 
-		public IEnumerable<Player> GetSource(Rule rule, int level)
-			=> GetPlayers(rule, level, false, false);
+		public IEnumerable<Player> GetPlayersByOrder(Rule rule) {
+			Reset(rule);
+			return GetPlayers(rule, _players, 0, true);
+		}
 
-		private IEnumerable<Player> GetPlayers(Rule rule, int level = 0, bool strictly = true, bool reset = true) {
-			if (reset) Reset(rule);
-			IEnumerable<Player> result = _players;
-			if (!strictly) result = _players.OrderBy(i => Guid.NewGuid());
-			return _players.OrderByDescending(p => p, rule.CreateComparer());
+		public IEnumerable<Player> GetSource(Rule rule, int level) {
+			return GetPlayers(rule, Source(_players), level, false);
+		}
+
+		private IEnumerable<Player> GetPlayers(Rule rule, IEnumerable<Player> players, int level, bool strictly) {
+			return players.OrderByDescending(p => p, rule.CreateComparer());
 		}
 
 		public void Reset(Rule rule) {
@@ -71,14 +74,10 @@ namespace BSMM2.Models {
 			_players.ForEach(p => p.CalcOpponentResult(rule));
 		}
 
-		[JsonIgnore]
-		protected virtual IEnumerable<Player> Shuffle
-			=> _players.OrderBy(i => Guid.NewGuid());
+		protected virtual IEnumerable<Player> Source(IEnumerable<Player> players)
+			=> players.OrderBy(i => Guid.NewGuid());
 
 		[JsonIgnore]
 		public int Count => _players.Count;
-
-		[JsonIgnore]
-		protected IEnumerable<Player> Source => _players;
 	}
 }

@@ -25,7 +25,8 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public static readonly Player BYE = new Player("BYE");
+		[JsonProperty]
+		public readonly Player BYE = new Player("BYE");
 
 		[JsonProperty]
 		private Record[] _records;

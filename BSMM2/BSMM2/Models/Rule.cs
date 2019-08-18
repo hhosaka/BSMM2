@@ -8,9 +8,17 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
-		public abstract int CompareDepth { get; }
+		protected abstract Func<Player, Player, int>[] Comparers { get; }
 
 		public abstract IResult Sum(IEnumerable<IResult> results);
+
+		public int CompareDepth => Comparers.Count();
+
+		[JsonIgnore]
+		public abstract string Name { get; }
+
+		[JsonIgnore]
+		public abstract string Description { get; }
 
 		private class TheComparer : Comparer<Player> {
 			private Rule _rule;
@@ -55,14 +63,12 @@ namespace BSMM2.Models {
 		public Comparer<Player> CreateComparer(int level = 0)
 			=> new TheComparer(this, level);
 
-		protected int Compare(Player sx, Player sy, int level) {
+		private int Compare(Player sx, Player sy, int level) {
 			foreach (var comparer in Comparers.Take(Comparers.Count() - level)) {
 				var ret = comparer(sx, sy);
 				if (ret != 0) return ret;
 			}
 			return 0;
 		}
-
-		protected abstract Func<Player, Player, int>[] Comparers { get; }
 	}
 }

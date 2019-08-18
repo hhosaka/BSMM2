@@ -27,11 +27,9 @@ namespace BSMM2.Models.Rules.Match {
 		public MatchResultTotal(IEnumerable<IResult> source) {
 			if (source.Any()) {
 				foreach (var data in source) {
-					var point = data as IMatchResult;
-					if (point != null) {
-						MatchPoint += point?.MatchPoint ?? 0;
-						LifePoint += point?.LifePoint ?? 0;
-					}
+					var point = (IMatchResult)data;
+					MatchPoint += point?.MatchPoint ?? 0;
+					LifePoint += point?.LifePoint ?? 0;
 				}
 				WinPoint = (double)MatchPoint / source.Count();
 			}
@@ -74,7 +72,6 @@ namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
 	public class MatchRule : Rule {
-		public override int CompareDepth => 3;
 
 		private static int ConvDouble2Int(double value) {
 			if (value == 0.0) {
@@ -123,5 +120,11 @@ namespace BSMM2.Models.Rules.Match {
 
 		public override ContentPage ContentPage
 			=> null;
+
+		public override string Name
+			=> "Single Match Rule";
+
+		public override string Description
+			=> "一本取りです。";
 	}
 }
