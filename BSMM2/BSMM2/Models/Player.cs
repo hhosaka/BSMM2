@@ -1,5 +1,4 @@
-﻿using BSMM2.Models.Rules.Match;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +15,27 @@ namespace BSMM2.Models {
 		public bool Dropped { get; private set; }
 
 		[JsonProperty]
-		public IList<Match> Matches { get; private set; }
+		private IList<Match> _matches;
 
 		[JsonIgnore]
-		public IMatchResult Result { get; private set; }
+		private IResult _result;
+
+		[JsonIgnore]
+		public IResult Result => _result;
 
 		[JsonIgnore]
 		public bool HasByeMatch
-			=> Matches.Any(match => match.IsByeMatch);
+			=> _matches.Any(match => match.IsByeMatch);
 
 		[JsonIgnore]
 		public bool HasGapMatch
-			=> Matches.Any(match => match.IsGapMatch);
+			=> _matches.Any(match => match.IsGapMatch);
 
 		public RESULT? GetResult(Player player)
-			=> Matches.FirstOrDefault(m => m.GetOpponent(this) == player)?.GetResult(this);
+			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		public void Commit(Match match)
-			=> Matches.Add(match);
+			=> _matches.Add(match);
 
 		public void Drop()
 			=> Dropped = true;
@@ -49,15 +51,14 @@ namespace BSMM2.Models {
 			return 0;
 		}
 
-		public void Calc(Rule rule) {
-			Result = new MatchResultTotal(Matches.Select(match => match.GetPoint(this)));
-		}
+		public void Reset(Rule rule)
+			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));
 
 		public Player() {// For Serializer
 		}
 
 		public Player(string name) {
-			Matches = new List<Match>();
+			_matches = new List<Match>();
 			Name = name;
 		}
 	}

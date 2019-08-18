@@ -70,7 +70,7 @@ namespace BSMM2.Models {
 
 		public void Shuffle(bool force = false) {
 			if (force || (_activeRound as Matching)?.Locked == false)
-				_activeRound = new Matching(MakeRound(_players.Shuffle, _rule));
+				_activeRound = new Matching(MakeRound(_players.GetPlayersAtRandom, _rule));
 		}
 
 		public bool CanExecuteStepToLock()

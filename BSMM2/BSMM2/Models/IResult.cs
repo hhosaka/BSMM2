@@ -1,7 +1,7 @@
 ﻿namespace BSMM2.Models {
 
 	public interface IResult {
-		RESULT Result { get; }
+		RESULT? RESULT { get; }
 		int Point { get; }
 	}
 }

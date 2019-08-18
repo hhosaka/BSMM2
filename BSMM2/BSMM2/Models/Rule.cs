@@ -1,11 +1,5 @@
-﻿using BSMM2.Models.Rules;
-using BSMM2.Models.Rules.Match;
-using BSMM2.Services;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
@@ -13,9 +7,11 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public abstract class Rule {
 
-		protected abstract int Compare(IMatchResult x, IMatchResult y, int level);
+		protected abstract int Compare(IResult x, IResult y, int level);
 
 		public abstract int CompareDepth { get; }
+
+		public abstract IResult Sum(IEnumerable<IResult> results);
 
 		private class TheComparer : Comparer<Player> {
 			private Rule _rule;

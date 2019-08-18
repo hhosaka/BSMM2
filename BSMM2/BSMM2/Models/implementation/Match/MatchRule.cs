@@ -22,7 +22,7 @@ namespace BSMM2.Models.Rules.Match {
 		public int Point => MatchPoint;
 
 		[JsonIgnore]
-		public RESULT Result => throw new NotImplementedException();
+		public RESULT? RESULT => null;
 
 		public MatchResultTotal(IEnumerable<IResult> source) {
 			if (source.Any()) {
@@ -42,23 +42,23 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonIgnore]
 		public int MatchPoint
-			=> Result == RESULT.Win ? 3 : Result == RESULT.Lose ? 0 : 1;
+			=> RESULT == Models.RESULT.Win ? 3 : RESULT == Models.RESULT.Lose ? 0 : 1;
 
 		[JsonIgnore]
 		public double WinPoint
-			=> Result == RESULT.Win ? 1.0 : Result == RESULT.Lose ? 0.0 : 0.5;
+			=> RESULT == Models.RESULT.Win ? 1.0 : RESULT == Models.RESULT.Lose ? 0.0 : 0.5;
 
 		[JsonProperty]
 		public int LifePoint { get; }
 
 		[JsonProperty]
-		public RESULT Result { get; }
+		public RESULT? RESULT { get; }
 
 		[JsonIgnore]
 		public int Point => MatchPoint;
 
 		public MatchResult(RESULT result, int lifePoint = 0) {
-			Result = result;
+			RESULT = result;
 			LifePoint = lifePoint;
 		}
 	}
@@ -76,7 +76,9 @@ namespace BSMM2.Models.Rules.Match {
 	public class MatchRule : Rule {
 		public override int CompareDepth => 3;
 
-		protected override int Compare(IMatchResult x, IMatchResult y, int level) {
+		protected override int Compare(IResult sx, IResult sy, int level) {
+			var x = sx as IMatchResult;
+			var y = sy as IMatchResult;
 			switch (level) {
 				case 0:
 					return Compare(true, true);
@@ -130,6 +132,10 @@ namespace BSMM2.Models.Rules.Match {
 				default:
 					throw new ArgumentException();
 			}
+		}
+
+		public override IResult Sum(IEnumerable<IResult> results) {
+			return new MatchResultTotal(results);
 		}
 
 		public override ContentPage ContentPage

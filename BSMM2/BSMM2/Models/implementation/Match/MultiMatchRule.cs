@@ -26,7 +26,7 @@ namespace BSMM2.Modules.Rules.MultiMatch {
 			=> _paramsList.Sum(p => p.WinPoint);
 
 		[JsonIgnore]
-		public RESULT Result => throw new NotImplementedException();
+		public RESULT? RESULT => throw new NotImplementedException();
 
 		public int Point
 			=> MatchPoint;

@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace BSMM2.Models {
 
@@ -54,13 +53,13 @@ namespace BSMM2.Models {
 		public void Remove(int index)
 			=> _players.RemoveAt(index);
 
-		public IEnumerable<Player> Result(Rule rule) {
-			_players.ForEach(p => p.Calc(rule));
+		public IEnumerable<Player> GetPlayersByOrder(Rule rule) {
+			_players.ForEach(p => p.Reset(rule));
 			return _players.OrderByDescending(p => p, rule.CreateComparer());
 		}
 
 		[JsonIgnore]
-		public virtual IEnumerable<Player> Shuffle
+		public virtual IEnumerable<Player> GetPlayersAtRandom
 			=> _players.OrderBy(i => Guid.NewGuid());
 
 		[JsonIgnore]
