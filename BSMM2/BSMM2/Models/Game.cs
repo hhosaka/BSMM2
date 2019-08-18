@@ -1,11 +1,7 @@
-﻿using BSMM2.Services;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using BSMM2.Modules.Rules;
 
 namespace BSMM2.Models {
 
@@ -70,7 +66,7 @@ namespace BSMM2.Models {
 
 		public void Shuffle(bool force = false) {
 			if (force || (_activeRound as Matching)?.Locked == false)
-				_activeRound = new Matching(MakeRound(_players.GetPlayersAtRandom, _rule));
+				_activeRound = new Matching(MakeRound());
 		}
 
 		public bool CanExecuteStepToLock()
@@ -102,10 +98,10 @@ namespace BSMM2.Models {
 			Shuffle(true);
 		}
 
-		private IEnumerable<Match> MakeRound(IEnumerable<Player> source, Rule rule) {
-			for (int level = 0; level < rule.CompareDepth; ++level) {
+		private IEnumerable<Match> MakeRound() {
+			for (int level = 0; level < _rule.CompareDepth; ++level) {
 				for (int i = 0; i < TryCount; ++i) {
-					var matchingList = Create(source.Where(p => !p.Dropped).OrderByDescending(p => p, rule.CreateComparer(level)));
+					var matchingList = Create(_players.GetPlayers(_rule, level, false).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;
 					}
