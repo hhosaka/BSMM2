@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Linq;
 
 namespace BSMM2.Models {
 
@@ -32,37 +33,47 @@ namespace BSMM2.Models {
 		public List<string> Entries { get; set; }
 
 		[JsonProperty]
-		public int EntryId { get; set; }
-
-		[JsonProperty]
 		public string Filename { get; set; } = "temp";
 
 		[JsonProperty]
 		public Game Game { get; set; }
 
-		public void Initial() {
-			switch (InitialMethod) {
-				case INITIAL_METHOD.BY_COUNT:
-					Game = new Game(Rule, new Players(PlayerCount, PlayerNamePrefix));
-					break;
-
-				case INITIAL_METHOD.BY_ENTRY:
-					Game = new Game(Rule, new Players(new StringReader(Entries[EntryId])));
-					break;
-			}
+		public void Initial(Rule rule, int count, string prefix) {
+			InitialMethod = INITIAL_METHOD.BY_COUNT;
+			Rule = rule;
+			PlayerCount = count;
+			PlayerNamePrefix = prefix;
+			Game = new Game(rule, new Players(count, prefix));
 		}
 
-		public void Load() {
-			var file = IsolatedStorageFile.GetUserStoreForApplication();
-			using (var strm = file.OpenFile(Filename + ".json", FileMode.Open))
+		public void Initial(Rule rule, string entry) {
+			InitialMethod = INITIAL_METHOD.BY_ENTRY;
+			Rule = rule;
+			if (!Entries.Any(e => e == entry))
+				Entries.Add(entry);
+
+			Game = new Game(Rule, new Players(new StringReader(entry)));
+		}
+
+		private IsolatedStorageFile _store;
+
+		private IsolatedStorageFile Store
+			=> _store ?? (_store = IsolatedStorageFile.GetUserStoreForApplication());
+
+		public IEnumerable<string> Filenames
+			=> Store.GetFileNames();
+
+		public void Load(string filename) {
+			Filename = filename;
+			using (var strm = Store.OpenFile(Filename + ".json", FileMode.Open))
 			using (var reader = new StreamReader(strm)) {
 				Game = new Serializer<Game>().Deserialize(reader);
 			}
 		}
 
-		public void Save() {
-			var file = IsolatedStorageFile.GetUserStoreForApplication();
-			using (var strm = file.CreateFile(Filename + ".json"))
+		public void Save(string filename) {
+			Filename = filename;
+			using (var strm = Store.CreateFile(filename + ".json"))
 			using (var writer = new StreamWriter(strm)) {
 				new Serializer<Game>().Serialize(writer, Game);
 			}
