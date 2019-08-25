@@ -49,7 +49,7 @@ namespace BSMM2.Models {
 			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));
 
 		public void CalcOpponentResult(Rule rule)
-			=> _opponentResult = rule.Sum(_matches.Select(match => match.GetOpponentResult(this)));
+			=> _opponentResult = rule.Sum(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer
 		}

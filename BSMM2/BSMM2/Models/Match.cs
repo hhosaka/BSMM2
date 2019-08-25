@@ -85,7 +85,7 @@ namespace BSMM2.Models {
 
 		public Match(Player player, Rule rule) {
 			_records = new[] { new Record(player), new Record(BYE) };
-			SetPoint(rule.ByePoints);
+			SetPoint(rule.CreatePoints(RESULT.Win));
 		}
 	}
 }

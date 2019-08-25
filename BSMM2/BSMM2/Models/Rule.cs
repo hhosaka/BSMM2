@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 	public abstract class Rule {
 		protected abstract Func<Player, Player, int>[] Comparers { get; }
 
-		public abstract (IResult, IResult) ByePoints { get; }
+		public abstract (IResult, IResult) CreatePoints(RESULT result);
 
 		public abstract IResult Sum(IEnumerable<IResult> results);
 

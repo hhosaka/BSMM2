@@ -9,14 +9,27 @@ namespace BSMM2.Models.Rules.Match {
 	[JsonObject]
 	public class MultiMatchRule : MatchRule {
 
-		public override (IResult, IResult) ByePoints
-			=> CreatePoints(Win);
-
 		public override string Name
 			=> "Multi Match Point";
 
 		public override string Description
 			=> "二本取り以上のゲームルールです";
+
+		public override (IResult, IResult) CreatePoints(RESULT result) {
+			switch (result) {
+				case Win:
+					return CreatePoints(new[] { Win, Win });
+
+				case Lose:
+					return CreatePoints(new[] { Lose, Lose });
+
+				case Draw:
+					return CreatePoints(new[] { Win, Lose });
+
+				default:
+					throw new ArgumentException();
+			}
+		}
 
 		public (IResult, IResult) CreatePoints(IEnumerable<RESULT> player1Results) {
 			return CreatePoints(player1Results.Select(r => (r, 0, 0)));

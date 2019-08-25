@@ -98,10 +98,7 @@ namespace BSMM2.Models.Rules.Match {
 						(x, y) => ConvDouble2Int(Result(x).WinPoint - Result(y).WinPoint),
 			};
 
-		public override (IResult, IResult) ByePoints
-			=> CreatePoints(Win);
-
-		public (IResult, IResult) CreatePoints(RESULT player1Result) {
+		public override (IResult, IResult) CreatePoints(RESULT player1Result) {
 			switch (player1Result) {
 				case Win:
 					return (new MatchResult(Win), new MatchResult(Lose));
