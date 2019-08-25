@@ -62,40 +62,50 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool CanExecuteShuffle
-			=> _activeRound is Matching;
+			=> (_activeRound as Matching)?.Locked == false;
 
 		public void Shuffle(bool force = false) {
-			if (force || (_activeRound as Matching)?.Locked == false)
+			if (force || CanExecuteShuffle)
 				_activeRound = new Matching(MakeRound());
 		}
 
 		public bool CanExecuteStepToLock()
 			=> (_activeRound as Matching).Locked == false;
 
-		public void StepToLock()
-			=> (_activeRound as Matching)?.Lock();
+		public void StepToLock() {
+			if (CanExecuteStepToLock()) {
+				(_activeRound as Matching)?.Lock();
+			}
+		}
 
 		public bool CanExecuteStepToPlaying()
 			=> _activeRound is Matching;
 
 		public void StepToPlaying() {
-			_activeRound = new Round(_activeRound.Matches);
-			_startTime = DateTime.Now;
+			if (CanExecuteStepToPlaying()) {
+				_activeRound = new Round(_activeRound.Matches);
+				_startTime = DateTime.Now;
+			}
 		}
 
 		public bool CanExecuteBackToMatching()
 			=> (_activeRound as Matching).Locked == true;
 
-		public void BackToMatching()
-			=> (_activeRound as Matching)?.Unlock();
+		public void BackToMatching() {
+			if (CanExecuteBackToMatching()) {
+				(_activeRound as Matching)?.Unlock();
+			}
+		}
 
 		public bool CanExecuteStepToMatching()
 			=> (_activeRound as Round)?.IsFinished == true;
 
 		public void StepToMatching() {
-			_startTime = null;
-			_rounds.Push((Round)_activeRound);
-			Shuffle(true);
+			if (CanExecuteStepToMatching()) {
+				_startTime = null;
+				_rounds.Push((Round)_activeRound);
+				Shuffle(true);
+			}
 		}
 
 		private IEnumerable<Match> MakeRound() {
@@ -131,7 +141,7 @@ namespace BSMM2.Models {
 						{
 							var p = stack.First();
 							if (AcceptByeMatchDuplication || !p.HasByeMatch) {
-								results.Enqueue(new Match(p));
+								results.Enqueue(new Match(p, _rule));
 								return results;//1人不戦勝
 							}
 						}

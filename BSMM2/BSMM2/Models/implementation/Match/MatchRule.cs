@@ -73,7 +73,7 @@ namespace BSMM2.Models.Rules.Match {
 	[JsonObject]
 	public class MatchRule : Rule {
 
-		private static int ConvDouble2Int(double value) {
+		public static int ConvDouble2Int(double value) {
 			if (value == 0.0) {
 				return 0;
 			} else if (value > 0.0) {
@@ -83,10 +83,10 @@ namespace BSMM2.Models.Rules.Match {
 			}
 		}
 
-		private static IMatchResult Result(Player player)
+		protected static IMatchResult Result(Player player)
 			=> (IMatchResult)player.Result;
 
-		private static IMatchResult OpponentResult(Player player)
+		protected static IMatchResult OpponentResult(Player player)
 			=> (IMatchResult)player.OpponentResult;
 
 		protected override Func<Player, Player, int>[] Comparers
@@ -97,6 +97,9 @@ namespace BSMM2.Models.Rules.Match {
 						(x, y) => OpponentResult(x).LifePoint - OpponentResult(y).LifePoint,
 						(x, y) => ConvDouble2Int(Result(x).WinPoint - Result(y).WinPoint),
 			};
+
+		public override (IResult, IResult) ByePoints
+			=> CreatePoints(Win);
 
 		public (IResult, IResult) CreatePoints(RESULT player1Result) {
 			switch (player1Result) {

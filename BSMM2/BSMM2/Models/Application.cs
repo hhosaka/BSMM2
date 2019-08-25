@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace BSMM2.Models {
 
@@ -76,6 +79,27 @@ namespace BSMM2.Models {
 			using (var strm = Store.CreateFile(filename + ".json"))
 			using (var writer = new StreamWriter(strm)) {
 				new Serializer<Game>().Serialize(writer, Game);
+			}
+		}
+
+		public async Task SendEmail(string subject, string body, List<string> recipients) {
+			try {
+				var message = new EmailMessage {
+					Subject = subject,
+					Body = body,
+					To = recipients,
+				};
+				await Email.ComposeAsync(message);
+			} catch (FeatureNotSupportedException fbsEx) {
+				// Email is not supported on this device
+			}
+		}
+
+		public void SendByMail(string to, string filename) {
+			var buf = new StringBuilder();
+			using (var writer = new StringWriter(buf)) {
+				new Serializer<Game>().Serialize(writer, Game);
+				SendEmail("BS Match Maker Result", buf.ToString(), new[] { "hhosaka183@gmail.com" }.ToList()).Start();
 			}
 		}
 	}

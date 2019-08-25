@@ -83,8 +83,9 @@ namespace BSMM2.Models {
 			IsGapMatch = (player1.Result?.Point != player2.Result?.Point);
 		}
 
-		public Match(Player player) {
+		public Match(Player player, Rule rule) {
 			_records = new[] { new Record(player), new Record(BYE) };
+			SetPoint(rule.ByePoints);
 		}
 	}
 }

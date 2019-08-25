@@ -63,6 +63,7 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest3() {
+			var filename = "debug";
 			var rule = new MatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
@@ -80,9 +81,12 @@ namespace BSMM2Test {
 			var application = new Application();
 			application.Game = game;
 
-			application.Save();
+			application.Save(filename);
+
+			Assert.IsTrue(application.Filenames.Any(str => str == application.Filename + ".json"));
+
 			application.Game = null;
-			application.Load();
+			application.Load(filename);
 
 			var game2 = application.Game;
 
