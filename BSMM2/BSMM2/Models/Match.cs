@@ -46,9 +46,9 @@ namespace BSMM2.Models {
 		public IEnumerable<string> PlayerNames
 			=> _records.Select(result => result.Player.Name);
 
-		public void SetPoint((IResult, IResult) points) {
-			_records[0].SetPoint(points.Item1);
-			_records[1].SetPoint(points.Item2);
+		public void SetPoint((IResult player1, IResult player2) points) {
+			_records[0].SetPoint(points.player1);
+			_records[1].SetPoint(points.player2);
 		}
 
 		public void Swap(Match other) {

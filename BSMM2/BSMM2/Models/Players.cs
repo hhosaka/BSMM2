@@ -56,7 +56,7 @@ namespace BSMM2.Models {
 		public void Remove(Player player)
 			=> _players.Remove(player);
 
-		public IEnumerable<Player> GetPlayersByOrder(Rule rule) {
+		public IEnumerable<Player> GetByOrder(Rule rule) {
 			Reset(rule);
 			return GetPlayers(rule, _players, 0, true);
 		}

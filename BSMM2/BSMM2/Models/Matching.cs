@@ -27,7 +27,7 @@ namespace BSMM2.Models {
 		}
 
 		public Matching(IEnumerable<Match> matches) {
-			Matches = matches.ToArray();
+			Matches = matches?.ToArray();
 		}
 	}
 }

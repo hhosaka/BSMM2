@@ -27,11 +27,14 @@ namespace BSMM2.Models.Rules.Match {
 		public MatchResultTotal(IEnumerable<IResult> source) {
 			if (source.Any()) {
 				foreach (var data in source) {
-					var point = (IMatchResult)data;
-					MatchPoint += point?.MatchPoint ?? 0;
-					LifePoint += point?.LifePoint ?? 0;
+					var point = data as IMatchResult;
+					if (point != null) {
+						MatchPoint += point.MatchPoint;
+						LifePoint += point.LifePoint;
+						WinPoint += point.WinPoint;
+					}
 				}
-				WinPoint = (double)MatchPoint / source.Count();
+				WinPoint = WinPoint / source.Count();
 			}
 		}
 	}
@@ -72,6 +75,7 @@ namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
 	public class MatchRule : Rule {
+		private const int DEFAULT_LIFE_POINT = 5;
 
 		public static int ConvDouble2Int(double value) {
 			if (value == 0.0) {
@@ -96,18 +100,22 @@ namespace BSMM2.Models.Rules.Match {
 						(x, y) => OpponentResult(x).MatchPoint - OpponentResult(y).MatchPoint,
 						(x, y) => OpponentResult(x).LifePoint - OpponentResult(y).LifePoint,
 						(x, y) => ConvDouble2Int(Result(x).WinPoint - Result(y).WinPoint),
+						(x, y) => ConvDouble2Int(OpponentResult(x).WinPoint - OpponentResult(y).WinPoint),
 			};
 
-		public override (IResult, IResult) CreatePoints(RESULT player1Result) {
-			switch (player1Result) {
+		public override (IResult, IResult) CreatePoints(RESULT result)
+			=> CreatePoints((result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT));
+
+		public (IResult, IResult) CreatePoints((RESULT result1, int lp1, int lp2) result) {
+			switch (result.result1) {
 				case Win:
-					return (new MatchResult(Win), new MatchResult(Lose));
+					return (new MatchResult(Win, result.lp1), new MatchResult(Lose, result.lp2));
 
 				case Lose:
-					return (new MatchResult(Lose), new MatchResult(Win));
+					return (new MatchResult(Lose, result.lp1), new MatchResult(Win, result.lp2));
 
 				case Draw:
-					return (new MatchResult(Draw), new MatchResult(Draw));
+					return (new MatchResult(Draw, result.lp1), new MatchResult(Draw, result.lp2));
 
 				default:
 					throw new ArgumentException();

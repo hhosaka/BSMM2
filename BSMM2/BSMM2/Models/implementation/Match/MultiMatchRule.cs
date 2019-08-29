@@ -15,6 +15,8 @@ namespace BSMM2.Models.Rules.Match {
 		public override string Description
 			=> "二本取り以上のゲームルールです";
 
+		private int _matchCount;
+
 		public override (IResult, IResult) CreatePoints(RESULT result) {
 			switch (result) {
 				case Win:
@@ -74,7 +76,7 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonIgnore]
 		public int MatchPoint
-			=> _results.Sum(p => p.MatchPoint);
+			=> RESULT == Win ? 3 : RESULT == Lose ? 0 : 1;
 
 		[JsonIgnore]
 		public int LifePoint
@@ -82,7 +84,7 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonIgnore]
 		public double WinPoint
-			=> _results.Sum(p => p.WinPoint);
+			=> _results.Sum(p => p.WinPoint) / _results.Count();
 
 		[JsonIgnore]
 		public RESULT? RESULT

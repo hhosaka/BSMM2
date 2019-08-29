@@ -108,6 +108,9 @@ namespace BSMM2.Models {
 			}
 		}
 
+		public Player[] OrderedPlayers
+			=> _players.GetByOrder(_rule).ToArray();
+
 		private IEnumerable<Match> MakeRound() {
 			_players.Reset(_rule);
 			for (int level = 0; level < _rule.CompareDepth; ++level) {
