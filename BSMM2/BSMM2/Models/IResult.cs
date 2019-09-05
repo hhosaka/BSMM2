@@ -3,5 +3,6 @@
 	public interface IResult {
 		RESULT? RESULT { get; }
 		int Point { get; }
+		bool IsFinished { get; }
 	}
 }

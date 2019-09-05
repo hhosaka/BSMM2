@@ -7,74 +7,43 @@ using static BSMM2.Models.RESULT;
 
 namespace BSMM2.Models.Rules.Match {
 
-	internal class MatchResultTotal : IMatchResult {
-
-		[JsonProperty]
-		public int MatchPoint { get; }
-
-		[JsonProperty]
-		public int LifePoint { get; }
-
-		[JsonProperty]
-		public double WinPoint { get; }
-
-		[JsonIgnore]
-		public int Point => MatchPoint;
-
-		[JsonIgnore]
-		public RESULT? RESULT => null;
-
-		public MatchResultTotal(IEnumerable<IResult> source) {
-			if (source.Any()) {
-				foreach (var data in source) {
-					var point = data as IMatchResult;
-					if (point != null) {
-						MatchPoint += point.MatchPoint;
-						LifePoint += point.LifePoint;
-						WinPoint += point.WinPoint;
-					}
-				}
-				WinPoint = WinPoint / source.Count();
-			}
-		}
-	}
-
-	internal class MatchResult : IMatchResult {
-
-		[JsonIgnore]
-		public int MatchPoint
-			=> RESULT == Models.RESULT.Win ? 3 : RESULT == Models.RESULT.Lose ? 0 : 1;
-
-		[JsonIgnore]
-		public double WinPoint
-			=> RESULT == Models.RESULT.Win ? 1.0 : RESULT == Models.RESULT.Lose ? 0.0 : 0.5;
-
-		[JsonProperty]
-		public int LifePoint { get; }
-
-		[JsonProperty]
-		public RESULT? RESULT { get; }
-
-		[JsonIgnore]
-		public int Point => MatchPoint;
-
-		public MatchResult(RESULT result, int lifePoint = 0) {
-			RESULT = result;
-			LifePoint = lifePoint;
-		}
-	}
-
-	[JsonObject]
-	public interface IMatchResult : IResult {
-		int MatchPoint { get; }
-
-		int LifePoint { get; }
-
-		double WinPoint { get; }
-	}
-
 	[JsonObject]
 	public class MatchRule : Rule {
+
+		private class MatchResultTotal : IMatchResult {
+
+			[JsonProperty]
+			public int MatchPoint { get; }
+
+			[JsonProperty]
+			public int LifePoint { get; }
+
+			[JsonProperty]
+			public double WinPoint { get; }
+
+			[JsonIgnore]
+			public int Point => MatchPoint;
+
+			[JsonIgnore]
+			public RESULT? RESULT => null;
+
+			public bool IsFinished => true;
+
+			public MatchResultTotal(IEnumerable<IResult> source) {
+				if (source.Any()) {
+					foreach (var data in source) {
+						var point = data as IMatchResult;
+						if (point != null) {
+							MatchPoint += point.MatchPoint;
+							LifePoint += point.LifePoint;
+							WinPoint += point.WinPoint;
+						}
+					}
+					WinPoint = WinPoint / source.Count();
+				}
+			}
+		}
+
 		private const int DEFAULT_LIFE_POINT = 5;
 
 		public static int ConvDouble2Int(double value) {

@@ -90,7 +90,7 @@ namespace BSMM2.Models {
 					To = recipients,
 				};
 				await Email.ComposeAsync(message);
-			} catch (FeatureNotSupportedException fbsEx) {
+			} catch (FeatureNotSupportedException) {
 				// Email is not supported on this device
 			}
 		}

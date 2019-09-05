@@ -200,11 +200,11 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void OrderTestMultiMatch1()
-			=> OrderTest1(new MultiMatchRule());
+			=> OrderTest1(new MultiMatchRule(2, 0));
 
 		[TestMethod]
 		public void OrderTestMultiMatch2()
-			=> OrderTest2(new MultiMatchRule());
+			=> OrderTest2(new MultiMatchRule(2, 0));
 
 		[TestMethod]
 		public void OrderTestSingleMatch3()
@@ -230,7 +230,7 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void Ÿ—˜ƒ|ƒCƒ“ƒgŒŸØ() {
-			var rule = new MultiMatchRule();
+			var rule = new MultiMatchRule(2, 0);
 			var game = CreateGame(rule, 8, 2);
 			var matches = game.ActiveRound.Matches;
 

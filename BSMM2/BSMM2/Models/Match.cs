@@ -15,10 +15,10 @@ namespace BSMM2.Models {
 			public Player Player { get; }
 
 			[JsonProperty]
-			public IResult Point { get; private set; }
+			public IResult Result { get; private set; }
 
 			public void SetPoint(IResult point)
-				=> Point = point;
+				=> Result = point;
 
 			public Record(Player player) {
 				Player = player;
@@ -36,7 +36,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsFinished
-			=> !_records.Any(result => result.Point == null);
+			=> !_records.Any(record => record.Result?.IsFinished != true);
 
 		[JsonIgnore]
 		public bool IsByeMatch
@@ -67,13 +67,13 @@ namespace BSMM2.Models {
 			=> _records.First(r => r.Player != player);
 
 		public IResult GetResult(Player player)
-			=> GetPlayerRecord(player)?.Point;
+			=> GetPlayerRecord(player)?.Result;
 
 		public Player GetOpponentPlayer(Player player)
 			=> GetOpponentRecord(player)?.Player;
 
 		public IResult GetOpponentResult(Player player)
-			=> GetOpponentRecord(player)?.Point;
+			=> GetOpponentRecord(player)?.Result;
 
 		public Match() {// For Serializer
 		}
