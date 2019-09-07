@@ -7,25 +7,13 @@ using static BSMM2.Models.RESULT;
 namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
-	public class MultiMatchRule : MatchRule {
-
-		[JsonIgnore]
-		public override string Name
-			=> "Multi Match Point";
-
-		[JsonIgnore]
-		public override string Description
-			=> "二本取り以上のゲームルールです";
-
-		[JsonProperty]
-		private int _count;
-
-		[JsonProperty]
-		private int _minCount;
+	public abstract class MultiMatchRule : MatchRule {
+		protected abstract int MatchCount { get; }
+		protected abstract int MinimumMatchCount { get; }
 
 		public override (IResult, IResult) CreatePoints(RESULT result) {
 			var results = new List<RESULT>();
-			for (int i = 0; i < _count; ++i) {
+			for (int i = 0; i < MatchCount; ++i) {
 				results.Add(result);
 			}
 			return CreatePoints(results.ToArray());
@@ -36,8 +24,8 @@ namespace BSMM2.Models.Rules.Match {
 		}
 
 		public (IResult, IResult) CreatePoints(IEnumerable<(RESULT, int lp1, int lp2)> player1Results) {
-			var p1result = new MultiMatchResult(_minCount);
-			var p2result = new MultiMatchResult(_minCount);
+			var p1result = new MultiMatchResult(MinimumMatchCount);
+			var p2result = new MultiMatchResult(MinimumMatchCount);
 			foreach (var result in player1Results) {
 				switch (result.Item1) {
 					case Win:
@@ -60,11 +48,6 @@ namespace BSMM2.Models.Rules.Match {
 				}
 			}
 			return (p1result, p2result);
-		}
-
-		public MultiMatchRule(int count, int minCount) {
-			_count = count;
-			_minCount = minCount;
 		}
 	}
 }

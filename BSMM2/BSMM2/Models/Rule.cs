@@ -1,14 +1,21 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
+	internal interface IComparer {
+		string Name { get; }
+		string Description { get; }
+		bool Active { get; set; }
+
+		int Compare(Player p1, Player p2);
+	}
+
 	[JsonObject]
 	public abstract class Rule {
-		protected abstract Func<Player, Player, int>[] Comparers { get; }
+		internal abstract IComparer[] Comparers { get; }
 
 		public abstract (IResult, IResult) CreatePoints(RESULT result);
 
@@ -24,11 +31,11 @@ namespace BSMM2.Models {
 
 		private class TheComparer : Comparer<Player> {
 			private Rule _rule;
-			private int _level;
+			private bool _fully;
 
-			public TheComparer(Rule rule, int level) {
+			public TheComparer(Rule rule, bool fully = false) {
 				_rule = rule;
-				_level = level;
+				_fully = fully;
 			}
 
 			public override int Compare(Player x, Player y) {
@@ -39,7 +46,7 @@ namespace BSMM2.Models {
 					ret = IsDropped();
 					if (ret == 0) {
 						if (x.Result != null && y.Result != null) {
-							ret = _rule.Compare(x, y, _level);
+							ret = _rule.Compare(x, y, _fully);
 							if (ret == 0) {
 								return ToComp(x.GetResult(y));
 							}
@@ -62,13 +69,18 @@ namespace BSMM2.Models {
 
 		public virtual ContentPage ContentPage { get; }
 
-		public Comparer<Player> CreateComparer(int level = 0)
-			=> new TheComparer(this, level);
+		public Comparer<Player> CreateOrderComparer()
+			=> new TheComparer(this, true);
 
-		private int Compare(Player sx, Player sy, int level) {
-			foreach (var comparer in Comparers.Take(Comparers.Count() - level)) {
-				var ret = comparer(sx, sy);
-				if (ret != 0) return ret;
+		public Comparer<Player> CreateSourceComparer()
+			=> new TheComparer(this, false);
+
+		private int Compare(Player sx, Player sy, bool fully = false) {
+			foreach (var comparer in Comparers) {
+				if (fully || comparer.Active) {
+					var ret = comparer.Compare(sx, sy);
+					if (ret != 0) return ret;
+				}
 			}
 			return 0;
 		}

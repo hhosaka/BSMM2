@@ -19,23 +19,23 @@ namespace BSMM2Test {
 			var players = new[] { new Player("player1"), new Player("player2"), new Player("player3"), new Player("player4") };
 			var matches = new[] { new Match(players[0], players[1]), new Match(players[2], players[3]) };
 
-			Assert.IsTrue(players.SequenceEqual(players.OrderByDescending(player => player, rule.CreateComparer())));
+			Assert.IsTrue(players.SequenceEqual(players.OrderByDescending(player => player, rule.CreateOrderComparer())));
 
 			matches.ForEach(match => match.Commit());
 
-			CollectionAssert.Equals(players, players.OrderByDescending(p => p, rule.CreateComparer()));
+			CollectionAssert.Equals(players, players.OrderByDescending(p => p, rule.CreateOrderComparer()));
 
 			matches[0].SetPoint(rule.CreatePoints(Win));
 			matches[1].SetPoint(rule.CreatePoints(Win));
 
 			CollectionAssert.Equals(new[] { players[0], players[2], players[1], players[3] },
-				players.OrderByDescending(p => p, rule.CreateComparer()));
+				players.OrderByDescending(p => p, rule.CreateOrderComparer()));
 
 			matches[0].SetPoint(rule.CreatePoints(Lose));
 			matches[1].SetPoint(rule.CreatePoints(Lose));
 
 			CollectionAssert.Equals(new[] { players[1], players[3], players[0], players[2] },
-				players.OrderByDescending(p => p, rule.CreateComparer()));
+				players.OrderByDescending(p => p, rule.CreateOrderComparer()));
 		}
 
 		[TestMethod]
@@ -191,20 +191,16 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
-		public void OrderTestSingleMatch1()
-			=> OrderTest1(new MatchRule());
+		public void OrderTestSingleMatch()
+			=> OrderTest(new MatchRule());
 
 		[TestMethod]
-		public void OrderTestSingleMatch2()
-			=> OrderTest2(new MatchRule());
+		public void OrderTestThreeGameMatch()
+			=> OrderTest(new ThreeGameMatchRule());
 
 		[TestMethod]
-		public void OrderTestMultiMatch1()
-			=> OrderTest1(new MultiMatchRule(2, 0));
-
-		[TestMethod]
-		public void OrderTestMultiMatch2()
-			=> OrderTest2(new MultiMatchRule(2, 0));
+		public void OrderTestThreeOnThreeMatch()
+			=> OrderTest(new ThreeGameMatchRule());
 
 		[TestMethod]
 		public void OrderTestSingleMatch3()
@@ -230,7 +226,7 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void Ÿ—˜ƒ|ƒCƒ“ƒgŒŸØ() {
-			var rule = new MultiMatchRule(2, 0);
+			var rule = new ThreeGameMatchRule();
 			var game = CreateGame(rule, 8, 2);
 			var matches = game.ActiveRound.Matches;
 
@@ -240,6 +236,11 @@ namespace BSMM2Test {
 			matches[0].SetPoint(rule.CreatePoints(new[] { Win, Lose, Win }));
 
 			Util.Check(new[] { 5, 1, 3, 6, 7, 2, 4, 8 }, game.OrderedPlayers);
+		}
+
+		private void OrderTest(Rule rule) {
+			OrderTest1(rule);
+			OrderTest2(rule);
 		}
 
 		//
