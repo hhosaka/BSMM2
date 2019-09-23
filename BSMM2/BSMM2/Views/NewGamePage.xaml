@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="BSMM2.Views.NewGamePage"
+			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 Title="{Binding Title}">
+	<ContentPage.Resources>
+		<local:PlayerControlConverter x:Key="PlayerControlConverter" />
+	</ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Create" Clicked="Create_Clicked" />
+	</ContentPage.ToolbarItems>
+	<ContentPage.Content>
+		<StackLayout>
+			<Label Text="Name:" />
+			<Editor Text="{Binding GameName}" />
+			<Label Text="Rule:" />
+			<Picker x:Name="Rule"
+				TitleColor="Red"
+				ItemsSource ="{Binding Rules}"
+				SelectedItem="{Binding Rule}"
+				ItemDisplayBinding="{Binding Name}" />
+
+			<Label Text="Player Mode:" />
+			<Picker x:Name="PlayerMode"
+				SelectedItem="{Binding PlayerMode}">
+				<Picker.ItemsSource>
+					<x:Array Type="{x:Type x:String}">
+						<x:String>Number</x:String>
+						<x:String>EntrySheet</x:String>
+					</x:Array>
+				</Picker.ItemsSource>
+			</Picker>
+			<Label Text="Prefix:"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Editor Text="{Binding Prefix}" Margin="0" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Label Text="Number of Players:"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Editor Text="{Binding PlayerCount}" Keyboard="Numeric" Margin="0" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Label Text="Entry Sheet:" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
+			<Editor Text="{Binding EntrySheet}" HeightRequest="256"  BackgroundColor="Aqua" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
+			<StackLayout Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding AsCurrentGame}" />
+				<Label Text="As Current Game" VerticalOptions="Center" />
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -78,7 +78,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.OrderedPlayers);
 
-			var application = new Application();
+			var application = new ApplicationXXX();
 			application.Game = game;
 
 			application.Save(filename);

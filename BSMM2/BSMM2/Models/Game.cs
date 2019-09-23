@@ -9,6 +9,9 @@ namespace BSMM2.Models {
 	public class Game {
 
 		[JsonProperty]
+		public string Title { get; set; }
+
+		[JsonProperty]
 		public Rule _rule;
 
 		[JsonProperty]
@@ -52,7 +55,8 @@ namespace BSMM2.Models {
 		public Game() {// For Serializer
 		}
 
-		public Game(Rule rule, Players players) {
+		public Game(Rule rule, Players players, string title = "Some Game") {
+			Title = title;
 			_players = players;
 			_rule = rule;
 			_rounds = new Stack<Round>();

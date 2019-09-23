@@ -11,7 +11,7 @@ using Xamarin.Essentials;
 
 namespace BSMM2.Models {
 
-	public class Application {
+	public class ApplicationXXX {
 
 		private enum INITIAL_METHOD { BY_COUNT, BY_ENTRY };
 
