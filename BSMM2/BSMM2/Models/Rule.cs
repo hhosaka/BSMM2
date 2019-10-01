@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xamarin.Forms;
@@ -30,12 +31,11 @@ namespace BSMM2.Models {
 		public abstract string Description { get; }
 
 		private class TheComparer : Comparer<Player> {
-			private Rule _rule;
+			private Func<Player, Player, int> _comparer;
 			private bool _fully;
 
-			public TheComparer(Rule rule, bool fully = false) {
-				_rule = rule;
-				_fully = fully;
+			public TheComparer(Func<Player, Player, int> comparer) {
+				_comparer = comparer;
 			}
 
 			public override int Compare(Player x, Player y) {
@@ -46,7 +46,7 @@ namespace BSMM2.Models {
 					ret = IsDropped();
 					if (ret == 0) {
 						if (x.Result != null && y.Result != null) {
-							ret = _rule.Compare(x, y, _fully);
+							ret = _comparer(x, y);
 							if (ret == 0) {
 								return ToComp(x.GetResult(y));
 							}
@@ -70,12 +70,12 @@ namespace BSMM2.Models {
 		public virtual ContentPage ContentPage { get; }
 
 		public Comparer<Player> CreateOrderComparer()
-			=> new TheComparer(this, true);
+			=> new TheComparer((p1, p2) => Compare(p1, p2, true));
 
 		public Comparer<Player> CreateSourceComparer()
-			=> new TheComparer(this, false);
+			=> new TheComparer((p1, p2) => Compare(p1, p2, false));
 
-		private int Compare(Player sx, Player sy, bool fully = false) {
+		private int Compare(Player sx, Player sy, bool fully) {
 			foreach (var comparer in Comparers) {
 				if (fully || comparer.Active) {
 					var ret = comparer.Compare(sx, sy);

@@ -34,22 +34,24 @@
 				ItemsSource="{Binding Players}"
 				VerticalOptions="FillAndExpand"
 				 HasUnevenRows="true"
-				 RefreshCommand="{Binding LoadPlayersCommand}"
-				 IsPullToRefreshEnabled="true"
 				 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
 				 CachingStrategy="RecycleElement"
-				 ItemSelected="OnPlayerSelected">
+				 ItemTapped="OnPlayerTapped">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Padding="10">
-								<Label Text="{Binding Text}"
+								<Label Text="{Binding Order}"
 					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListItemTextStyle}"
+					   Style="{DynamicResource ListPlayerOrderStyle}"
 					   FontSize="16" />
-								<Label Text="{Binding Description}"
+								<Label Text="{Binding Name}"
 					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListItemDetailTextStyle}"
+					   Style="{DynamicResource ListPlayerNameStyle}"
+					   FontSize="16" />
+								<Label Text="{Binding Score}"
+					   LineBreakMode="NoWrap"
+					   Style="{DynamicResource ListPlayeScoreStyle}"
 					   FontSize="13" />
 							</StackLayout>
 						</ViewCell>

@@ -24,6 +24,7 @@ namespace BSMM2.Models {
 				new ThreeOnThreeMatchRule(),
 			};
 			Rule = Rules.First();
+			Games = new HashSet<Game>();
 			_instance = this;
 		}
 
@@ -32,16 +33,7 @@ namespace BSMM2.Models {
 				Games.Remove(Game);
 			}
 			Games.Add(game);
-			return game;
-		}
-
-		public Game NewGame() {
-			//Game = new Game(Rule, CreatePlayers(), GameTitle);
-			//if (Games.Any()) {
-			//	Games.Remove(Game);
-			//}
-			//Games.Add(Game);
-			return Game;
+			return Game = game;
 		}
 	}
 }

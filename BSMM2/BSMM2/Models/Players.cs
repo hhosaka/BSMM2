@@ -58,15 +58,11 @@ namespace BSMM2.Models {
 
 		public IEnumerable<Player> GetByOrder(Rule rule) {
 			Reset(rule);
-			return GetPlayers(rule, _players, 0, true);
+			return _players.OrderByDescending(p => p, rule.CreateOrderComparer());
 		}
 
 		public IEnumerable<Player> GetSource(Rule rule, int level) {
-			return GetPlayers(rule, Source(_players), level, false);
-		}
-
-		private IEnumerable<Player> GetPlayers(Rule rule, IEnumerable<Player> players, int level, bool strictly) {
-			return players.OrderByDescending(p => p, rule.CreateSourceComparer());
+			return Source(_players).OrderByDescending(p => p, rule.CreateSourceComparer());
 		}
 
 		public void Reset(Rule rule) {

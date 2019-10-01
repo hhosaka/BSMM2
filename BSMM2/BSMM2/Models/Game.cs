@@ -112,8 +112,25 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public Player[] OrderedPlayers
-			=> _players.GetByOrder(_rule).ToArray();
+		private IEnumerable<Player> GetOrderedPlayers() {
+			var comparer = _rule.CreateOrderComparer();
+			var players = _players.GetByOrder(_rule);
+			Player prev = null;
+			int order = 0;
+			int count = 0;
+			foreach (var p in players) {
+				if (prev == null || comparer.Compare(prev, p) != 0) {
+					order = count;
+					prev = p;
+				}
+				p.Order = order + 1;
+				++count;
+			}
+			return players;
+		}
+
+		public IEnumerable<Player> PlayersByOrder
+				=> GetOrderedPlayers();
 
 		private IEnumerable<Match> MakeRound() {
 			_players.Reset(_rule);

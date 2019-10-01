@@ -15,15 +15,15 @@ namespace BSMM2.Views {
 			BindingContext = viewModel = new PlayersViewModel();
 		}
 
-		private async void OnPlayerSelected(object sender, SelectedItemChangedEventArgs args) {
+		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {
 			//	var player = args.SelectedItem as Player;
 			//	if (player == null)
 			//		return;
 
 			//	await Navigation.PushAsync(new PlayerDetailPage(new PlayerDetailViewModel(player)));
 
-			//	// Manually deselect item.
-			//	PlayersListView.SelectedItem = null;
+			// Manually deselect item.
+			PlayersListView.SelectedItem = null;
 		}
 
 		private async void NewGame_Clicked(object sender, EventArgs e) {

@@ -13,6 +13,12 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool Dropped { get; private set; }
 
+		[JsonIgnore]
+		public int Order { get; set; }
+
+		[JsonIgnore]
+		public string Score { get; private set; }
+
 		[JsonProperty]
 		private IList<Match> _matches;
 
@@ -57,6 +63,7 @@ namespace BSMM2.Models {
 		public Player(string name) {
 			_matches = new List<Match>();
 			Name = name;
+			Score = "*** Score ***";
 		}
 	}
 }
