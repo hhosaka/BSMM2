@@ -329,10 +329,6 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
 			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
 
-			var players = game.PlayersByOrder;
-			var player5 = players.First(p => p.Name == "Player005");
-			var player7 = players.First(p => p.Name == "Player007");
-			var result = rule.CreateOrderComparer().Compare(player5, player7);
 			Util.CheckWithOrder(new[] { 1, 3, 5, 7, 2, 4, 6 }, new[] { 1, 1, 1, 4, 5, 5, 5 }, game.PlayersByOrder);
 
 			game.StepToMatching();
