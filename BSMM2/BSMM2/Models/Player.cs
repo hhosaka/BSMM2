@@ -7,6 +7,34 @@ namespace BSMM2.Models {
 	[JsonObject(nameof(Player))]
 	public class Player : IPlayer {
 
+		private class Total : IResult {
+
+			[JsonProperty]
+			public int Point { get; }
+
+			[JsonProperty]
+			public int LifePoint { get; }
+
+			[JsonProperty]
+			public double WinPoint { get; }
+
+			[JsonIgnore]
+			public RESULT? RESULT => null;
+
+			public bool IsFinished => true;
+
+			public Total(IEnumerable<IResult> source) {
+				foreach (var point in source) {
+					if (point != null) {
+						Point += point.Point;
+						LifePoint += point.LifePoint;
+						WinPoint += point.WinPoint;
+					}
+				}
+				WinPoint = source.Any() ? WinPoint / source.Count() : 0.0;
+			}
+		}
+
 		[JsonProperty]
 		public string Name { get; private set; }
 
@@ -52,10 +80,10 @@ namespace BSMM2.Models {
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		public void CalcResult(Rule rule)
-			=> _result = rule.Sum(_matches.Select(match => match.GetResult(this)));
+			=> _result = new Total(_matches.Select(match => match.GetResult(this)));
 
 		public void CalcOpponentResult(Rule rule)
-			=> _opponentResult = rule.Sum(_matches.Select(match => match.GetOpponentPlayer(this).Result));
+			=> _opponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer
 		}

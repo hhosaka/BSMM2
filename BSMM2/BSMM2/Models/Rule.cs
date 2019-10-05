@@ -18,6 +18,100 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public abstract class Rule {
 
+		private static int ConvDouble2Int(double value) {
+			if (value == 0.0) {
+				return 0;
+			} else if (value > 0.0) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+
+		private class PointComparer : IComparer {
+
+			public string Name
+				=> "Match Point";
+
+			public string Description
+				=> "合計得点";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> p1.Result.Point - p2.Result.Point;
+		}
+
+		private class LifePointComparer : IComparer {
+
+			public string Name
+				=> "Life Point";
+
+			public string Description
+				=> "合計ライフポイント";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> p1.Result.LifePoint - p2.Result.LifePoint;
+		}
+
+		private class OpponentMatchPointComparer : IComparer {
+
+			public string Name
+				=> "Opponent Match Point";
+
+			public string Description
+				=> "対戦相手の合計得点";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> p1.OpponentResult.Point - p2.OpponentResult.Point;
+		}
+
+		private class OpponentLifePointComparer : IComparer {
+
+			public string Name
+				=> "Opponent Life Point";
+
+			public string Description
+				=> "対戦相手の合計ライフポイント";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> p1.OpponentResult.LifePoint - p2.OpponentResult.LifePoint;
+		}
+
+		private class WinPointComparer : IComparer {
+
+			public string Name
+				=> "Win Point";
+
+			public string Description
+				=> "合計勝利ポイント";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> ConvDouble2Int(p1.Result.WinPoint - p2.Result.WinPoint);
+		}
+
+		private class OpponentWinPointComparer : IComparer {
+
+			public string Name
+				=> "Opponent Win Point";
+
+			public string Description
+				=> "対戦相手の合計勝利ポイント";
+
+			public bool Active { get; set; } = true;
+
+			public int Compare(Player p1, Player p2)
+				=> ConvDouble2Int(p1.OpponentResult.WinPoint - p2.OpponentResult.WinPoint);
+		}
+
 		private class ByePlayer : IPlayer {
 			public string Name => "BYE";
 
@@ -40,11 +134,9 @@ namespace BSMM2.Models {
 		}
 
 		public static IPlayer BYE = new ByePlayer();
-		internal abstract IComparer[] Comparers { get; }
+		internal IComparer[] Comparers { get; }
 
 		public abstract (IResult, IResult) CreatePoints(RESULT result);
-
-		public abstract IResult Sum(IEnumerable<IResult> results);
 
 		public int CompareDepth => Comparers.Count();
 
@@ -106,6 +198,17 @@ namespace BSMM2.Models {
 				}
 			}
 			return 0;
+		}
+
+		public Rule() {
+			Comparers = new IComparer[] {
+				new PointComparer(),
+				new LifePointComparer(),
+				new OpponentMatchPointComparer(),
+				new OpponentLifePointComparer(),
+				new WinPointComparer(),
+				new OpponentWinPointComparer(),
+			};
 		}
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Xamarin.Forms;
 using static BSMM2.Models.RESULT;
 
@@ -9,139 +7,7 @@ namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
 	public class MatchRule : Rule {
-
-		public class MatchPoint : IComparer {
-
-			public string Name
-				=> "Match Point";
-
-			public string Description
-				=> "合計得点";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> Result(p1).Point - Result(p2).Point;
-		}
-
-		public class LifePoint : IComparer {
-
-			public string Name
-				=> "Life Point";
-
-			public string Description
-				=> "合計ライフポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> Result(p1).LifePoint - Result(p2).LifePoint;
-		}
-
-		public class OpponentMatchPoint : IComparer {
-
-			public string Name
-				=> "Opponent Match Point";
-
-			public string Description
-				=> "対戦相手の合計得点";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> OpponentResult(p1).Point - OpponentResult(p2).Point;
-		}
-
-		public class OpponentLifePoint : IComparer {
-
-			public string Name
-				=> "Opponent Life Point";
-
-			public string Description
-				=> "対戦相手の合計ライフポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> OpponentResult(p1).LifePoint - OpponentResult(p2).LifePoint;
-		}
-
-		public class WinPoint : IComparer {
-
-			public string Name
-				=> "Win Point";
-
-			public string Description
-				=> "合計勝利ポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(Result(p1).WinPoint - Result(p2).WinPoint);
-		}
-
-		public class OpponentWinPoint : IComparer {
-
-			public string Name
-				=> "Opponent Win Point";
-
-			public string Description
-				=> "対戦相手の合計勝利ポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(OpponentResult(p1).WinPoint - OpponentResult(p2).WinPoint);
-		}
-
-		private class Total : IResult {
-
-			[JsonProperty]
-			public int Point { get; }
-
-			[JsonProperty]
-			public int LifePoint { get; }
-
-			[JsonProperty]
-			public double WinPoint { get; }
-
-			[JsonIgnore]
-			public RESULT? RESULT => null;
-
-			public bool IsFinished => true;
-
-			public Total(IEnumerable<IResult> source) {
-				foreach (var data in source) {
-					var point = data as IResult;
-					if (point != null) {
-						Point += point.Point;
-						LifePoint += point.LifePoint;
-						WinPoint += point.WinPoint;
-					}
-				}
-				WinPoint = source.Any() ? WinPoint / source.Count() : 0.0;
-			}
-		}
-
 		private const int DEFAULT_LIFE_POINT = 5;
-
-		public static int ConvDouble2Int(double value) {
-			if (value == 0.0) {
-				return 0;
-			} else if (value > 0.0) {
-				return 1;
-			} else {
-				return -1;
-			}
-		}
-
-		private static IResult Result(Player player)
-			=> (IResult)player.Result;
-
-		private static IResult OpponentResult(Player player)
-			=> (IResult)player.OpponentResult;
-
-		internal override IComparer[] Comparers { get; }
 
 		public override (IResult, IResult) CreatePoints(RESULT result)
 			=> CreatePoints((result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT));
@@ -162,10 +28,6 @@ namespace BSMM2.Models.Rules.Match {
 			}
 		}
 
-		public override IResult Sum(IEnumerable<IResult> results) {
-			return new Total(results.Cast<IResult>());
-		}
-
 		public override ContentPage ContentPage
 			=> null;
 
@@ -174,16 +36,5 @@ namespace BSMM2.Models.Rules.Match {
 
 		public override string Description
 			=> "一本取りです。";
-
-		public MatchRule() {
-			Comparers = new IComparer[] {
-				new MatchPoint(),
-				new LifePoint(),
-				new OpponentMatchPoint(),
-				new OpponentLifePoint(),
-				new WinPoint(),
-				new OpponentWinPoint(),
-			};
-		}
 	}
 }

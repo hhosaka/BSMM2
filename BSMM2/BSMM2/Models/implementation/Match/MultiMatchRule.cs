@@ -7,7 +7,7 @@ using static BSMM2.Models.RESULT;
 namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
-	public abstract class MultiMatchRule : MatchRule {
+	public abstract class MultiMatchRule : Rule {
 		protected abstract int MatchCount { get; }
 		protected abstract int MinimumMatchCount { get; }
 
