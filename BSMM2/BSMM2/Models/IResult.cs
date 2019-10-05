@@ -2,7 +2,13 @@
 
 	public interface IResult {
 		RESULT? RESULT { get; }
+
 		int Point { get; }
+
+		int LifePoint { get; }
+
+		double WinPoint { get; }
+
 		bool IsFinished { get; }
 	}
 }

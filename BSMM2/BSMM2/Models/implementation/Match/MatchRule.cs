@@ -21,7 +21,7 @@ namespace BSMM2.Models.Rules.Match {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> Result(p1).MatchPoint - Result(p2).MatchPoint;
+				=> Result(p1).Point - Result(p2).Point;
 		}
 
 		public class LifePoint : IComparer {
@@ -49,7 +49,7 @@ namespace BSMM2.Models.Rules.Match {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> OpponentResult(p1).MatchPoint - OpponentResult(p2).MatchPoint;
+				=> OpponentResult(p1).Point - OpponentResult(p2).Point;
 		}
 
 		public class OpponentLifePoint : IComparer {
@@ -94,10 +94,10 @@ namespace BSMM2.Models.Rules.Match {
 				=> ConvDouble2Int(OpponentResult(p1).WinPoint - OpponentResult(p2).WinPoint);
 		}
 
-		private class Total : IMatchResult {
+		private class Total : IResult {
 
 			[JsonProperty]
-			public int MatchPoint { get; }
+			public int Point { get; }
 
 			[JsonProperty]
 			public int LifePoint { get; }
@@ -106,18 +106,15 @@ namespace BSMM2.Models.Rules.Match {
 			public double WinPoint { get; }
 
 			[JsonIgnore]
-			public int Point => MatchPoint;
-
-			[JsonIgnore]
 			public RESULT? RESULT => null;
 
 			public bool IsFinished => true;
 
-			public Total(IEnumerable<IMatchResult> source) {
+			public Total(IEnumerable<IResult> source) {
 				foreach (var data in source) {
-					var point = data as IMatchResult;
+					var point = data as IResult;
 					if (point != null) {
-						MatchPoint += point.MatchPoint;
+						Point += point.Point;
 						LifePoint += point.LifePoint;
 						WinPoint += point.WinPoint;
 					}
@@ -138,11 +135,11 @@ namespace BSMM2.Models.Rules.Match {
 			}
 		}
 
-		private static IMatchResult Result(Player player)
-			=> (IMatchResult)player.Result;
+		private static IResult Result(Player player)
+			=> (IResult)player.Result;
 
-		private static IMatchResult OpponentResult(Player player)
-			=> (IMatchResult)player.OpponentResult;
+		private static IResult OpponentResult(Player player)
+			=> (IResult)player.OpponentResult;
 
 		internal override IComparer[] Comparers { get; }
 
@@ -166,7 +163,7 @@ namespace BSMM2.Models.Rules.Match {
 		}
 
 		public override IResult Sum(IEnumerable<IResult> results) {
-			return new Total(results.Cast<IMatchResult>());
+			return new Total(results.Cast<IResult>());
 		}
 
 		public override ContentPage ContentPage

@@ -5,7 +5,7 @@ using System.Linq;
 namespace BSMM2.Models {
 
 	[JsonObject(nameof(Player))]
-	public class Player {
+	public class Player : IPlayer {
 
 		[JsonProperty]
 		public string Name { get; private set; }

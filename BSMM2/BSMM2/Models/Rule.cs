@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Models.Rules.Match;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,29 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
-		public static Player BYE = new Player("BYE");
+
+		private class ByePlayer : IPlayer {
+			public string Name => "BYE";
+
+			public bool Dropped => true;
+
+			public IResult Result { get; }
+
+			public IResult OpponentResult => Result;
+
+			public bool HasByeMatch => false;
+
+			public bool HasGapMatch => false;
+
+			public void Commit(Match match) {
+			}
+
+			public ByePlayer() {
+				Result = new MatchResult(RESULT.Lose, 0);
+			}
+		}
+
+		public static IPlayer BYE = new ByePlayer();
 		internal abstract IComparer[] Comparers { get; }
 
 		public abstract (IResult, IResult) CreatePoints(RESULT result);

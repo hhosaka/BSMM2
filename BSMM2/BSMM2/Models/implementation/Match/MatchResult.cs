@@ -2,10 +2,10 @@
 
 namespace BSMM2.Models.Rules.Match {
 
-	internal class MatchResult : IMatchResult {
+	internal class MatchResult : IResult {
 
 		[JsonIgnore]
-		public int MatchPoint
+		public int Point
 			=> RESULT == Models.RESULT.Win ? 3 : RESULT == Models.RESULT.Lose ? 0 : 1;
 
 		[JsonIgnore]
@@ -17,9 +17,6 @@ namespace BSMM2.Models.Rules.Match {
 
 		[JsonProperty]
 		public RESULT? RESULT { get; }
-
-		[JsonIgnore]
-		public int Point => MatchPoint;
 
 		public bool IsFinished => true;
 

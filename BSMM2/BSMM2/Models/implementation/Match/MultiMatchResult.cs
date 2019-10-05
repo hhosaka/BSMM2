@@ -6,10 +6,10 @@ using static BSMM2.Models.RESULT;
 namespace BSMM2.Models.Rules.Match {
 
 	[JsonObject]
-	public class MultiMatchResult : IMatchResult {
+	public class MultiMatchResult : IResult {
 
 		[JsonProperty]
-		private List<IMatchResult> _results;
+		private List<IResult> _results;
 
 		[JsonProperty]
 		private int _minCount;
@@ -38,7 +38,7 @@ namespace BSMM2.Models.Rules.Match {
 
 		public bool IsFinished => _results.Count() >= _minCount;
 
-		public void Add(IMatchResult result) {
+		public void Add(IResult result) {
 			_RESULT = null;
 			_results.Add(result);
 		}
@@ -64,7 +64,7 @@ namespace BSMM2.Models.Rules.Match {
 
 		public MultiMatchResult(int minCount) {
 			_minCount = minCount;
-			_results = new List<IMatchResult>();
+			_results = new List<IResult>();
 		}
 	}
 }
