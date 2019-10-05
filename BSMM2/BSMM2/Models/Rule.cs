@@ -16,6 +16,7 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
+		public static Player BYE = new Player("BYE");
 		internal abstract IComparer[] Comparers { get; }
 
 		public abstract (IResult, IResult) CreatePoints(RESULT result);
@@ -32,7 +33,6 @@ namespace BSMM2.Models {
 
 		private class TheComparer : Comparer<Player> {
 			private Func<Player, Player, int> _comparer;
-			private bool _fully;
 
 			public TheComparer(Func<Player, Player, int> comparer) {
 				_comparer = comparer;
@@ -43,7 +43,7 @@ namespace BSMM2.Models {
 				if (x == y) {
 					return 0;
 				} else {
-					ret = IsDropped();
+					ret = CheckDropped();
 					if (ret == 0) {
 						if (x.Result != null && y.Result != null) {
 							ret = _comparer(x, y);
@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 				int ToComp(RESULT? result)
 					=> result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
 
-				int IsDropped() {
+				int CheckDropped() {
 					if (x.Dropped)
 						return y.Dropped ? 0 : -1;
 					else

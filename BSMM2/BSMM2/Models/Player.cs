@@ -11,7 +11,7 @@ namespace BSMM2.Models {
 		public string Name { get; private set; }
 
 		[JsonProperty]
-		public bool Dropped { get; private set; }
+		public virtual bool Dropped { get; private set; }
 
 		[JsonIgnore]
 		public int Order { get; set; }

@@ -8,6 +8,13 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class Match {
 
+		private class ByePlayer : Player {
+			public override bool Dropped => true;
+
+			public ByePlayer() : base("BYE") {
+			}
+		}
+
 		[JsonObject]
 		private class Record {
 
@@ -26,7 +33,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonProperty]
-		public readonly Player BYE = new Player("BYE");
+		public readonly Player BYE = new ByePlayer();
 
 		[JsonProperty]
 		private Record[] _records;

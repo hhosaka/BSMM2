@@ -20,7 +20,7 @@ namespace BSMM2.Models.Rules.Match {
 		}
 
 		public (IResult, IResult) CreatePoints(IEnumerable<RESULT> player1Results) {
-			return CreatePoints(player1Results.Select(r => (r, 0, 0)));
+			return CreatePoints(player1Results.Select(r => (r, 5, 5)));
 		}
 
 		public (IResult, IResult) CreatePoints(IEnumerable<(RESULT, int lp1, int lp2)> player1Results) {

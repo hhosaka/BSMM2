@@ -19,13 +19,14 @@ namespace BSMM2Test {
 			}
 		}
 
-		public static void Check(IEnumerable<int> expect, IEnumerable<Player> players) {
+		private static void Check(IEnumerable<int> expect, IEnumerable<Player> players) {
 			Check(expect, DefaultOrigin, players);
 		}
 
-		public static void CheckOrder(IEnumerable<int> expect, IEnumerable<Player> players) {
+		public static void CheckWithOrder(IEnumerable<int> expectedPlayers, IEnumerable<int> expectedOrder, IEnumerable<Player> players) {
+			Check(expectedPlayers, players);
 			var result = players.Select(p => p.Order);
-			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
+			CollectionAssert.AreEqual(expectedOrder.ToArray(), result.ToArray(), Message(expectedOrder, result));
 		}
 
 		public static void Check(IEnumerable<int> expect, string origin, IEnumerable<Player> players) {
