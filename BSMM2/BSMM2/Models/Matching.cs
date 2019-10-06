@@ -22,7 +22,7 @@ namespace BSMM2.Models {
 			=> Swap(Matches[m1], Matches[m2]);
 
 		public void Swap(Match m1, Match m2) {
-			if (!Locked)
+			if (!Locked && !m1.IsByeMatch && !m2.IsByeMatch)
 				m1.Swap(m2);
 		}
 

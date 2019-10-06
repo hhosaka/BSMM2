@@ -29,18 +29,18 @@ namespace BSMM2.Models.Rules.Match {
 			foreach (var result in player1Results) {
 				switch (result.Item1) {
 					case Win:
-						p1result.Add(new MatchResult(Win, result.lp1));
-						p2result.Add(new MatchResult(Lose, result.lp2));
+						p1result.Add(new SingleMatchResult(Win, result.lp1));
+						p2result.Add(new SingleMatchResult(Lose, result.lp2));
 						break;
 
 					case Lose:
-						p1result.Add(new MatchResult(Lose, result.lp1));
-						p2result.Add(new MatchResult(Win, result.lp2));
+						p1result.Add(new SingleMatchResult(Lose, result.lp1));
+						p2result.Add(new SingleMatchResult(Win, result.lp2));
 						break;
 
 					case Draw:
-						p1result.Add(new MatchResult(Draw, result.lp1));
-						p2result.Add(new MatchResult(Draw, result.lp2));
+						p1result.Add(new SingleMatchResult(Draw, result.lp1));
+						p2result.Add(new SingleMatchResult(Draw, result.lp2));
 						break;
 
 					default:

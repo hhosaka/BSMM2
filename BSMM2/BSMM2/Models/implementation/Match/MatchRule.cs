@@ -15,13 +15,13 @@ namespace BSMM2.Models.Rules.Match {
 		public (IResult, IResult) CreatePoints((RESULT result1, int lp1, int lp2) result) {
 			switch (result.result1) {
 				case Win:
-					return (new MatchResult(Win, result.lp1), new MatchResult(Lose, result.lp2));
+					return (new SingleMatchResult(Win, result.lp1), new SingleMatchResult(Lose, result.lp2));
 
 				case Lose:
-					return (new MatchResult(Lose, result.lp1), new MatchResult(Win, result.lp2));
+					return (new SingleMatchResult(Lose, result.lp1), new SingleMatchResult(Win, result.lp2));
 
 				case Draw:
-					return (new MatchResult(Draw, result.lp1), new MatchResult(Draw, result.lp2));
+					return (new SingleMatchResult(Draw, result.lp1), new SingleMatchResult(Draw, result.lp2));
 
 				default:
 					throw new ArgumentException();

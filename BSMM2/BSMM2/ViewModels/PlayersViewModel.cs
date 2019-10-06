@@ -3,10 +3,23 @@ using BSMM2.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
+
+	internal class ResultConverter : IValueConverter {
+
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+			if (value is IResult result)
+				return "Point=" + result.Point + "/Life=" + result.LifePoint + "/Win=" + result.WinPoint;
+			return "***";
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
+	}
 
 	public class PlayersViewModel : BaseViewModel {
 		public ObservableCollection<Player> Players { get; set; }

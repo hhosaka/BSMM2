@@ -44,20 +44,14 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public int Order { get; set; }
 
-		[JsonIgnore]
-		public string Score { get; private set; }
-
 		[JsonProperty]
 		private IList<Match> _matches;
-
-		[JsonIgnore]
-		private IResult _result;
 
 		[JsonIgnore]
 		private IResult _opponentResult;
 
 		[JsonIgnore]
-		public IResult Result => _result;
+		public IResult Result { get; private set; }
 
 		[JsonIgnore]
 		public IResult OpponentResult => _opponentResult;
@@ -80,7 +74,7 @@ namespace BSMM2.Models {
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		public void CalcResult(Rule rule)
-			=> _result = new Total(_matches.Select(match => match.GetResult(this)));
+			=> Result = new Total(_matches.Select(match => match.GetResult(this)));
 
 		public void CalcOpponentResult(Rule rule)
 			=> _opponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
@@ -91,7 +85,6 @@ namespace BSMM2.Models {
 		public Player(string name) {
 			_matches = new List<Match>();
 			Name = name;
-			Score = "*** Score ***";
 		}
 	}
 }

@@ -2,8 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 x:Class="BSMM2.Views.PlayersPage"
+			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
+	<ContentPage.Resources>
+		<local:ResultConverter x:Key="ResultConverter" />
+	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="NewGame" Clicked="NewGame_Clicked" Order="Secondary">
 			<ToolbarItem.Icon>
@@ -49,7 +53,7 @@
 					   LineBreakMode="NoWrap"
 					   Style="{DynamicResource ListPlayerNameStyle}"
 					   FontSize="16" />
-								<Label Text="{Binding Score}"
+								<Label Text="{Binding Result, Converter={StaticResource ResultConverter}}"
 					   LineBreakMode="NoWrap"
 					   Style="{DynamicResource ListPlayeScoreStyle}"
 					   FontSize="13" />

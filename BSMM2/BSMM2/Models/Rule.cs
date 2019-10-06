@@ -129,7 +129,7 @@ namespace BSMM2.Models {
 			}
 
 			public ByePlayer() {
-				Result = new MatchResult(RESULT.Lose, 0);
+				Result = new SingleMatchResult(RESULT.Lose, 0);
 			}
 		}
 
