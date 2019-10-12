@@ -34,7 +34,7 @@ namespace BSMM2.Views {
 			base.OnAppearing();
 
 			if (viewModel.Matches.Count == 0)
-				viewModel.LoadMatchesCommand.Execute(null);
+				viewModel.LoadRoundCommand.Execute(null);
 		}
 	}
 }

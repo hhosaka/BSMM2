@@ -1,9 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			 x:Class="BSMM2.Views.RoundPage"
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
+	<ContentPage.Resources>
+		<local:RoundResultConverter x:Key="Converter" />
+	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="NewGame" Clicked="NewGame_Clicked" Order="Secondary">
 			<ToolbarItem.Icon>
@@ -12,21 +16,6 @@
 				</OnPlatform>
 			</ToolbarItem.Icon>
 		</ToolbarItem>
-		<ToolbarItem Text="DeleteGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-		<ToolbarItem Text="SelectGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-		<ToolbarItem Text="AddPlayer" Clicked="NewGame_Clicked" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
@@ -41,25 +30,35 @@
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Padding="10">
-								<Label Text="{Binding Id}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayerOrderStyle}"
-					   FontSize="16" />
-								<Label Text="{Binding PlayerNames[0]}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayerNameStyle}"
-					   FontSize="16" />
-								<Label Text="{Binding PlayerNames[1]}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayeScoreStyle}"
-					   FontSize="13" />
+								<StackLayout Orientation="Horizontal">
+									<Label Text="{Binding Records[0], Converter={StaticResource Converter}}"
+									LineBreakMode="NoWrap"
+									HorizontalOptions="Start"
+									FontSize="20" />
+									<Label Text="{Binding Records[0].Player.Name}"
+									LineBreakMode="NoWrap"
+									HorizontalOptions="Start"
+									FontSize="20" />
+								</StackLayout>
+								<StackLayout Orientation="Horizontal" HorizontalOptions="End">
+									<Label Text="{Binding Records[1].Player.Name}"
+									LineBreakMode="NoWrap"
+									HorizontalOptions="End"
+									FontSize="20" />
+									<Label Text="{Binding Records[1], Converter={StaticResource Converter}}"
+									LineBreakMode="NoWrap"
+									HorizontalOptions="End"
+									FontSize="20" />
+								</StackLayout>
 							</StackLayout>
 						</ViewCell>
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
 			<StackLayout Orientation="Horizontal">
-				<Button Text="start" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Start" Command="{Binding ShuffleCommand}" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Next Round" Command="{Binding ShuffleCommand}" HorizontalOptions="CenterAndExpand"></Button>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

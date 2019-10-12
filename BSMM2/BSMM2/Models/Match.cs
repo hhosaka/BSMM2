@@ -16,24 +16,24 @@ namespace BSMM2.Models {
 		}
 
 		[JsonObject]
-		private class Record {
+		private class Record : IMatchRecord {
 
 			[JsonProperty]
-			public Player Player { get; }
+			public IPlayer Player { get; }
 
 			[JsonProperty]
 			public IResult Result { get; private set; }
 
-			public void SetPoint(IResult point)
-				=> Result = point;
+			public void SetPoint(IResult result)
+				=> Result = result;
 
-			public Record(Player player) {
+			public Record(IPlayer player) {
 				Player = player;
 			}
 		}
 
 		[JsonProperty]
-		public readonly Player BYE = new ByePlayer();
+		public readonly IPlayer BYE = new ByePlayer();
 
 		[JsonProperty]
 		private Record[] _records;
@@ -53,6 +53,18 @@ namespace BSMM2.Models {
 		public IEnumerable<string> PlayerNames
 			=> _records.Select(result => result.Player.Name);
 
+		[JsonIgnore]
+		public IPlayer Player1 => _records[0].Player;
+
+		[JsonIgnore]
+		public IPlayer Player2 => _records[1].Player;
+
+		[JsonIgnore]
+		public RESULT? Player1Result => _records[0]?.Result?.RESULT;
+
+		[JsonIgnore]
+		public IEnumerable<IMatchRecord> Records => _records.Cast<IMatchRecord>();
+
 		public void SetPoint((IResult player1, IResult player2) points) {
 			_records[0].SetPoint(points.player1);
 			_records[1].SetPoint(points.player2);
@@ -67,30 +79,30 @@ namespace BSMM2.Models {
 		public void Commit()
 			=> _records.ForEach(result => result.Player.Commit(this));
 
-		private Record GetPlayerRecord(Player player)
+		private Record GetPlayerRecord(IPlayer player)
 			=> _records.First(r => r.Player == player);
 
-		private Record GetOpponentRecord(Player player)
+		private Record GetOpponentRecord(IPlayer player)
 			=> _records.First(r => r.Player != player);
 
-		public IResult GetResult(Player player)
+		public IResult GetResult(IPlayer player)
 			=> GetPlayerRecord(player)?.Result;
 
-		public Player GetOpponentPlayer(Player player)
+		public IPlayer GetOpponentPlayer(IPlayer player)
 			=> GetOpponentRecord(player)?.Player;
 
-		public IResult GetOpponentResult(Player player)
+		public IResult GetOpponentResult(IPlayer player)
 			=> GetOpponentRecord(player)?.Result;
 
 		public Match() {// For Serializer
 		}
 
-		public Match(Player player1, Player player2) {
+		public Match(IPlayer player1, IPlayer player2) {
 			_records = new[] { new Record(player1), new Record(player2) };
 			IsGapMatch = (player1.Result?.Point != player2.Result?.Point);
 		}
 
-		public Match(Player player, Rule rule) {
+		public Match(IPlayer player, Rule rule) {
 			_records = new[] { new Record(player), new Record(BYE) };
 			SetPoint(rule.CreatePoints(RESULT.Win));
 		}
