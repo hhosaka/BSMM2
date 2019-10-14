@@ -1,4 +1,5 @@
 ﻿using BSMM2.Models.Matches;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,12 +7,16 @@ using System.Linq;
 namespace BSMM2.Models {
 
 	public class BSMMApp {
-		public IEnumerable<Rule> Rules { get; }
-		public Rule Rule { get; set; }
-		public HashSet<Game> Games { get; }
-		public Game Game { get; private set; }
-
 		private static BSMMApp _instance;
+
+		private Dictionary<Guid, string> _games;
+		private Engine _engine;
+
+		public IDictionary<Guid, string> Games => _games;
+		public IEnumerable<Rule> Rules { get; }
+
+		public Rule Rule { get; set; }
+		public Game Game { get; private set; }
 
 		public static BSMMApp Instance => _instance;
 
@@ -24,16 +29,26 @@ namespace BSMM2.Models {
 				new ThreeOnThreeMatchRule(),
 			};
 			Rule = Rules.First();
-			Games = new HashSet<Game>();
+			_games = new Dictionary<Guid, string>();
+			_engine = new Engine();
 			_instance = this;
 		}
 
 		public Game Add(Game game, bool AsCurrentGame) {
-			if (AsCurrentGame && Games.Contains(Game)) {
-				Games.Remove(Game);
+			if (AsCurrentGame && _games.ContainsKey(Game.Id)) {
+				_engine.Remove(Game);
+				_games.Remove(Game.Id);
 			}
-			Games.Add(game);
+			_games[game.Id] = game.Title;
 			return Game = game;
+		}
+
+		public Game Switch(Guid id) {
+			return Game = _engine.Load(id);
+		}
+
+		public void Save() {
+			_engine.Save(Game);
 		}
 	}
 }

@@ -12,6 +12,9 @@ namespace BSMM2.Models {
 		public string Title { get; set; }
 
 		[JsonProperty]
+		public Guid Id { get; }
+
+		[JsonProperty]
 		public Rule _rule;
 
 		[JsonProperty]
@@ -57,6 +60,7 @@ namespace BSMM2.Models {
 
 		public Game(Rule rule, Players players, string title = "Some Game") {
 			Title = title;
+			Id = Guid.NewGuid();
 			_players = players;
 			_rule = rule;
 			_rounds = new Stack<Round>();

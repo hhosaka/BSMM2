@@ -78,17 +78,11 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
 
-			var application = new ApplicationXXX();
-			application.Game = game;
+			var engine = new Engine();
 
-			application.Save(filename);
+			engine.Save(game);
 
-			Assert.IsTrue(application.Filenames.Any(str => str == application.Filename + ".json"));
-
-			application.Game = null;
-			application.Load(filename);
-
-			var game2 = application.Game;
+			var game2 = engine.Load(game.Id);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound.Matches);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.PlayersByOrder);
