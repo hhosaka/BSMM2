@@ -13,11 +13,15 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="PCLStorage" Version="1.0.2" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1367" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.673156" />  
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\MatchPage.xaml.cs">
+      <DependentUpon>MatchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\RoundPage.xaml.cs">
       <DependentUpon>RoundPage.xaml</DependentUpon>
     </Compile>

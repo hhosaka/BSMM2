@@ -24,7 +24,7 @@ namespace BSMM2.Models {
 			[JsonProperty]
 			public IResult Result { get; private set; }
 
-			public void SetPoint(IResult result)
+			public void SetResult(IResult result)
 				=> Result = result;
 
 			public Record(IPlayer player) {
@@ -65,9 +65,13 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public IEnumerable<IMatchRecord> Records => _records.Cast<IMatchRecord>();
 
-		public void SetPoint((IResult player1, IResult player2) points) {
-			_records[0].SetPoint(points.player1);
-			_records[1].SetPoint(points.player2);
+		public void SetResults((IResult player1, IResult player2) points) {
+			SetResults(points.player1, points.player2);
+		}
+
+		public void SetResults(IResult result1, IResult result2) {
+			_records[0].SetResult(result1);
+			_records[1].SetResult(result2);
 		}
 
 		public void Swap(Match other) {
@@ -104,7 +108,7 @@ namespace BSMM2.Models {
 
 		public Match(IPlayer player, Rule rule) {
 			_records = new[] { new Record(player), new Record(BYE) };
-			SetPoint(rule.CreatePoints(RESULT.Win));
+			SetResults(rule.CreatePoints(RESULT.Win));
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace BSMM2.Models {
 			Debug.Assert(_instance == null);
 
 			Rules = new Rule[] {
-				new MatchRule(),
+				new SingleMatchRule(),
 				new ThreeGameMatchRule(),
 				new ThreeOnThreeMatchRule(),
 			};

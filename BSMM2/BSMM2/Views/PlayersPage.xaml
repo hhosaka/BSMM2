@@ -62,9 +62,6 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<StackLayout Orientation="Horizontal">
-				<Button Text="start" HorizontalOptions="CenterAndExpand"></Button>
-			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

@@ -22,7 +22,7 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest1() {
-			var game = new FakeGame(new MatchRule(), 6, _origin);
+			var game = new FakeGame(new SingleMatchRule(), 6, _origin);
 
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
@@ -40,16 +40,16 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest2() {
-			var rule = new MatchRule();
+			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[2].SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
@@ -64,16 +64,16 @@ namespace BSMM2Test {
 		[TestMethod]
 		public void LoadSaveTest3() {
 			var filename = "debug";
-			var rule = new MatchRule();
+			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetPoint(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[1].SetPoint(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[2].SetPoint(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches[2].SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
@@ -104,7 +104,7 @@ namespace BSMM2Test {
 				Count = count,
 				PlayerNamePrefix = playerName,
 				Entries = entries,
-				Rule = new MatchRule()
+				Rule = new SingleMatchRule()
 			};
 
 			var serializer = new Serializer<Settings>();

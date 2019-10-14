@@ -22,10 +22,10 @@
 			<ListView x:Name="RoundListView"
 				ItemsSource="{Binding Matches}"
 				VerticalOptions="FillAndExpand"
-				 HasUnevenRows="true"
-				 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-				 CachingStrategy="RecycleElement"
-				 ItemTapped="OnMatchTapped">
+				HasUnevenRows="true"
+				IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+				CachingStrategy="RecycleElement"
+				ItemTapped="OnMatchTapped">
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<ViewCell>

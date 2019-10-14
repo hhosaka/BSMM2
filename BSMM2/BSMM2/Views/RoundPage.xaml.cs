@@ -1,4 +1,5 @@
-﻿using BSMM2.ViewModels;
+﻿using BSMM2.Models;
+using BSMM2.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -16,11 +17,8 @@ namespace BSMM2.Views {
 		}
 
 		private async void OnMatchTapped(object sender, SelectedItemChangedEventArgs args) {
-			//	var player = args.SelectedItem as Player;
-			//	if (player == null)
-			//		return;
-
-			//	await Navigation.PushAsync(new PlayerDetailPage(new PlayerDetailViewModel(player)));
+			if (args.SelectedItem is Match match)
+				await Navigation.PushAsync(new MatchPage(viewModel.Game._rule, match));
 
 			// Manually deselect item.
 			RoundListView.SelectedItem = null;

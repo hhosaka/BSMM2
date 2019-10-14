@@ -15,7 +15,7 @@ namespace BSMM2.Models {
 
 		private enum INITIAL_METHOD { BY_COUNT, BY_ENTRY };
 
-		private static Rule[] _rules = { new MatchRule() };
+		private static Rule[] _rules = { new SingleMatchRule() };
 
 		[JsonProperty]
 		private INITIAL_METHOD InitialMethod { get; set; } = INITIAL_METHOD.BY_COUNT;

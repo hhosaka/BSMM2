@@ -64,12 +64,11 @@ namespace BSMM2.Models {
 			Shuffle(true);
 		}
 
-		[JsonIgnore]
-		public bool CanExecuteShuffle
+		public bool CanExecuteShuffle()
 			=> (_activeRound as Matching)?.Locked == false;
 
 		public void Shuffle(bool force = false) {
-			if (force || CanExecuteShuffle)
+			if (force || CanExecuteShuffle())
 				_activeRound = new Matching(MakeRound());
 		}
 
