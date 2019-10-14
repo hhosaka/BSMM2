@@ -33,7 +33,9 @@ namespace BSMM2Test {
 
 			new Serializer<Game>().Serialize(new StringWriter(buf), game);
 
-			var result = new Serializer<Game>().Deserialize(new StringReader(buf.ToString()));
+			var sbuf = buf.ToString();
+
+			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound.Matches);
 		}

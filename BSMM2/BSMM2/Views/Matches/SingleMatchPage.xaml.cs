@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.Models.Matches;
 using BSMM2.ViewModels.Matches;
 using System;
 
@@ -12,9 +11,9 @@ namespace BSMM2.Views.Matches {
 	public partial class SingleMatchPage : ContentPage {
 		private SingleMatchViewModel _viewModel;
 
-		public SingleMatchPage(Rule rule, Match match) {
+		public SingleMatchPage(Game game, Match match) {
 			InitializeComponent();
-			BindingContext = _viewModel = new SingleMatchViewModel(rule as SingleMatchRule, match);
+			BindingContext = _viewModel = new SingleMatchViewModel(game, match);
 		}
 
 		private async void Create_Clicked(object sender, EventArgs e) {

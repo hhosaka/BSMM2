@@ -28,6 +28,7 @@ namespace BSMM2.ViewModels {
 		public string Prefix { get; set; }
 		public int PlayerCount { get; set; }
 		public string EntrySheet { get; set; }
+		public bool EnableLifePoint { get; set; }
 		public bool AsCurrentGame { get; set; }
 
 		private string _PlayerMode;
@@ -38,7 +39,8 @@ namespace BSMM2.ViewModels {
 		}
 
 		public void ExecuteNewGame() {
-			BSMMApp.Instance.Add(new Game(Rule, CreatePlayers(), GameName), AsCurrentGame);
+			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
+			BSMMApp.Instance.Add(game, AsCurrentGame);
 		}
 
 		private Players CreatePlayers() {

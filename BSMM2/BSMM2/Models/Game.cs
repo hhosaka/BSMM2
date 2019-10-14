@@ -15,7 +15,10 @@ namespace BSMM2.Models {
 		public Guid Id { get; }
 
 		[JsonProperty]
-		public Rule _rule;
+		public bool EnableLifePoint { get; }
+
+		[JsonProperty]
+		public Rule Rule { get; private set; }
 
 		[JsonProperty]
 		private readonly Players _players;
@@ -58,11 +61,12 @@ namespace BSMM2.Models {
 		public Game() {// For Serializer
 		}
 
-		public Game(Rule rule, Players players, string title = "Some Game") {
-			Title = title;
+		public Game(Rule rule, Players players, bool enableLifePoint, string title = null) {
+			EnableLifePoint = enableLifePoint;
+			Title = title ?? DateTime.Now.ToString();
 			Id = Guid.NewGuid();
 			_players = players;
-			_rule = rule;
+			Rule = rule;
 			_rounds = new Stack<Round>();
 			_startTime = null;
 			Shuffle(true);
@@ -116,8 +120,8 @@ namespace BSMM2.Models {
 		}
 
 		private IEnumerable<Player> GetOrderedPlayers() {
-			var comparer = _rule.CreateOrderComparer();
-			var players = _players.GetByOrder(_rule);
+			var comparer = Rule.CreateOrderComparer();
+			var players = _players.GetByOrder(Rule);
 			Player prev = null;
 			int order = 0;
 			int count = 0;
@@ -132,14 +136,15 @@ namespace BSMM2.Models {
 			return players;
 		}
 
+		[JsonIgnore]
 		public IEnumerable<Player> PlayersByOrder
 				=> GetOrderedPlayers();
 
 		private IEnumerable<Match> MakeRound() {
-			_players.Reset(_rule);
-			for (int level = 0; level < _rule.CompareDepth; ++level) {
+			_players.Reset(Rule);
+			for (int level = 0; level < Rule.CompareDepth; ++level) {
 				for (int i = 0; i < TryCount; ++i) {
-					var matchingList = Create(_players.GetSource(_rule, level).Where(p => !p.Dropped));
+					var matchingList = Create(_players.GetSource(Rule, level).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;
 					}
@@ -168,7 +173,7 @@ namespace BSMM2.Models {
 						{
 							var p = stack.First();
 							if (AcceptByeMatchDuplication || !p.HasByeMatch) {
-								results.Enqueue(new Match(p, _rule));
+								results.Enqueue(new Match(p, Rule));
 								return results;//1人不戦勝
 							}
 						}

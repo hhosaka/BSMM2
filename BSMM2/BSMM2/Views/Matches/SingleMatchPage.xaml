@@ -5,14 +5,15 @@
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			 Title="{Binding Title}">
 	<ContentPage.Content>
-		<StackLayout>
-			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" Margin="0" IsVisible="True" />
+		<StackLayout VerticalOptions="Center">
+			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" Margin="0" IsVisible="{Binding Game.EnableLifePoint}" />
 			<Picker x:Name="ResultSelector"
+					Title="Select a match result"
 				SelectedItem="{Binding SelectedItem}"
 				ItemsSource="{Binding Items}"
 				ItemDisplayBinding="{Binding Name}">
 			</Picker>
-			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" Margin="0" IsVisible="True" />
+			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" Margin="0"  IsVisible="{Binding Game.EnableLifePoint}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

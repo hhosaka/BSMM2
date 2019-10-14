@@ -35,7 +35,7 @@ namespace BSMM2.Models {
 		}
 
 		public Game Add(Game game, bool AsCurrentGame) {
-			if (AsCurrentGame && _games.ContainsKey(Game.Id)) {
+			if (Game != null && AsCurrentGame && _games.ContainsKey(Game.Id)) {
 				_engine.Remove(Game);
 				_games.Remove(Game.Id);
 			}

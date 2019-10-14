@@ -36,5 +36,6 @@ namespace BSMM2.Models.Matches {
 
 		public override string Description
 			=> "一本取りです。";
+
 	}
 }

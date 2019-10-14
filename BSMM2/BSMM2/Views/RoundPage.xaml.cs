@@ -19,7 +19,7 @@ namespace BSMM2.Views {
 
 		private async void OnMatchTapped(object sender, SelectedItemChangedEventArgs args) {
 			if (args.SelectedItem is Match match)
-				await Navigation.PushAsync(new SingleMatchPage(viewModel.Game._rule, match));
+				await Navigation.PushAsync(new SingleMatchPage(viewModel.Game, match));
 
 			// Manually deselect item.
 			RoundListView.SelectedItem = null;

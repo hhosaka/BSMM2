@@ -38,6 +38,10 @@
 			<Label Text="Entry Sheet:" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
 			<Editor Text="{Binding EntrySheet}" HeightRequest="256"  BackgroundColor="Aqua" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
 			<StackLayout Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding EnableLifePoint}" />
+				<Label Text="Enable Life Point" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding AsCurrentGame}" />
 				<Label Text="As Current Game" VerticalOptions="Center" />
 			</StackLayout>

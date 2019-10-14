@@ -16,21 +16,20 @@ namespace BSMM2.ViewModels.Matches {
 			}
 		}
 
-		private SingleMatchRule _rule;
 		private Match _match;
 
+		public Game Game { get; }
 		public int LifePoint1 { get; set; }
 		public int LifePoint2 { get; set; }
 		public Item SelectedItem { get; set; }
 		public IEnumerable<Item> Items { get; }
 
 		public void Execute() {
-			_match.SetResults(_rule.CreatePoints(SelectedItem.RESULT, LifePoint1, LifePoint2));
+			_match.SetResults((Game.Rule as SingleMatchRule).CreatePoints(SelectedItem.RESULT, LifePoint1, LifePoint2));
 		}
 
-		public SingleMatchViewModel(SingleMatchRule rule, Match match) {
-			_rule = rule;
-
+		public SingleMatchViewModel(Game game, Match match) {
+			Game = game;
 			var items = new List<Item>();
 			items.Add(new Item(match.Player1.Name + " Win", RESULT_T.Win));
 			items.Add(new Item("Draw", RESULT_T.Win));
