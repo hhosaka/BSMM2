@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\MatchPage.xaml.cs">
-      <DependentUpon>MatchPage.xaml</DependentUpon>
+    <Compile Update="Views\Matches\SingleMatchPage.xaml.cs">
+      <DependentUpon>SingleMatchPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\RoundPage.xaml.cs">
       <DependentUpon>RoundPage.xaml</DependentUpon>

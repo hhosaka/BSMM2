@@ -1,4 +1,4 @@
-﻿using BSMM2.Models.Rules.Match;
+﻿using BSMM2.Models.Matches;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;

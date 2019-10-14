@@ -19,7 +19,7 @@ namespace BSMM2.Models {
 			public double WinPoint { get; }
 
 			[JsonIgnore]
-			public RESULT? RESULT => null;
+			public RESULT_T? RESULT => null;
 
 			public bool IsFinished => true;
 
@@ -70,7 +70,7 @@ namespace BSMM2.Models {
 		public void Drop()
 			=> Dropped = true;
 
-		public RESULT? GetResult(Player player)
+		public RESULT_T? GetResult(Player player)
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		public void CalcResult(Rule rule)

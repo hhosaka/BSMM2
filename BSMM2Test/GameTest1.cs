@@ -1,12 +1,12 @@
 using BSMM2.Models;
-using BSMM2.Models.Rules.Match;
+using BSMM2.Models.Matches;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using Xamarin.Forms.Internals;
-using static BSMM2.Models.RESULT;
+using static BSMM2.Models.RESULT_T;
 
 namespace BSMM2Test {
 

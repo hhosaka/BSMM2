@@ -60,7 +60,7 @@ namespace BSMM2.Models {
 		public IPlayer Player2 => _records[1].Player;
 
 		[JsonIgnore]
-		public RESULT? Player1Result => _records[0]?.Result?.RESULT;
+		public RESULT_T? Player1Result => _records[0]?.Result?.RESULT;
 
 		[JsonIgnore]
 		public IEnumerable<IMatchRecord> Records => _records.Cast<IMatchRecord>();
@@ -108,7 +108,7 @@ namespace BSMM2.Models {
 
 		public Match(IPlayer player, Rule rule) {
 			_records = new[] { new Record(player), new Record(BYE) };
-			SetResults(rule.CreatePoints(RESULT.Win));
+			SetResults(rule.CreatePoints(RESULT_T.Win));
 		}
 	}
 }

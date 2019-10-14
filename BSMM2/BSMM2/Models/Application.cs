@@ -1,4 +1,4 @@
-﻿using BSMM2.Models.Rules.Match;
+﻿using BSMM2.Models.Matches;
 using BSMM2.Services;
 using Newtonsoft.Json;
 using System.Collections.Generic;

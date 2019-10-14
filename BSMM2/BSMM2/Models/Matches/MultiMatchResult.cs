@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using static BSMM2.Models.RESULT;
+using static BSMM2.Models.RESULT_T;
 
-namespace BSMM2.Models.Rules.Match {
+namespace BSMM2.Models.Matches {
 
 	[JsonObject]
 	public class MultiMatchResult : IResult {
@@ -15,7 +15,7 @@ namespace BSMM2.Models.Rules.Match {
 		private int _minCount;
 
 		[JsonIgnore]
-		private RESULT? _RESULT;
+		private RESULT_T? _RESULT;
 
 		[JsonIgnore]
 		public int MatchPoint
@@ -30,7 +30,7 @@ namespace BSMM2.Models.Rules.Match {
 			=> _results.Sum(p => p.WinPoint) / _results.Count();
 
 		[JsonIgnore]
-		public RESULT? RESULT
+		public RESULT_T? RESULT
 			=> _RESULT ?? (_RESULT = GetResult());
 
 		public int Point
@@ -43,7 +43,7 @@ namespace BSMM2.Models.Rules.Match {
 			_results.Add(result);
 		}
 
-		private RESULT? GetResult() {
+		private RESULT_T? GetResult() {
 			if (_results.Any()) {
 				int result = 0;
 				foreach (var r in _results) {

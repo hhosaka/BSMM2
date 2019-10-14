@@ -1,16 +1,16 @@
 ﻿using BSMM2.Models;
-using BSMM2.Models.Rules.Match;
+using BSMM2.Models.Matches;
 using System.Collections.Generic;
 
-namespace BSMM2.ViewModels {
+namespace BSMM2.ViewModels.Matches {
 
-	internal class MatchViewModel : BaseViewModel {
+	internal class SingleMatchViewModel : BaseViewModel {
 
 		internal class Item {
 			public string Name { get; }
-			public RESULT RESULT { get; }
+			public RESULT_T RESULT { get; }
 
-			public Item(string name, RESULT result) {
+			public Item(string name, RESULT_T result) {
 				Name = name;
 				RESULT = result;
 			}
@@ -28,13 +28,13 @@ namespace BSMM2.ViewModels {
 			_match.SetResults(_rule.CreatePoints(SelectedItem.RESULT, LifePoint1, LifePoint2));
 		}
 
-		public MatchViewModel(SingleMatchRule rule, Match match) {
+		public SingleMatchViewModel(SingleMatchRule rule, Match match) {
 			_rule = rule;
 
 			var items = new List<Item>();
-			items.Add(new Item(match.Player1.Name + " Win", RESULT.Win));
-			items.Add(new Item("Draw", RESULT.Win));
-			items.Add(new Item(match.Player2.Name + " Win", RESULT.Lose));
+			items.Add(new Item(match.Player1.Name + " Win", RESULT_T.Win));
+			items.Add(new Item("Draw", RESULT_T.Win));
+			items.Add(new Item(match.Player2.Name + " Win", RESULT_T.Lose));
 			Items = items;
 		}
 	}

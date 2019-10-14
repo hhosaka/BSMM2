@@ -1,4 +1,4 @@
-﻿using BSMM2.Models.Rules.Match;
+﻿using BSMM2.Models.Matches;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -129,14 +129,14 @@ namespace BSMM2.Models {
 			}
 
 			public ByePlayer() {
-				Result = new SingleMatchResult(RESULT.Lose, 0);
+				Result = new SingleMatchResult(RESULT_T.Lose, 0);
 			}
 		}
 
 		public static IPlayer BYE = new ByePlayer();
 		internal IComparer[] Comparers { get; }
 
-		public abstract (IResult, IResult) CreatePoints(RESULT result);
+		public abstract (IResult, IResult) CreatePoints(RESULT_T result);
 
 		public int CompareDepth => Comparers.Count();
 
@@ -170,8 +170,8 @@ namespace BSMM2.Models {
 				}
 				return ret;
 
-				int ToComp(RESULT? result)
-					=> result == RESULT.Win ? 1 : result == RESULT.Lose ? -1 : 0;
+				int ToComp(RESULT_T? result)
+					=> result == RESULT_T.Win ? 1 : result == RESULT_T.Lose ? -1 : 0;
 
 				int CheckDropped() {
 					if (x.Dropped)

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BSMM2.Models.Rules.Match {
+namespace BSMM2.Models.Matches {
 
 	[JsonObject]
 	public class ThreeOnThreeMatchRule : MultiMatchRule {

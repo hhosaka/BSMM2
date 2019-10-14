@@ -1,29 +1,30 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Models.Matches;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static BSMM2.Models.RESULT;
+using static BSMM2.Models.RESULT_T;
 
-namespace BSMM2.Models.Rules.Match {
+namespace BSMM2.Models.Matches {
 
 	[JsonObject]
 	public abstract class MultiMatchRule : Rule {
 		protected abstract int MatchCount { get; }
 		protected abstract int MinimumMatchCount { get; }
 
-		public override (IResult, IResult) CreatePoints(RESULT result) {
-			var results = new List<RESULT>();
+		public override (IResult, IResult) CreatePoints(RESULT_T result) {
+			var results = new List<RESULT_T>();
 			for (int i = 0; i < MatchCount; ++i) {
 				results.Add(result);
 			}
 			return CreatePoints(results.ToArray());
 		}
 
-		public (IResult, IResult) CreatePoints(IEnumerable<RESULT> player1Results) {
+		public (IResult, IResult) CreatePoints(IEnumerable<RESULT_T> player1Results) {
 			return CreatePoints(player1Results.Select(r => (r, 5, 5)));
 		}
 
-		public (IResult, IResult) CreatePoints(IEnumerable<(RESULT, int lp1, int lp2)> player1Results) {
+		public (IResult, IResult) CreatePoints(IEnumerable<(RESULT_T, int lp1, int lp2)> player1Results) {
 			var p1result = new MultiMatchResult(MinimumMatchCount);
 			var p2result = new MultiMatchResult(MinimumMatchCount);
 			foreach (var result in player1Results) {
