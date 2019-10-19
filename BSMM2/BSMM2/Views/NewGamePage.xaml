@@ -8,7 +8,7 @@
 		<local:PlayerControlConverter x:Key="PlayerControlConverter" />
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Create" Clicked="Create_Clicked" />
+		<ToolbarItem Text="New Game" Clicked="NewGame_Clicked" Order="Primary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>

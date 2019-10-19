@@ -8,15 +8,6 @@
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="NewGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<ListView x:Name="RoundListView"
@@ -57,8 +48,8 @@
 			</ListView>
 			<StackLayout Orientation="Horizontal">
 				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="CenterAndExpand"></Button>
-				<Button Text="Start" Command="{Binding ShuffleCommand}" HorizontalOptions="CenterAndExpand"></Button>
-				<Button Text="Next Round" Command="{Binding ShuffleCommand}" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Start" Command="{Binding StartCommand}" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Next Round" Command="{Binding NextRoundCommand}" HorizontalOptions="CenterAndExpand"></Button>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

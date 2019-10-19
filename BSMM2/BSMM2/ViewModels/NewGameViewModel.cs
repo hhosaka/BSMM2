@@ -41,6 +41,7 @@ namespace BSMM2.ViewModels {
 		public void ExecuteNewGame() {
 			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
 			BSMMApp.Instance.Add(game, AsCurrentGame);
+			MessagingCenter.Send(this, "NewGame", game);
 		}
 
 		private Players CreatePlayers() {

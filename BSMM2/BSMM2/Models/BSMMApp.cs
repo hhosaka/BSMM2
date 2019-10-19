@@ -40,6 +40,7 @@ namespace BSMM2.Models {
 				_games.Remove(Game.Id);
 			}
 			_games[game.Id] = game.Title;
+			_engine.Save(game);
 			return Game = game;
 		}
 

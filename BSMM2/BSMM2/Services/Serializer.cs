@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace BSMM2.Services {
 
@@ -21,6 +18,7 @@ namespace BSMM2.Services {
 		public void Serialize(string filename, T obj) {
 			using (var w = new StreamWriter(filename)) {
 				Serialize(w, obj);
+				w.Close();
 			}
 		}
 
@@ -31,6 +29,7 @@ namespace BSMM2.Services {
 		public T Deserialize(string filename) {
 			using (var r = new StreamReader(filename)) {
 				return Deserialize(r);
+				r.Close();
 			}
 		}
 	}

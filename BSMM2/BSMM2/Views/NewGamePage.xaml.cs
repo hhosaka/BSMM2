@@ -15,7 +15,7 @@ namespace BSMM2.Views {
 			BindingContext = _viewModel = new NewGameViewModel();
 		}
 
-		private async void Create_Clicked(object sender, EventArgs e) {
+		private async void NewGame_Clicked(object sender, EventArgs e) {
 			_viewModel.ExecuteNewGame();
 			MessagingCenter.Send(this, "NewGame");
 			await Navigation.PopModalAsync();

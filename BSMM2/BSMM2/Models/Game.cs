@@ -119,6 +119,9 @@ namespace BSMM2.Models {
 			}
 		}
 
+		public bool IsMatching()
+			=> _activeRound is Matching;
+
 		private IEnumerable<Player> GetOrderedPlayers() {
 			var comparer = Rule.CreateOrderComparer();
 			var players = _players.GetByOrder(Rule);
