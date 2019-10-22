@@ -38,10 +38,11 @@ namespace BSMM2.ViewModels {
 			set => SetProperty<string>(ref _PlayerMode, value);
 		}
 
-		public void ExecuteNewGame() {
+		public bool ExecuteNewGame() {
 			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
 			BSMMApp.Instance.Add(game, AsCurrentGame);
-			MessagingCenter.Send(this, "NewGame", game);
+			MessagingCenter.Send<object, Game>(this, "RefreshGame", game);
+			return true;
 		}
 
 		private Players CreatePlayers() {

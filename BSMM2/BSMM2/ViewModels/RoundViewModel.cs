@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.ViewModels.Matches;
 using Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
@@ -11,8 +10,13 @@ namespace BSMM2.ViewModels {
 
 	public class RoundViewModel : BaseViewModel {
 		public Game Game { get; set; }
+		private ObservableCollection<Match> _matches;
 
-		public ObservableCollection<Match> Matches { get; set; }
+		public ObservableCollection<Match> Matches {
+			get => _matches;
+			set { SetProperty(ref _matches, value); }
+		}
+
 		public Command LoadRoundCommand { get; set; }
 		public DelegateCommand ShuffleCommand { get; set; }
 		public DelegateCommand StartCommand { get; set; }
@@ -27,11 +31,8 @@ namespace BSMM2.ViewModels {
 			StartCommand = new DelegateCommand(async () => await ExecuteStartCommand(), () => Game?.CanExecuteStepToPlaying() == true);
 			NextRoundCommand = new DelegateCommand(async () => await ExecuteNextRoundCommand(), () => Game?.CanExecuteStepToMatching() == true);
 
-			MessagingCenter.Subscribe<NewGameViewModel, Game>(this, "NewGame", async (sender, game) => {
+			MessagingCenter.Subscribe<object, Game>(this, "RefreshGame", async (sender, game) => {
 				await ExecuteLoadRoundCommand(game);
-			});
-			MessagingCenter.Subscribe<SingleMatchViewModel>(this, "Update", async sender => {
-				await ExecuteLoadRoundCommand(null);
 			});
 		}
 
@@ -42,10 +43,11 @@ namespace BSMM2.ViewModels {
 			=> Game?.IsMatching() == true;
 
 		private async Task Load() {
-			Matches.Clear();
-			foreach (var match in Game.ActiveRound.Matches) {
-				await Task.Run(() => Matches.Add(match));
-			}
+			Matches = new ObservableCollection<Match>(Game.ActiveRound.Matches);
+			//Matches.Clear();
+			//foreach (var match in Game.ActiveRound.Matches) {
+			//	await Task.Run(() => Matches.Add(new MatchItem(match)));
+			//}
 		}
 
 		private async Task ExecuteNextRoundCommand() {

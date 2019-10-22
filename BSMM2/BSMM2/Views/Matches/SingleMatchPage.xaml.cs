@@ -1,6 +1,5 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels.Matches;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,8 +11,13 @@ namespace BSMM2.Views.Matches {
 
 		public SingleMatchPage(Game game, Match match) {
 			InitializeComponent();
+			Title = "Single Match Result";
 			BindingContext = _viewModel = new SingleMatchViewModel(game, match);
-			_viewModel.Popup += async () => await Navigation.PopModalAsync();
+		}
+
+		private async void OnResultTapped(object sender, SelectedItemChangedEventArgs args) {
+			if (_viewModel.Update())
+				await Navigation.PopModalAsync();
 		}
 	}
 }

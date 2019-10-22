@@ -34,17 +34,26 @@ namespace BSMM2.Models {
 			_instance = this;
 		}
 
-		public Game Add(Game game, bool AsCurrentGame) {
-			if (Game != null && AsCurrentGame && _games.ContainsKey(Game.Id)) {
-				_engine.Remove(Game);
-				_games.Remove(Game.Id);
+		public bool Add(Game game, bool AsCurrentGame) {
+			if (!_games.ContainsValue(game.Title)) {
+				if (Game != null && AsCurrentGame && _games.ContainsKey(Game.Id)) {
+					RemoveGame();
+				}
+				_games[game.Id] = game.Title;
+				_engine.Save(game);
+				Game = game;
+				return true;
 			}
-			_games[game.Id] = game.Title;
-			_engine.Save(game);
-			return Game = game;
+			return false;
 		}
 
-		public Game Switch(Guid id) {
+		public void RemoveGame() {
+			_engine.Remove(Game);
+			_games.Remove(Game.Id);
+			Game = null;
+		}
+
+		public Game Select(Guid id) {
 			return Game = _engine.Load(id);
 		}
 

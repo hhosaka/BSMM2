@@ -1,22 +1,26 @@
 ﻿using BSMM2.Models;
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
 
 	public class PlayersViewModel : BaseViewModel {
-		public ObservableCollection<Player> Players { get; set; }
-		public Command<Game> LoadPlayersCommand { get; set; }
+		private Game _game;
+
+		private IEnumerable<Player> _players;
+
+		public IEnumerable<Player> Players {
+			get => _players;
+			set { SetProperty(ref _players, value); }
+		}
 
 		public PlayersViewModel() {
 			Title = "Players";
 			Players = new ObservableCollection<Player>();
-			LoadPlayersCommand = new Command<Game>(async game => await ExecuteLoadPlayersCommand(game));
 
-			MessagingCenter.Subscribe<NewGameViewModel, Game>(this, "NewGame", async (sender, game) => {
+			MessagingCenter.Subscribe<object, Game>(this, "RefreshGame", async (sender, game) => {
 				await ExecuteLoadPlayersCommand(game);
 			});
 		}
@@ -26,12 +30,10 @@ namespace BSMM2.ViewModels {
 				IsBusy = true;
 
 				try {
-					Players.Clear();
-					foreach (var player in game.PlayersByOrder) {
-						await Task.Run(() => Players.Add(player));
-					}
-				} catch (Exception ex) {
-					Debug.WriteLine(ex);
+					if (game != null)
+						_game = game;
+
+					await Task.Run(() => Players = _game.PlayersByOrder);
 				} finally {
 					IsBusy = false;
 				}

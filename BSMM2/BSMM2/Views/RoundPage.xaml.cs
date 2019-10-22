@@ -16,11 +16,10 @@ namespace BSMM2.Views {
 			BindingContext = viewModel = new RoundViewModel();
 		}
 
-		private async void OnMatchTapped(object sender, SelectedItemChangedEventArgs args) {
-			if (args.SelectedItem is Match match && viewModel.IsPlaying)
+		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
+			if (args.Item is Match match && viewModel.IsPlaying)
 				await Navigation.PushModalAsync(new NavigationPage(new SingleMatchPage(viewModel.Game, match)));
 
-			// Manually deselect item.
 			RoundListView.SelectedItem = null;
 		}
 

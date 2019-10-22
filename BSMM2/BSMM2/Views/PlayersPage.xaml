@@ -9,28 +9,10 @@
 		<local:ResultConverter x:Key="ResultConverter" />
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="NewGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-		<ToolbarItem Text="DeleteGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-		<ToolbarItem Text="SelectGame" Clicked="NewGame_Clicked" Order="Secondary">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource">
-					<On Platform="UWP" Value="add.png" />
-				</OnPlatform>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
-		<ToolbarItem Text="AddPlayer" Clicked="NewGame_Clicked" Order="Secondary" />
+		<ToolbarItem Text="New Game" Clicked="NewGame_Clicked" Order="Secondary" />
+		<ToolbarItem Text="Remove Current Game" Clicked="RemoveGame_Clicked" Order="Secondary" />
+		<ToolbarItem Text="Select Game" Clicked="SelectGame_Clicked" Order="Secondary" />
+		<ToolbarItem Text="AddPlayer" Clicked="AddPlayer_Clicked" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
@@ -45,18 +27,11 @@
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Padding="10">
-								<Label Text="{Binding Order}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayerOrderStyle}"
-					   FontSize="16" />
-								<Label Text="{Binding Name}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayerNameStyle}"
-					   FontSize="16" />
-								<Label Text="{Binding Result, Converter={StaticResource ResultConverter}}"
-					   LineBreakMode="NoWrap"
-					   Style="{DynamicResource ListPlayeScoreStyle}"
-					   FontSize="13" />
+								<StackLayout Orientation="Horizontal">
+									<Label Text="{Binding Order}" FontSize="16" />
+									<Label Text="{Binding Name}" FontSize="16" />
+								</StackLayout>
+								<Label Text="{Binding Result, Converter={StaticResource ResultConverter}}" FontSize="13" />
 							</StackLayout>
 						</ViewCell>
 					</DataTemplate>

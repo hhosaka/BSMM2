@@ -1,4 +1,5 @@
-﻿using BSMM2.ViewModels;
+﻿using BSMM2.Models;
+using BSMM2.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -30,11 +31,20 @@ namespace BSMM2.Views {
 			await Navigation.PushModalAsync(new NavigationPage(new NewGamePage()));
 		}
 
-		protected override void OnAppearing() {
-			base.OnAppearing();
+		private async void RemoveGame_Clicked(object sender, EventArgs e) {
+			var accepted = await DisplayAlert(
+				  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
+			if (accepted) {
+				BSMMApp.Instance.RemoveGame();
+			};
+		}
 
-			if (viewModel.Players.Count == 0)
-				viewModel.LoadPlayersCommand.Execute(null);
+		private async void SelectGame_Clicked(object sender, EventArgs e) {
+			// TBD
+		}
+
+		private async void AddPlayer_Clicked(object sender, EventArgs e) {
+			// TBD
 		}
 	}
 }

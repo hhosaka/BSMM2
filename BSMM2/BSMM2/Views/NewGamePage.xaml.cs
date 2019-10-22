@@ -16,9 +16,8 @@ namespace BSMM2.Views {
 		}
 
 		private async void NewGame_Clicked(object sender, EventArgs e) {
-			_viewModel.ExecuteNewGame();
-			MessagingCenter.Send(this, "NewGame");
-			await Navigation.PopModalAsync();
+			if (_viewModel.ExecuteNewGame())
+				await Navigation.PopModalAsync();
 		}
 	}
 }

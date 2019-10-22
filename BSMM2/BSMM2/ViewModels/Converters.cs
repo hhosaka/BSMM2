@@ -19,18 +19,12 @@ namespace BSMM2.ViewModels {
 	}
 
 	public class RoundResultConverter : IValueConverter {
-		private static int i = 0;
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 			return "(" + GetResult() + ")";
 
-			string GetResult() {
-				var r = (value as IMatchRecord)?.Result?.RESULT;
-				if (r != null)
-					return r.ToString();
-				else
-					return "I=" + (++i);
-			}
+			string GetResult()
+				=> (value as IMatchRecord)?.Result?.RESULT?.ToString() ?? "***";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
