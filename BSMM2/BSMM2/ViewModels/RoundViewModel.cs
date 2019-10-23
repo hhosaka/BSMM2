@@ -1,39 +1,56 @@
 ﻿using BSMM2.Models;
 using Prism.Commands;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
 
 	public class RoundViewModel : BaseViewModel {
-		public Game Game { get; set; }
-		private ObservableCollection<Match> _matches;
 
-		public ObservableCollection<Match> Matches {
+		public class MatchItem : INotifyPropertyChanged {
+			private Match _match;
+
+			public MatchItem(Match match) {
+				_match = match;
+			}
+
+			public void SetResults((IResult, IResult) points) {
+				_match.SetResults(points);
+				PropertyChanged(this, new PropertyChangedEventArgs("Records"));
+			}
+
+			public IEnumerable<IMatchRecord> Records => _match.Records;
+
+			public event PropertyChangedEventHandler PropertyChanged;
+		}
+
+		private BSMMApp _app;
+		public Game Game => _app.Game;
+		private List<MatchItem> _matches;
+
+		public List<MatchItem> Matches {
 			get => _matches;
 			set { SetProperty(ref _matches, value); }
 		}
 
-		public Command LoadRoundCommand { get; set; }
-		public DelegateCommand ShuffleCommand { get; set; }
-		public DelegateCommand StartCommand { get; set; }
-		public DelegateCommand NextRoundCommand { get; set; }
+		public DelegateCommand ShuffleCommand { get; }
+		public DelegateCommand StartCommand { get; }
+		public DelegateCommand NextRoundCommand { get; }
 
-		public RoundViewModel() {
-			Title = "Players";
-			Game = BSMMApp.Instance.Game;
-			Matches = new ObservableCollection<Match>();
-			LoadRoundCommand = new Command<Game>(async game => await ExecuteLoadRoundCommand(game));
-			ShuffleCommand = new DelegateCommand(async () => await ExecuteShuffleCommand(), () => Game?.CanExecuteShuffle() == true);
-			StartCommand = new DelegateCommand(async () => await ExecuteStartCommand(), () => Game?.CanExecuteStepToPlaying() == true);
-			NextRoundCommand = new DelegateCommand(async () => await ExecuteNextRoundCommand(), () => Game?.CanExecuteStepToMatching() == true);
+		public RoundViewModel(BSMMApp app) {
+			_app = app;
+			Title = "Round";
+			ShuffleCommand = new DelegateCommand(async () => await Shuffle(), () => Game?.CanExecuteShuffle() == true);
+			StartCommand = new DelegateCommand(async () => await Playing(), () => Game?.CanExecuteStepToPlaying() == true);
+			NextRoundCommand = new DelegateCommand(async () => await NextRound(), () => Game?.CanExecuteStepToMatching() == true);
 
-			MessagingCenter.Subscribe<object, Game>(this, "RefreshGame", async (sender, game) => {
-				await ExecuteLoadRoundCommand(game);
-			});
+			MessagingCenter.Subscribe<object>(this, "RefreshGame",
+				async (sender) => await Refresh());
 		}
 
 		public bool IsPlaying
@@ -42,19 +59,28 @@ namespace BSMM2.ViewModels {
 		public bool IsMatching
 			=> Game?.IsMatching() == true;
 
-		private async Task Load() {
-			Matches = new ObservableCollection<Match>(Game.ActiveRound.Matches);
-			//Matches.Clear();
-			//foreach (var match in Game.ActiveRound.Matches) {
-			//	await Task.Run(() => Matches.Add(new MatchItem(match)));
-			//}
+		private void RaiseCanExecuteChanged() {
+			StartCommand.RaiseCanExecuteChanged();
+			ShuffleCommand.RaiseCanExecuteChanged();
+			NextRoundCommand.RaiseCanExecuteChanged();
 		}
 
-		private async Task ExecuteNextRoundCommand() {
-			await Task.Run(() => Game.StepToMatching());
+		private async Task NextRound() {
+			if (!IsBusy) {
+				IsBusy = true;
+
+				try {
+					await Task.Run(() => Game.StepToMatching());
+					RaiseCanExecuteChanged();
+				} catch (Exception ex) {
+					Debug.WriteLine(ex);
+				} finally {
+					IsBusy = false;
+				}
+			}
 		}
 
-		private async Task ExecuteStartCommand() {
+		private async Task Playing() {
 			if (!IsBusy) {
 				IsBusy = true;
 
@@ -69,13 +95,12 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		private async Task ExecuteShuffleCommand() {
+		private async Task Shuffle() {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Game.Shuffle());
-					await Load();
+					await Task.Run(() => Matches = new List<MatchItem>(Game.Shuffle().Matches.Select(m => new MatchItem(m))));
 				} catch (Exception ex) {
 					Debug.WriteLine(ex);
 				} finally {
@@ -84,23 +109,12 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		private void RaiseCanExecuteChanged() {
-			StartCommand.RaiseCanExecuteChanged();
-			ShuffleCommand.RaiseCanExecuteChanged();
-			NextRoundCommand.RaiseCanExecuteChanged();
-		}
-
-		private async Task ExecuteLoadRoundCommand(Game game) {
+		private async Task Refresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					if (game != null)
-						Game = game;
-					else
-						Game = BSMMApp.Instance.Game;
-
-					await Load();
+					await Task.Run(() => Matches = new List<MatchItem>(Game.ActiveRound.Matches.Select(m => new MatchItem(m))));
 					RaiseCanExecuteChanged();
 				} catch (Exception ex) {
 					Debug.WriteLine(ex);

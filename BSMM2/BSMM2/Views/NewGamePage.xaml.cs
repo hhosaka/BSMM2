@@ -1,4 +1,5 @@
-﻿using BSMM2.ViewModels;
+﻿using BSMM2.Models;
+using BSMM2.ViewModels;
 using System;
 
 using Xamarin.Forms;
@@ -10,9 +11,9 @@ namespace BSMM2.Views {
 	public partial class NewGamePage : ContentPage {
 		private NewGameViewModel _viewModel;
 
-		public NewGamePage() {
+		public NewGamePage(BSMMApp app) {
 			InitializeComponent();
-			BindingContext = _viewModel = new NewGameViewModel();
+			BindingContext = _viewModel = new NewGameViewModel(app);
 		}
 
 		private async void NewGame_Clicked(object sender, EventArgs e) {

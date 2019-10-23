@@ -3,17 +3,16 @@ using System.Windows.Input;
 
 using Xamarin.Forms;
 
-namespace BSMM2.ViewModels
-{
-    public class AboutViewModel : BaseViewModel
-    {
-        public AboutViewModel()
-        {
-            Title = "BS Match Maker Neo";
+namespace BSMM2.ViewModels {
 
-            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
-        }
+	public class AboutViewModel : BaseViewModel {
 
-        public ICommand OpenWebCommand { get; }
-    }
+		public AboutViewModel() {
+			Title = "About";
+
+			OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
+		}
+
+		public ICommand OpenWebCommand { get; }
+	}
 }

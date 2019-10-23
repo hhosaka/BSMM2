@@ -1,14 +1,11 @@
 ﻿using BSMM2.Models.Matches;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace BSMM2.Models {
 
 	public class BSMMApp {
-		private static BSMMApp _instance;
-
 		private Dictionary<Guid, string> _games;
 		private Engine _engine;
 
@@ -18,11 +15,7 @@ namespace BSMM2.Models {
 		public Rule Rule { get; set; }
 		public Game Game { get; private set; }
 
-		public static BSMMApp Instance => _instance;
-
 		public BSMMApp() {
-			Debug.Assert(_instance == null);
-
 			Rules = new Rule[] {
 				new SingleMatchRule(),
 				new ThreeGameMatchRule(),
@@ -31,7 +24,6 @@ namespace BSMM2.Models {
 			Rule = Rules.First();
 			_games = new Dictionary<Guid, string>();
 			_engine = new Engine();
-			_instance = this;
 		}
 
 		public bool Add(Game game, bool AsCurrentGame) {

@@ -12,8 +12,7 @@ namespace BSMM2 {
 		public App() {
 			InitializeComponent();
 
-			new BSMMApp();
-			MainPage = new MainPage();
+			MainPage = new MainPage(new BSMMApp());
 		}
 
 		protected override void OnStart() {

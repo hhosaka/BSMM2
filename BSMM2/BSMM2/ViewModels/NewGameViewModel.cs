@@ -22,9 +22,10 @@ namespace BSMM2.ViewModels {
 	}
 
 	internal class NewGameViewModel : BaseViewModel {
+		private BSMMApp _app;
 		public string GameName { get; set; }
 		public Rule Rule { get; set; }
-		public IEnumerable<Rule> Rules => BSMMApp.Instance.Rules;
+		public IEnumerable<Rule> Rules => _app.Rules;
 		public string Prefix { get; set; }
 		public int PlayerCount { get; set; }
 		public string EntrySheet { get; set; }
@@ -40,8 +41,8 @@ namespace BSMM2.ViewModels {
 
 		public bool ExecuteNewGame() {
 			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
-			BSMMApp.Instance.Add(game, AsCurrentGame);
-			MessagingCenter.Send<object, Game>(this, "RefreshGame", game);
+			_app.Add(game, AsCurrentGame);
+			MessagingCenter.Send<object>(this, "RefreshGame");
 			return true;
 		}
 
@@ -60,7 +61,8 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		public NewGameViewModel() {
+		public NewGameViewModel(BSMMApp app) {
+			_app = app;
 			Title = "Create New Game";
 			Rule = Rules.First();
 			GameName = "Game" + DateTime.Now.ToShortDateString();

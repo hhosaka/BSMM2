@@ -9,11 +9,13 @@ namespace BSMM2.Views {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PlayersPage : ContentPage {
 		private PlayersViewModel viewModel;
+		private BSMMApp _app;
 
-		public PlayersPage() {
+		public PlayersPage(BSMMApp app) {
+			_app = app;
 			InitializeComponent();
 
-			BindingContext = viewModel = new PlayersViewModel();
+			BindingContext = viewModel = new PlayersViewModel(app);
 		}
 
 		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {
@@ -28,14 +30,14 @@ namespace BSMM2.Views {
 		}
 
 		private async void NewGame_Clicked(object sender, EventArgs e) {
-			await Navigation.PushModalAsync(new NavigationPage(new NewGamePage()));
+			await Navigation.PushModalAsync(new NavigationPage(new NewGamePage(_app)));
 		}
 
 		private async void RemoveGame_Clicked(object sender, EventArgs e) {
 			var accepted = await DisplayAlert(
 				  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
 			if (accepted) {
-				BSMMApp.Instance.RemoveGame();
+				_app.RemoveGame();
 			};
 		}
 

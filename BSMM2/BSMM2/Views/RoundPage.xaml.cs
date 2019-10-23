@@ -3,6 +3,7 @@ using BSMM2.ViewModels;
 using BSMM2.Views.Matches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static BSMM2.ViewModels.RoundViewModel;
 
 namespace BSMM2.Views {
 
@@ -10,24 +11,17 @@ namespace BSMM2.Views {
 	public partial class RoundPage : ContentPage {
 		private RoundViewModel viewModel;
 
-		public RoundPage() {
+		public RoundPage(BSMMApp app) {
 			InitializeComponent();
 
-			BindingContext = viewModel = new RoundViewModel();
+			BindingContext = viewModel = new RoundViewModel(app);
 		}
 
 		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
-			if (args.Item is Match match && viewModel.IsPlaying)
+			if (args.Item is MatchItem match && viewModel.IsPlaying)
 				await Navigation.PushModalAsync(new NavigationPage(new SingleMatchPage(viewModel.Game, match)));
 
 			RoundListView.SelectedItem = null;
-		}
-
-		protected override void OnAppearing() {
-			base.OnAppearing();
-
-			if (viewModel.Matches.Count == 0)
-				viewModel.LoadRoundCommand.Execute(null);
 		}
 	}
 }

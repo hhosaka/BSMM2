@@ -7,7 +7,8 @@ using Xamarin.Forms;
 namespace BSMM2.ViewModels {
 
 	public class PlayersViewModel : BaseViewModel {
-		private Game _game;
+		private BSMMApp _app;
+		private Game Game => _app.Game;
 
 		private IEnumerable<Player> _players;
 
@@ -16,24 +17,23 @@ namespace BSMM2.ViewModels {
 			set { SetProperty(ref _players, value); }
 		}
 
-		public PlayersViewModel() {
+		public PlayersViewModel(BSMMApp app) {
+			_app = app;
 			Title = "Players";
 			Players = new ObservableCollection<Player>();
 
-			MessagingCenter.Subscribe<object, Game>(this, "RefreshGame", async (sender, game) => {
-				await ExecuteLoadPlayersCommand(game);
-			});
+			MessagingCenter.Subscribe<object>(this, "RefreshGame",
+				async (sender) => await Refresh());
+			MessagingCenter.Subscribe<object>(this, "UpdateMatch",
+				async (sender) => await Refresh());
 		}
 
-		private async Task ExecuteLoadPlayersCommand(Game game) {
+		private async Task Refresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					if (game != null)
-						_game = game;
-
-					await Task.Run(() => Players = _game.PlayersByOrder);
+					await Task.Run(() => Players = Game.PlayersByOrder);
 				} finally {
 					IsBusy = false;
 				}
