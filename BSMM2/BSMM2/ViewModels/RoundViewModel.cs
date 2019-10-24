@@ -12,7 +12,7 @@ namespace BSMM2.ViewModels {
 
 	public class RoundViewModel : BaseViewModel {
 
-		public class MatchItem : INotifyPropertyChanged {
+		public class MatchItem : INotifyPropertyChanged, IMatch {
 			private Match _match;
 
 			public MatchItem(Match match) {

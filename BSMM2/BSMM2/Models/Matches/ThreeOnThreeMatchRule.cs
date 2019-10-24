@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Xamarin.Forms;
 
 namespace BSMM2.Models.Matches {
 
@@ -18,5 +19,9 @@ namespace BSMM2.Models.Matches {
 
 		protected override int MinimumMatchCount
 			=> 3;
+
+		public override ContentPage CreateMatchPage(Game game, IMatch match) {
+			throw new System.NotImplementedException();
+		}
 	}
 }

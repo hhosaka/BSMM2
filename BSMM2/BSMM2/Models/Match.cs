@@ -6,7 +6,7 @@ using Xamarin.Forms.Internals;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Match {
+	public class Match : IMatch {
 
 		private class ByePlayer : Player {
 			public override bool Dropped => true;

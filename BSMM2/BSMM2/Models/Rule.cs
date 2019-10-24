@@ -182,7 +182,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public virtual ContentPage ContentPage { get; }
+		public abstract ContentPage CreateMatchPage(Game game, IMatch match);
 
 		public Comparer<Player> CreateOrderComparer()
 			=> new TheComparer((p1, p2) => Compare(p1, p2, true));

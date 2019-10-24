@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
@@ -57,6 +58,10 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool Locked => (_activeRound as Matching)?.Locked == true;
+
+		public ContentPage CreateMatchPage(IMatch match) {
+			return Rule.CreateMatchPage(this, match);
+		}
 
 		public Game() {// For Serializer
 		}

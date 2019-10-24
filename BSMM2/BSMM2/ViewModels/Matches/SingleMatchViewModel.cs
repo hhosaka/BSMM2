@@ -3,7 +3,6 @@ using BSMM2.Models.Matches;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
-using static BSMM2.ViewModels.RoundViewModel;
 
 namespace BSMM2.ViewModels.Matches {
 
@@ -19,7 +18,7 @@ namespace BSMM2.ViewModels.Matches {
 			}
 		}
 
-		private MatchItem _match;
+		private IMatch _match;
 
 		public SingleMatchRule Rule { get; }
 		public bool EnableLifePoint { get; }
@@ -41,7 +40,7 @@ namespace BSMM2.ViewModels.Matches {
 			return false;
 		}
 
-		public SingleMatchViewModel(Game game, MatchItem match) {
+		public SingleMatchViewModel(Game game, IMatch match) {
 			Rule = game.Rule as SingleMatchRule;
 			EnableLifePoint = game.EnableLifePoint;
 			_match = match;

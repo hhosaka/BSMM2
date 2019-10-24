@@ -2,7 +2,6 @@
 using BSMM2.ViewModels.Matches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using static BSMM2.ViewModels.RoundViewModel;
 
 namespace BSMM2.Views.Matches {
 
@@ -10,7 +9,7 @@ namespace BSMM2.Views.Matches {
 	public partial class SingleMatchPage : ContentPage {
 		private SingleMatchViewModel _viewModel;
 
-		public SingleMatchPage(Game game, MatchItem match) {
+		public SingleMatchPage(Game game, IMatch match) {
 			InitializeComponent();
 			Title = "Single Match Result";
 			BindingContext = _viewModel = new SingleMatchViewModel(game, match);

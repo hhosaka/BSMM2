@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
@@ -51,6 +52,10 @@ namespace BSMM2.Models {
 
 		public void Save() {
 			_engine.Save(Game);
+		}
+
+		public ContentPage CreateMatchPage(Match match) {
+			return Game.CreateMatchPage(match);
 		}
 	}
 }
