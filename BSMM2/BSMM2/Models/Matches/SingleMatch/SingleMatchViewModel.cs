@@ -1,10 +1,9 @@
-﻿using BSMM2.Models;
-using BSMM2.Models.Matches;
+﻿using BSMM2.ViewModels;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
 
-namespace BSMM2.ViewModels.Matches {
+namespace BSMM2.Models.Matches.SingleMatch {
 
 	internal class SingleMatchViewModel : BaseViewModel {
 

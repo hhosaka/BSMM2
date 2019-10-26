@@ -1,9 +1,7 @@
-﻿using BSMM2.Models;
-using BSMM2.ViewModels.Matches;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace BSMM2.Views.Matches {
+namespace BSMM2.Models.Matches.SingleMatch {
 
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleMatchPage : ContentPage {

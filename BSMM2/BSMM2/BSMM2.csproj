@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Matches\SingleMatchPage.xaml.cs">
+    <Compile Update="Models\Matches\SingleMatch\SingleMatchPage.xaml.cs">
       <DependentUpon>SingleMatchPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\RoundPage.xaml.cs">
@@ -37,5 +37,10 @@
     <EmbeddedResource Update="Views\RoundPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\Matches\" />
+    <Folder Include="Views\Matches\" />
   </ItemGroup>
 </Project>

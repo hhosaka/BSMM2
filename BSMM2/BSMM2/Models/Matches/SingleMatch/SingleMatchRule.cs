@@ -1,10 +1,9 @@
-﻿using BSMM2.Views.Matches;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using Xamarin.Forms;
 using static BSMM2.Models.RESULT_T;
 
-namespace BSMM2.Models.Matches {
+namespace BSMM2.Models.Matches.SingleMatch {
 
 	[JsonObject]
 	public class SingleMatchRule : Rule {

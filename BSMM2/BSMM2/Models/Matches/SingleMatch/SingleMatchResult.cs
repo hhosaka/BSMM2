@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BSMM2.Models.Matches {
+namespace BSMM2.Models.Matches.SingleMatch {
 
 	internal class SingleMatchResult : IResult {
 

@@ -1,5 +1,6 @@
 using BSMM2.Models;
 using BSMM2.Models.Matches;
+using BSMM2.Models.Matches.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
