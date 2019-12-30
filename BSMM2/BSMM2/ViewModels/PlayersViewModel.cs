@@ -33,7 +33,7 @@ namespace BSMM2.ViewModels {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Players = Game.PlayersByOrder);
+					await Task.Run(() => Players = Game?.PlayersByOrder);
 				} finally {
 					IsBusy = false;
 				}

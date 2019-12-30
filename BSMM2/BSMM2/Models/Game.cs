@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -25,7 +26,7 @@ namespace BSMM2.Models {
 		private readonly Players _players;
 
 		[JsonProperty]
-		private readonly Stack<Round> _rounds;
+		private readonly Stack<IRound> _rounds;
 
 		[JsonProperty]
 		private IRound _activeRound;
@@ -50,7 +51,7 @@ namespace BSMM2.Models {
 		public Players Players => _players;
 
 		[JsonIgnore]
-		public IEnumerable<Round> Rounds
+		public IEnumerable<IRound> Rounds
 			=> _rounds;
 
 		[JsonIgnore]
@@ -72,18 +73,29 @@ namespace BSMM2.Models {
 			Id = Guid.NewGuid();
 			_players = players;
 			Rule = rule;
-			_rounds = new Stack<Round>();
+			_rounds = new Stack<IRound>();
 			_startTime = null;
-			Shuffle(true);
+			var result = CreateMatching();
+			Debug.Assert(result);
+		}
+
+		private bool CreateMatching() {
+			var round = MakeRound();
+			if (round != null) {
+				_activeRound = new Matching(MakeRound());
+				return true;
+			}
+			return false;
 		}
 
 		public bool CanExecuteShuffle()
 			=> (_activeRound as Matching)?.Locked == false;
 
-		public IRound Shuffle(bool force = false) {
-			if (force || CanExecuteShuffle())
-				_activeRound = new Matching(MakeRound());
-			return _activeRound;
+		public bool Shuffle() {
+			if (CanExecuteShuffle()) {
+				return CreateMatching();
+			}
+			return false;
 		}
 
 		public bool CanExecuteStepToLock()
@@ -117,12 +129,16 @@ namespace BSMM2.Models {
 		public bool CanExecuteStepToMatching()
 			=> (_activeRound as Round)?.IsFinished == true;
 
-		public void StepToMatching() {
+		public bool StepToMatching() {
 			if (CanExecuteStepToMatching()) {
 				_startTime = null;
-				_rounds.Push((Round)_activeRound);
-				Shuffle(true);
+				var round = _activeRound;
+				if (CreateMatching()) {
+					_rounds.Push(round);
+					return true;
+				}
 			}
+			return false;
 		}
 
 		public bool IsMatching()
@@ -181,7 +197,7 @@ namespace BSMM2.Models {
 					case 1:// 1人余り
 						{
 							var p = stack.First();
-							if (AcceptByeMatchDuplication || !p.HasByeMatch) {
+							if (isByeAcceptable(p)) {
 								results.Enqueue(new Match(p, Rule));
 								return results;//1人不戦勝
 							}
@@ -189,6 +205,11 @@ namespace BSMM2.Models {
 						break;
 				}
 				return null;//組み合わせを作れなかった。
+
+				bool isByeAcceptable(Player p) {
+					if (p.IsAllWins) return false;
+					return p.IsAllLoses || (AcceptByeMatchDuplication || !p.HasByeMatch);
+				}
 
 				Player PickOpponent(IEnumerable<Player> opponents, Player player) {
 					foreach (var opponent in opponents) {

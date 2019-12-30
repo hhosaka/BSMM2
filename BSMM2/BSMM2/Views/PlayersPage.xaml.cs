@@ -38,6 +38,7 @@ namespace BSMM2.Views {
 				  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
 			if (accepted) {
 				_app.RemoveGame();
+				MessagingCenter.Send<object>(this, "RefreshGame");
 			};
 		}
 

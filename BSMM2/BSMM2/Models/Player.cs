@@ -21,6 +21,7 @@ namespace BSMM2.Models {
 			[JsonIgnore]
 			public RESULT_T? RESULT => null;
 
+			[JsonIgnore]
 			public bool IsFinished => true;
 
 			public Total(IEnumerable<IResult> source) {
@@ -63,6 +64,12 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public bool HasGapMatch
 			=> _matches.Any(match => match.IsGapMatch);
+
+		[JsonIgnore]
+		public bool IsAllWins => _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Win);
+
+		[JsonIgnore]
+		public bool IsAllLoses => _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Lose);
 
 		public void Commit(Match match)
 			=> _matches.Add(match);
