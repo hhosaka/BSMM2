@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models.Matches;
 using BSMM2.Models.Matches.SingleMatch;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,17 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	public class BSMMApp {
+		private static Game defaultGame = new Game();
+
 		private Dictionary<Guid, string> _games;
+		private Game _game;
 		private Engine _engine;
 
 		public IDictionary<Guid, string> Games => _games;
 		public IEnumerable<Rule> Rules { get; }
 
 		public Rule Rule { get; set; }
-		public Game Game { get; private set; }
+		public Game Game => _game ?? defaultGame;
 
 		public BSMMApp() {
 			Rules = new Rule[] {
@@ -30,33 +34,40 @@ namespace BSMM2.Models {
 
 		public bool Add(Game game, bool AsCurrentGame) {
 			if (!_games.ContainsValue(game.Title)) {
-				if (Game != null && AsCurrentGame && _games.ContainsKey(Game.Id)) {
+				if (_game != null && AsCurrentGame && _games.ContainsKey(_game.Id)) {
 					RemoveGame();
 				}
 				_games[game.Id] = game.Title;
 				_engine.Save(game);
-				Game = game;
+				_game = game;
 				return true;
 			}
 			return false;
 		}
 
 		public void RemoveGame() {
-			_engine.Remove(Game);
-			_games.Remove(Game.Id);
-			Game = null;
+			if (_game != null) {
+				_engine.Remove(Game);
+				_games.Remove(Game.Id);
+				_game = null;
+			}
 		}
 
 		public Game Select(Guid id) {
-			return Game = _engine.Load(id);
+			return _game = _engine.Load(id);
 		}
 
 		public void Save() {
-			_engine.Save(Game);
+			if (_game != null) {
+				_engine.Save(_game);
+			}
 		}
 
 		public ContentPage CreateMatchPage(Match match) {
-			return Game.CreateMatchPage(match);
+			return _game.CreateMatchPage(match);
 		}
+
+		public DelegateCommand CreateStartCommand(Action onChanged)
+			=> new DelegateCommand(() => { _game?.StepToPlaying(); onChanged(); }, () => _game?.CanExecuteStepToPlaying() == true);
 	}
 }

@@ -21,24 +21,20 @@
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Padding="10">
-								<StackLayout Orientation="Horizontal">
+								<StackLayout Orientation="Horizontal"  HorizontalOptions="Start">
 									<Label Text="{Binding Records[0], Converter={StaticResource Converter}}"
 									LineBreakMode="NoWrap"
-									HorizontalOptions="Start"
 									FontSize="20" />
 									<Label Text="{Binding Records[0].Player.Name}"
 									LineBreakMode="NoWrap"
-									HorizontalOptions="Start"
 									FontSize="20" />
 								</StackLayout>
 								<StackLayout Orientation="Horizontal" HorizontalOptions="End">
 									<Label Text="{Binding Records[1].Player.Name}"
 									LineBreakMode="NoWrap"
-									HorizontalOptions="End"
 									FontSize="20" />
 									<Label Text="{Binding Records[1], Converter={StaticResource Converter}}"
 									LineBreakMode="NoWrap"
-									HorizontalOptions="End"
 									FontSize="20" />
 								</StackLayout>
 							</StackLayout>
@@ -49,7 +45,7 @@
 			<StackLayout Orientation="Horizontal">
 				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="CenterAndExpand"></Button>
 				<Button Text="Start" Command="{Binding StartCommand}" HorizontalOptions="CenterAndExpand"></Button>
-				<Button Text="Next Round" Command="{Binding NextRoundCommand}" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Next Round" Command="{Binding StepToMatchingCommand}" HorizontalOptions="CenterAndExpand"></Button>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

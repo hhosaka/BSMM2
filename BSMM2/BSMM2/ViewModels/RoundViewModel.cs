@@ -40,17 +40,20 @@ namespace BSMM2.ViewModels {
 
 		public DelegateCommand ShuffleCommand { get; }
 		public DelegateCommand StartCommand { get; }
-		public DelegateCommand NextRoundCommand { get; }
+		public DelegateCommand StepToMatchingCommand { get; }
+
+		public event Func<Task> OnMatchingFailed;
 
 		public RoundViewModel(BSMMApp app) {
+			Debug.Assert(app != null);
 			_app = app;
 			Title = "Round";
-			ShuffleCommand = new DelegateCommand(async () => { Game?.Shuffle(); await Refresh(); }, () => Game?.CanExecuteShuffle() == true);
-			StartCommand = new DelegateCommand(async () => await Playing(), () => Game?.CanExecuteStepToPlaying() == true);
-			NextRoundCommand = new DelegateCommand(async () => await NextRound(), () => Game?.CanExecuteStepToMatching() == true);
+			ShuffleCommand = CreateShuffleCommand();
+			StartCommand = CreateStepToPlayingCommand();
+			StepToMatchingCommand = CreateStepToMatchingCommand();
 
 			MessagingCenter.Subscribe<object>(this, "RefreshGame",
-				async (sender) => await Refresh());
+				async (sender) => await Refresh(false));
 
 			MessagingCenter.Subscribe<object>(this, "UpdateMatch",
 				(sender) => RaiseCanExecuteChanged());
@@ -59,59 +62,72 @@ namespace BSMM2.ViewModels {
 		public bool IsPlaying
 			=> Game?.IsMatching() == false;
 
-		public bool IsMatching
-			=> Game?.IsMatching() == true;
+		private void Execute(Action action) {
+			if (!IsBusy) {
+				IsBusy = true;
+				try {
+					action();
+					RaiseCanExecuteChanged();
+				} finally {
+					IsBusy = false;
+				}
+			}
+		}
 
 		private void RaiseCanExecuteChanged() {
 			StartCommand.RaiseCanExecuteChanged();
 			ShuffleCommand.RaiseCanExecuteChanged();
-			NextRoundCommand.RaiseCanExecuteChanged();
+			StepToMatchingCommand.RaiseCanExecuteChanged();
 		}
 
-		private async Task NextRound() {
+		private DelegateCommand CreateStepToPlayingCommand() {
+			return new DelegateCommand(
+				() => Execute(Game.StepToPlaying),
+				() => Game.CanExecuteStepToPlaying());
+		}
+
+		private DelegateCommand CreateStepToMatchingCommand() {
+			return new DelegateCommand(
+				async () => await Execute(),
+				() => Game.CanExecuteStepToMatching());
+
+			async Task Execute() {
+				if (!IsBusy) {
+					IsBusy = true;
+
+					try {
+						if (Game.StepToMatching()) {
+							RaiseCanExecuteChanged();
+							Matches = new List<MatchItem>(Game.ActiveRound.Matches.Select(m => new MatchItem(m)));
+						} else {
+							await OnMatchingFailed?.Invoke();
+						}
+					} finally {
+						IsBusy = false;
+					}
+				}
+			}
+		}
+
+		private DelegateCommand CreateShuffleCommand() {
+			return new DelegateCommand(async () => await Refresh(true), () => Game.CanExecuteShuffle() == true);
+		}
+
+		private async Task Refresh(bool doShuffle) {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Game.StepToMatching());
+					if (doShuffle) Game.Shuffle();
+					await UpdateList();
 					RaiseCanExecuteChanged();
-				} catch (Exception ex) {
-					Debug.WriteLine(ex);
 				} finally {
 					IsBusy = false;
 				}
 			}
 		}
 
-		private async Task Playing() {
-			if (!IsBusy) {
-				IsBusy = true;
-
-				try {
-					await Task.Run(() => Game.StepToPlaying());
-					RaiseCanExecuteChanged();
-				} catch (Exception ex) {
-					Debug.WriteLine(ex);
-				} finally {
-					IsBusy = false;
-				}
-			}
-		}
-
-		private async Task Refresh() {
-			if (!IsBusy) {
-				IsBusy = true;
-
-				try {
-					var list = Game?.ActiveRound?.Matches;
-					await Task.Run(() => Matches = list == null ? null : new List<MatchItem>(list.Select(m => new MatchItem(m))));
-					RaiseCanExecuteChanged();
-				} catch (Exception ex) {
-					Debug.WriteLine(ex);
-				} finally {
-					IsBusy = false;
-				}
-			}
-		}
+		private async Task UpdateList()
+			=> await Task.Run(() => Matches = new List<MatchItem>(Game.ActiveRound.Matches.Select(m => new MatchItem(m))));
 	}
 }
