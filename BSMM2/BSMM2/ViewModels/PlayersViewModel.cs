@@ -22,9 +22,9 @@ namespace BSMM2.ViewModels {
 			Title = "Players";
 			Players = new ObservableCollection<Player>();
 
-			MessagingCenter.Subscribe<object>(this, "RefreshGame",
+			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
 				async (sender) => await Refresh());
-			MessagingCenter.Subscribe<object>(this, "UpdateMatch",
+			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
 				async (sender) => await Refresh());
 		}
 

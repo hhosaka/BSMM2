@@ -42,7 +42,7 @@ namespace BSMM2.ViewModels {
 		public bool ExecuteNewGame() {
 			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
 			_app.Add(game, AsCurrentGame);
-			MessagingCenter.Send<object>(this, "RefreshGame");
+			MessagingCenter.Send<object>(this, "UpdatedRound");
 			return true;
 		}
 

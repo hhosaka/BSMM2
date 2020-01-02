@@ -3,7 +3,6 @@ using BSMM2.ViewModels;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using static BSMM2.ViewModels.RoundViewModel;
 
 namespace BSMM2.Views {
 
@@ -23,7 +22,7 @@ namespace BSMM2.Views {
 		}
 
 		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
-			if (args.Item is MatchItem match && viewModel.IsPlaying)
+			if (args.Item is Match match && viewModel.IsPlaying)
 				await Navigation.PushModalAsync(new NavigationPage(viewModel.Game.CreateMatchPage(match)));
 
 			RoundListView.SelectedItem = null;

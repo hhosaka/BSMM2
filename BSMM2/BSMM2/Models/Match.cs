@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Match : IMatch {
+	public class Match : INotifyPropertyChanged, IMatch {
 
 		private class ByePlayer : Player {
 			public override bool Dropped => true;
@@ -72,6 +73,7 @@ namespace BSMM2.Models {
 		public void SetResults(IResult result1, IResult result2) {
 			_records[0].SetResult(result1);
 			_records[1].SetResult(result2);
+			PropertyChanged(this, new PropertyChangedEventArgs("Records"));
 		}
 
 		public void Swap(Match other) {
@@ -110,5 +112,7 @@ namespace BSMM2.Models {
 			_records = new[] { new Record(player), new Record(BYE) };
 			SetResults(rule.CreatePoints(RESULT_T.Win));
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }
