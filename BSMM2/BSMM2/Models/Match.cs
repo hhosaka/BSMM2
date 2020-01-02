@@ -73,7 +73,7 @@ namespace BSMM2.Models {
 		public void SetResults(IResult result1, IResult result2) {
 			_records[0].SetResult(result1);
 			_records[1].SetResult(result2);
-			PropertyChanged(this, new PropertyChangedEventArgs("Records"));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Records"));
 		}
 
 		public void Swap(Match other) {

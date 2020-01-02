@@ -407,15 +407,15 @@ namespace BSMM2Test {
 
 			Util.CheckWithOrder(new[] { 1, 9, 5, 3, 7, 2, 6, 10, 4, 11, 8 }, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, game.PlayersByOrder);
 
-			game.StepToMatching();
-			//game.StepToPlaying();
+			Assert.IsFalse(game.StepToMatching());
+			game.AcceptByeMatchDuplication = true;
+			Assert.IsTrue(game.StepToMatching());
+			game.StepToPlaying();
 
-			//Util.Check(new[] { 1, 9, 5, 3, 7, 2, 6, 10, 4, 11, 8, -1 }, game.ActiveRound);
+			var points = game.PlayersByOrder.Select(p => p.Result.Point);
+			var opponentPoints = game.PlayersByOrder.Select(p => p.OpponentResult.Point);
 
-			//var points = game.PlayersByOrder.Select(p => p.Result.Point);
-			//var opponentPoints = game.PlayersByOrder.Select(p => p.OpponentResult.Point);
-
-			//Util.CheckWithOrder(new[] { 1, 5, 2, 6, 3, 7, 4 }, new[] { 1, 2, 3, 4, 5, 6, 7 }, game.PlayersByOrder);
+			Util.Check(new[] { 1, 9, 5, 3, 7, 6, 2, 10, 4, 8, 11, -1 }, game.ActiveRound);
 		}
 
 		private Game CreateGame(Rule rule, int count, int round) {

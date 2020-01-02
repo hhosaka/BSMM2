@@ -214,9 +214,18 @@ namespace BSMM2.Models {
 				Player PickOpponent(IEnumerable<Player> opponents, Player player) {
 					foreach (var opponent in opponents) {
 						if (player.GetResult(opponent) == null) {//対戦履歴なし
-							if (AcceptGapMatchDuplication || !player.HasGapMatch) {
+							if (CheckGapMatch()) {
 								return opponent;//対戦者認定
 							}
+						}
+
+						bool CheckGapMatch() {// 階段戦の重複は避ける
+							if (!AcceptGapMatchDuplication) {
+								if (player.Result.Point != opponent.Result.Point) {
+									return !player.HasGapMatch && !opponent.HasGapMatch;
+								}
+							}
+							return true;
 						}
 					}
 					return null;//適合者なし
