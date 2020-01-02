@@ -1,4 +1,5 @@
 ﻿using BSMM2.Models;
+using BSMM2.Resource;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace BSMM2.ViewModels {
 		public RoundViewModel(BSMMApp app) {
 			Debug.Assert(app != null);
 			_app = app;
-			Title = "Round";
+			Title = AppResource.RoundPageTitle;
 			ShuffleCommand = CreateShuffleCommand();
 			StartCommand = CreateStepToPlayingCommand();
 			StepToMatchingCommand = CreateStepToMatchingCommand();

@@ -22,12 +22,21 @@
     <Compile Update="Models\Matches\SingleMatch\SingleMatchPage.xaml.cs">
       <DependentUpon>SingleMatchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Resource\AppResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>AppResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Views\RoundPage.xaml.cs">
       <DependentUpon>RoundPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resource\AppResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\NewGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

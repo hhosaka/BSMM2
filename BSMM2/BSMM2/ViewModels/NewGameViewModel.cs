@@ -32,11 +32,11 @@ namespace BSMM2.ViewModels {
 		public bool EnableLifePoint { get; set; }
 		public bool AsCurrentGame { get; set; }
 
-		private string _PlayerMode;
+		private string _playerMode;
 
 		public string PlayerMode {
-			get => _PlayerMode;
-			set => SetProperty<string>(ref _PlayerMode, value);
+			get => _playerMode;
+			set => SetProperty<string>(ref _playerMode, value);
 		}
 
 		public bool ExecuteNewGame() {
