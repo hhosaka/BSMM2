@@ -4,6 +4,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -18,6 +19,27 @@ namespace BSMM2.ViewModels {
 		public IEnumerable<Match> Matches {
 			get => _matches;
 			set { SetProperty(ref _matches, value); }
+		}
+
+		private string _timer;
+
+		public string Timer {
+			get => _timer;
+			set => SetProperty(ref _timer, value);
+		}
+
+		private string _count;
+
+		public string Count {
+			get => _count;
+			set => SetProperty(ref _count, value);
+		}
+
+		private bool _isTimeVisible;
+
+		public bool IsTimerVisible {
+			get => _isTimeVisible;
+			set => SetProperty(ref _isTimeVisible, value);
 		}
 
 		public DelegateCommand ShuffleCommand { get; }
@@ -62,13 +84,20 @@ namespace BSMM2.ViewModels {
 			StepToMatchingCommand.RaiseCanExecuteChanged();
 		}
 
-		private async Task UpdateList()
-			=> await Task.Run(() => Matches = Game.ActiveRound.Matches);
+		private async Task UpdateList() {
+			await Task.Run(() => Matches = Game.ActiveRound?.Matches ?? Enumerable.Empty<Match>());
+			Count = "Round" + (Game.Rounds?.Count() + 1 ?? 0);
+		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {
 			return new DelegateCommand(
-				async () => await Invoke(() => Task.Run(() => Game.StepToPlaying())),
+				async () => await Invoke(Execute),
 				() => Game.CanExecuteStepToPlaying());
+
+			async Task Execute() {
+				await Task.Run(() => Game.StepToPlaying());
+				StartTimer();
+			}
 		}
 
 		private DelegateCommand CreateShuffleCommand() {
@@ -97,6 +126,19 @@ namespace BSMM2.ViewModels {
 					await OnMatchingFailed();
 				}
 			}
+		}
+
+		private void StartTimer() {
+			IsTimerVisible = true;
+			Device.StartTimer(new TimeSpan(100), () => {
+				if (Game.StartTime == null) {
+					IsTimerVisible = false;
+					return false;
+				} else {
+					Timer = (DateTime.Now - Game.StartTime)?.ToString(@"hh\:mm\:ss");
+					return true;
+				}
+			});
 		}
 	}
 }

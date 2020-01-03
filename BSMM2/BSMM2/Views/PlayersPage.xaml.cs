@@ -37,8 +37,8 @@ namespace BSMM2.Views {
 			var accepted = await DisplayAlert(
 				  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
 			if (accepted) {
-				_app.RemoveGame();
-				MessagingCenter.Send<object>(this, "UpdatedRound");
+				if (_app.RemoveGame())
+					MessagingCenter.Send<object>(this, "UpdatedRound");
 			};
 		}
 

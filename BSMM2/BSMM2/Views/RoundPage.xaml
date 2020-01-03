@@ -10,6 +10,8 @@
 	</ContentPage.Resources>
 	<ContentPage.Content>
 		<StackLayout>
+			<Label Text="{Binding Count}" FontSize="40" HorizontalOptions="Center" />
+			<Label Text="{Binding Timer}" IsVisible="{Binding IsTimerVisible}" FontSize="40" HorizontalOptions="Center" />
 			<ListView x:Name="RoundListView"
 				ItemsSource="{Binding Matches}"
 				VerticalOptions="FillAndExpand"

@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Game {
+	public class Game : IGame {
 
 		[JsonProperty]
 		public string Title { get; set; }
@@ -32,7 +32,7 @@ namespace BSMM2.Models {
 		private IRound _activeRound;
 
 		[JsonProperty]
-		private DateTime? _startTime;
+		public DateTime? StartTime;
 
 		[JsonProperty]
 		public bool AcceptByeMatchDuplication { get; set; } = false;
@@ -42,10 +42,6 @@ namespace BSMM2.Models {
 
 		[JsonProperty]
 		public virtual int TryCount { get; set; } = 100;
-
-		[JsonIgnore]
-		public TimeSpan? ElapsedTime
-			=> DateTime.Now - _startTime;
 
 		[JsonIgnore]
 		public Players Players => _players;
@@ -74,7 +70,7 @@ namespace BSMM2.Models {
 			_players = players;
 			Rule = rule;
 			_rounds = new Stack<IRound>();
-			_startTime = null;
+			StartTime = null;
 			var result = CreateMatching();
 			Debug.Assert(result);
 		}
@@ -113,7 +109,7 @@ namespace BSMM2.Models {
 		public void StepToPlaying() {
 			if (CanExecuteStepToPlaying()) {
 				_activeRound = new Round(_activeRound.Matches);
-				_startTime = DateTime.Now;
+				StartTime = DateTime.Now;
 			}
 		}
 
@@ -131,7 +127,7 @@ namespace BSMM2.Models {
 
 		public bool StepToMatching() {
 			if (CanExecuteStepToMatching()) {
-				_startTime = null;
+				StartTime = null;
 				var round = _activeRound;
 				if (CreateMatching()) {
 					_rounds.Push(round);
@@ -162,7 +158,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonIgnore]
-		public IEnumerable<Player> PlayersByOrder
+		public virtual IEnumerable<Player> PlayersByOrder
 				=> GetOrderedPlayers();
 
 		private IEnumerable<Match> MakeRound() {

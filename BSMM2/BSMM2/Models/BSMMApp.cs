@@ -9,7 +9,7 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	public class BSMMApp {
-		private static Game defaultGame = new Game();
+		private static readonly Game defaultGame = new DefaultGame();
 
 		private Dictionary<Guid, string> _games;
 		private Game _game;
@@ -33,24 +33,23 @@ namespace BSMM2.Models {
 		}
 
 		public bool Add(Game game, bool AsCurrentGame) {
-			if (!_games.ContainsValue(game.Title)) {
-				if (_game != null && AsCurrentGame && _games.ContainsKey(_game.Id)) {
-					RemoveGame();
-				}
-				_games[game.Id] = game.Title;
-				_engine.Save(game);
-				_game = game;
-				return true;
+			if (_game != null && AsCurrentGame && _games.ContainsKey(_game.Id)) {
+				RemoveGame();
 			}
-			return false;
+			_games[game.Id] = game.Title;
+			_engine.Save(game);
+			_game = game;
+			return true;
 		}
 
-		public void RemoveGame() {
+		public bool RemoveGame() {
 			if (_game != null) {
 				_engine.Remove(Game);
 				_games.Remove(Game.Id);
 				_game = null;
+				return true;
 			}
+			return false;
 		}
 
 		public Game Select(Guid id) {

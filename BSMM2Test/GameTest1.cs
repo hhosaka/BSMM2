@@ -161,10 +161,8 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
 			// ŽŽ‡’†‚É‚·‚é
-			Assert.IsNull(game.ElapsedTime);
 			game.StepToPlaying();
 			Thread.Sleep(2);
-			Assert.IsTrue(game.ElapsedTime?.Milliseconds > 0);
 
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 

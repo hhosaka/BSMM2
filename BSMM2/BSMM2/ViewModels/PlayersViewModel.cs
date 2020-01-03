@@ -1,6 +1,7 @@
 ﻿using BSMM2.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -28,12 +29,12 @@ namespace BSMM2.ViewModels {
 				async (sender) => await Refresh());
 		}
 
-		private async Task Refresh() {
+		public async Task Refresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Players = Game?.PlayersByOrder);
+					await Task.Run(() => Players = new ObservableCollection<Player>(Game.PlayersByOrder ?? Enumerable.Empty<Player>()));
 				} finally {
 					IsBusy = false;
 				}
