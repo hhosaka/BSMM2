@@ -130,7 +130,7 @@ namespace BSMM2.ViewModels {
 
 		private void StartTimer() {
 			IsTimerVisible = true;
-			Device.StartTimer(new TimeSpan(100), () => {
+			Device.StartTimer(TimeSpan.FromMilliseconds(100), () => {
 				if (Game.StartTime == null) {
 					IsTimerVisible = false;
 					return false;
