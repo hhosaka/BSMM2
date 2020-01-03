@@ -3,13 +3,14 @@ using BSMM2.Models.Matches.SingleMatch;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
 	public class BSMMApp {
-		private static readonly Game defaultGame = new DefaultGame();
+		private static readonly IGame defaultGame = new DefaultGame();
 
 		private Dictionary<Guid, string> _games;
 		private Game _game;
@@ -19,7 +20,7 @@ namespace BSMM2.Models {
 		public IEnumerable<Rule> Rules { get; }
 
 		public Rule Rule { get; set; }
-		public Game Game => _game ?? defaultGame;
+		public IGame Game => _game ?? defaultGame;
 
 		public BSMMApp() {
 			Rules = new Rule[] {
@@ -43,13 +44,11 @@ namespace BSMM2.Models {
 		}
 
 		public bool RemoveGame() {
-			if (_game != null) {
-				_engine.Remove(Game);
-				_games.Remove(Game.Id);
-				_game = null;
-				return true;
-			}
-			return false;
+			Debug.Assert(_game != null);
+			_engine.Remove(_game);
+			_games.Remove(_game.Id);
+			_game = null;
+			return true;
 		}
 
 		public Game Select(Guid id) {
@@ -67,6 +66,6 @@ namespace BSMM2.Models {
 		}
 
 		public DelegateCommand CreateStartCommand(Action onChanged)
-			=> new DelegateCommand(() => { _game?.StepToPlaying(); onChanged(); }, () => _game?.CanExecuteStepToPlaying() == true);
+			=> new DelegateCommand(() => { Game.StepToPlaying(); onChanged(); }, () => Game.CanExecuteStepToPlaying);
 	}
 }

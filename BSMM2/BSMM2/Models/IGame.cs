@@ -1,8 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
-	internal interface IGame {
+	public interface IGame {
+		IRound ActiveRound { get; }
+		IEnumerable<IRound> Rounds { get; }
+		DateTime? StartTime { get; }
+		bool IsMatching { get; }
 		IEnumerable<Player> PlayersByOrder { get; }
+
+		bool CanExecuteShuffle { get; }
+
+		bool Shuffle();
+
+		bool CanExecuteStepToPlaying { get; }
+
+		void StepToPlaying();
+
+		bool CanExecuteStepToMatching { get; }
+
+		bool StepToMatching();
+
+		ContentPage CreateMatchPage(IMatch match);
 	}
 }

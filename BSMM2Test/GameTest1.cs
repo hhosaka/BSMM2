@@ -117,13 +117,11 @@ namespace BSMM2Test {
 			// 初期設定確認
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			//　スワップできる
-			Assert.IsFalse(game.Locked);
 			(game.ActiveRound as Matching)?.Swap(0, 1);
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			//　シャッフルできる
-			Assert.IsTrue(game.CanExecuteShuffle());
+			Assert.IsTrue(game.CanExecuteShuffle);
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
@@ -133,30 +131,6 @@ namespace BSMM2Test {
 			(game.ActiveRound as Matching)?.Swap(0, 1);
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			//　ロックしてみる
-			Assert.IsFalse(game.CanExecuteStepToMatching());
-			Assert.IsTrue(game.CanExecuteStepToLock());
-			Assert.IsTrue(game.CanExecuteStepToPlaying());
-			Assert.IsFalse(game.CanExecuteBackToMatching());
-			game.StepToLock();
-
-			Assert.IsTrue(game.Locked);
-			(game.ActiveRound as Matching)?.Swap(0, 1);
-			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Assert.IsTrue(game.Locked);
-
-			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
-			Assert.IsTrue(game.Locked);
-
-			// マッチングに戻る
-			Assert.IsFalse(game.CanExecuteStepToMatching());
-			Assert.IsFalse(game.CanExecuteStepToLock());
-			Assert.IsTrue(game.CanExecuteStepToPlaying());
-			Assert.IsTrue(game.CanExecuteBackToMatching());
-			game.BackToMatching();
-
-			Assert.IsFalse(game.Locked);
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
@@ -164,15 +138,15 @@ namespace BSMM2Test {
 			game.StepToPlaying();
 			Thread.Sleep(2);
 
-			Assert.IsFalse(game.CanExecuteStepToMatching());
+			Assert.IsFalse(game.CanExecuteStepToMatching);
 
 			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Win));
 
-			Assert.IsFalse(game.CanExecuteStepToMatching());
+			Assert.IsFalse(game.CanExecuteStepToMatching);
 
 			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Win));
 
-			Assert.IsTrue(game.CanExecuteStepToMatching());
+			Assert.IsTrue(game.CanExecuteStepToMatching);
 
 			game.StepToMatching();
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.PlayersByOrder);
@@ -185,7 +159,7 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Lose));
 			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Lose));
 
-			Assert.IsTrue(game.CanExecuteStepToMatching());
+			Assert.IsTrue(game.CanExecuteStepToMatching);
 			Util.CheckWithOrder(new[] { 3, 1, 4, 2 }, new[] { 1, 2, 2, 4 }, game.PlayersByOrder);
 		}
 

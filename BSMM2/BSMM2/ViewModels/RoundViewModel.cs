@@ -14,7 +14,7 @@ namespace BSMM2.ViewModels {
 		private BSMMApp _app;
 		private IEnumerable<Match> _matches;
 
-		public Game Game => _app.Game;
+		public IGame Game => _app.Game;
 
 		public IEnumerable<Match> Matches {
 			get => _matches;
@@ -64,7 +64,7 @@ namespace BSMM2.ViewModels {
 		}
 
 		public bool IsPlaying
-			=> Game?.IsMatching() == false;
+			=> !Game.IsMatching;
 
 		private async Task Invoke(Func<Task> action) {
 			if (!IsBusy) {
@@ -92,7 +92,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateStepToPlayingCommand() {
 			return new DelegateCommand(
 				async () => await Invoke(Execute),
-				() => Game.CanExecuteStepToPlaying());
+				() => Game.CanExecuteStepToPlaying);
 
 			async Task Execute() {
 				await Task.Run(() => Game.StepToPlaying());
@@ -103,7 +103,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateShuffleCommand() {
 			return new DelegateCommand(
 				async () => await Invoke(Execute),
-				() => Game.CanExecuteShuffle());
+				() => Game.CanExecuteShuffle);
 
 			async Task Execute() {
 				if (Game.Shuffle()) {
@@ -117,7 +117,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateStepToMatchingCommand() {
 			return new DelegateCommand(
 				async () => await Invoke(Execute),
-				() => Game.CanExecuteStepToMatching());
+				() => Game.CanExecuteStepToMatching);
 
 			async Task Execute() {
 				if (Game.StepToMatching()) {

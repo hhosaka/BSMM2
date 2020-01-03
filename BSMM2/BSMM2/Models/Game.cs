@@ -32,7 +32,7 @@ namespace BSMM2.Models {
 		private IRound _activeRound;
 
 		[JsonProperty]
-		public DateTime? StartTime;
+		public DateTime? StartTime { get; private set; }
 
 		[JsonProperty]
 		public bool AcceptByeMatchDuplication { get; set; } = false;
@@ -52,9 +52,6 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public IRound ActiveRound => _activeRound;
-
-		[JsonIgnore]
-		public bool Locked => (_activeRound as Matching)?.Locked == true;
 
 		public ContentPage CreateMatchPage(IMatch match) {
 			return Rule.CreateMatchPage(this, match);
@@ -84,49 +81,31 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		public bool CanExecuteShuffle()
-			=> (_activeRound as Matching)?.Locked == false;
+		public bool CanExecuteShuffle
+			=> _activeRound is Matching;
 
 		public bool Shuffle() {
-			if (CanExecuteShuffle()) {
+			if (CanExecuteShuffle) {
 				return CreateMatching();
 			}
 			return false;
 		}
 
-		public bool CanExecuteStepToLock()
-			=> (_activeRound as Matching).Locked == false;
-
-		public void StepToLock() {
-			if (CanExecuteStepToLock()) {
-				(_activeRound as Matching)?.Lock();
-			}
-		}
-
-		public bool CanExecuteStepToPlaying()
+		public bool CanExecuteStepToPlaying
 			=> _activeRound is Matching;
 
 		public void StepToPlaying() {
-			if (CanExecuteStepToPlaying()) {
+			if (CanExecuteStepToPlaying) {
 				_activeRound = new Round(_activeRound.Matches);
 				StartTime = DateTime.Now;
 			}
 		}
 
-		public bool CanExecuteBackToMatching()
-			=> (_activeRound as Matching).Locked == true;
-
-		public void BackToMatching() {
-			if (CanExecuteBackToMatching()) {
-				(_activeRound as Matching)?.Unlock();
-			}
-		}
-
-		public bool CanExecuteStepToMatching()
+		public bool CanExecuteStepToMatching
 			=> (_activeRound as Round)?.IsFinished == true;
 
 		public bool StepToMatching() {
-			if (CanExecuteStepToMatching()) {
+			if (CanExecuteStepToMatching) {
 				StartTime = null;
 				var round = _activeRound;
 				if (CreateMatching()) {
@@ -137,7 +116,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		public bool IsMatching()
+		public bool IsMatching
 			=> _activeRound is Matching;
 
 		private IEnumerable<Player> GetOrderedPlayers() {
