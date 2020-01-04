@@ -9,6 +9,7 @@ namespace BSMM2.Models {
 		IEnumerable<IRound> Rounds { get; }
 		DateTime? StartTime { get; }
 		bool IsMatching { get; }
+		string Headline { get; }
 		IEnumerable<Player> PlayersByOrder { get; }
 
 		bool CanExecuteShuffle { get; }

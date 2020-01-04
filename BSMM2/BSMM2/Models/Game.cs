@@ -11,7 +11,10 @@ namespace BSMM2.Models {
 	public class Game : IGame {
 
 		[JsonProperty]
-		public string Title { get; set; }
+		public string Title { get; }
+
+		[JsonIgnore]
+		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
 		[JsonProperty]
 		public Guid Id { get; }

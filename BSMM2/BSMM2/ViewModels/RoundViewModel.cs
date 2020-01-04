@@ -86,7 +86,7 @@ namespace BSMM2.ViewModels {
 
 		private async Task UpdateList() {
 			await Task.Run(() => Matches = Game.ActiveRound?.Matches ?? Enumerable.Empty<Match>());
-			Count = "Round" + (Game.Rounds?.Count() + 1 ?? 0);
+			Count = Game.Headline;
 		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {
