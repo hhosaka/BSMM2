@@ -1,5 +1,4 @@
 using BSMM2.Models;
-using BSMM2.Models.Matches;
 using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -39,6 +38,9 @@ namespace BSMM2Test {
 			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound.Matches);
+			Assert.AreEqual(game.Title, result.Title);
+			Assert.AreEqual(game.Id, result.Id);
+			Util.Check(game, result);
 		}
 
 		[TestMethod]

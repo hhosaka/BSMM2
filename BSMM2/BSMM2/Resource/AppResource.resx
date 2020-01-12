@@ -117,7 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ButtonRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="ButtonSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
   <data name="RoundPageTitle" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="TabTitlePlayer" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="TabTitleRound" xml:space="preserve">
     <value>Round</value>
   </data>
 </root>

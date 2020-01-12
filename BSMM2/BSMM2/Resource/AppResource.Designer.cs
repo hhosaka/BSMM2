@@ -61,11 +61,47 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Remove に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ButtonRemove {
+            get {
+                return ResourceManager.GetString("ButtonRemove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ButtonSelect {
+            get {
+                return ResourceManager.GetString("ButtonSelect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Round に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string RoundPageTitle {
             get {
                 return ResourceManager.GetString("RoundPageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TabTitlePlayer {
+            get {
+                return ResourceManager.GetString("TabTitlePlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Round に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TabTitleRound {
+            get {
+                return ResourceManager.GetString("TabTitleRound", resourceCulture);
             }
         }
     }

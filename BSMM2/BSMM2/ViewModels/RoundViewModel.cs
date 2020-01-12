@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.Resource;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -28,13 +27,6 @@ namespace BSMM2.ViewModels {
 			set => SetProperty(ref _timer, value);
 		}
 
-		private string _count;
-
-		public string Count {
-			get => _count;
-			set => SetProperty(ref _count, value);
-		}
-
 		private bool _isTimeVisible;
 
 		public bool IsTimerVisible {
@@ -51,7 +43,6 @@ namespace BSMM2.ViewModels {
 		public RoundViewModel(BSMMApp app) {
 			Debug.Assert(app != null);
 			_app = app;
-			Title = AppResource.RoundPageTitle;
 			ShuffleCommand = CreateShuffleCommand();
 			StartCommand = CreateStepToPlayingCommand();
 			StepToMatchingCommand = CreateStepToMatchingCommand();
@@ -86,7 +77,7 @@ namespace BSMM2.ViewModels {
 
 		private async Task UpdateList() {
 			await Task.Run(() => Matches = Game.ActiveRound?.Matches ?? Enumerable.Empty<Match>());
-			Count = Game.Headline;
+			Title = Game.Headline;
 		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {

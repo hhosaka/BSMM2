@@ -47,6 +47,61 @@ namespace BSMM2Test {
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
+		public static void Check(IResult a, IResult b) {
+			if (a == null && b == null) return;//どちらも未設定
+			Assert.IsNotNull(a);
+			Assert.IsNotNull(b);
+			Assert.AreEqual(a.IsFinished, b.IsFinished);
+			Assert.AreEqual(a.Point, b.Point);
+			Assert.AreEqual(a.WinPoint, b.WinPoint);
+			Assert.AreEqual(a.LifePoint, b.LifePoint);
+		}
+
+		public static void Check(IPlayer a, IPlayer b) {
+			Assert.AreEqual(a.Dropped, b.Dropped);
+			Assert.AreEqual(a.Name, b.Name);
+			Assert.AreEqual(a.HasByeMatch, b.HasByeMatch);
+			Assert.AreEqual(a.HasGapMatch, b.HasGapMatch);
+			Check(a.Result, b.Result);
+		}
+
+		public static void Check(Rule rule, Players a, Players b) {
+			Assert.AreEqual(a.Count, b.Count);
+			var ita = a.GetByOrder(rule).GetEnumerator();
+			var itb = b.GetByOrder(rule).GetEnumerator();
+			while (ita.MoveNext() && itb.MoveNext()) {
+				Check(ita.Current, itb.Current);
+			}
+		}
+
+		public static void Check(IMatch a, IMatch b) {
+			Check(a.Record1.Player, b.Record1.Player);
+			Check(a.Record2.Player, b.Record2.Player);
+			Check(a.Record1.Result, b.Record1.Result);
+			Check(a.Record2.Result, b.Record2.Result);
+		}
+
+		public static void Check(IRound a, IRound b) {
+			var ita = a.Matches.GetEnumerator();
+			var itb = b.Matches.GetEnumerator();
+			while (ita.MoveNext() && itb.MoveNext()) {
+				Check(ita.Current as IMatch, itb.Current as IMatch);
+			}
+		}
+
+		public static void Check(Game a, Game b) {
+			Assert.AreEqual(a.Title, b.Title);
+			Assert.AreEqual(a.Id, b.Id);
+			Assert.AreEqual(a.EnableLifePoint, b.EnableLifePoint);
+			Assert.AreEqual(a.AcceptByeMatchDuplication, b.AcceptByeMatchDuplication);
+			Assert.AreEqual(a.AcceptGapMatchDuplication, b.AcceptGapMatchDuplication);
+			Assert.AreEqual(a.IsMatching, b.IsMatching);
+			Assert.AreEqual(a.StartTime, b.StartTime);
+			Assert.AreEqual(a.Rule.Name, b.Rule.Name);
+			Check(a.Rule, a.Players, b.Players);
+			Check(a.ActiveRound, b.ActiveRound);
+		}
+
 		private static String Message(IEnumerable<int> expect, IEnumerable<int> result) {
 			return "result=" + ToString(result) + " expected=" + ToString(expect);
 

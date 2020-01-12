@@ -16,7 +16,7 @@ namespace BSMM2Test {
 			await viewModel.Refresh();
 			app.Add(new FakeGame(new SingleMatchRule(), 8), true);
 			await viewModel.Refresh();
-			app.RemoveGame();
+			app.Remove(app.Game.Id);
 			await viewModel.Refresh();
 		}
 	}

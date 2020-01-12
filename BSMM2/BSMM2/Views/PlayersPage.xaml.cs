@@ -16,6 +16,7 @@ namespace BSMM2.Views {
 			InitializeComponent();
 
 			BindingContext = viewModel = new PlayersViewModel(app);
+			viewModel.SelectGame += () => Navigation.PushModalAsync(new NavigationPage(new GamesPage(_app)));
 		}
 
 		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {
@@ -34,16 +35,16 @@ namespace BSMM2.Views {
 		}
 
 		private async void RemoveGame_Clicked(object sender, EventArgs e) {
-			var accepted = await DisplayAlert(
-				  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
-			if (accepted) {
-				if (_app.RemoveGame())
-					MessagingCenter.Send<object>(this, "UpdatedRound");
-			};
+			//var accepted = await DisplayAlert(
+			//	  "Delete Current Game", "Press Done to delete current Game", "Done", "Cancel");
+			//if (accepted) {
+			//	if (_app.Remove())
+			//		MessagingCenter.Send<object>(this, "UpdatedRound");
+			//};
 		}
 
 		private async void SelectGame_Clicked(object sender, EventArgs e) {
-			// TBD
+			await Navigation.PushModalAsync(new NavigationPage(new GamesPage(_app)));
 		}
 
 		private async void AddPlayer_Clicked(object sender, EventArgs e) {

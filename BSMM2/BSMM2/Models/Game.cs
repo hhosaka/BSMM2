@@ -11,28 +11,16 @@ namespace BSMM2.Models {
 	public class Game : IGame {
 
 		[JsonProperty]
-		public string Title { get; }
-
-		[JsonIgnore]
-		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
+		public string Title { get; private set; }
 
 		[JsonProperty]
-		public Guid Id { get; }
-
-		[JsonProperty]
-		public bool EnableLifePoint { get; }
+		public Guid Id { get; private set; }
 
 		[JsonProperty]
 		public Rule Rule { get; private set; }
 
 		[JsonProperty]
-		private readonly Players _players;
-
-		[JsonProperty]
-		private readonly Stack<IRound> _rounds;
-
-		[JsonProperty]
-		private IRound _activeRound;
+		public bool EnableLifePoint { get; private set; }
 
 		[JsonProperty]
 		public DateTime? StartTime { get; private set; }
@@ -46,28 +34,31 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public virtual int TryCount { get; set; } = 100;
 
-		[JsonIgnore]
-		public Players Players => _players;
+		[JsonProperty]
+		public Players Players { get; private set; }
 
-		[JsonIgnore]
+		[JsonProperty]
+		public readonly Stack<IRound> _rounds;
+
 		public IEnumerable<IRound> Rounds
 			=> _rounds;
 
-		[JsonIgnore]
-		public IRound ActiveRound => _activeRound;
+		[JsonProperty]
+		public IRound ActiveRound { get; private set; }
 
-		public ContentPage CreateMatchPage(IMatch match) {
-			return Rule.CreateMatchPage(this, match);
-		}
+		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
+
+		public virtual IEnumerable<Player> PlayersByOrder
+				=> GetOrderedPlayers();
 
 		public Game() {// For Serializer
 		}
 
-		public Game(Rule rule, Players players, bool enableLifePoint, string title = null) {
+		public Game(Rule rule, Players players, bool enableLifePoint, string title) {
 			EnableLifePoint = enableLifePoint;
-			Title = title ?? DateTime.Now.ToString();
+			Title = title;
 			Id = Guid.NewGuid();
-			_players = players;
+			Players = players;
 			Rule = rule;
 			_rounds = new Stack<IRound>();
 			StartTime = null;
@@ -75,17 +66,21 @@ namespace BSMM2.Models {
 			Debug.Assert(result);
 		}
 
+		public ContentPage CreateMatchPage(IMatch match) {
+			return Rule.CreateMatchPage(this, match);
+		}
+
 		private bool CreateMatching() {
 			var round = MakeRound();
 			if (round != null) {
-				_activeRound = new Matching(MakeRound());
+				ActiveRound = new Matching(MakeRound());
 				return true;
 			}
 			return false;
 		}
 
 		public bool CanExecuteShuffle
-			=> _activeRound is Matching;
+			=> ActiveRound is Matching;
 
 		public bool Shuffle() {
 			if (CanExecuteShuffle) {
@@ -95,22 +90,22 @@ namespace BSMM2.Models {
 		}
 
 		public bool CanExecuteStepToPlaying
-			=> _activeRound is Matching;
+			=> ActiveRound is Matching;
 
 		public void StepToPlaying() {
 			if (CanExecuteStepToPlaying) {
-				_activeRound = new Round(_activeRound.Matches);
+				ActiveRound = new Round(ActiveRound.Matches);
 				StartTime = DateTime.Now;
 			}
 		}
 
 		public bool CanExecuteStepToMatching
-			=> (_activeRound as Round)?.IsFinished == true;
+			=> (ActiveRound as Round)?.IsFinished == true;
 
 		public bool StepToMatching() {
 			if (CanExecuteStepToMatching) {
 				StartTime = null;
-				var round = _activeRound;
+				var round = ActiveRound;
 				if (CreateMatching()) {
 					_rounds.Push(round);
 					return true;
@@ -120,11 +115,11 @@ namespace BSMM2.Models {
 		}
 
 		public bool IsMatching
-			=> _activeRound is Matching;
+			=> ActiveRound is Matching;
 
 		private IEnumerable<Player> GetOrderedPlayers() {
 			var comparer = Rule.CreateOrderComparer();
-			var players = _players.GetByOrder(Rule);
+			var players = Players.GetByOrder(Rule);
 			Player prev = null;
 			int order = 0;
 			int count = 0;
@@ -139,15 +134,11 @@ namespace BSMM2.Models {
 			return players;
 		}
 
-		[JsonIgnore]
-		public virtual IEnumerable<Player> PlayersByOrder
-				=> GetOrderedPlayers();
-
 		private IEnumerable<Match> MakeRound() {
-			_players.Reset(Rule);
+			Players.Reset(Rule);
 			for (int level = 0; level < Rule.CompareDepth; ++level) {
 				for (int i = 0; i < TryCount; ++i) {
-					var matchingList = Create(_players.GetSource(Rule, level).Where(p => !p.Dropped));
+					var matchingList = Create(Players.GetSource(Rule, level).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;
 					}

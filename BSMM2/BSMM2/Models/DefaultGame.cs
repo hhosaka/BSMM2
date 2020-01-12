@@ -35,6 +35,8 @@ namespace BSMM2.Models {
 		public bool IsMatching
 			=> true;
 
+		public Guid Id => Guid.Empty;
+
 		public bool Shuffle()
 			=> false;
 

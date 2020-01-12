@@ -35,7 +35,7 @@ namespace BSMM2.Models {
 
 		public bool Add(Game game, bool AsCurrentGame) {
 			if (_game != null && AsCurrentGame && _games.ContainsKey(_game.Id)) {
-				RemoveGame();
+				Remove(_game.Id);
 			}
 			_games[game.Id] = game.Title;
 			_engine.Save(game);
@@ -43,8 +43,8 @@ namespace BSMM2.Models {
 			return true;
 		}
 
-		public bool RemoveGame() {
-			Debug.Assert(_game != null);
+		public bool Remove(Guid id) {
+			Debug.Assert(id != Guid.Empty);
 			_engine.Remove(_game);
 			_games.Remove(_game.Id);
 			_game = null;
@@ -52,7 +52,11 @@ namespace BSMM2.Models {
 		}
 
 		public Game Select(Guid id) {
-			return _game = _engine.Load(id);
+			var game = _engine.Load(id);
+			if (game != null) {
+				_game = game;
+			}
+			return game;
 		}
 
 		public void Save() {

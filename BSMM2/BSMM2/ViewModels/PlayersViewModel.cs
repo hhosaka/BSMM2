@@ -1,4 +1,6 @@
 ﻿using BSMM2.Models;
+using Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,10 +20,15 @@ namespace BSMM2.ViewModels {
 			set { SetProperty(ref _players, value); }
 		}
 
+		public event Action SelectGame;
+
+		public DelegateCommand SelectGameCommand { get; }
+
 		public PlayersViewModel(BSMMApp app) {
 			_app = app;
-			Title = "Players";
 			Players = new ObservableCollection<Player>();
+
+			SelectGameCommand = new DelegateCommand(() => SelectGame?.Invoke(), () => _app.Games.Any());
 
 			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
 				async (sender) => await Refresh());
@@ -34,10 +41,16 @@ namespace BSMM2.ViewModels {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Players = new ObservableCollection<Player>(Game.PlayersByOrder ?? Enumerable.Empty<Player>()));
+					await Task.Run(() => Execute());
+					SelectGameCommand?.RaiseCanExecuteChanged();
 				} finally {
 					IsBusy = false;
 				}
+			}
+
+			void Execute() {
+				Players = new ObservableCollection<Player>(Game.PlayersByOrder ?? Enumerable.Empty<Player>());
+				Title = Game.Headline;
 			}
 		}
 	}

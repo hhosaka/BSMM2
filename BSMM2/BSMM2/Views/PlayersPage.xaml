@@ -10,8 +10,7 @@
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="New Game" Clicked="NewGame_Clicked" Order="Secondary" />
-		<ToolbarItem Text="Remove Current Game" Clicked="RemoveGame_Clicked" Order="Secondary" />
-		<ToolbarItem Text="Select Game" Clicked="SelectGame_Clicked" Order="Secondary" />
+		<ToolbarItem Text="Select Game" Command ="{Binding SelectGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="AddPlayer" Clicked="AddPlayer_Clicked" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

@@ -1,5 +1,5 @@
 ﻿using BSMM2.Models;
-
+using BSMM2.Resource;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,14 +10,14 @@ namespace BSMM2.Views {
 
 		public MainPage(BSMMApp app) {
 			InitializeComponent();
-			Children.Add(CreatePage(new PlayersPage(app)));
-			Children.Add(CreatePage(new RoundPage(app)));
-			Children.Add(CreatePage(new ItemsPage()));
-			Children.Add(CreatePage(new AboutPage()));
+			Children.Add(CreatePage(new PlayersPage(app), AppResource.TabTitlePlayer));
+			Children.Add(CreatePage(new RoundPage(app), AppResource.TabTitleRound));
+			//		Children.Add(CreatePage(new ItemsPage()));
+			//		Children.Add(CreatePage(new AboutPage()));
 
-			Page CreatePage(Page page) {
+			Page CreatePage(Page page, string title) {
 				var ret = new NavigationPage(page);
-				ret.Title = page.Title;
+				ret.Title = title;
 				return ret;
 			}
 		}

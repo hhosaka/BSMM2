@@ -54,6 +54,9 @@ namespace BSMM2.Models {
 		public IEnumerable<string> PlayerNames
 			=> _records.Select(result => result.Player.Name);
 
+		public IMatchRecord Record1 => _records[0];
+		public IMatchRecord Record2 => _records[1];
+
 		[JsonIgnore]
 		public IPlayer Player1 => _records[0].Player;
 
