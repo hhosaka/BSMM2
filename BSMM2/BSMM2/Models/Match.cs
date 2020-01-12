@@ -20,13 +20,16 @@ namespace BSMM2.Models {
 		private class Record : IMatchRecord {
 
 			[JsonProperty]
-			public IPlayer Player { get; }
+			public IPlayer Player { get; private set; }
 
 			[JsonProperty]
 			public IResult Result { get; private set; }
 
 			public void SetResult(IResult result)
 				=> Result = result;
+
+			private Record() {
+			}
 
 			public Record(IPlayer player) {
 				Player = player;
@@ -42,32 +45,19 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool IsGapMatch { get; }
 
-		[JsonIgnore]
 		public bool IsFinished
 			=> !_records.Any(record => record.Result?.IsFinished != true);
 
-		[JsonIgnore]
 		public bool IsByeMatch
 			=> _records.Any(result => result.Player == BYE);
 
-		[JsonIgnore]
 		public IEnumerable<string> PlayerNames
 			=> _records.Select(result => result.Player.Name);
 
 		public IMatchRecord Record1 => _records[0];
 		public IMatchRecord Record2 => _records[1];
 
-		[JsonIgnore]
-		public IPlayer Player1 => _records[0].Player;
-
-		[JsonIgnore]
-		public IPlayer Player2 => _records[1].Player;
-
-		[JsonIgnore]
-		public RESULT_T? Player1Result => _records[0]?.Result?.RESULT;
-
-		[JsonIgnore]
-		public IEnumerable<IMatchRecord> Records => _records.Cast<IMatchRecord>();
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public void SetResults((IResult player1, IResult player2) points) {
 			SetResults(points.player1, points.player2);
@@ -76,7 +66,8 @@ namespace BSMM2.Models {
 		public void SetResults(IResult result1, IResult result2) {
 			_records[0].SetResult(result1);
 			_records[1].SetResult(result2);
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Records"));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Record1"));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Record2"));
 		}
 
 		public void Swap(Match other) {
@@ -115,7 +106,5 @@ namespace BSMM2.Models {
 			_records = new[] { new Record(player), new Record(BYE) };
 			SetResults(rule.CreatePoints(RESULT_T.Win));
 		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

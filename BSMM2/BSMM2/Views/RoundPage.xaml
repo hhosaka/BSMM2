@@ -23,18 +23,18 @@
 						<ViewCell>
 							<StackLayout Padding="10">
 								<StackLayout Orientation="Horizontal"  HorizontalOptions="Start">
-									<Label Text="{Binding Records[0], Converter={StaticResource Converter}}"
+									<Label Text="{Binding Record1, Converter={StaticResource Converter}}"
 									LineBreakMode="NoWrap"
 									FontSize="20" />
-									<Label Text="{Binding Records[0].Player.Name}"
+									<Label Text="{Binding Record1.Player.Name}"
 									LineBreakMode="NoWrap"
 									FontSize="20" />
 								</StackLayout>
 								<StackLayout Orientation="Horizontal" HorizontalOptions="End">
-									<Label Text="{Binding Records[1].Player.Name}"
+									<Label Text="{Binding Record2.Player.Name}"
 									LineBreakMode="NoWrap"
 									FontSize="20" />
-									<Label Text="{Binding Records[1], Converter={StaticResource Converter}}"
+									<Label Text="{Binding Record2, Converter={StaticResource Converter}}"
 									LineBreakMode="NoWrap"
 									FontSize="20" />
 								</StackLayout>

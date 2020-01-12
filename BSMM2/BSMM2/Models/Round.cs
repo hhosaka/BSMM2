@@ -10,7 +10,6 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public Match[] Matches { get; private set; }
 
-		[JsonIgnore]
 		public bool IsFinished
 			=> !Matches.Any(match => !match.IsFinished);
 

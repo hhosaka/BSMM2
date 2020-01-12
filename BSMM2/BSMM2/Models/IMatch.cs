@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace BSMM2.Models {
+﻿namespace BSMM2.Models {
 
 	public interface IMatch {
-		IEnumerable<IMatchRecord> Records { get; }
 		IMatchRecord Record1 { get; }
 		IMatchRecord Record2 { get; }
 

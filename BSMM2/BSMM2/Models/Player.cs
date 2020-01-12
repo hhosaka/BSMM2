@@ -4,24 +4,18 @@ using System.Linq;
 
 namespace BSMM2.Models {
 
-	[JsonObject(nameof(Player))]
+	[JsonObject]
 	public class Player : IPlayer {
 
 		private class Total : IResult {
-
-			[JsonProperty]
 			public int Point { get; }
 
-			[JsonProperty]
 			public int LifePoint { get; }
 
-			[JsonProperty]
 			public double WinPoint { get; }
 
-			[JsonIgnore]
 			public RESULT_T? RESULT => null;
 
-			[JsonIgnore]
 			public bool IsFinished => true;
 
 			public Total(IEnumerable<IResult> source) {
@@ -42,34 +36,26 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public virtual bool Dropped { get; private set; }
 
-		[JsonIgnore]
-		public int Order { get; set; }
-
 		[JsonProperty]
 		private IList<Match> _matches;
 
-		[JsonIgnore]
-		private IResult _opponentResult;
-
-		[JsonIgnore]
-		public IResult Result { get; private set; }
-
-		[JsonIgnore]
-		public IResult OpponentResult => _opponentResult;
-
-		[JsonIgnore]
 		public bool HasByeMatch
 			=> _matches.Any(match => match.IsByeMatch);
 
-		[JsonIgnore]
 		public bool HasGapMatch
 			=> _matches.Any(match => match.IsGapMatch);
 
-		[JsonIgnore]
-		public bool IsAllWins => _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Win);
+		public bool IsAllWins
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Win);
 
-		[JsonIgnore]
-		public bool IsAllLoses => _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Lose);
+		public bool IsAllLoses
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Lose);
+
+		public IResult Result { get; private set; }
+
+		public IResult OpponentResult { get; private set; }
+
+		public int Order { get; set; }
 
 		public void Commit(Match match)
 			=> _matches.Add(match);
@@ -84,7 +70,7 @@ namespace BSMM2.Models {
 			=> Result = new Total(_matches.Select(match => match.GetResult(this)));
 
 		public void CalcOpponentResult(Rule rule)
-			=> _opponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
+			=> OpponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer
 		}
