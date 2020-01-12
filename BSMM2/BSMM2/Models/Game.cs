@@ -94,7 +94,7 @@ namespace BSMM2.Models {
 
 		public void StepToPlaying() {
 			if (CanExecuteStepToPlaying) {
-				ActiveRound = new Round(ActiveRound.Matches);
+				ActiveRound = new Round(ActiveRound);
 				StartTime = DateTime.Now;
 			}
 		}

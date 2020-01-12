@@ -3,7 +3,6 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -76,7 +75,7 @@ namespace BSMM2.ViewModels {
 		}
 
 		private async Task UpdateList() {
-			await Task.Run(() => Matches = Game.ActiveRound?.Matches ?? Enumerable.Empty<Match>());
+			await Task.Run(() => Matches = Game.ActiveRound);
 			Title = Game.Headline;
 		}
 

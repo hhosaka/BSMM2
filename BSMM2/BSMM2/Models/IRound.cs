@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace BSMM2.Models {
 
-	public interface IRound {
-		Match[] Matches { get; }
+	public interface IRound : IEnumerable<Match> {
 	}
 }

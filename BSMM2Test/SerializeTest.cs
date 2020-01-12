@@ -25,9 +25,9 @@ namespace BSMM2Test {
 			var game = new FakeGame(new SingleMatchRule(), 6, _origin);
 
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			(game.ActiveRound as Matching)?.Swap(0, 1);
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound);
 
 			var buf = new StringBuilder();
 
@@ -37,7 +37,7 @@ namespace BSMM2Test {
 
 			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound.Matches);
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound);
 			Assert.AreEqual(game.Title, result.Title);
 			Assert.AreEqual(game.Id, result.Id);
 			Util.Check(game, result);
@@ -48,21 +48,21 @@ namespace BSMM2Test {
 			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[2].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
 
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
 		}
 
@@ -72,16 +72,22 @@ namespace BSMM2Test {
 			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 
 			game.StepToPlaying();
 
-			game.ActiveRound.Matches[0].SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[1].SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.Matches[2].SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
+
+			var buf = new StringBuilder();
+
+			new Serializer<Game>().Serialize(new StringWriter(buf), game);
+
+			var sbuf = buf.ToString();
 
 			var engine = new Engine();
 
@@ -89,7 +95,7 @@ namespace BSMM2Test {
 
 			var game2 = engine.Load(game.Id);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound.Matches);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.PlayersByOrder);
 		}
 

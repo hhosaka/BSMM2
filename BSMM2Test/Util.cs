@@ -34,16 +34,12 @@ namespace BSMM2Test {
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
-		public static void Check(IEnumerable<int> expect, Matching matchingList) {
-			Check(expect, DefaultOrigin, matchingList.Matches);
-		}
-
 		public static void Check(IEnumerable<int> expect, IRound round) {
-			Check(expect, DefaultOrigin, round.Matches);
+			Check(expect, DefaultOrigin, round);
 		}
 
-		public static void Check(IEnumerable<int> expect, string origin, Match[] matches) {
-			var result = matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
+		public static void Check(IEnumerable<int> expect, string origin, IRound round) {
+			var result = round.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
@@ -81,9 +77,9 @@ namespace BSMM2Test {
 			Check(a.Record2.Result, b.Record2.Result);
 		}
 
-		public static void Check(IRound a, IRound b) {
-			var ita = a.Matches.GetEnumerator();
-			var itb = b.Matches.GetEnumerator();
+		public static void Check(IEnumerable<Match> a, IEnumerable<Match> b) {
+			var ita = a.GetEnumerator();
+			var itb = b.GetEnumerator();
 			while (ita.MoveNext() && itb.MoveNext()) {
 				Check(ita.Current as IMatch, itb.Current as IMatch);
 			}
