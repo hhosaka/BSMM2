@@ -20,15 +20,19 @@ namespace BSMM2.ViewModels {
 			set { SetProperty(ref _players, value); }
 		}
 
-		public event Action SelectGame;
-
+		public DelegateCommand NewGameCommand { get; }
 		public DelegateCommand SelectGameCommand { get; }
+		public DelegateCommand AddPlayerCommand { get; }
+		public DelegateCommand ExportCommand { get; }
+		public DelegateCommand HelpCommand { get; }
 
-		public PlayersViewModel(BSMMApp app) {
+		public PlayersViewModel(BSMMApp app, Action newGame = null, Action selectGame = null, Action addPlayer = null) {
 			_app = app;
 			Players = new ObservableCollection<Player>();
 
-			SelectGameCommand = new DelegateCommand(() => SelectGame?.Invoke(), () => _app.Games.Any());
+			NewGameCommand = new DelegateCommand(() => newGame?.Invoke());
+			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
+			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke());
 
 			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
 				async (sender) => await Refresh());

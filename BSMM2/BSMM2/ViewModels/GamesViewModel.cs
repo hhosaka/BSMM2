@@ -28,7 +28,7 @@ namespace BSMM2.ViewModels {
 		private BSMMApp _app;
 		private IGame Game => _app.Game;
 
-		public event Action exit;
+		private event Action _close;
 
 		private IEnumerable<Gameset> _games;
 
@@ -37,8 +37,9 @@ namespace BSMM2.ViewModels {
 			set { SetProperty(ref _games, value); }
 		}
 
-		public GamesViewModel(BSMMApp app) {
+		public GamesViewModel(BSMMApp app, Action close) {
 			_app = app;
+			_close += close;
 			UpdateList();
 		}
 

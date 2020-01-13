@@ -15,8 +15,7 @@ namespace BSMM2.Views {
 		public GamesPage(BSMMApp app) {
 			_app = app;
 			InitializeComponent();
-			_viewModel = new GamesViewModel(app);
-			_viewModel.exit += async () => await Navigation.PopModalAsync();
+			_viewModel = new GamesViewModel(app, async () => await Navigation.PopModalAsync());
 			BindingContext = _viewModel;
 		}
 

@@ -15,8 +15,14 @@ namespace BSMM2.Views {
 			_app = app;
 			InitializeComponent();
 
-			BindingContext = viewModel = new PlayersViewModel(app);
-			viewModel.SelectGame += () => Navigation.PushModalAsync(new NavigationPage(new GamesPage(_app)));
+			BindingContext = viewModel = new PlayersViewModel(app, NewGame, SelectGame, AddPlayer);
+
+			void NewGame()
+				=> Navigation.PushModalAsync(new NavigationPage(new NewGamePage(_app)));
+			void SelectGame()
+				=> Navigation.PushModalAsync(new NavigationPage(new GamesPage(_app)));
+			void AddPlayer()
+				=> Navigation.PushModalAsync(new NavigationPage(new AddPlayerPage(_app)));
 		}
 
 		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {

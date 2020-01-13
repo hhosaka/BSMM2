@@ -31,6 +31,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>AppResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\AddPlayerPage.xaml.cs">
+      <DependentUpon>AddPlayerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\GamesPage.xaml.cs">
       <DependentUpon>GamesPage.xaml</DependentUpon>
     </Compile>
