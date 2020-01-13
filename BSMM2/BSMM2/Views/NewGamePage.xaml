@@ -7,9 +7,6 @@
 	<ContentPage.Resources>
 		<local:PlayerControlConverter x:Key="PlayerControlConverter" />
 	</ContentPage.Resources>
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="New Game" Clicked="NewGame_Clicked" Order="Primary" />
-	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<Label Text="Name:" />
@@ -45,6 +42,7 @@
 				<CheckBox IsChecked="{Binding AsCurrentGame}" />
 				<Label Text="As Current Game" VerticalOptions="Center" />
 			</StackLayout>
+			<Button Text="Create" Command="{Binding CreateCommand}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

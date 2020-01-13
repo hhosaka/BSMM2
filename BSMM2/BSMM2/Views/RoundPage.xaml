@@ -44,9 +44,9 @@
 				</ListView.ItemTemplate>
 			</ListView>
 			<StackLayout Orientation="Horizontal">
-				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="CenterAndExpand"></Button>
-				<Button Text="Start" Command="{Binding StartCommand}" HorizontalOptions="CenterAndExpand"></Button>
-				<Button Text="Next Round" Command="{Binding StepToMatchingCommand}" HorizontalOptions="CenterAndExpand"></Button>
+				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="FillAndExpand"></Button>
+				<Button Text="Start" Command="{Binding StartCommand}" HorizontalOptions="FillAndExpand"></Button>
+				<Button Text="Next Round" Command="{Binding StepToMatchingCommand}" HorizontalOptions="FillAndExpand"></Button>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

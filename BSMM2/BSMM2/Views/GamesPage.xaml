@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="BSMM2.Views.GamesPage"
+			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			  Title="{Binding Title}"
+			 x:Name="BrowseItemsPage">
+	<ContentPage.Content>
+		<StackLayout>
+			<ListView x:Name="GamesListView"
+				ItemsSource="{Binding Games}"
+				 HasUnevenRows="true"
+				 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+				 CachingStrategy="RecycleElement"
+				 ItemTapped="GamesListView_ItemTapped">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Padding="10" Orientation="Horizontal">
+								<Label Text="{Binding Title}" FontSize="16" />
+								<Button Text="Remove" Command="{Binding RemoveCommand}" />
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			<Button Text="Back" Clicked ="Back_Clicked" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

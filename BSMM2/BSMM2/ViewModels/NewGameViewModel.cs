@@ -1,9 +1,11 @@
 ﻿using BSMM2.Models;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
@@ -39,12 +41,9 @@ namespace BSMM2.ViewModels {
 			set => SetProperty<string>(ref _playerMode, value);
 		}
 
-		public bool ExecuteNewGame() {
-			var game = new Game(Rule, CreatePlayers(), EnableLifePoint, GameName);
-			_app.Add(game, AsCurrentGame);
-			MessagingCenter.Send<object>(this, "UpdatedRound");
-			return true;
-		}
+		public ICommand CreateCommand { get; }
+
+		private event Action _closeWindow;
 
 		private Players CreatePlayers() {
 			switch (PlayerMode) {
@@ -61,7 +60,7 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		public NewGameViewModel(BSMMApp app) {
+		public NewGameViewModel(BSMMApp app, Action closeWindow) {
 			_app = app;
 			Title = "Create New Game";
 			Rule = Rules.First();
@@ -71,6 +70,15 @@ namespace BSMM2.ViewModels {
 			PlayerCount = 8;
 			EntrySheet = "Player 1\nPlayer 2\nPlayer 3\n";
 			AsCurrentGame = true;
+			_closeWindow += closeWindow;
+			CreateCommand = new DelegateCommand(ExecuteCreate);
+
+			void ExecuteCreate() {
+				if (app.Add(new Game(Rule, CreatePlayers(), EnableLifePoint, GameName), AsCurrentGame)) {
+					MessagingCenter.Send<object>(this, "UpdatedRound");
+				}// TODO : Error handling is required?
+				_closeWindow?.Invoke();
+			}
 		}
 	}
 }
