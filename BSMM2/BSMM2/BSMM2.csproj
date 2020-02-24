@@ -26,10 +26,10 @@
     <Compile Update="Models\Matches\SingleMatch\SingleMatchPage.xaml.cs">
       <DependentUpon>SingleMatchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Resource\AppResource.Designer.cs">
+    <Compile Update="Resource\AppResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>AppResource.resx</DependentUpon>
+      <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Update="Views\AddPlayerPage.xaml.cs">
       <DependentUpon>AddPlayerPage.xaml</DependentUpon>
@@ -43,9 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resource\AppResource.resx">
+    <EmbeddedResource Update="Resource\AppResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
+      <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\NewGamePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -59,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Properties\" />
     <Folder Include="ViewModels\Matches\" />
     <Folder Include="Views\Matches\" />
   </ItemGroup>

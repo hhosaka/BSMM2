@@ -7,7 +7,11 @@
 			 x:Name="BrowseItemsPage">
 	<ContentPage.Content>
 		<StackLayout>
-			<Button Text="Back" Clicked ="Back_Clicked" />
+			<Editor Text="{Binding Data}" HeightRequest="256"  BackgroundColor="Aqua" />
+			<StackLayout Orientation="Horizontal">
+				<Button Text="Add" Command ="{Binding AddPlayerCommand}" />
+				<Button Text="Cancel" Clicked ="Back_Clicked" />
+			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

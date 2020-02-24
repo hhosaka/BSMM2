@@ -1,4 +1,5 @@
 ﻿using BSMM2.Models;
+using BSMM2.Resource;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace BSMM2.ViewModels {
 		public bool EnableLifePoint { get; set; }
 		public bool AsCurrentGame { get; set; }
 
+		public string TextAsCurrentGame => AppResources.TextAsCurrentGame;
 		private string _playerMode;
 
 		public string PlayerMode {

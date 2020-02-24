@@ -17,6 +17,8 @@ namespace BSMM2.Models {
 		public IEnumerable<IRound> Rounds
 			=> Enumerable.Empty<IRound>();
 
+		public bool AddPlayers(string data) => false;
+
 		public string Headline => "Create New Game";
 		public DateTime? StartTime => null;
 

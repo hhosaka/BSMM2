@@ -1,5 +1,8 @@
 ﻿using BSMM2.Models;
+using Prism.Commands;
 using System;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
 
@@ -7,11 +10,21 @@ namespace BSMM2.ViewModels {
 		private BSMMApp _app;
 		private IGame Game => _app.Game;
 
-		private event Action _close;
+		public string Data { get; set; }
 
-		public AddPlayerViewModel(BSMMApp app) {
+		public ICommand AddPlayerCommand { get; }
+
+		public AddPlayerViewModel(BSMMApp app, Action exit) {
 			Title = "Add Player";
 			_app = app;
+
+			AddPlayerCommand = new DelegateCommand(AddPlayer);
+
+			void AddPlayer() {
+				_app.Game.AddPlayers(Data);
+				MessagingCenter.Send<object>(this, "UpdatedRound");
+				exit();
+			}
 		}
 	}
 }

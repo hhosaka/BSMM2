@@ -22,14 +22,14 @@ namespace BSMM2.Resource {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppResource {
+    internal class AppResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AppResource() {
+        internal AppResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace BSMM2.Resource {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BSMM2.Resource.AppResource", typeof(AppResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BSMM2.Resource.AppResources", typeof(AppResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -102,6 +102,15 @@ namespace BSMM2.Resource {
         internal static string TabTitleRound {
             get {
                 return ResourceManager.GetString("TabTitleRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   As Current Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextAsCurrentGame {
+            get {
+                return ResourceManager.GetString("TextAsCurrentGame", resourceCulture);
             }
         }
     }

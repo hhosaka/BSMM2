@@ -51,6 +51,15 @@ namespace BSMM2.Models {
 		public virtual IEnumerable<Player> PlayersByOrder
 				=> GetOrderedPlayers();
 
+		public bool AddPlayers(string data) {
+			foreach (var name in data.Split(new[] { '\r', '\n' })) {
+				if (!string.IsNullOrEmpty(name)) {
+					AddPlayer(name);
+				}
+			}
+			return true;
+		}
+
 		public Game() {// For Serializer
 		}
 
@@ -68,6 +77,15 @@ namespace BSMM2.Models {
 
 		public ContentPage CreateMatchPage(IMatch match) {
 			return Rule.CreateMatchPage(this, match);
+		}
+
+		public bool AddPlayer(string data) {
+			foreach (var name in data.Split(new[] { '\r', '\n' })) {
+				if (!string.IsNullOrEmpty(name)) {
+					Players.Add(name);
+				}
+			}
+			return true;
 		}
 
 		private bool CreateMatching() {

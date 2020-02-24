@@ -40,7 +40,7 @@
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding AsCurrentGame}" />
-				<Label Text="As Current Game" VerticalOptions="Center" />
+				<Label Text="{Binding TextAsCurrentGame}" VerticalOptions="Center" />
 			</StackLayout>
 			<Button Text="Create" Command="{Binding CreateCommand}" />
 		</StackLayout>

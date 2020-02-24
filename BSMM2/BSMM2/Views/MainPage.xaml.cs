@@ -10,8 +10,8 @@ namespace BSMM2.Views {
 
 		public MainPage(BSMMApp app) {
 			InitializeComponent();
-			Children.Add(CreatePage(new PlayersPage(app), AppResource.TabTitlePlayer));
-			Children.Add(CreatePage(new RoundPage(app), AppResource.TabTitleRound));
+			Children.Add(CreatePage(new PlayersPage(app), AppResources.TabTitlePlayer));
+			Children.Add(CreatePage(new RoundPage(app), AppResources.TabTitleRound));
 			//		Children.Add(CreatePage(new ItemsPage()));
 			//		Children.Add(CreatePage(new AboutPage()));
 
