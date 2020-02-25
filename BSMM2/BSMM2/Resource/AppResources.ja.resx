@@ -135,4 +135,7 @@
   <data name="TextAsCurrentGame" xml:space="preserve">
     <value>現在のゲームに上書き</value>
   </data>
+  <data name="TextEnableLifePoint" xml:space="preserve">
+    <value>ライフポイントを有効にする</value>
+  </data>
 </root>

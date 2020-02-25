@@ -135,4 +135,7 @@
   <data name="TextAsCurrentGame" xml:space="preserve">
     <value>As Current Game</value>
   </data>
+  <data name="TextEnableLifePoint" xml:space="preserve">
+    <value>Enable Life Point</value>
+  </data>
 </root>

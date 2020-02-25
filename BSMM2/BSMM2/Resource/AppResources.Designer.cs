@@ -113,5 +113,14 @@ namespace BSMM2.Resource {
                 return ResourceManager.GetString("TextAsCurrentGame", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Enable Life Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextEnableLifePoint {
+            get {
+                return ResourceManager.GetString("TextEnableLifePoint", resourceCulture);
+            }
+        }
     }
 }

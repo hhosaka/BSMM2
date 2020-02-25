@@ -36,6 +36,7 @@ namespace BSMM2.ViewModels {
 		public bool AsCurrentGame { get; set; }
 
 		public string TextAsCurrentGame => AppResources.TextAsCurrentGame;
+		public string TextEnableLifePoint => AppResources.TextEnableLifePoint;
 		private string _playerMode;
 
 		public string PlayerMode {

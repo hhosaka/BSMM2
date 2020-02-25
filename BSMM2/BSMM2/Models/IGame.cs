@@ -28,5 +28,7 @@ namespace BSMM2.Models {
 		ContentPage CreateMatchPage(IMatch match);
 
 		bool AddPlayers(string data);
+
+		bool CanAddPlayers { get; }
 	}
 }

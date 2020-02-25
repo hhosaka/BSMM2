@@ -32,7 +32,7 @@ namespace BSMM2.ViewModels {
 
 			NewGameCommand = new DelegateCommand(() => newGame?.Invoke());
 			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
-			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke());
+			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers);
 
 			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
 				async (sender) => await Refresh());
@@ -47,6 +47,7 @@ namespace BSMM2.ViewModels {
 				try {
 					await Task.Run(() => Execute());
 					SelectGameCommand?.RaiseCanExecuteChanged();
+					AddPlayerCommand?.RaiseCanExecuteChanged();
 				} finally {
 					IsBusy = false;
 				}

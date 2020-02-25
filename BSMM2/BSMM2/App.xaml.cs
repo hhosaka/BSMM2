@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.Resource;
 using BSMM2.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +11,7 @@ namespace BSMM2 {
 
 		public App() {
 			InitializeComponent();
-			AppResources.Culture = new System.Globalization.CultureInfo("ja-JP");
+			//AppResources.Culture = new System.Globalization.CultureInfo("ja-JP");
 
 			MainPage = new MainPage(new BSMMApp());
 		}
