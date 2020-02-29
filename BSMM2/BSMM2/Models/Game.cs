@@ -9,6 +9,7 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class Game : IGame {
+		private static readonly int _tryCount = 100;
 
 		[JsonProperty]
 		public string Title { get; private set; }
@@ -20,9 +21,6 @@ namespace BSMM2.Models {
 		public Rule Rule { get; private set; }
 
 		[JsonProperty]
-		public bool EnableLifePoint { get; private set; }
-
-		[JsonProperty]
 		public DateTime? StartTime { get; private set; }
 
 		[JsonProperty]
@@ -30,9 +28,6 @@ namespace BSMM2.Models {
 
 		[JsonProperty]
 		public bool AcceptGapMatchDuplication { get; set; } = false;
-
-		[JsonProperty]
-		public virtual int TryCount { get; set; } = 100;
 
 		[JsonProperty]
 		public Players Players { get; private set; }
@@ -67,8 +62,7 @@ namespace BSMM2.Models {
 		public Game() {// For Serializer
 		}
 
-		public Game(Rule rule, Players players, bool enableLifePoint, string title) {
-			EnableLifePoint = enableLifePoint;
+		public Game(Rule rule, Players players, string title) {
 			Title = title;
 			Id = Guid.NewGuid();
 			Players = players;
@@ -150,7 +144,7 @@ namespace BSMM2.Models {
 		private IEnumerable<Match> MakeRound() {
 			Players.Reset(Rule);
 			for (int level = 0; level < Rule.CompareDepth; ++level) {
-				for (int i = 0; i < TryCount; ++i) {
+				for (int i = 0; i < _tryCount; ++i) {
 					var matchingList = Create(Players.GetSource(Rule, level).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;

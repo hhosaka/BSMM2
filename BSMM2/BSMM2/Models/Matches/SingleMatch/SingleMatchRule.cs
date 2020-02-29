@@ -31,10 +31,16 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public override ContentPage CreateMatchPage(Game game, IMatch match)
 			=> new SingleMatchPage(game, match);
 
+		public override Rule Clone()
+			=> new SingleMatchRule(EnableLifePoint);
+
 		public override string Name
 			=> "Single Match Rule";
 
 		public override string Description
 			=> "一本取りです。";
+
+		public SingleMatchRule(bool enableLifePoint = false) : base(enableLifePoint) {
+		}
 	}
 }

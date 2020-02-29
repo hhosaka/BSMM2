@@ -400,5 +400,14 @@ namespace BSMM2Test {
 			}
 			return game;
 		}
+
+		[TestMethod]
+		public void CloneTest() {
+			var rule = new SingleMatchRule();
+			rule.EnableLifePoint = true;
+			var clone = rule.Clone();
+			Assert.AreEqual(rule.Name, clone.Name);
+			Assert.AreEqual(rule.EnableLifePoint, clone.EnableLifePoint);
+		}
 	}
 }

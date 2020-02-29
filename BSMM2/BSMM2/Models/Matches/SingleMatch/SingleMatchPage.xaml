@@ -16,8 +16,8 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" IsVisible="{Binding EnableLifePoint}" />
-			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" IsVisible="{Binding EnableLifePoint}" />
+			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" IsVisible="{Binding Rule.EnableLifePoint}" />
+			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" IsVisible="{Binding Rule.EnableLifePoint}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

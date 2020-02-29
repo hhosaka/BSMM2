@@ -40,7 +40,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public SingleMatchViewModel(Game game, IMatch match) {
 			Rule = game.Rule as SingleMatchRule;
-			EnableLifePoint = game.EnableLifePoint;
 			_match = match;
 			var record1 = match.Record1;
 			var record2 = match.Record2;

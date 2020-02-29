@@ -25,11 +25,11 @@ namespace BSMM2Test {
 		}
 
 		public FakeGame(Rule rule, int count, string prefix = "Player")
-			: base(rule, new FakePlayers(count, prefix), true, DateTime.Now.ToString()) {
+			: base(rule, new FakePlayers(count, prefix), DateTime.Now.ToString()) {
 		}
 
 		public FakeGame(Rule rule, TextReader r)
-			: base(rule, new FakePlayers(r), true, DateTime.Now.ToString()) {
+			: base(rule, new FakePlayers(r), DateTime.Now.ToString()) {
 		}
 	}
 }

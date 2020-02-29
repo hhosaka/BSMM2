@@ -1,5 +1,4 @@
-﻿using BSMM2.Models.Matches;
-using BSMM2.Models.Matches.SingleMatch;
+﻿using BSMM2.Models.Matches.SingleMatch;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,7 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
+		public bool EnableLifePoint { get; set; }
 
 		private static int ConvDouble2Int(double value) {
 			if (value == 0.0) {
@@ -185,6 +185,8 @@ namespace BSMM2.Models {
 
 		public abstract ContentPage CreateMatchPage(Game game, IMatch match);
 
+		public abstract Rule Clone();
+
 		public Comparer<Player> CreateOrderComparer()
 			=> new TheComparer((p1, p2) => Compare(p1, p2, true));
 
@@ -201,7 +203,9 @@ namespace BSMM2.Models {
 			return 0;
 		}
 
-		public Rule() {
+		public Rule(bool enableLifePoint) {
+			EnableLifePoint = enableLifePoint;
+
 			Comparers = new IComparer[] {
 				new PointComparer(),
 				new LifePointComparer(),

@@ -77,7 +77,7 @@ namespace BSMM2.ViewModels {
 			CreateCommand = new DelegateCommand(ExecuteCreate);
 
 			void ExecuteCreate() {
-				if (app.Add(new Game(Rule, CreatePlayers(), EnableLifePoint, GameName), AsCurrentGame)) {
+				if (app.Add(new Game(Rule.Clone(), CreatePlayers(), GameName), AsCurrentGame)) {
 					MessagingCenter.Send<object>(this, "UpdatedRound");
 				}// TODO : Error handling is required?
 				_closeWindow?.Invoke();

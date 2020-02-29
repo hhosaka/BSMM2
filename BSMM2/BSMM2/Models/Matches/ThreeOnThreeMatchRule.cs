@@ -23,5 +23,9 @@ namespace BSMM2.Models.Matches {
 		public override ContentPage CreateMatchPage(Game game, IMatch match) {
 			throw new System.NotImplementedException();
 		}
+
+		public override Rule Clone() {
+			throw new System.NotImplementedException();
+		}
 	}
 }
