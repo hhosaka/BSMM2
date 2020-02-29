@@ -32,7 +32,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> new SingleMatchPage(game, match);
 
 		public override Rule Clone()
-			=> new SingleMatchRule(EnableLifePoint);
+			=> new SingleMatchRule(this);
 
 		public override string Name
 			=> "Single Match Rule";
@@ -40,7 +40,10 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public override string Description
 			=> "一本取りです。";
 
-		public SingleMatchRule(bool enableLifePoint = false) : base(enableLifePoint) {
+		public SingleMatchRule() : base() {
+		}
+
+		public SingleMatchRule(Rule src) : base(src) {
 		}
 	}
 }

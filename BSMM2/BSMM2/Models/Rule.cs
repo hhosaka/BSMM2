@@ -17,7 +17,15 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Rule {
+
+		[JsonProperty]
 		public bool EnableLifePoint { get; set; }
+
+		[JsonProperty]
+		public bool AcceptByeMatchDuplication { get; set; }
+
+		[JsonProperty]
+		public bool AcceptGapMatchDuplication { get; set; }
 
 		private static int ConvDouble2Int(double value) {
 			if (value == 0.0) {
@@ -203,9 +211,7 @@ namespace BSMM2.Models {
 			return 0;
 		}
 
-		public Rule(bool enableLifePoint) {
-			EnableLifePoint = enableLifePoint;
-
+		public Rule() {
 			Comparers = new IComparer[] {
 				new PointComparer(),
 				new LifePointComparer(),
@@ -214,6 +220,12 @@ namespace BSMM2.Models {
 				new WinPointComparer(),
 				new OpponentWinPointComparer(),
 			};
+		}
+
+		public Rule(Rule src) : this() {
+			EnableLifePoint = src.EnableLifePoint;
+			AcceptByeMatchDuplication = src.AcceptByeMatchDuplication;
+			AcceptGapMatchDuplication = src.AcceptGapMatchDuplication;
 		}
 	}
 }

@@ -24,12 +24,6 @@ namespace BSMM2.Models {
 		public DateTime? StartTime { get; private set; }
 
 		[JsonProperty]
-		public bool AcceptByeMatchDuplication { get; set; } = false;
-
-		[JsonProperty]
-		public bool AcceptGapMatchDuplication { get; set; } = false;
-
-		[JsonProperty]
 		public Players Players { get; private set; }
 
 		[JsonProperty]
@@ -184,7 +178,7 @@ namespace BSMM2.Models {
 
 				bool isByeAcceptable(Player p) {
 					if (p.IsAllWins) return false;
-					return p.IsAllLoses || (AcceptByeMatchDuplication || !p.HasByeMatch);
+					return p.IsAllLoses || (Rule.AcceptByeMatchDuplication || !p.HasByeMatch);
 				}
 
 				Player PickOpponent(IEnumerable<Player> opponents, Player player) {
@@ -196,7 +190,7 @@ namespace BSMM2.Models {
 						}
 
 						bool CheckGapMatch() {// 階段戦の重複は避ける
-							if (!AcceptGapMatchDuplication) {
+							if (!Rule.AcceptGapMatchDuplication) {
 								if (player.Result.Point != opponent.Result.Point) {
 									return !player.HasGapMatch && !opponent.HasGapMatch;
 								}

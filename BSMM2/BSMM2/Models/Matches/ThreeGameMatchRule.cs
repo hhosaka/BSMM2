@@ -27,5 +27,8 @@ namespace BSMM2.Models.Matches {
 		public override Rule Clone() {
 			throw new System.NotImplementedException();
 		}
+
+		public ThreeGameMatchRule() {
+		}
 	}
 }

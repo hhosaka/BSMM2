@@ -20,9 +20,6 @@ namespace BSMM2.Models.Matches {
 			return CreatePoints(results.ToArray());
 		}
 
-		public MultiMatchRule() : base(false) {
-		}//TODO:tentative
-
 		public (IResult, IResult) CreatePoints(IEnumerable<RESULT_T> player1Results) {
 			return CreatePoints(player1Results.Select(r => (r, 5, 5)));
 		}
