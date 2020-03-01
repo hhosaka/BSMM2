@@ -25,6 +25,9 @@ namespace BSMM2.Views {
 				=> Navigation.PushModalAsync(new NavigationPage(new AddPlayerPage(_app)));
 		}
 
+		private void OnRuleTapped(object sender, EventArgs args)
+				=> Navigation.PushModalAsync(new NavigationPage(new RulePage(_app)));
+
 		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {
 			//	var player = args.SelectedItem as Player;
 			//	if (player == null)

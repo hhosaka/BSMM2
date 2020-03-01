@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="BSMM2.Views.RulePage"
+			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 Title="{Binding Name}">
+	<ContentPage.Content>
+		<StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding AcceptByeMatchDuplication}" />
+				<Label Text="AcceptByeMatchDuplication" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding AcceptGapMatchDuplication}" />
+				<Label Text="AcceptGapMatchDuplication" VerticalOptions="Center" />
+			</StackLayout>
+			<Button Text="Close" Clicked="OnClose" />
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>

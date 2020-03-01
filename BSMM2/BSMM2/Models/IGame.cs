@@ -6,6 +6,7 @@ namespace BSMM2.Models {
 
 	public interface IGame {
 		Guid Id { get; }
+		Rule Rule { get; }
 		IRound ActiveRound { get; }
 		IEnumerable<IRound> Rounds { get; }
 		DateTime? StartTime { get; }

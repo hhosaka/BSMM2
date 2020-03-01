@@ -14,6 +14,8 @@ namespace BSMM2.Models {
 		public IRound ActiveRound
 			=> _defaultRound;
 
+		public Rule Rule => null;
+
 		public IEnumerable<IRound> Rounds
 			=> Enumerable.Empty<IRound>();
 
