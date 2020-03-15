@@ -1,6 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
-
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,5 +13,8 @@ namespace BSMM2.Views {
 			InitializeComponent();
 			BindingContext = new NewGameViewModel(app, async () => await Navigation.PopModalAsync());
 		}
+
+		private async void Back_Clicked(object sender, EventArgs e)
+			=> await Navigation.PopModalAsync();
 	}
 }

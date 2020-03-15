@@ -10,7 +10,7 @@
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="New Game" Command="{Binding NewGameCommand}" Order="Secondary" />
-		<ToolbarItem Text="Rule" Clicked ="OnRuleTapped" Order="Secondary" />
+		<ToolbarItem Text="Rule" Command="{Binding RuleCommand}" Order="Secondary" />
 		<ToolbarItem Text="Select Game" Command ="{Binding SelectGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="AddPlayer" Command="{Binding AddPlayerCommand}" Order="Secondary" />
 		<ToolbarItem Text="Export" Order="Secondary" />

@@ -8,10 +8,7 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Editor Text="{Binding Data}" HeightRequest="256"  BackgroundColor="Aqua" />
-			<StackLayout Orientation="Horizontal">
-				<Button Text="Add" Command ="{Binding AddPlayerCommand}" />
-				<Button Text="Cancel" Clicked ="Back_Clicked" />
-			</StackLayout>
+			<Button Text="Add" Command ="{Binding AddPlayerCommand}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

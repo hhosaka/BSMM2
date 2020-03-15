@@ -24,7 +24,6 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			<Button Text="Back" Clicked ="Back_Clicked" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
