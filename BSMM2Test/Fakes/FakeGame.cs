@@ -24,6 +24,9 @@ namespace BSMM2Test {
 			}
 		}
 
+		public FakeGame() {
+		}
+
 		public FakeGame(Rule rule, int count, string prefix = "Player")
 			: base(rule, new FakePlayers(count, prefix), DateTime.Now.ToString()) {
 		}

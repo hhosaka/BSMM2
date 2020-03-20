@@ -14,6 +14,14 @@ namespace BSMM2.Models {
 	public class BSMMApp {
 		private static readonly IGame _defaultGame = new DefaultGame();
 
+		public static BSMMApp Create() {
+			return new BSMMApp(new Rule[] {
+				new SingleMatchRule(),
+				new ThreeGameMatchRule(),
+				new ThreeOnThreeMatchRule(),
+				});
+		}
+
 		private Engine _engine;
 
 		[JsonProperty]
@@ -28,23 +36,22 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public IGame Game { get; private set; }
 
-		private bool IsValidGame
-			=> Game != _defaultGame;
+		public bool IsValidGame
+			=> Game.Id != Guid.Empty;
 
 		public BSMMApp() {
 			_engine = new Engine();
+			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
+				 (sender) => _engine.SaveApp(this));
+			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
+				 (sender) => _engine.SaveApp(this));
 		}
 
-		public BSMMApp(Engine engine) {
-			Rules = new Rule[] {
-				new SingleMatchRule(),
-				new ThreeGameMatchRule(),
-				new ThreeOnThreeMatchRule(),
-			};
+		private BSMMApp(Rule[] rules) : this() {
+			Rules = rules;
 			Rule = Rules.First();
 			Games = new Dictionary<Guid, string>();
 			Game = _defaultGame;
-			_engine = engine;
 		}
 
 		public bool Add(Game game, bool AsCurrentGame) {

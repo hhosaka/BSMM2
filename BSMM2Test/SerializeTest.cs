@@ -103,7 +103,7 @@ namespace BSMM2Test {
 		public void LoadSaveAppTest1() {
 			var buf = new StringBuilder();
 
-			var app = new BSMMApp(new Engine());
+			var app = BSMMApp.Create();
 			app.Rule = app.Rules.ElementAt(1);
 			new Serializer<BSMMApp>().Serialize(new StringWriter(buf), app);
 
@@ -115,8 +115,20 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
-		public void LoadSaveAppTest() {
-			var app = new BSMMApp(new Engine());
+		public void LoadSaveAppTest2() {
+			var app = BSMMApp.Create();
+			app.Rule = app.Rules.ElementAt(0);
+			app.SaveApp();
+			var app2 = new Engine().CreateApp();
+			Assert.IsTrue(app2.Rules.Count() == 3);
+			Assert.AreEqual(app2.Rules.ElementAt(0), app2.Rule);
+			Assert.AreEqual(0, app2.Games.Count());
+			Assert.AreEqual(false, app.IsValidGame);
+		}
+
+		[TestMethod]
+		public void LoadSaveAppTest3() {
+			var app = BSMMApp.Create();
 			app.Rule = app.Rules.ElementAt(1);
 			var title = "test";
 			app.Add(new Game(app.Rule, new Players(8), title), true);

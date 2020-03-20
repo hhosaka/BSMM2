@@ -33,7 +33,7 @@ namespace BSMM2.Models {
 			if (_store.FileExists(APPDATAPATH)) {
 				return Load<BSMMApp>(APPDATAPATH);
 			} else {
-				return new BSMMApp(this);
+				return BSMMApp.Create();
 			}
 		}
 
