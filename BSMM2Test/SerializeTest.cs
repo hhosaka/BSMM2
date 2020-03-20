@@ -91,12 +91,41 @@ namespace BSMM2Test {
 
 			var engine = new Engine();
 
-			engine.Save(game);
+			engine.SaveGame(game);
 
-			var game2 = engine.Load(game.Id);
+			var game2 = engine.LoadGame(game.Id);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.PlayersByOrder);
+		}
+
+		[TestMethod]
+		public void LoadSaveAppTest1() {
+			var buf = new StringBuilder();
+
+			var app = new BSMMApp(new Engine());
+			app.Rule = app.Rules.ElementAt(1);
+			new Serializer<BSMMApp>().Serialize(new StringWriter(buf), app);
+
+			var sbuf = buf.ToString();
+
+			var result = new Serializer<BSMMApp>().Deserialize(new StringReader(sbuf));
+			Assert.IsTrue(result.Rules.Count() == 3);
+			Assert.AreEqual(result.Rule, result.Rules.ElementAt(1));
+		}
+
+		[TestMethod]
+		public void LoadSaveAppTest() {
+			var app = new BSMMApp(new Engine());
+			app.Rule = app.Rules.ElementAt(1);
+			var title = "test";
+			app.Add(new Game(app.Rule, new Players(8), title), true);
+			app.SaveApp();
+			var app2 = new Engine().CreateApp();
+			Assert.IsTrue(app2.Rules.Count() == 3);
+			Assert.AreEqual(app2.Rules.ElementAt(1), app2.Rule);
+			Assert.AreEqual(1, app2.Games.Count());
+			Assert.AreEqual(app.Game.Id, app2.Game.Id);
 		}
 
 		[TestMethod]

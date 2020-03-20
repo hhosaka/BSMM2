@@ -13,7 +13,7 @@ namespace BSMM2 {
 			InitializeComponent();
 			//AppResources.Culture = new System.Globalization.CultureInfo("ja-JP");
 
-			MainPage = new MainPage(new BSMMApp());
+			MainPage = new MainPage(new Engine().CreateApp());
 		}
 
 		protected override void OnStart() {
