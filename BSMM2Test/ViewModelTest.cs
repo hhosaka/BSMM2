@@ -18,7 +18,7 @@ namespace BSMM2Test {
 			app.Add(new FakeGame(new SingleMatchRule(), 8), true);
 			await viewModel.ExecuteRefresh();
 
-			MessagingCenter.Send<object>(app, "UpdatedRound");
+			MessagingCenter.Send<object>(app, Messages.REFRESH);
 
 			var app2 = new Engine().CreateApp();
 			Assert.AreEqual(true, app2.IsValidGame);
@@ -26,7 +26,7 @@ namespace BSMM2Test {
 			app2.Remove(app2.Game.Id);
 			await viewModel.ExecuteRefresh();
 
-			MessagingCenter.Send<object>(app2, "UpdatedRound");
+			MessagingCenter.Send<object>(app2, Messages.REFRESH);
 
 			Assert.AreEqual(false, new Engine().CreateApp().IsValidGame);
 		}

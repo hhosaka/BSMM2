@@ -36,9 +36,7 @@ namespace BSMM2.ViewModels {
 			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
 			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers);
 
-			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
-				async (sender) => await ExecuteRefresh());
-			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
+			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
 				async (sender) => await ExecuteRefresh());
 
 			Refresh();

@@ -62,13 +62,13 @@ namespace BSMM2.ViewModels {
 
 		public void Select(Guid id) {
 			if (_app.Select(id) != null) {
-				MessagingCenter.Send<object>(this, "UpdatedRound");
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 			}
 		}
 
 		public async void Remove(Guid id) {
 			if (_app.Remove(id)) {
-				MessagingCenter.Send<object>(this, "UpdatedRound");
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				await Refresh();
 			}
 		}

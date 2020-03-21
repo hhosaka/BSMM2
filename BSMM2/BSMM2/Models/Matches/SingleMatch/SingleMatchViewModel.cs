@@ -32,7 +32,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public bool Update() {
 			if (SelectedItem != null) {
 				_match.SetResults(Rule.CreatePoints(SelectedItem.RESULT, LifePoint1, LifePoint2));
-				MessagingCenter.Send<object>(this, "UpdatedMatch");
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				return true;
 			}
 			return false;

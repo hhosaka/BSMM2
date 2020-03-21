@@ -22,7 +22,7 @@ namespace BSMM2.ViewModels {
 
 			void AddPlayer() {
 				_app.Game.AddPlayers(Data);
-				MessagingCenter.Send<object>(this, "UpdatedRound");
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				exit();
 			}
 		}

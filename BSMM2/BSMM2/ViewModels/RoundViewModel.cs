@@ -10,9 +10,10 @@ namespace BSMM2.ViewModels {
 
 	public class RoundViewModel : BaseViewModel {
 		private BSMMApp _app;
-		private IEnumerable<Match> _matches;
 
 		public IGame Game => _app.Game;
+
+		private IEnumerable<Match> _matches;
 
 		public IEnumerable<Match> Matches {
 			get => _matches;
@@ -46,11 +47,8 @@ namespace BSMM2.ViewModels {
 			StartCommand = CreateStepToPlayingCommand();
 			StepToMatchingCommand = CreateStepToMatchingCommand();
 
-			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
-				async (sender) => await Invoke(() => UpdateList()));
-
-			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
-				(sender) => RaiseCanExecuteChanged());
+			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
+				async (sender) => await Invoke(() => Refresh()));
 
 			Refresh();
 		}
@@ -58,11 +56,11 @@ namespace BSMM2.ViewModels {
 		public bool IsPlaying
 			=> !Game.IsMatching;
 
-		private async Task Invoke(Func<Task> action) {
+		private async Task Invoke(Action action) {
 			if (!IsBusy) {
 				IsBusy = true;
 				try {
-					await action();
+					await Task.Run(action);
 					RaiseCanExecuteChanged();
 				} finally {
 					IsBusy = false;
@@ -82,18 +80,13 @@ namespace BSMM2.ViewModels {
 			RaiseCanExecuteChanged();
 		}
 
-		private async Task UpdateList() {
-			await Task.Run(() => Matches = Game.ActiveRound);
-			Title = Game.Headline;
-		}
-
 		private DelegateCommand CreateStepToPlayingCommand() {
 			return new DelegateCommand(
 				async () => await Invoke(Execute),
 				() => Game.CanExecuteStepToPlaying);
 
-			async Task Execute() {
-				await Task.Run(() => Game.StepToPlaying());
+			void Execute() {
+				Game.StepToPlaying();
 				StartTimer();
 			}
 		}
@@ -103,11 +96,11 @@ namespace BSMM2.ViewModels {
 				async () => await Invoke(Execute),
 				() => Game.CanExecuteShuffle);
 
-			async Task Execute() {
+			void Execute() {
 				if (Game.Shuffle()) {
-					await UpdateList();
+					Refresh();
 				} else {
-					await OnMatchingFailed();
+					OnMatchingFailed();
 				}
 			}
 		}
@@ -117,11 +110,11 @@ namespace BSMM2.ViewModels {
 				async () => await Invoke(Execute),
 				() => Game.CanExecuteStepToMatching);
 
-			async Task Execute() {
+			void Execute() {
 				if (Game.StepToMatching()) {
-					await UpdateList();
+					Refresh();
 				} else {
-					await OnMatchingFailed();
+					OnMatchingFailed();
 				}
 			}
 		}
