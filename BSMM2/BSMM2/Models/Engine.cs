@@ -1,6 +1,7 @@
 ﻿using BSMM2.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace BSMM2.Models {
 		private IsolatedStorageFile _store;
 
 		public T Load<T>(string filename) where T : new() {
+			Debug.Assert(_store.FileExists(filename));
 			using (var strm = _store.OpenFile(filename, FileMode.Open))
 			using (var reader = new StreamReader(strm)) {
 				return new Serializer<T>().Deserialize(reader);
@@ -31,10 +33,11 @@ namespace BSMM2.Models {
 
 		public BSMMApp CreateApp() {
 			if (_store.FileExists(APPDATAPATH)) {
-				return Load<BSMMApp>(APPDATAPATH);
-			} else {
-				return BSMMApp.Create();
+				var app = Load<BSMMApp>(APPDATAPATH);
+				if (app != null)
+					return app;
 			}
+			return BSMMApp.Create();
 		}
 
 		public void SaveApp(BSMMApp app) {

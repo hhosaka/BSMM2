@@ -51,6 +51,8 @@ namespace BSMM2.ViewModels {
 
 			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
 				(sender) => RaiseCanExecuteChanged());
+
+			Refresh();
 		}
 
 		public bool IsPlaying
@@ -72,6 +74,12 @@ namespace BSMM2.ViewModels {
 			StartCommand.RaiseCanExecuteChanged();
 			ShuffleCommand.RaiseCanExecuteChanged();
 			StepToMatchingCommand.RaiseCanExecuteChanged();
+		}
+
+		private void Refresh() {
+			Matches = Game.ActiveRound;
+			Title = Game.Headline;
+			RaiseCanExecuteChanged();
 		}
 
 		private async Task UpdateList() {

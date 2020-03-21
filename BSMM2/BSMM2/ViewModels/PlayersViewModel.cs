@@ -37,29 +37,31 @@ namespace BSMM2.ViewModels {
 			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers);
 
 			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
-				async (sender) => await Refresh());
+				async (sender) => await ExecuteRefresh());
 			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
-				async (sender) => await Refresh());
+				async (sender) => await ExecuteRefresh());
+
+			Refresh();
 		}
 
-		public async Task Refresh() {
+		public async Task ExecuteRefresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 
 				try {
-					await Task.Run(() => Execute());
+					await Task.Run(() => Refresh());
 				} finally {
 					IsBusy = false;
 				}
 			}
+		}
 
-			void Execute() {
-				Players = new ObservableCollection<Player>(Game.PlayersByOrder ?? Enumerable.Empty<Player>());
-				Title = Game.Headline;
-				RuleCommand?.RaiseCanExecuteChanged();
-				SelectGameCommand?.RaiseCanExecuteChanged();
-				AddPlayerCommand?.RaiseCanExecuteChanged();
-			}
+		private void Refresh() {
+			Players = new ObservableCollection<Player>(Game.PlayersByOrder ?? Enumerable.Empty<Player>());
+			Title = Game.Headline;
+			RuleCommand?.RaiseCanExecuteChanged();
+			SelectGameCommand?.RaiseCanExecuteChanged();
+			AddPlayerCommand?.RaiseCanExecuteChanged();
 		}
 	}
 }

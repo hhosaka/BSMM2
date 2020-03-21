@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Diagnostics;
 using System.IO;
 
 namespace BSMM2.Services {
@@ -8,8 +9,13 @@ namespace BSMM2.Services {
 		private static readonly JsonSerializerSettings settings
 			= new JsonSerializerSettings {
 				PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-				TypeNameHandling = TypeNameHandling.Auto
+				TypeNameHandling = TypeNameHandling.Auto,
+				Error = (sender, args) => OnError(args)
 			};
+
+		public static void OnError(Newtonsoft.Json.Serialization.ErrorEventArgs args) {
+			Debug.Write(args);
+		}
 
 		public void Serialize(TextWriter w, T obj) {
 			w.Write(JsonConvert.SerializeObject(obj, settings));

@@ -41,10 +41,12 @@ namespace BSMM2.Models {
 
 		public BSMMApp() {
 			_engine = new Engine();
-			MessagingCenter.Subscribe<object>(this, "UpdatedRound",
-				 (sender) => _engine.SaveApp(this));
-			MessagingCenter.Subscribe<object>(this, "UpdatedMatch",
-				 (sender) => _engine.SaveApp(this));
+			MessagingCenter.Subscribe<object>(this, "UpdatedRound", Save);
+			MessagingCenter.Subscribe<object>(this, "UpdatedMatch", Save);
+
+			void Save(object sender) {
+				_engine.SaveApp(this);
+			}
 		}
 
 		private BSMMApp(Rule[] rules) : this() {

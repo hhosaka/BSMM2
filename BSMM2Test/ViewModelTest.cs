@@ -14,9 +14,9 @@ namespace BSMM2Test {
 		public async Task ControlGameTest() {
 			var app = BSMMApp.Create();
 			var viewModel = new PlayersViewModel(app);
-			await viewModel.Refresh();
+			await viewModel.ExecuteRefresh();
 			app.Add(new FakeGame(new SingleMatchRule(), 8), true);
-			await viewModel.Refresh();
+			await viewModel.ExecuteRefresh();
 
 			MessagingCenter.Send<object>(app, "UpdatedRound");
 
@@ -24,7 +24,7 @@ namespace BSMM2Test {
 			Assert.AreEqual(true, app2.IsValidGame);
 
 			app2.Remove(app2.Game.Id);
-			await viewModel.Refresh();
+			await viewModel.ExecuteRefresh();
 
 			MessagingCenter.Send<object>(app2, "UpdatedRound");
 

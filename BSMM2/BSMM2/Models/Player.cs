@@ -46,10 +46,10 @@ namespace BSMM2.Models {
 			=> _matches.Any(match => match.IsGapMatch);
 
 		public bool IsAllWins
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Win);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this)?.RESULT != RESULT_T.Win);
 
 		public bool IsAllLoses
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this).RESULT != RESULT_T.Lose);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this)?.RESULT != RESULT_T.Lose);
 
 		public IResult Result { get; private set; }
 
