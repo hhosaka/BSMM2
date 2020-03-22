@@ -39,6 +39,9 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		private IList<Match> _matches;
 
+		[JsonIgnore]
+		public IEnumerable<Match> Matches => _matches;
+
 		public bool HasByeMatch
 			=> _matches.Any(match => match.IsByeMatch);
 

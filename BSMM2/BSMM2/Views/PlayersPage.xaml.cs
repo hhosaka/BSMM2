@@ -27,13 +27,8 @@ namespace BSMM2.Views {
 		}
 
 		private async void OnPlayerTapped(object sender, SelectedItemChangedEventArgs args) {
-			//	var player = args.SelectedItem as Player;
-			//	if (player == null)
-			//		return;
-
-			//	await Navigation.PushAsync(new PlayerDetailPage(new PlayerDetailViewModel(player)));
-
-			// Manually deselect item.
+			if (args.SelectedItem is Player player)
+				await Navigation.PushAsync(new PlayerPage(_app, player));
 			PlayersListView.SelectedItem = null;
 		}
 	}
