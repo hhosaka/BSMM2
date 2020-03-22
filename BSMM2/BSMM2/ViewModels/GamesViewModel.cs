@@ -12,23 +12,19 @@ namespace BSMM2.ViewModels {
 
 		public class Gameset {
 			private GamesViewModel _parent;
-			public Guid Id { get; }
-			public string Title { get; }
+			public IGame Game { get; }
 
 			public ICommand RemoveCommand { get; }
 
-			public Gameset(GamesViewModel parent, Guid id, string title) {
+			public Gameset(GamesViewModel parent, IGame game) {
 				_parent = parent;
-				Id = id;
-				Title = title;
-				RemoveCommand = new Command(() => parent.Remove(Id));
+				Game = game;
+				RemoveCommand = new Command(() => parent.Remove(Game));
 			}
 		}
 
 		private BSMMApp _app;
 		private IGame Game => _app.Game;
-
-		private event Action _close;
 
 		private IEnumerable<Gameset> _games;
 
@@ -39,7 +35,6 @@ namespace BSMM2.ViewModels {
 
 		public GamesViewModel(BSMMApp app, Action close) {
 			_app = app;
-			_close += close;
 			UpdateList();
 		}
 
@@ -56,18 +51,18 @@ namespace BSMM2.ViewModels {
 		}
 
 		public void UpdateList() {
-			Games = _app.Games.Select(game => new Gameset(this, game.Key, game.Value));
+			Games = _app.Games.Select(game => new Gameset(this, game));
 			Title = Game.Headline;
 		}
 
-		public void Select(Guid id) {
-			if (_app.Select(id) != null) {
+		public void Select(IGame game) {
+			if (_app.Select(game)) {
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 			}
 		}
 
-		public async void Remove(Guid id) {
-			if (_app.Remove(id)) {
+		public async void Remove(IGame game) {
+			if (_app.Remove(game)) {
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				await Refresh();
 			}

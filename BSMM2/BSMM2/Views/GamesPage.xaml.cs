@@ -18,7 +18,7 @@ namespace BSMM2.Views {
 
 		private async void GamesListView_ItemTapped(object sender, ItemTappedEventArgs e) {
 			if (e.Group is Gameset gameset) {
-				_viewModel.Select(gameset.Id);
+				_viewModel.Select(gameset.Game);
 				await Navigation.PopModalAsync();
 			}
 		}

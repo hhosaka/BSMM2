@@ -17,7 +17,7 @@
 					<DataTemplate>
 						<ViewCell>
 							<StackLayout Padding="10" Orientation="Horizontal">
-								<Label Text="{Binding Title}" FontSize="16" />
+								<Label Text="{Binding Game.Title}" FontSize="16" />
 								<Button Text="Remove" Command="{Binding RemoveCommand}" />
 							</StackLayout>
 						</ViewCell>

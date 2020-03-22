@@ -1,10 +1,7 @@
 ﻿using BSMM2.Models.Matches;
 using BSMM2.Models.Matches.SingleMatch;
 using Newtonsoft.Json;
-using Prism.Commands;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -12,6 +9,8 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class BSMMApp {
+
+		[JsonIgnore]
 		private static readonly IGame _defaultGame = new DefaultGame();
 
 		public static BSMMApp Create() {
@@ -22,10 +21,14 @@ namespace BSMM2.Models {
 				});
 		}
 
+		[JsonIgnore]
 		private Engine _engine;
 
 		[JsonProperty]
-		public Dictionary<Guid, string> Games { get; private set; }
+		private List<IGame> _games;
+
+		[JsonIgnore]
+		public IEnumerable<IGame> Games => _games;
 
 		[JsonProperty]
 		public IEnumerable<Rule> Rules { get; private set; }
@@ -34,10 +37,13 @@ namespace BSMM2.Models {
 		public Rule Rule { get; set; }
 
 		[JsonProperty]
-		public IGame Game { get; private set; }
+		private IGame _game;
 
-		public bool IsValidGame
-			=> Game.Id != Guid.Empty;
+		[JsonIgnore]
+		public IGame Game => _game ?? _defaultGame;
+
+		[JsonProperty]
+		public bool AutoSave { get; set; }
 
 		public BSMMApp() {
 			_engine = new Engine();
@@ -47,51 +53,41 @@ namespace BSMM2.Models {
 		private BSMMApp(Rule[] rules) : this() {
 			Rules = rules;
 			Rule = Rules.First();
-			Games = new Dictionary<Guid, string>();
-			Game = _defaultGame;
+			_games = new List<IGame>();
+			AutoSave = true;
 		}
 
-		public bool Add(Game game, bool AsCurrentGame) {
-			if (IsValidGame && AsCurrentGame && Games.ContainsKey(Game.Id)) {
-				Remove(Game.Id);
+		public bool Add(IGame game, bool AsCurrentGame) {
+			if (_game != null && AsCurrentGame) {
+				Remove(_game);
 			}
-			Games[game.Id] = game.Title;
-			_engine.SaveGame(game);
-			Game = game;
+			_games.Add(game);
+			_game = game;
 			return true;
 		}
 
-		public bool Remove(Guid id) {
-			Debug.Assert(id != Guid.Empty);
-			_engine.RemoveGame(Game);
-			Games.Remove(Game.Id);
-			Game = _defaultGame;
+		public bool Remove(IGame game) {
+			_games.Remove(game);
+			_game = null;
 			return true;
 		}
 
-		public Game Select(Guid id) {
-			var game = _engine.LoadGame(id);
-			if (IsValidGame) {
-				Game = game;
-			}
-			return game;
+		public bool Select(IGame game) {
+			_game = game;
+			return true;
 		}
 
-		public void SaveApp() {
-			_engine.SaveApp(this);
-		}
-
-		public void Save() {
-			if (IsValidGame) {
-				_engine.SaveGame(Game);
-			}
+		public void Save(bool force) {
+			if (force || AutoSave)
+				_engine.SaveApp(this);
 		}
 
 		public ContentPage CreateMatchPage(Match match) {
 			return Game.CreateMatchPage(match);
 		}
 
-		public DelegateCommand CreateStartCommand(Action onChanged)
-			=> new DelegateCommand(() => { Game.StepToPlaying(); onChanged(); }, () => Game.CanExecuteStepToPlaying);
+		// TODO : TBD
+		//public DelegateCommand CreateStartCommand(Action onChanged)
+		//	=> new DelegateCommand(() => { Game.StepToPlaying(); onChanged(); }, () => Game.CanExecuteStepToPlaying);
 	}
 }
