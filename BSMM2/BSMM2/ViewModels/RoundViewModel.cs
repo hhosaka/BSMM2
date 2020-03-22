@@ -38,7 +38,7 @@ namespace BSMM2.ViewModels {
 		public DelegateCommand StartCommand { get; }
 		public DelegateCommand StepToMatchingCommand { get; }
 
-		public event Func<Task> OnMatchingFailed;
+		public event Func<Task> OnFailedMatching;
 
 		public RoundViewModel(BSMMApp app) {
 			Debug.Assert(app != null);
@@ -48,73 +48,69 @@ namespace BSMM2.ViewModels {
 			StepToMatchingCommand = CreateStepToMatchingCommand();
 
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
-				async (sender) => await Invoke(() => Refresh()));
+				async (sender) => await Refresh());
 
-			Refresh();
+			Task.Run(Refresh);
 		}
 
 		public bool IsPlaying
 			=> !Game.IsMatching;
 
-		private async Task Invoke(Action action) {
+		private async Task Refresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 				try {
-					await Task.Run(action);
-					RaiseCanExecuteChanged();
+					await Task.Run(() => Execute());
 				} finally {
 					IsBusy = false;
 				}
 			}
-		}
 
-		private void RaiseCanExecuteChanged() {
-			StartCommand.RaiseCanExecuteChanged();
-			ShuffleCommand.RaiseCanExecuteChanged();
-			StepToMatchingCommand.RaiseCanExecuteChanged();
-		}
-
-		private void Refresh() {
-			Matches = Game.ActiveRound;
-			Title = Game.Headline;
-			RaiseCanExecuteChanged();
+			void Execute() {
+				Matches = Game.ActiveRound;
+				Title = Game.Headline;
+				StartCommand.RaiseCanExecuteChanged();
+				ShuffleCommand.RaiseCanExecuteChanged();
+				StepToMatchingCommand.RaiseCanExecuteChanged();
+			}
 		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {
 			return new DelegateCommand(
-				async () => await Invoke(Execute),
+				Execute,
 				() => Game.CanExecuteStepToPlaying);
 
-			void Execute() {
+			async void Execute() {
 				Game.StepToPlaying();
 				StartTimer();
+				await Refresh();
 			}
 		}
 
 		private DelegateCommand CreateShuffleCommand() {
 			return new DelegateCommand(
-				async () => await Invoke(Execute),
+				Execute,
 				() => Game.CanExecuteShuffle);
 
-			void Execute() {
+			async void Execute() {
 				if (Game.Shuffle()) {
-					Refresh();
+					await Refresh();
 				} else {
-					OnMatchingFailed();
+					await OnFailedMatching();
 				}
 			}
 		}
 
 		private DelegateCommand CreateStepToMatchingCommand() {
 			return new DelegateCommand(
-				async () => await Invoke(Execute),
+				Execute,
 				() => Game.CanExecuteStepToMatching);
 
-			void Execute() {
+			async void Execute() {
 				if (Game.StepToMatching()) {
-					Refresh();
+					await Refresh();
 				} else {
-					OnMatchingFailed();
+					await OnFailedMatching();
 				}
 			}
 		}

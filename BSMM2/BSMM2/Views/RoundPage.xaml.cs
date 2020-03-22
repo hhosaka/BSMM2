@@ -14,7 +14,7 @@ namespace BSMM2.Views {
 			InitializeComponent();
 
 			BindingContext = viewModel = new RoundViewModel(app);
-			viewModel.OnMatchingFailed += OnMatchingFailed;
+			viewModel.OnFailedMatching += OnMatchingFailed;
 		}
 
 		private async Task OnMatchingFailed() {
