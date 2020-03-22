@@ -34,6 +34,9 @@ namespace BSMM2.ViewModels {
 			set => SetProperty(ref _isTimeVisible, value);
 		}
 
+		public bool IsPlaying
+			=> !Game.IsMatching;
+
 		public DelegateCommand ShuffleCommand { get; }
 		public DelegateCommand StartCommand { get; }
 		public DelegateCommand StepToMatchingCommand { get; }
@@ -48,31 +51,28 @@ namespace BSMM2.ViewModels {
 			StepToMatchingCommand = CreateStepToMatchingCommand();
 
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
-				async (sender) => await Refresh());
+				async (sender) => await ExecuteRefresh());
 
-			Task.Run(Refresh);
+			Refresh();
 		}
 
-		public bool IsPlaying
-			=> !Game.IsMatching;
-
-		private async Task Refresh() {
+		private async Task ExecuteRefresh() {
 			if (!IsBusy) {
 				IsBusy = true;
 				try {
-					await Task.Run(() => Execute());
+					await Task.Run(() => Refresh());
 				} finally {
 					IsBusy = false;
 				}
 			}
+		}
 
-			void Execute() {
-				Matches = Game.ActiveRound;
-				Title = Game.Headline;
-				StartCommand.RaiseCanExecuteChanged();
-				ShuffleCommand.RaiseCanExecuteChanged();
-				StepToMatchingCommand.RaiseCanExecuteChanged();
-			}
+		private void Refresh() {
+			Matches = Game.ActiveRound;
+			Title = Game.Headline;
+			StartCommand?.RaiseCanExecuteChanged();
+			ShuffleCommand?.RaiseCanExecuteChanged();
+			StepToMatchingCommand?.RaiseCanExecuteChanged();
 		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {
@@ -83,7 +83,7 @@ namespace BSMM2.ViewModels {
 			async void Execute() {
 				Game.StepToPlaying();
 				StartTimer();
-				await Refresh();
+				await ExecuteRefresh();
 			}
 		}
 
@@ -94,7 +94,7 @@ namespace BSMM2.ViewModels {
 
 			async void Execute() {
 				if (Game.Shuffle()) {
-					await Refresh();
+					await ExecuteRefresh();
 				} else {
 					await OnFailedMatching();
 				}
@@ -108,7 +108,7 @@ namespace BSMM2.ViewModels {
 
 			async void Execute() {
 				if (Game.StepToMatching()) {
-					await Refresh();
+					await ExecuteRefresh();
 				} else {
 					await OnFailedMatching();
 				}
