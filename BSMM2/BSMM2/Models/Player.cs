@@ -34,7 +34,7 @@ namespace BSMM2.Models {
 		public string Name { get; private set; }
 
 		[JsonProperty]
-		public virtual bool Dropped { get; private set; }
+		public virtual bool Dropped { get; set; }
 
 		[JsonProperty]
 		private IList<Match> _matches;
@@ -62,9 +62,6 @@ namespace BSMM2.Models {
 
 		public void Commit(Match match)
 			=> _matches.Add(match);
-
-		public void Drop()
-			=> Dropped = true;
 
 		public RESULT_T? GetResult(Player player)
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;

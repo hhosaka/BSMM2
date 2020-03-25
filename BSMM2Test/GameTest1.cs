@@ -99,7 +99,7 @@ namespace BSMM2Test {
 			Util.CheckWithOrder(new[] { 2, 4, 1, 3 }, new[] { 1, 1, 3, 3 }, game.PlayersByOrder);
 
 			game.StepToMatching();
-			game.PlayersByOrder.ToArray()[0].Drop();
+			game.PlayersByOrder.ToArray()[0].Dropped = true;
 
 			Util.CheckWithOrder(new[] { 4, 1, 3, 2 }, new[] { 1, 2, 2, 4 }, game.PlayersByOrder);
 

@@ -4,11 +4,12 @@ namespace BSMM2.ViewModels {
 
 	public class PlayerViewModel : BaseViewModel {
 		private BSMMApp _app;
-		public Player Player { get; }
+		private Player _player;
+		public Player Player => _player;
 
 		public PlayerViewModel(BSMMApp app, Player player) {
 			_app = app;
-			Player = player;
+			_player = player;
 		}
 	}
 }
