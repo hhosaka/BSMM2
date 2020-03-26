@@ -3,6 +3,7 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 x:Class="BSMM2.Views.PlayerPage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 Disappearing="OnClosing"
 			  Title="{Binding Title}">
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
@@ -10,7 +11,7 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<Label Text ="Name:" />
-			<Editor Text="{Binding Player.Name, Mode=TwoWay}" />
+			<Entry Text="{Binding Player.Name, Mode=TwoWay}" />
 			<CheckBox IsChecked="{Binding Player.Dropped , Mode=TwoWay}" />
 			<Label Text="Dropped" />
 			<ListView x:Name="RoundListView"

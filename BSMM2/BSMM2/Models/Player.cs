@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,7 +32,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonProperty]
-		public string Name { get; private set; }
+		public String Name { get; set; }
 
 		[JsonProperty]
 		public virtual bool Dropped { get; set; }
