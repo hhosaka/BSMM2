@@ -5,6 +5,10 @@
 			 x:Class="BSMM2.Views.RoundPage"
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Log" Command="{Binding ShowRoundLogCommand}" Order="Secondary" />
+		<ToolbarItem Text="Help" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>

@@ -47,7 +47,7 @@ namespace BSMM2.Models {
 
 		public BSMMApp() {
 			_engine = new Engine();
-			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => _engine.SaveApp(this));
+			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
 		}
 
 		private BSMMApp(Rule[] rules) : this() {
