@@ -1,8 +1,8 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using static BSMM2.ViewModels.GamesViewModel;
 
 namespace BSMM2.Views {
 
@@ -10,17 +10,10 @@ namespace BSMM2.Views {
 	public partial class GamesPage : ContentPage {
 		private GamesViewModel _viewModel;
 
-		public GamesPage(BSMMApp app) {
+		public GamesPage(BSMMApp app, string title, Action<IGame> action) {
 			InitializeComponent();
-			_viewModel = new GamesViewModel(app, async () => await Navigation.PopModalAsync());
+			_viewModel = new GamesViewModel(app, title, action);
 			BindingContext = _viewModel;
-		}
-
-		private async void GamesListView_ItemTapped(object sender, ItemTappedEventArgs e) {
-			if (e.Group is Gameset gameset) {
-				_viewModel.Select(gameset.Game);
-				await Navigation.PopModalAsync();
-			}
 		}
 	}
 }

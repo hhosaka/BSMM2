@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
+using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,16 +15,36 @@ namespace BSMM2.Views {
 			_app = app;
 			InitializeComponent();
 
-			BindingContext = viewModel = new PlayersViewModel(app, NewGame, OpenRule, SelectGame, AddPlayer);
+			BindingContext = viewModel = new PlayersViewModel(app, NewGame, OpenRule, SelectGame, DeleteGame, AddPlayer);
 
 			void NewGame()
 				=> Navigation.PushModalAsync(new NavigationPage(new NewGamePage(_app)));
 			void OpenRule()
 				=> Navigation.PushModalAsync(new NavigationPage(new RulePage(_app)));
 			void SelectGame()
-				=> Navigation.PushModalAsync(new NavigationPage(new GamesPage(_app)));
+				=> Navigation.PushModalAsync(
+					new NavigationPage(new GamesPage(_app, "Select Item", selectGame)));
+			void DeleteGame()
+				=> Navigation.PushModalAsync(
+					new NavigationPage(new GamesPage(_app, "Delete Item", deleteGame)));
 			void AddPlayer()
 				=> Navigation.PushModalAsync(new NavigationPage(new AddPlayerPage(_app)));
+
+			async void selectGame(IGame game) {
+				Debug.Assert(game != null);
+				if (app.Select(game)) {
+					MessagingCenter.Send<object>(this, Messages.REFRESH);
+					await Navigation.PopModalAsync();
+				}
+			}
+
+			async void deleteGame(IGame game) {
+				Debug.Assert(game != null);
+				if (app.Remove(game)) {
+					MessagingCenter.Send<object>(this, Messages.REFRESH);
+					await Navigation.PopModalAsync();
+				}
+			}
 		}
 
 		private async void OnPlayerTapped(object sender, ItemTappedEventArgs args) {

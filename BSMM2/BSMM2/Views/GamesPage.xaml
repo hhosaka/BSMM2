@@ -9,18 +9,13 @@
 		<StackLayout>
 			<ListView x:Name="GamesListView"
 				ItemsSource="{Binding Games}"
-				 HasUnevenRows="true"
-				 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-				 CachingStrategy="RecycleElement"
-				 ItemTapped="GamesListView_ItemTapped">
+				SelectedItem="{Binding SelectedItem}"
+				HasUnevenRows="true"
+				IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+				CachingStrategy="RecycleElement">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<ViewCell>
-							<StackLayout Padding="10" Orientation="Horizontal">
-								<Label Text="{Binding Game.Title}" FontSize="16" />
-								<Button Text="Remove" Command="{Binding RemoveCommand}" />
-							</StackLayout>
-						</ViewCell>
+						<TextCell Text="{Binding Headline}" />
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>

@@ -1,58 +1,35 @@
 ﻿using BSMM2.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
 
 	public class GamesViewModel : BaseViewModel {
-
-		public class Gameset {
-			private GamesViewModel _parent;
-			public IGame Game { get; }
-
-			public ICommand RemoveCommand { get; }
-
-			public Gameset(GamesViewModel parent, IGame game) {
-				_parent = parent;
-				Game = game;
-				RemoveCommand = new Command(() => parent.Remove(Game));
-			}
-		}
-
 		private BSMMApp _app;
 		private IGame Game => _app.Game;
 
-		private IEnumerable<Gameset> _games;
+		public IEnumerable<IGame> Games => _app.Games;
 
-		public IEnumerable<Gameset> Games {
-			get => _games;
-			set => SetProperty(ref _games, value);
-		}
+		private Action<IGame> _action;
 
-		public GamesViewModel(BSMMApp app, Action close) {
-			_app = app;
-			UpdateList();
-		}
+		private IGame _selectedItem;
 
-		public async Task Refresh() {
-			if (!IsBusy) {
-				IsBusy = true;
-
-				try {
-					await Task.Run(() => UpdateList());
-				} finally {
-					IsBusy = false;
+		public IGame SelectedItem {
+			get => _selectedItem;
+			set {
+				SetProperty(ref _selectedItem, value);
+				if (_selectedItem != null) {
+					_action?.Invoke(_selectedItem);
 				}
 			}
 		}
 
-		public void UpdateList() {
-			Games = _app.Games.Select(game => new Gameset(this, game));
-			Title = Game.Headline;
+		public GamesViewModel(BSMMApp app, string title, Action<IGame> action) {
+			_app = app;
+			SelectedItem = app.Game;
+			_action = action;
+			Title = title;
 		}
 
 		public void Select(IGame game) {
@@ -61,10 +38,9 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		public async void Remove(IGame game) {
+		public void Remove(IGame game) {
 			if (_app.Remove(game)) {
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
-				await Refresh();
 			}
 		}
 	}
