@@ -14,8 +14,7 @@ namespace BSMM2.Views {
 			BindingContext = new PlayerViewModel(app, player);
 		}
 
-		private void OnClosing(object sender, EventArgs e) {
-			MessagingCenter.Send<object>(this, Messages.REFRESH);
-		}
+		private void OnClosing(object sender, EventArgs e)
+			=> MessagingCenter.Send<object>(this, Messages.REFRESH);
 	}
 }

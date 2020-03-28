@@ -69,7 +69,6 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest3() {
-			var filename = "debug";
 			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 6, _origin);
 

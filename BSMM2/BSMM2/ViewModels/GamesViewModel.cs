@@ -30,7 +30,7 @@ namespace BSMM2.ViewModels {
 
 		public IEnumerable<Gameset> Games {
 			get => _games;
-			set { SetProperty(ref _games, value); }
+			set => SetProperty(ref _games, value);
 		}
 
 		public GamesViewModel(BSMMApp app, Action close) {

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 using static BSMM2.Models.RESULT_T;
 
@@ -28,8 +29,10 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public override ContentPage CreateMatchPage(Game game, IMatch match)
-			=> new SingleMatchPage(game, match);
+		public override ContentPage CreateMatchPage(Game game, IMatch match) {
+			Debug.Assert(game.Rule is SingleMatchRule);
+			return new SingleMatchPage(game.Rule as SingleMatchRule, match);
+		}
 
 		public override Rule Clone()
 			=> new SingleMatchRule(this);

@@ -35,7 +35,6 @@ namespace BSMM2.Services {
 		public T Deserialize(string filename) {
 			using (var r = new StreamReader(filename)) {
 				return Deserialize(r);
-				r.Close();
 			}
 		}
 	}

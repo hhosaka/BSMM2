@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace BSMM2.Models.Matches.SingleMatch {
@@ -7,15 +8,13 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	public partial class SingleMatchPage : ContentPage {
 		private SingleMatchViewModel _viewModel;
 
-		public SingleMatchPage(Game game, IMatch match) {
+		public SingleMatchPage(SingleMatchRule rule, IMatch match) {
 			InitializeComponent();
-			Title = "Single Match Result";
-			BindingContext = _viewModel = new SingleMatchViewModel(game, match);
-		}
+			Title = String.Format("{0} Result", rule.Name);
+			BindingContext = _viewModel = new SingleMatchViewModel(rule, match, back);
 
-		private async void OnResultTapped(object sender, SelectedItemChangedEventArgs args) {
-			if (_viewModel.Update())
-				await Navigation.PopModalAsync();
+			async void back()
+				=> await Navigation.PopModalAsync();
 		}
 	}
 }
