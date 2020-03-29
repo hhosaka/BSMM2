@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BSMM2.Models {
@@ -74,6 +75,14 @@ namespace BSMM2.Models {
 			=> OpponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer
+		}
+
+		public void ExportTitle(TextWriter writer) {
+			writer.Write("name");
+		}
+
+		public void Export(TextWriter writer) {
+			writer.Write(Name);
 		}
 
 		public Player(string name) {

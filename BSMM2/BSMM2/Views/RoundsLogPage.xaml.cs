@@ -1,4 +1,5 @@
 ﻿using BSMM2.Models;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,9 +10,10 @@ namespace BSMM2.Views {
 
 		public RoundsLogPage(BSMMApp app) {
 			InitializeComponent();
-			int index = 1;
-			foreach (var round in app.Game.Rounds) {
-				Children.Add(CreatePage(new RoundLogPage(app.Game, round), "Round" + (index++)));
+			for (int index = 0; index < app.Game.Rounds.Count(); ++index) {
+				Children.Add(CreatePage(
+					new RoundLogPage(app.Game, index),
+					"Round" + (index + 1)));
 			}
 
 			Page CreatePage(Page page, string title) {
