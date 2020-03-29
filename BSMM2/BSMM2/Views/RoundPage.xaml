@@ -6,7 +6,7 @@
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Log" Command="{Binding ShowRoundLogCommand}" Order="Secondary" />
+		<ToolbarItem Text="Log" Command="{Binding ShowRoundsLogCommand}" Order="Secondary" />
 		<ToolbarItem Text="Help" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Resources>

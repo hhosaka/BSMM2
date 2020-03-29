@@ -1,21 +1,21 @@
 ﻿using BSMM2.Models;
-using BSMM2.Resource;
+using BSMM2.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace BSMM2.Views {
 
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RoundLogPage : TabbedPage {
+	public partial class RoundLogPage : ContentPage {
 
-		public RoundLogPage(BSMMApp app) {
+		public RoundLogPage(IGame game, IRound round) {
 			InitializeComponent();
-			Children.Add(CreatePage(new RoundPage(app), AppResources.TabTitleRound));
 
-			Page CreatePage(Page page, string title) {
-				var ret = new NavigationPage(page);
-				ret.Title = title;
-				return ret;
+			BindingContext = new RoundLogViewModel(round, showMatch);
+
+			async void showMatch(Match match) {
+				await Navigation.PushModalAsync(new NavigationPage(game.CreateMatchPage(match)));
+				RoundListView.SelectedItem = null;
 			}
 		}
 	}

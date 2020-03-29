@@ -13,11 +13,11 @@ namespace BSMM2.Views {
 		public RoundPage(BSMMApp app) {
 			InitializeComponent();
 
-			BindingContext = viewModel = new RoundViewModel(app, showRoundLog);
+			BindingContext = viewModel = new RoundViewModel(app, showRoundsLog);
 			viewModel.OnFailedMatching += OnMatchingFailed;
 
-			void showRoundLog()
-				=> Navigation.PushModalAsync(new RoundLogPage(app));
+			void showRoundsLog()
+				=> Navigation.PushModalAsync(new RoundsLogPage(app));
 		}
 
 		private async Task OnMatchingFailed() {

@@ -41,17 +41,17 @@ namespace BSMM2.ViewModels {
 		public DelegateCommand ShuffleCommand { get; }
 		public DelegateCommand StartCommand { get; }
 		public DelegateCommand StepToMatchingCommand { get; }
-		public DelegateCommand ShowRoundLogCommand { get; }
+		public DelegateCommand ShowRoundsLogCommand { get; }
 
 		public event Func<Task> OnFailedMatching;
 
-		public RoundViewModel(BSMMApp app, Action showRoundLog) {
+		public RoundViewModel(BSMMApp app, Action showRoundsLog) {
 			Debug.Assert(app != null);
 			_app = app;
 			ShuffleCommand = CreateShuffleCommand();
 			StartCommand = CreateStepToPlayingCommand();
 			StepToMatchingCommand = CreateStepToMatchingCommand();
-			ShowRoundLogCommand = new DelegateCommand(showRoundLog, () => app.Game.Rounds.Any());
+			ShowRoundsLogCommand = new DelegateCommand(showRoundsLog, () => app.Game.Rounds.Any());
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
 				async (sender) => await ExecuteRefresh());
 
@@ -75,7 +75,7 @@ namespace BSMM2.ViewModels {
 			StartCommand?.RaiseCanExecuteChanged();
 			ShuffleCommand?.RaiseCanExecuteChanged();
 			StepToMatchingCommand?.RaiseCanExecuteChanged();
-			ShowRoundLogCommand?.RaiseCanExecuteChanged();
+			ShowRoundsLogCommand?.RaiseCanExecuteChanged();
 		}
 
 		private DelegateCommand CreateStepToPlayingCommand() {

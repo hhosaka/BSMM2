@@ -34,11 +34,11 @@
     <Compile Update="Views\AddPlayerPage.xaml.cs">
       <DependentUpon>AddPlayerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RoundLogPage.xaml.cs">
-      <DependentUpon>RoundLogPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\PlayerPage.xaml.cs">
       <DependentUpon>PlayerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RoundLogPage.xaml.cs">
+      <DependentUpon>RoundLogPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\RulePage.xaml.cs">
       <DependentUpon>RulePage.xaml</DependentUpon>
