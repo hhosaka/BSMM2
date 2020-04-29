@@ -6,6 +6,6 @@ namespace BSMM2.Models {
 
 		void ExportTitle(TextWriter writer);
 
-		void Export(TextWriter writer);
+		void ExportData(TextWriter writer);
 	}
 }

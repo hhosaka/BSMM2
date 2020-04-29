@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -76,7 +77,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.OpponentResult.Point - p2.OpponentResult.Point;
+				=> p1.OpponentResult?.Point ?? 0 - p2.OpponentResult?.Point ?? 0;
 		}
 
 		private class OpponentLifePointComparer : IComparer {
@@ -90,7 +91,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.OpponentResult.LifePoint - p2.OpponentResult.LifePoint;
+				=> p1.OpponentResult?.LifePoint ?? 0 - p2.OpponentResult?.LifePoint ?? 0;
 		}
 
 		private class WinPointComparer : IComparer {
@@ -118,7 +119,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(p1.OpponentResult.WinPoint - p2.OpponentResult.WinPoint);
+				=> ConvDouble2Int(p1.OpponentResult?.WinPoint ?? 0 - p2.OpponentResult?.WinPoint ?? 0);
 		}
 
 		private class ByePlayer : IPlayer {
@@ -135,6 +136,14 @@ namespace BSMM2.Models {
 			public bool HasGapMatch => false;
 
 			public void Commit(Match match) {
+			}
+
+			public void ExportTitle(TextWriter writer) {
+				throw new NotImplementedException();
+			}
+
+			public void ExportData(TextWriter writer) {
+				throw new NotImplementedException();
 			}
 
 			public ByePlayer() {

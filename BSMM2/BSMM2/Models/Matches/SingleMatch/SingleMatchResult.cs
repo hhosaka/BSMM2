@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.IO;
+using Newtonsoft.Json;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
@@ -23,6 +24,14 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public SingleMatchResult(RESULT_T result, int lifePoint = 0) {
 			RESULT = result;
 			LifePoint = lifePoint;
+		}
+
+		public void ExportTitle(TextWriter writer) {
+			throw new System.NotImplementedException();
+		}
+
+		public void ExportData(TextWriter writer) {
+			throw new System.NotImplementedException();
 		}
 	}
 }

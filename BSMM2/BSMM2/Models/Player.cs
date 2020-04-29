@@ -9,6 +9,28 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class Player : IPlayer {
 
+		private class DefaultResult : IResult {
+			public RESULT_T? RESULT => RESULT_T.Matching;
+
+			public int Point => 0;
+
+			public int LifePoint => 0;
+
+			public double WinPoint => 0;
+
+			public bool IsFinished => false;
+
+			public void ExportTitle(TextWriter writer) {
+				writer.Write("Point, WinPoint, LifePoint");
+			}
+
+			public void ExportData(TextWriter writer) {
+				writer.Write("0, 0, 0");
+			}
+		}
+
+		private static readonly DefaultResult _defaultResult = new DefaultResult();
+
 		private class Total : IResult {
 			public int Point { get; }
 
@@ -16,7 +38,7 @@ namespace BSMM2.Models {
 
 			public double WinPoint { get; }
 
-			public RESULT_T? RESULT => null;
+			public RESULT_T? RESULT => RESULT_T.Matching;
 
 			public bool IsFinished => true;
 
@@ -29,6 +51,18 @@ namespace BSMM2.Models {
 					}
 				}
 				WinPoint = source.Any() ? WinPoint / source.Count() : 0.0;
+			}
+
+			public void ExportTitle(TextWriter writer) {
+				writer.Write("Status, Point, WinPoint, LifePoint");
+			}
+
+			public void ExportData(TextWriter writer) {
+				writer.Write(Point);
+				writer.Write(", ");
+				writer.Write(WinPoint);
+				writer.Write(", ");
+				writer.Write(LifePoint);
 			}
 		}
 
@@ -56,8 +90,10 @@ namespace BSMM2.Models {
 		public bool IsAllLoses
 			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this)?.RESULT != RESULT_T.Lose);
 
+		[JsonIgnore]
 		public IResult Result { get; private set; }
 
+		[JsonIgnore]
 		public IResult OpponentResult { get; private set; }
 
 		public int Order { get; set; }
@@ -75,17 +111,24 @@ namespace BSMM2.Models {
 			=> OpponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer
+			Result = _defaultResult;
 		}
 
 		public void ExportTitle(TextWriter writer) {
-			writer.Write("name");
+			writer.Write("Name, Dropped, ");
+			Result.ExportTitle(writer);
 		}
 
-		public void Export(TextWriter writer) {
+		public void ExportData(TextWriter writer) {
+			writer.Write("\"");
 			writer.Write(Name);
+			writer.Write("\", ");
+			writer.Write(Dropped);
+			writer.Write(", ");
+			Result.ExportData(writer);
 		}
 
-		public Player(string name) {
+		public Player(string name) : this() {
 			_matches = new List<Match>();
 			Name = name;
 		}

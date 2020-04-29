@@ -9,12 +9,21 @@ namespace BSMM2Test {
 	public class ExportTest {
 
 		[TestMethod]
-		public void ExportTest1() {
+		public void ExportTitleTest() {
 			var player = new Player("test");
 			var buf = new StringBuilder();
 
 			player.ExportTitle(new StringWriter(buf));
-			Assert.AreEqual("name", buf.ToString());
+			Assert.AreEqual("Name, Dropped, Point, WinPoint, LifePoint", buf.ToString());
+		}
+
+		[TestMethod]
+		public void ExportDataTest() {
+			var player = new Player("test");
+			var buf = new StringBuilder();
+
+			player.ExportData(new StringWriter(buf));
+			Assert.AreEqual("\"test\", False, 0, 0, 0", buf.ToString());
 		}
 	}
 }
