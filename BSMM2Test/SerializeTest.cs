@@ -139,30 +139,5 @@ namespace BSMM2Test {
 			Assert.AreEqual(1, app2.Games.Count());
 			Assert.AreEqual(app.Game.Id, app2.Game.Id);
 		}
-
-		[TestMethod]
-		public void SaveSettings() {
-			var entries = new[] { "123\r\n456", "abc\r\ndef" };
-			var playerName = "test";
-			var count = 123;
-
-			var settings = new Settings() {
-				Count = count,
-				PlayerNamePrefix = playerName,
-				Entries = entries,
-				Rule = new SingleMatchRule()
-			};
-
-			var serializer = new Serializer<Settings>();
-			var buf = new StringBuilder();
-
-			serializer.Serialize(new StringWriter(buf), settings);
-			var result = serializer.Deserialize(new StringReader(buf.ToString()));
-
-			Assert.AreEqual(count, result.Count);
-			Assert.AreEqual(playerName, result.PlayerNamePrefix);
-			CollectionAssert.AreEqual(entries.ToArray(), result.Entries.ToArray());
-			Assert.IsNotNull(result.Rule as Rule);
-		}
 	}
 }
