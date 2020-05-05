@@ -24,7 +24,7 @@ namespace BSMM2.ViewModels {
 			return "(" + GetResult() + ")";
 
 			string GetResult()
-				=> (value as IMatchRecord)?.Result?.RESULT?.ToString() ?? "***";
+				=> (value as IMatchRecord)?.Result.RESULT.ToString() ?? "***";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

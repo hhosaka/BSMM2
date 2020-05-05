@@ -16,7 +16,7 @@ namespace BSMM2.Models.Matches {
 		private int _minCount;
 
 		[JsonIgnore]
-		private RESULT_T? _RESULT;
+		private RESULT_T _RESULT;
 
 		[JsonIgnore]
 		public int MatchPoint
@@ -31,8 +31,8 @@ namespace BSMM2.Models.Matches {
 			=> _results.Sum(p => p.WinPoint) / _results.Count();
 
 		[JsonIgnore]
-		public RESULT_T? RESULT
-			=> _RESULT ?? (_RESULT = GetResult());
+		public RESULT_T RESULT
+			=> _RESULT = GetResult();
 
 		public int Point
 			=> MatchPoint;
@@ -40,11 +40,10 @@ namespace BSMM2.Models.Matches {
 		public bool IsFinished => _results.Count() >= _minCount;
 
 		public void Add(IResult result) {
-			_RESULT = null;
 			_results.Add(result);
 		}
 
-		private RESULT_T? GetResult() {
+		private RESULT_T GetResult() {
 			if (_results.Any()) {
 				int result = 0;
 				foreach (var r in _results) {
@@ -60,7 +59,7 @@ namespace BSMM2.Models.Matches {
 				}
 				return result == 0 ? Draw : result > 0 ? Win : Lose;
 			}
-			return null;
+			return RESULT_T.Undefined;
 		}
 
 		public void ExportTitle(TextWriter writer) {

@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.IO;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
@@ -17,7 +17,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public int LifePoint { get; }
 
 		[JsonProperty]
-		public RESULT_T? RESULT { get; }
+		public RESULT_T RESULT { get; }
 
 		public bool IsFinished => true;
 

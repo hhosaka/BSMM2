@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 	public class Player : IPlayer {
 
 		private class DefaultResult : IResult {
-			public RESULT_T? RESULT => RESULT_T.Matching;
+			public RESULT_T RESULT => RESULT_T.Undefined;
 
 			public int Point => 0;
 
@@ -38,7 +38,7 @@ namespace BSMM2.Models {
 
 			public double WinPoint { get; }
 
-			public RESULT_T? RESULT => RESULT_T.Matching;
+			public RESULT_T RESULT => RESULT_T.Undefined;
 
 			public bool IsFinished => true;
 
@@ -104,10 +104,10 @@ namespace BSMM2.Models {
 		public RESULT_T? GetResult(Player player)
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
-		public void CalcResult(Rule rule)
+		internal void CalcResult(Rule rule)
 			=> Result = new Total(_matches.Select(match => match.GetResult(this)));
 
-		public void CalcOpponentResult(Rule rule)
+		internal void CalcOpponentResult(Rule rule)
 			=> OpponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
 
 		public Player() {// For Serializer

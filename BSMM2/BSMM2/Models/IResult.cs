@@ -1,7 +1,7 @@
 ﻿namespace BSMM2.Models {
 
 	public interface IResult : Exportable {
-		RESULT_T? RESULT { get; }
+		RESULT_T RESULT { get; }
 
 		int Point { get; }
 
