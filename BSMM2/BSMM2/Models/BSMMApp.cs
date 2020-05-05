@@ -1,24 +1,35 @@
 ﻿using BSMM2.Models.Matches;
 using BSMM2.Models.Matches.SingleMatch;
+using BSMM2.Services;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
 	[JsonObject]
 	public class BSMMApp {
+		private static readonly string APPDATAPATH = "appfile.data";
 
 		[JsonIgnore]
 		private static readonly IGame _defaultGame = new DefaultGame();
 
 		public static BSMMApp Create() {
-			return new BSMMApp(new Rule[] {
-				new SingleMatchRule(),
-				new ThreeGameMatchRule(),
-				new ThreeOnThreeMatchRule(),
-				});
+			var engine = new Engine();
+			return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+
+			BSMMApp Initiate()
+				=> new BSMMApp(engine,
+						new Rule[] {
+					new SingleMatchRule(),
+					new ThreeGameMatchRule(),
+					new ThreeOnThreeMatchRule(),
+						});
 		}
 
 		[JsonIgnore]
@@ -45,12 +56,15 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool AutoSave { get; set; }
 
-		public BSMMApp() {
-			_engine = new Engine();
+		public BSMMApp() : this(new Engine()) {// for Serializer
+		}
+
+		private BSMMApp(Engine engine) {
+			_engine = engine;
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
 		}
 
-		private BSMMApp(Rule[] rules) : this() {
+		private BSMMApp(Engine engine, Rule[] rules) : this(engine) {
 			Rules = rules;
 			Rule = Rules.First();
 			_games = new List<IGame>();
@@ -79,11 +93,32 @@ namespace BSMM2.Models {
 
 		public void Save(bool force) {
 			if (force || AutoSave)
-				_engine.SaveApp(this);
+				_engine.Save(this, APPDATAPATH);
 		}
 
 		public ContentPage CreateMatchPage(Match match) {
 			return Game.CreateMatchPage(match);
+		}
+
+		public async Task SendEmail(string subject, string body, List<string> recipients) {
+			try {
+				var message = new EmailMessage {
+					Subject = subject,
+					Body = body,
+					To = recipients,
+				};
+				await Email.ComposeAsync(message);
+			} catch (FeatureNotSupportedException) {
+				// Email is not supported on this device
+			}
+		}
+
+		public void SendByMail(Game game, string to, string filename) {
+			var buf = new StringBuilder();
+			using (var writer = new StringWriter(buf)) {
+				new Serializer<Game>().Serialize(writer, game);
+				SendEmail("BS Match Maker Result", buf.ToString(), new[] { "hhosaka183@gmail.com" }.ToList()).Start();
+			}
 		}
 
 		// TODO : TBD

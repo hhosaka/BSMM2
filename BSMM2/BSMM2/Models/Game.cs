@@ -202,5 +202,17 @@ namespace BSMM2.Models {
 				}
 			}
 		}
+
+		public static Game Load(Guid id, Engine engine) {
+			return engine.Load<Game>(id.ToString() + ".json", () => new Game());
+		}
+
+		public void Save(Engine engine) {
+			engine.Save<IGame>(this, Id.ToString() + ".json");
+		}
+
+		public void Remove(Engine engine, IGame game) {
+			engine.Delete(game.Id.ToString() + ".json");
+		}
 	}
 }

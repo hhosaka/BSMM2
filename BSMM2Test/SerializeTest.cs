@@ -29,6 +29,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			(game.ActiveRound as Matching)?.Swap(0, 1);
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.PlayersByOrder);
 
 			var buf = new StringBuilder();
 
@@ -39,6 +40,7 @@ namespace BSMM2Test {
 			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.PlayersByOrder);
 			Assert.AreEqual(game.Title, result.Title);
 			Assert.AreEqual(game.Id, result.Id);
 			Util.Check(game, result);
@@ -63,8 +65,8 @@ namespace BSMM2Test {
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, result.PlayersByOrder);
 		}
 
 		[TestMethod]
@@ -91,9 +93,9 @@ namespace BSMM2Test {
 
 			var engine = new Engine();
 
-			engine.SaveGame(game);
+			game.Save(engine);
 
-			var game2 = engine.LoadGame(game.Id);
+			var game2 = Game.Load(game.Id, engine);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.PlayersByOrder);
@@ -119,7 +121,7 @@ namespace BSMM2Test {
 			var app = BSMMApp.Create();
 			app.Rule = app.Rules.ElementAt(0);
 			app.Save(true);
-			var app2 = new Engine().CreateApp();
+			var app2 = BSMMApp.Create();
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(0), app2.Rule);
 			Assert.AreEqual(0, app2.Games.Count());
@@ -133,7 +135,7 @@ namespace BSMM2Test {
 			var title = "test";
 			app.Add(new Game(app.Rule, new Players(8), title), true);
 			app.Save(true);
-			var app2 = new Engine().CreateApp();
+			var app2 = BSMMApp.Create();
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(1), app2.Rule);
 			Assert.AreEqual(1, app2.Games.Count());

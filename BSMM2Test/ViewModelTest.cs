@@ -21,7 +21,7 @@ namespace BSMM2Test {
 
 			MessagingCenter.Send<object>(app, Messages.REFRESH);
 
-			var app2 = new Engine().CreateApp();
+			var app2 = BSMMApp.Create();
 			Assert.AreNotEqual(Guid.Empty, app2.Game.Id);
 
 			app2.Remove((Game)app2.Game);
@@ -29,7 +29,7 @@ namespace BSMM2Test {
 
 			MessagingCenter.Send<object>(app2, Messages.REFRESH);
 
-			Assert.AreEqual(Guid.Empty, new Engine().CreateApp().Game.Id);
+			Assert.AreEqual(Guid.Empty, BSMMApp.Create().Game.Id);
 		}
 	}
 }
