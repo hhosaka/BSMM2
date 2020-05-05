@@ -25,7 +25,11 @@ namespace BSMM2.Models {
 			if (force) {
 				return Initiate();
 			} else {
-				return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+				try {
+					return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+				} catch (IOException) {
+					return Initiate();
+				}
 			}
 
 			BSMMApp Initiate()

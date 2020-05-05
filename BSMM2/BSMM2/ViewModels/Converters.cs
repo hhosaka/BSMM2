@@ -10,8 +10,7 @@ namespace BSMM2.ViewModels {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 			if (value is IResult result)
 				return "Point=" + result.Point + "/Life=" + result.LifePoint + "/Win=" + result.WinPoint;
-			else
-				return "***";
+			return "***";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,7 +23,7 @@ namespace BSMM2.ViewModels {
 			return "(" + GetResult() + ")";
 
 			string GetResult()
-				=> (value as IMatchRecord)?.Result.RESULT.ToString() ?? "***";
+				=> (value as IMatchRecord).Result.RESULT.ToString();
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
