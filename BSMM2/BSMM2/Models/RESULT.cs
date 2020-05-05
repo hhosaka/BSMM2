@@ -1,4 +1,4 @@
 ﻿namespace BSMM2.Models {
 
-	public enum RESULT_T { Win, Lose, Draw, Undefined }
+	public enum RESULT_T { Win, Lose, Draw, Progress }
 }

@@ -91,7 +91,7 @@ namespace BSMM2Test {
 
 			var sbuf = buf.ToString();
 
-			var engine = new Engine();
+			var engine = new SerializeUtil();
 
 			game.Save(engine);
 

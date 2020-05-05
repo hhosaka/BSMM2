@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 	public class Player : IPlayer {
 
 		private class DefaultResult : IResult {
-			public RESULT_T RESULT => RESULT_T.Undefined;
+			public RESULT_T RESULT => RESULT_T.Progress;
 
 			public int Point => 0;
 
@@ -38,7 +38,7 @@ namespace BSMM2.Models {
 
 			public double WinPoint { get; }
 
-			public RESULT_T RESULT => RESULT_T.Undefined;
+			public RESULT_T RESULT => RESULT_T.Progress;
 
 			public bool IsFinished => true;
 

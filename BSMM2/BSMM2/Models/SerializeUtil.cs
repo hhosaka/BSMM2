@@ -5,13 +5,11 @@ using System.IO.IsolatedStorage;
 
 namespace BSMM2.Models {
 
-	public class Engine {
-		private static readonly string APPDATAPATH = "appfile.data";
-
+	public class SerializeUtil {
 		private IsolatedStorageFile _store;
 
 		public T Load<T>(string filename, Func<T> initiator) where T : new() {
-			if (_store.FileExists(APPDATAPATH)) {
+			if (_store.FileExists(filename)) {
 				using (var strm = _store.OpenFile(filename, FileMode.Open))
 				using (var reader = new StreamReader(strm)) {
 					return new Serializer<T>().Deserialize(reader);
@@ -31,7 +29,7 @@ namespace BSMM2.Models {
 			_store.DeleteFile(filename);
 		}
 
-		public Engine() {
+		public SerializeUtil() {
 			_store = IsolatedStorageFile.GetUserStoreForApplication();
 		}
 	}

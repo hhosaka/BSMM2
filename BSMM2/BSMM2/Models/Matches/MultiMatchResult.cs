@@ -59,7 +59,7 @@ namespace BSMM2.Models.Matches {
 				}
 				return result == 0 ? Draw : result > 0 ? Win : Lose;
 			}
-			return RESULT_T.Undefined;
+			return RESULT_T.Progress;
 		}
 
 		public void ExportTitle(TextWriter writer) {

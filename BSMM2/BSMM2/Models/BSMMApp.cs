@@ -19,9 +19,14 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		private static readonly IGame _defaultGame = new DefaultGame();
 
-		public static BSMMApp Create() {
-			var engine = new Engine();
-			return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+		public static BSMMApp Create(bool force = false) {
+			var engine = new SerializeUtil();
+
+			if (force) {
+				return Initiate();
+			} else {
+				return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+			}
 
 			BSMMApp Initiate()
 				=> new BSMMApp(engine,
@@ -33,7 +38,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonIgnore]
-		private Engine _engine;
+		private SerializeUtil _engine;
 
 		[JsonProperty]
 		private List<IGame> _games;
@@ -48,46 +53,44 @@ namespace BSMM2.Models {
 		public Rule Rule { get; set; }
 
 		[JsonProperty]
-		private IGame _game;
-
-		[JsonIgnore]
-		public IGame Game => _game ?? _defaultGame;
+		public IGame Game { get; private set; }
 
 		[JsonProperty]
 		public bool AutoSave { get; set; }
 
-		public BSMMApp() : this(new Engine()) {// for Serializer
+		public BSMMApp() : this(new SerializeUtil()) {// for Serializer
 		}
 
-		private BSMMApp(Engine engine) {
+		private BSMMApp(SerializeUtil engine) {
 			_engine = engine;
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
 		}
 
-		private BSMMApp(Engine engine, Rule[] rules) : this(engine) {
+		private BSMMApp(SerializeUtil engine, Rule[] rules) : this(engine) {
 			Rules = rules;
+			Game = _defaultGame;
 			Rule = Rules.First();
 			_games = new List<IGame>();
 			AutoSave = true;
 		}
 
 		public bool Add(IGame game, bool AsCurrentGame) {
-			if (_game != null && AsCurrentGame) {
-				Remove(_game);
+			if (Game != _defaultGame && AsCurrentGame) {
+				Remove(Game);
 			}
 			_games.Add(game);
-			_game = game;
+			Game = game;
 			return true;
 		}
 
 		public bool Remove(IGame game) {
 			_games.Remove(game);
-			_game = null;
+			Game = _defaultGame;
 			return true;
 		}
 
 		public bool Select(IGame game) {
-			_game = game;
+			Game = game;
 			return true;
 		}
 

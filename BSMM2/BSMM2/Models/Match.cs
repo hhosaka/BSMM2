@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using Xamarin.Forms.Internals;
 
@@ -8,6 +9,24 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class Match : INotifyPropertyChanged, IMatch {
+
+		private class DefaultResult : IResult {
+			public RESULT_T RESULT => RESULT_T.Progress;
+
+			public int Point => 0;
+
+			public int LifePoint => 0;
+
+			public double WinPoint => 0;
+
+			public bool IsFinished => false;
+
+			public void ExportData(TextWriter writer) {
+			}
+
+			public void ExportTitle(TextWriter writer) {
+			}
+		}
 
 		private class ByePlayer : Player {
 			public override bool Dropped => true;
@@ -18,6 +37,7 @@ namespace BSMM2.Models {
 
 		[JsonObject]
 		private class Record : IMatchRecord {
+			private static readonly IResult _defaultResult = new DefaultResult();
 
 			[JsonProperty]
 			public IPlayer Player { get; private set; }
@@ -33,6 +53,7 @@ namespace BSMM2.Models {
 
 			public Record(IPlayer player) {
 				Player = player;
+				Result = _defaultResult;
 			}
 		}
 
