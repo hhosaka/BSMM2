@@ -15,6 +15,9 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		private List<Player> _players;
 
+		[JsonIgnore]
+		public int Count => _players.Count;
+
 		private IEnumerable<Player> Generate(int start, string prefix, int count = 1) {
 			for (int i = 0; i < count; ++i) {
 				yield return new Player(string.Format("{0}{1:000}", prefix, start + i));
@@ -73,7 +76,13 @@ namespace BSMM2.Models {
 		protected virtual IEnumerable<Player> Source(IEnumerable<Player> players)
 			=> players.OrderBy(i => Guid.NewGuid());
 
-		[JsonIgnore]
-		public int Count => _players.Count;
+		public void Export(Rule rule, TextWriter writer) {
+			_players.First()?.ExportTitle(writer);
+			writer.WriteLine();
+			foreach (var player in GetByOrder(rule)) {
+				player.ExportData(writer);
+				writer.WriteLine();
+			}
+		}
 	}
 }

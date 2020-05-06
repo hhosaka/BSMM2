@@ -54,7 +54,7 @@ namespace BSMM2.Models {
 			}
 
 			public void ExportTitle(TextWriter writer) {
-				writer.Write("Status, Point, WinPoint, LifePoint");
+				writer.Write("Point, WinPoint, LifePoint");
 			}
 
 			public void ExportData(TextWriter writer) {
