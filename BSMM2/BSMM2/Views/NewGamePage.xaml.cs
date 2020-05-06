@@ -14,7 +14,7 @@ namespace BSMM2.Views {
 			BindingContext = new NewGameViewModel(app, async () => await Navigation.PopModalAsync());
 		}
 
-		private async void Back_Clicked(object sender, EventArgs e)
+		private async void Back(object sender, EventArgs e)
 			=> await Navigation.PopModalAsync();
 	}
 }

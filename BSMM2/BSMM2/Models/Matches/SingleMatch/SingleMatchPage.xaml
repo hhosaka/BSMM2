@@ -3,6 +3,9 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 x:Class="BSMM2.Models.Matches.SingleMatch.SingleMatchPage"
 			 Title="{Binding Title}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout VerticalOptions="Center">
 			<Label Text="{Binding LifePointTitle1}"  IsVisible="{Binding EnableLifePoint}" />

@@ -13,7 +13,7 @@ namespace BSMM2.Views {
 			BindingContext = app.Game.Rule;
 		}
 
-		private async void OnClose(object sender, EventArgs args)
+		private async void Back(object sender, EventArgs args)
 			=> await Navigation.PopModalAsync();
 	}
 }

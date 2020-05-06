@@ -15,5 +15,8 @@ namespace BSMM2.Views {
 			_viewModel = new GamesViewModel(app, title, action);
 			BindingContext = _viewModel;
 		}
+
+		private async void Back(object sender, EventArgs e)
+			=> await Navigation.PopModalAsync();
 	}
 }

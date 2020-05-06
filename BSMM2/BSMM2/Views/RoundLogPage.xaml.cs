@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
+using System;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -19,5 +20,8 @@ namespace BSMM2.Views {
 				RoundListView.SelectedItem = null;
 			}
 		}
+
+		private async void Back(object sender, EventArgs e)
+			=> await Navigation.PopModalAsync();
 	}
 }

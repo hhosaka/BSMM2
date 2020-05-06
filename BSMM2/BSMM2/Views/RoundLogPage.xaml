@@ -8,6 +8,9 @@
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<ListView x:Name="RoundListView"

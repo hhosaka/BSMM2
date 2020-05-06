@@ -11,10 +11,13 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public SingleMatchPage(SingleMatchRule rule, IMatch match) {
 			InitializeComponent();
 			Title = String.Format("{0} Result", rule.Name);
-			BindingContext = _viewModel = new SingleMatchViewModel(rule, match, back);
-
-			async void back()
-				=> await Navigation.PopModalAsync();
+			BindingContext = _viewModel = new SingleMatchViewModel(rule, match, Back);
 		}
+
+		private void Back(object sender, EventArgs e)
+			=> Back();
+
+		private async void Back()
+			=> await Navigation.PopModalAsync();
 	}
 }

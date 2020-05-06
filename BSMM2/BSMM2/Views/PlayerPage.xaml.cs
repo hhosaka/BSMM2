@@ -14,7 +14,7 @@ namespace BSMM2.Views {
 			BindingContext = new PlayerViewModel(app, player);
 		}
 
-		private async void Close(object sender, EventArgs e)
+		private async void Back(object sender, EventArgs e)
 			=> await Navigation.PopModalAsync();
 
 		private void OnClosing(object sender, EventArgs e)

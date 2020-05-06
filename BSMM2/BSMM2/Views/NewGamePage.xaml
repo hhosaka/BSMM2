@@ -7,13 +7,15 @@
 	<ContentPage.Resources>
 		<local:PlayerControlConverter x:Key="PlayerControlConverter" />
 	</ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<Label Text="Name:" />
+			<Label Text="Title:" />
 			<Editor Text="{Binding GameName}" />
-			<Label Text="Rule:" />
 			<Picker x:Name="Rule"
-				TitleColor="Red"
+				Title="Rule:"
 				ItemsSource ="{Binding Rules}"
 				SelectedItem="{Binding Rule}"
 				ItemDisplayBinding="{Binding Name}" />

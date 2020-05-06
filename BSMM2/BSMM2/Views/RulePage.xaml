@@ -4,17 +4,19 @@
 			 x:Class="BSMM2.Views.RulePage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			 Title="{Binding Name}">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<CheckBox IsChecked="{Binding AcceptByeMatchDuplication}" />
 				<Label Text="AcceptByeMatchDuplication" VerticalOptions="Center" />
+				<CheckBox IsChecked="{Binding AcceptByeMatchDuplication}" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<CheckBox IsChecked="{Binding AcceptGapMatchDuplication}" />
 				<Label Text="AcceptGapMatchDuplication" VerticalOptions="Center" />
+				<CheckBox IsChecked="{Binding AcceptGapMatchDuplication}" />
 			</StackLayout>
-			<Button Text="Close" Clicked="OnClose" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

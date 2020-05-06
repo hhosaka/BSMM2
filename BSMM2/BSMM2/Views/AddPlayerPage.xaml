@@ -5,6 +5,9 @@
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<Editor Text="{Binding Data}" HeightRequest="256"  BackgroundColor="Aqua" />
