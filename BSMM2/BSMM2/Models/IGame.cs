@@ -12,7 +12,8 @@ namespace BSMM2.Models {
 		DateTime? StartTime { get; }
 		bool IsMatching { get; }
 		string Headline { get; }
-		IEnumerable<Player> PlayersByOrder { get; }
+
+		Players Players { get; }
 
 		bool CanExecuteShuffle { get; }
 

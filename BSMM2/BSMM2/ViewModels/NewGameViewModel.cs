@@ -48,14 +48,14 @@ namespace BSMM2.ViewModels {
 
 		private event Action _closeWindow;
 
-		private Players CreatePlayers() {
+		private Players CreatePlayers(Rule rule) {
 			switch (PlayerMode) {
 				case "Number":
-					return new Players(PlayerCount, Prefix);
+					return new Players(rule, PlayerCount, Prefix);
 
 				case "EntrySheet": {
 						using (var reader = new StringReader(EntrySheet)) {
-							return new Players(reader);
+							return new Players(rule, reader);
 						}
 					}
 				default:
@@ -77,7 +77,7 @@ namespace BSMM2.ViewModels {
 			CreateCommand = new DelegateCommand(ExecuteCreate);
 
 			void ExecuteCreate() {
-				if (app.Add(new Game(Rule.Clone(), CreatePlayers(), GameName), AsCurrentGame)) {
+				if (app.Add(new Game(Rule.Clone(), CreatePlayers(Rule), GameName), AsCurrentGame)) {
 					MessagingCenter.Send<object>(this, Messages.REFRESH);
 				}// TODO : Error handling is required?
 				_closeWindow?.Invoke();

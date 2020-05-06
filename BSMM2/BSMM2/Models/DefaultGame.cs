@@ -6,6 +6,7 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	internal class DefaultGame : IGame {
+		private Players _defaultPlayers = new Players();
 		private IRound _defaultRound = new Matching(Enumerable.Empty<Match>());
 
 		public IEnumerable<Player> PlayersByOrder
@@ -42,6 +43,9 @@ namespace BSMM2.Models {
 			=> true;
 
 		public Guid Id => Guid.Empty;
+
+		public Players Players
+			=> _defaultPlayers;
 
 		public bool Shuffle()
 			=> false;

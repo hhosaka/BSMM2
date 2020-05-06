@@ -37,9 +37,6 @@ namespace BSMM2.Models {
 
 		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
-		public virtual IEnumerable<Player> PlayersByOrder
-				=> GetOrderedPlayers();
-
 		public bool CanAddPlayers => true;//TODO: tentative
 
 		public bool AddPlayers(string data) {
@@ -118,25 +115,8 @@ namespace BSMM2.Models {
 		public bool IsMatching
 			=> ActiveRound is Matching;
 
-		private IEnumerable<Player> GetOrderedPlayers() {
-			var comparer = Rule.CreateOrderComparer();
-			var players = Players.GetByOrder(Rule);
-			Player prev = null;
-			int order = 0;
-			int count = 0;
-			foreach (var p in players) {
-				if (prev == null || comparer.Compare(prev, p) != 0) {
-					order = count;
-					prev = p;
-				}
-				p.Order = order + 1;
-				++count;
-			}
-			return players;
-		}
-
 		private IEnumerable<Match> MakeRound() {
-			Players.Reset(Rule);
+			Players.Reset();
 			for (int level = 0; level < Rule.CompareDepth; ++level) {
 				for (int i = 0; i < _tryCount; ++i) {
 					var matchingList = Create(Players.GetSource(Rule, level).Where(p => !p.Dropped));

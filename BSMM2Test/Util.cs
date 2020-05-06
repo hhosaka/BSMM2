@@ -63,8 +63,8 @@ namespace BSMM2Test {
 
 		public static void Check(Rule rule, Players a, Players b) {
 			Assert.AreEqual(a.Count, b.Count);
-			var ita = a.GetByOrder(rule).GetEnumerator();
-			var itb = b.GetByOrder(rule).GetEnumerator();
+			var ita = a.GetByOrder().GetEnumerator();
+			var itb = b.GetByOrder().GetEnumerator();
 			while (ita.MoveNext() && itb.MoveNext()) {
 				Check(ita.Current, itb.Current);
 			}

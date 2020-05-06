@@ -29,7 +29,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			(game.ActiveRound as Matching)?.Swap(0, 1);
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.PlayersByOrder);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.Players.GetByOrder());
 
 			var buf = new StringBuilder();
 
@@ -40,7 +40,7 @@ namespace BSMM2Test {
 			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
 			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.PlayersByOrder);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.Players.GetByOrder());
 			Assert.AreEqual(game.Title, result.Title);
 			Assert.AreEqual(game.Id, result.Id);
 			Util.Check(game, result);
@@ -60,13 +60,13 @@ namespace BSMM2Test {
 			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
 
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, result.PlayersByOrder);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, result.Players.GetByOrder());
 		}
 
 		[TestMethod]
@@ -83,7 +83,7 @@ namespace BSMM2Test {
 			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.PlayersByOrder);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
 
 			var buf = new StringBuilder();
 
@@ -98,7 +98,7 @@ namespace BSMM2Test {
 			var game2 = Game.Load(game.Id, engine);
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.PlayersByOrder);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.Players.GetByOrder());
 		}
 
 		[TestMethod]
@@ -131,9 +131,10 @@ namespace BSMM2Test {
 		[TestMethod]
 		public void LoadSaveAppTest3() {
 			var app = BSMMApp.Create();
-			app.Rule = app.Rules.ElementAt(1);
+			var rule = app.Rules.ElementAt(1);
+			app.Rule = rule;
 			var title = "test";
-			app.Add(new Game(app.Rule, new Players(8), title), true);
+			app.Add(new Game(rule, new Players(app.Rule, 8), title), true);
 			app.Save(true);
 			var app2 = BSMMApp.Create();
 			Assert.IsTrue(app2.Rules.Count() == 3);

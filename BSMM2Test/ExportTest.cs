@@ -37,7 +37,7 @@ namespace BSMM2Test {
 			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(RESULT_T.Win));
 			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(RESULT_T.Win));
 
-			var players = game.PlayersByOrder;
+			var players = game.Players.GetByOrder();
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, players);
 
 			var buf = new StringBuilder();
@@ -50,7 +50,7 @@ namespace BSMM2Test {
 			Assert.AreEqual("\"Player002\", False, 0, 0, 5", buf.ToString());
 
 			buf.Clear();
-			game.Players.Export(rule, new StringWriter(buf));
+			game.Players.Export(new StringWriter(buf));
 
 			Assert.AreEqual("Name, Dropped, Point, WinPoint, LifePoint\r\n" +
 							"\"Player001\", False, 3, 1, 5\r\n" +

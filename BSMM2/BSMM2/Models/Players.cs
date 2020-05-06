@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -8,6 +9,9 @@ namespace BSMM2.Models {
 
 	public class Players {
 		private const String DEFAULT_PREFIX = "Player";
+
+		[JsonProperty]
+		private Rule _rule;
 
 		[JsonProperty]
 		private String _prefix;
@@ -19,6 +23,7 @@ namespace BSMM2.Models {
 		public int Count => _players.Count;
 
 		private IEnumerable<Player> Generate(int start, string prefix, int count = 1) {
+			Debug.Assert(count > 0);
 			for (int i = 0; i < count; ++i) {
 				yield return new Player(string.Format("{0}{1:000}", prefix, start + i));
 			}
@@ -35,12 +40,14 @@ namespace BSMM2.Models {
 		public Players() {
 		}
 
-		public Players(int count, String prefix = DEFAULT_PREFIX) {
+		public Players(Rule rule, int count, String prefix = DEFAULT_PREFIX) {
+			_rule = rule;
 			_prefix = prefix;
 			_players = Generate(1, prefix, count).ToList();
 		}
 
-		public Players(TextReader r, String prefix = DEFAULT_PREFIX) {
+		public Players(Rule rule, TextReader r, String prefix = DEFAULT_PREFIX) {
+			_rule = rule;
 			_prefix = prefix;
 			_players = Generate(r).ToList();
 		}
@@ -59,27 +66,44 @@ namespace BSMM2.Models {
 		public void Remove(Player player)
 			=> _players.Remove(player);
 
-		public IEnumerable<Player> GetByOrder(Rule rule) {
-			Reset(rule);
-			return _players.OrderByDescending(p => p, rule.CreateOrderComparer());
+		public IEnumerable<Player> GetByOrder() {
+			if (_players == null) {
+				return Enumerable.Empty<Player>();
+			} else {
+				Reset();
+				var players = _players.OrderByDescending(p => p, _rule.CreateOrderComparer());
+				var comparer = _rule.CreateOrderComparer();
+				Player prev = null;
+				int order = 0;
+				int count = 0;
+				foreach (var p in players) {
+					if (prev == null || comparer.Compare(prev, p) != 0) {
+						order = count;
+						prev = p;
+					}
+					p.Order = order + 1;
+					++count;
+				}
+				return players;
+			}
 		}
 
 		public IEnumerable<Player> GetSource(Rule rule, int level) {
 			return Source(_players).OrderByDescending(p => p, rule.CreateSourceComparer());
 		}
 
-		public void Reset(Rule rule) {
-			_players.ForEach(p => p.CalcResult(rule));
-			_players.ForEach(p => p.CalcOpponentResult(rule));
+		public void Reset() {
+			_players.ForEach(p => p.CalcResult(_rule));
+			_players.ForEach(p => p.CalcOpponentResult(_rule));
 		}
 
 		protected virtual IEnumerable<Player> Source(IEnumerable<Player> players)
 			=> players.OrderBy(i => Guid.NewGuid());
 
-		public void Export(Rule rule, TextWriter writer) {
+		public void Export(TextWriter writer) {
 			_players.First()?.ExportTitle(writer);
 			writer.WriteLine();
-			foreach (var player in GetByOrder(rule)) {
+			foreach (var player in GetByOrder()) {
 				player.ExportData(writer);
 				writer.WriteLine();
 			}
