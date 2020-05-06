@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 using Xamarin.Forms;
 
@@ -8,9 +9,9 @@ namespace BSMM2.ViewModels {
 	internal class ResultConverter : IValueConverter {
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			if (value is IResult result)
-				return "Point=" + result.Point + "/Life=" + result.LifePoint + "/Win=" + result.WinPoint;
-			return "***";
+			Debug.Assert(value is IResult);
+			var result = (IResult)value;
+			return "Point=" + result.Point + "/Life=" + result.LifePoint + "/Win=" + result.WinPoint;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

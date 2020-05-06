@@ -7,6 +7,7 @@ namespace BSMM2.ViewModels {
 
 		public PlayerViewModel(BSMMApp app, Player player) {
 			Player = player;
+			Title = player.Name;
 		}
 	}
 }

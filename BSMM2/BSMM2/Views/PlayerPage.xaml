@@ -8,12 +8,15 @@
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Back" Clicked="Close" Order="Secondary" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<Label Text ="Name:" />
-			<Entry Text="{Binding Player.Name, Mode=TwoWay}" />
-			<CheckBox IsChecked="{Binding Player.Dropped , Mode=TwoWay}" />
-			<Label Text="Dropped" />
+			<StackLayout Orientation="Horizontal">
+				<CheckBox IsChecked="{Binding Player.Dropped , Mode=TwoWay}" />
+				<Label Text="Dropped" />
+			</StackLayout>
 			<ListView x:Name="RoundListView"
 				ItemsSource="{Binding Player.Matches}"
 				VerticalOptions="FillAndExpand"

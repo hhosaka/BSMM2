@@ -49,7 +49,7 @@ namespace BSMM2.Views {
 
 		private async void OnPlayerTapped(object sender, ItemTappedEventArgs args) {
 			if (args.Item is Player player)
-				await Navigation.PushModalAsync(new PlayerPage(_app, player));
+				await Navigation.PushModalAsync(new NavigationPage(new PlayerPage(_app, player)));
 			PlayersListView.SelectedItem = null;
 		}
 	}
