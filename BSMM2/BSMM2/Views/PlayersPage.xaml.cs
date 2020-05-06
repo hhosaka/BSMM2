@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
+using System;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -46,6 +47,9 @@ namespace BSMM2.Views {
 				}
 			}
 		}
+
+		private void OpenSettingsPage(object sender, EventArgs e)
+				=> Navigation.PushModalAsync(new NavigationPage(new SettingsPage(_app)));
 
 		private async void OnPlayerTapped(object sender, ItemTappedEventArgs args) {
 			if (args.Item is Player player)

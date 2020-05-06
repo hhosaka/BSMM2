@@ -62,6 +62,9 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool AutoSave { get; set; }
 
+		[JsonProperty]
+		public string MailAddress { get; set; }
+
 		public BSMMApp() : this(new SerializeUtil()) {// for Serializer
 		}
 
@@ -107,12 +110,12 @@ namespace BSMM2.Models {
 			return Game.CreateMatchPage(match);
 		}
 
-		public async Task SendEmail(string subject, string body, List<string> recipients) {
+		public async Task SendEmail(string subject, string body, IEnumerable<string> recipients) {
 			try {
 				var message = new EmailMessage {
 					Subject = subject,
 					Body = body,
-					To = recipients,
+					To = recipients.ToList(),
 				};
 				await Email.ComposeAsync(message);
 			} catch (FeatureNotSupportedException) {
@@ -124,8 +127,14 @@ namespace BSMM2.Models {
 			var buf = new StringBuilder();
 			using (var writer = new StringWriter(buf)) {
 				new Serializer<Game>().Serialize(writer, game);
-				SendEmail("BS Match Maker Result", buf.ToString(), new[] { "hhosaka183@gmail.com" }.ToList()).Start();
+				SendEmail("BS Match Maker Result", buf.ToString(), new[] { MailAddress }).Start();
 			}
+		}
+
+		public async void Export() {
+			var buf = new StringBuilder();
+			Game.Players.Export(new StringWriter(buf));
+			await SendEmail(Game.Headline, buf.ToString(), new[] { MailAddress });
 		}
 
 		// TODO : TBD

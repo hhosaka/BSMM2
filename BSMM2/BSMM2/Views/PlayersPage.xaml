@@ -14,7 +14,8 @@
 		<ToolbarItem Text="Select Game" Command ="{Binding SelectGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="Delete Game" Command ="{Binding DeleteGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="AddPlayer" Command="{Binding AddPlayerCommand}" Order="Secondary" />
-		<ToolbarItem Text="Export" Order="Secondary" />
+		<ToolbarItem Text="Export" Command="{Binding ExportCommand}" Order="Secondary" />
+		<ToolbarItem Text="Settings" Clicked="OpenSettingsPage" Order="Secondary" />
 		<ToolbarItem Text="Help" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
