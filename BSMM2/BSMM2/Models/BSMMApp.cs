@@ -2,6 +2,7 @@
 using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.Services;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace BSMM2.Models {
 			} else {
 				try {
 					return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
-				} catch (IOException) {
+				} catch (Exception) {
 					return Initiate();
 				}
 			}

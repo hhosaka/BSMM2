@@ -16,6 +16,7 @@
 		<ToolbarItem Text="AddPlayer" Command="{Binding AddPlayerCommand}" Order="Secondary" />
 		<ToolbarItem Text="Export" Command="{Binding ExportCommand}" Order="Secondary" />
 		<ToolbarItem Text="Settings" Clicked="OpenSettingsPage" Order="Secondary" />
+		<!--ToolbarItem Text="Log" Clicked="Log" Order="Secondary" /-->
 		<ToolbarItem Text="Help" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>

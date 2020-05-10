@@ -48,6 +48,10 @@ namespace BSMM2.Views {
 			}
 		}
 
+		private void Log(object sender, EventArgs e) {
+			DisplayAlert("log", new SerializeUtil().Log(), "Finish");
+		}
+
 		private void OpenSettingsPage(object sender, EventArgs e)
 				=> Navigation.PushModalAsync(new NavigationPage(new SettingsPage(_app)));
 

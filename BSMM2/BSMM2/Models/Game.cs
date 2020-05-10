@@ -27,7 +27,7 @@ namespace BSMM2.Models {
 		public Players Players { get; private set; }
 
 		[JsonProperty]
-		public readonly Stack<IRound> _rounds;
+		public List<IRound> _rounds;
 
 		public IEnumerable<IRound> Rounds
 			=> _rounds;
@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 			Id = Guid.NewGuid();
 			Players = players;
 			Rule = rule;
-			_rounds = new Stack<IRound>();
+			_rounds = new List<IRound>();
 			StartTime = null;
 			var result = CreateMatching();
 			Debug.Assert(result);
@@ -105,7 +105,7 @@ namespace BSMM2.Models {
 				StartTime = null;
 				var round = ActiveRound;
 				if (CreateMatching()) {
-					_rounds.Push(round);
+					_rounds.Add(round);
 					return true;
 				}
 			}

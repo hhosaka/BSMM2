@@ -28,8 +28,21 @@ namespace BSMM2.Services {
 			}
 		}
 
-		public T Deserialize(TextReader r) {
+		public T Deserialize(TextReader r, TextWriter err = null) {
+			var settings
+				= new JsonSerializerSettings {
+					PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+					TypeNameHandling = TypeNameHandling.Auto,
+					Error = (sender, args) => OnError(args)
+				};
+
 			return JsonConvert.DeserializeObject<T>(r.ReadToEnd(), settings);
+
+			void OnError(Newtonsoft.Json.Serialization.ErrorEventArgs args) {
+				Debug.Write(args);
+				err?.WriteLine(args.ErrorContext.Error.Message);
+				err?.WriteLine();
+			}
 		}
 
 		public T Deserialize(string filename) {
