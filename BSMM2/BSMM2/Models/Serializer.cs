@@ -6,24 +6,26 @@ namespace BSMM2.Services {
 
 	public class Serializer<T> {
 
-		private static readonly JsonSerializerSettings settings
-			= new JsonSerializerSettings {
-				PreserveReferencesHandling = PreserveReferencesHandling.Objects,
-				TypeNameHandling = TypeNameHandling.Auto,
-				Error = (sender, args) => OnError(args)
-			};
+		public void Serialize(TextWriter w, T obj, TextWriter err = null) {
+			var settings
+				= new JsonSerializerSettings {
+					PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+					TypeNameHandling = TypeNameHandling.Auto,
+					Error = (sender, args) => OnError(args)
+				};
 
-		public static void OnError(Newtonsoft.Json.Serialization.ErrorEventArgs args) {
-			Debug.Write(args);
-		}
-
-		public void Serialize(TextWriter w, T obj) {
 			w.Write(JsonConvert.SerializeObject(obj, settings));
+
+			void OnError(Newtonsoft.Json.Serialization.ErrorEventArgs args) {
+				Debug.Write(args);
+				err?.WriteLine(args.ErrorContext.Error.Message);
+				err?.WriteLine();
+			}
 		}
 
-		public void Serialize(string filename, T obj) {
+		public void Serialize(string filename, T obj, TextWriter err = null) {
 			using (var w = new StreamWriter(filename)) {
-				Serialize(w, obj);
+				Serialize(w, obj, err);
 				w.Close();
 			}
 		}

@@ -70,6 +70,9 @@ namespace BSMM2.ViewModels {
 		}
 
 		private void Refresh() {
+			if (!IsTimerVisible && !Game.IsMatching)
+				StartTimer();
+
 			Matches = Game.ActiveRound;
 			Title = Game.Headline;
 			StartCommand?.RaiseCanExecuteChanged();
