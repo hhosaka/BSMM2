@@ -1,6 +1,5 @@
 ﻿using BSMM2.Models.Matches;
 using BSMM2.Models.Matches.SingleMatch;
-using BSMM2.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -111,7 +110,11 @@ namespace BSMM2.Models {
 			return Game.CreateMatchPage(match);
 		}
 
-		public async Task SendEmail(string subject, string body, IEnumerable<string> recipients) {
+		public async Task SendByMail(string subject, string body) {
+			await SendByMail(subject, body, new[] { MailAddress });
+		}
+
+		public async Task SendByMail(string subject, string body, IEnumerable<string> recipients) {
 			try {
 				var message = new EmailMessage {
 					Subject = subject,
@@ -124,18 +127,10 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public void SendByMail(Game game, string to, string filename) {
-			var buf = new StringBuilder();
-			using (var writer = new StringWriter(buf)) {
-				new Serializer<Game>().Serialize(writer, game);
-				SendEmail("BS Match Maker Result", buf.ToString(), new[] { MailAddress }).Start();
-			}
-		}
-
-		public async void Export() {
+		public async void ExportPlayers() {
 			var buf = new StringBuilder();
 			Game.Players.Export(new StringWriter(buf));
-			await SendEmail(Game.Headline, buf.ToString(), new[] { MailAddress });
+			await SendByMail(Game.Headline, buf.ToString(), new[] { MailAddress });
 		}
 
 		// TODO : TBD

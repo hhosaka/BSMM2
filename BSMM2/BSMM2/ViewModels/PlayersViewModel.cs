@@ -3,9 +3,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -27,7 +25,7 @@ namespace BSMM2.ViewModels {
 		public DelegateCommand SelectGameCommand { get; }
 		public DelegateCommand DeleteGameCommand { get; }
 		public DelegateCommand AddPlayerCommand { get; }
-		public DelegateCommand ExportCommand { get; }
+		public DelegateCommand ExportPlayersCommand { get; }
 		public DelegateCommand HelpCommand { get; }
 
 		public PlayersViewModel(BSMMApp app, Action newGame = null, Action openRule = null, Action selectGame = null, Action deleteGame = null, Action addPlayer = null) {
@@ -39,7 +37,7 @@ namespace BSMM2.ViewModels {
 			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
 			DeleteGameCommand = new DelegateCommand(() => deleteGame?.Invoke(), () => _app.Games.Any());
 			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers);
-			ExportCommand = new DelegateCommand(_app.Export);
+			ExportPlayersCommand = new DelegateCommand(_app.ExportPlayers);
 
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
 				async (sender) => await ExecuteRefresh());
