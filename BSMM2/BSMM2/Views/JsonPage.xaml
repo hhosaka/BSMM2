@@ -15,7 +15,9 @@
 			</StackLayout>
 			<Editor Text="{Binding Buf}" HeightRequest="512" />
 			<StackLayout Orientation="Horizontal">
+				<Button Text="Export" Command="{Binding ExportCommand}" HorizontalOptions="FillAndExpand" />
 				<Button Text="Import" Command="{Binding ImportCommand}" HorizontalOptions="FillAndExpand" />
+				<Button Text="Clear" Command="{Binding ClearCommand}" HorizontalOptions="FillAndExpand" />
 				<Button Text="Send Mail" Command="{Binding SendByMailCommand}" HorizontalOptions="FillAndExpand" />
 			</StackLayout>
 		</StackLayout>

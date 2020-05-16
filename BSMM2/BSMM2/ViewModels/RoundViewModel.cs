@@ -55,6 +55,7 @@ namespace BSMM2.ViewModels {
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
 				async (sender) => await ExecuteRefresh());
 
+			StartTimer();
 			Refresh();
 		}
 
@@ -70,8 +71,8 @@ namespace BSMM2.ViewModels {
 		}
 
 		private void Refresh() {
-			if (!IsTimerVisible && !Game.IsMatching)
-				StartTimer();
+
+			IsTimerVisible = (Game.StartTime != null);
 
 			Matches = Game.ActiveRound;
 			Title = Game.Headline;
@@ -122,15 +123,15 @@ namespace BSMM2.ViewModels {
 		}
 
 		private void StartTimer() {
-			IsTimerVisible = true;
 			Device.StartTimer(TimeSpan.FromMilliseconds(100), () => {
 				if (Game.StartTime == null) {
 					IsTimerVisible = false;
-					return false;
 				} else {
-					Timer = (DateTime.Now - Game.StartTime)?.ToString(@"hh\:mm\:ss");
-					return true;
+					Device.BeginInvokeOnMainThread(() => {
+						Timer = (DateTime.Now - Game.StartTime)?.ToString(@"hh\:mm\:ss");
+					});
 				}
+				return true;
 			});
 		}
 	}
