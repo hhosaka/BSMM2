@@ -3,7 +3,6 @@ using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -118,19 +117,19 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveAppTest2() {
-			var app = BSMMApp.Create();
+			var app = BSMMApp.Create(true);
 			app.Rule = app.Rules.ElementAt(0);
 			app.Save(true);
 			var app2 = BSMMApp.Create();
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(0), app2.Rule);
-			Assert.AreEqual(0, app2.Games.Count());
-			Assert.AreEqual(Guid.Empty, app.Game.Id);
+			Assert.AreEqual(1, app2.Games.Count());
+			Assert.AreEqual(app.Games.Last(), app.Game);
 		}
 
 		[TestMethod]
 		public void LoadSaveAppTest3() {
-			var app = BSMMApp.Create();
+			var app = BSMMApp.Create(true);
 			var rule = app.Rules.ElementAt(1);
 			app.Rule = rule;
 			var title = "test";
@@ -139,7 +138,7 @@ namespace BSMM2Test {
 			var app2 = BSMMApp.Create();
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(1), app2.Rule);
-			Assert.AreEqual(1, app2.Games.Count());
+			Assert.AreEqual(2, app2.Games.Count());
 			Assert.AreEqual(app.Game.Id, app2.Game.Id);
 		}
 	}

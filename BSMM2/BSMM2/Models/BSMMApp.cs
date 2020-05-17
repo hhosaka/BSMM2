@@ -16,9 +16,6 @@ namespace BSMM2.Models {
 	public class BSMMApp {
 		private static readonly string APPDATAPATH = "appfile.data";
 
-		[JsonIgnore]
-		private static readonly IGame _defaultGame = new DefaultGame();
-
 		public static BSMMApp Create(bool force = false) {
 			var engine = new SerializeUtil();
 
@@ -75,14 +72,14 @@ namespace BSMM2.Models {
 
 		private BSMMApp(SerializeUtil engine, Rule[] rules) : this(engine) {
 			Rules = rules;
-			Game = _defaultGame;
 			Rule = Rules.First();
-			_games = new List<IGame>();
+			_games = new List<IGame>() { new Game(rules[0], new Players(rules[0], 8)) };
+			Game = _games.Last();
 			AutoSave = true;
 		}
 
 		public bool Add(IGame game, bool AsCurrentGame) {
-			if (Game != _defaultGame && AsCurrentGame) {
+			if (AsCurrentGame) {
 				Remove(Game);
 			}
 			_games.Add(game);
@@ -91,9 +88,12 @@ namespace BSMM2.Models {
 		}
 
 		public bool Remove(IGame game) {
-			_games.Remove(game);
-			Game = _defaultGame;
-			return true;
+			if (_games.Count > 1) {
+				_games.Remove(game);
+				Game = _games.Last();
+				return true;
+			}
+			return false;
 		}
 
 		public bool Select(IGame game) {

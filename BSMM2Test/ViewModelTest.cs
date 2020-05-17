@@ -3,6 +3,7 @@ using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -25,12 +26,14 @@ namespace BSMM2Test {
 			var app2 = BSMMApp.Create();
 			Assert.AreNotEqual(Guid.Empty, app2.Game.Id);
 
-			app2.Remove((Game)app2.Game);
+			Assert.IsTrue(app2.Remove((Game)app2.Game));
 			await viewModel.ExecuteRefresh();
 
 			MessagingCenter.Send<object>(app2, Messages.REFRESH);
 
-			Assert.AreEqual(Guid.Empty, BSMMApp.Create().Game.Id);
+			//			Assert.AreEqual(Guid.Empty, BSMMApp.Create().Game.Id);
+			Assert.AreEqual(app2.Games.Last().Id, app2.Game.Id);
+			Assert.IsFalse(app2.Remove((Game)app2.Game));
 		}
 	}
 }

@@ -11,6 +11,9 @@ namespace BSMM2.Models {
 	public class Game : IGame {
 		private static readonly int _tryCount = 100;
 
+		public static string GenerateTitle()
+			=> "Game" + DateTime.Now.ToString();
+
 		[JsonProperty]
 		public string Title { get; private set; }
 
@@ -53,8 +56,12 @@ namespace BSMM2.Models {
 		public Game() {// For Serializer
 		}
 
-		public Game(Rule rule, Players players, string title) {
-			Title = title;
+		public Game(Rule rule, Players players, string title = null) {
+			if (string.IsNullOrEmpty(title))
+				Title = GenerateTitle();
+			else
+				Title = title;
+
 			Id = Guid.NewGuid();
 			Players = players;
 			Rule = rule;
