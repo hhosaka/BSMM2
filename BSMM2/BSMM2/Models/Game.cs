@@ -8,7 +8,7 @@ using Xamarin.Forms;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Game : IGame {
+	public class Game {
 		private static readonly int _tryCount = 100;
 
 		public static string GenerateTitle()
@@ -195,10 +195,10 @@ namespace BSMM2.Models {
 		}
 
 		public void Save(SerializeUtil engine) {
-			engine.Save<IGame>(this, Id.ToString() + ".json");
+			engine.Save<Game>(this, Id.ToString() + ".json");
 		}
 
-		public void Remove(SerializeUtil engine, IGame game) {
+		public void Remove(SerializeUtil engine, Game game) {
 			engine.Delete(game.Id.ToString() + ".json");
 		}
 	}

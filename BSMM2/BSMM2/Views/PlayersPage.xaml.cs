@@ -31,7 +31,7 @@ namespace BSMM2.Views {
 			void AddPlayer()
 				=> Navigation.PushModalAsync(new NavigationPage(new AddPlayerPage(_app)));
 
-			async void selectGame(IGame game) {
+			async void selectGame(Game game) {
 				Debug.Assert(game != null);
 				if (app.Select(game)) {
 					MessagingCenter.Send<object>(this, Messages.REFRESH);
@@ -39,7 +39,7 @@ namespace BSMM2.Views {
 				}
 			}
 
-			async void deleteGame(IGame game) {
+			async void deleteGame(Game game) {
 				Debug.Assert(game != null);
 				if (app.Remove(game)) {
 					MessagingCenter.Send<object>(this, Messages.REFRESH);

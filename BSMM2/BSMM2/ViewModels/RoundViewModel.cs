@@ -12,7 +12,7 @@ namespace BSMM2.ViewModels {
 	public class RoundViewModel : BaseViewModel {
 		private BSMMApp _app;
 
-		public IGame Game => _app.Game;
+		public Game Game => _app.Game;
 
 		private IEnumerable<Match> _matches;
 
@@ -71,7 +71,6 @@ namespace BSMM2.ViewModels {
 		}
 
 		private void Refresh() {
-
 			IsTimerVisible = (Game.StartTime != null);
 
 			Matches = Game.ActiveRound;

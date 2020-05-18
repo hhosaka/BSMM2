@@ -32,7 +32,7 @@ namespace BSMM2.ViewModels {
 
 			void Export() {
 				var buf = new StringBuilder();
-				new Serializer<Game>().Serialize(new StringWriter(buf), (Game)app.Game);
+				new Serializer<Game>().Serialize(new StringWriter(buf), app.Game);
 				Buf = buf.ToString();
 			}
 

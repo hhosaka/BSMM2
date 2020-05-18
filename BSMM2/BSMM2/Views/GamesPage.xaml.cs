@@ -10,7 +10,7 @@ namespace BSMM2.Views {
 	public partial class GamesPage : ContentPage {
 		private GamesViewModel _viewModel;
 
-		public GamesPage(BSMMApp app, string title, Action<IGame> action) {
+		public GamesPage(BSMMApp app, string title, Action<Game> action) {
 			InitializeComponent();
 			_viewModel = new GamesViewModel(app, title, action);
 			BindingContext = _viewModel;

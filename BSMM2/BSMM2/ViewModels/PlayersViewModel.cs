@@ -11,7 +11,7 @@ namespace BSMM2.ViewModels {
 
 	public class PlayersViewModel : BaseViewModel {
 		private BSMMApp _app;
-		private IGame Game => _app.Game;
+		private Game Game => _app.Game;
 
 		private IEnumerable<Player> _players;
 

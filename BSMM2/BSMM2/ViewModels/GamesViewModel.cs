@@ -7,15 +7,15 @@ namespace BSMM2.ViewModels {
 
 	public class GamesViewModel : BaseViewModel {
 		private BSMMApp _app;
-		private IGame Game => _app.Game;
+		private Game Game => _app.Game;
 
-		public IEnumerable<IGame> Games => _app.Games;
+		public IEnumerable<Game> Games => _app.Games;
 
-		private Action<IGame> _action;
+		private Action<Game> _action;
 
-		private IGame _selectedItem;
+		private Game _selectedItem;
 
-		public IGame SelectedItem {
+		public Game SelectedItem {
 			get => _selectedItem;
 			set {
 				SetProperty(ref _selectedItem, value);
@@ -25,20 +25,20 @@ namespace BSMM2.ViewModels {
 			}
 		}
 
-		public GamesViewModel(BSMMApp app, string title, Action<IGame> action) {
+		public GamesViewModel(BSMMApp app, string title, Action<Game> action) {
 			_app = app;
 			SelectedItem = app.Game;
 			_action = action;
 			Title = title;
 		}
 
-		public void Select(IGame game) {
+		public void Select(Game game) {
 			if (_app.Select(game)) {
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 			}
 		}
 
-		public void Remove(IGame game) {
+		public void Remove(Game game) {
 			if (_app.Remove(game)) {
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 			}

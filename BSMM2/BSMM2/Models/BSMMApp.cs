@@ -42,10 +42,10 @@ namespace BSMM2.Models {
 		private SerializeUtil _engine;
 
 		[JsonProperty]
-		private List<IGame> _games;
+		private List<Game> _games;
 
 		[JsonIgnore]
-		public IEnumerable<IGame> Games => _games;
+		public IEnumerable<Game> Games => _games;
 
 		[JsonProperty]
 		public IEnumerable<Rule> Rules { get; private set; }
@@ -54,7 +54,7 @@ namespace BSMM2.Models {
 		public Rule Rule { get; set; }
 
 		[JsonProperty]
-		public IGame Game { get; private set; }
+		public Game Game { get; private set; }
 
 		[JsonProperty]
 		public bool AutoSave { get; set; }
@@ -73,12 +73,12 @@ namespace BSMM2.Models {
 		private BSMMApp(SerializeUtil engine, Rule[] rules) : this(engine) {
 			Rules = rules;
 			Rule = Rules.First();
-			_games = new List<IGame>() { new Game(rules[0], new Players(rules[0], 8)) };
+			_games = new List<Game>() { new Game(rules[0], new Players(rules[0], 8)) };
 			Game = _games.Last();
 			AutoSave = true;
 		}
 
-		public bool Add(IGame game, bool AsCurrentGame) {
+		public bool Add(Game game, bool AsCurrentGame) {
 			if (AsCurrentGame) {
 				Remove(Game);
 			}
@@ -87,7 +87,7 @@ namespace BSMM2.Models {
 			return true;
 		}
 
-		public bool Remove(IGame game) {
+		public bool Remove(Game game) {
 			if (_games.Count > 1) {
 				_games.Remove(game);
 				Game = _games.Last();
@@ -96,7 +96,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		public bool Select(IGame game) {
+		public bool Select(Game game) {
 			Game = game;
 			return true;
 		}

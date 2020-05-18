@@ -10,7 +10,7 @@ namespace BSMM2.Views {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RoundLogPage : ContentPage {
 
-		public RoundLogPage(IGame game, int index) {
+		public RoundLogPage(Game game, int index) {
 			InitializeComponent();
 
 			BindingContext = new RoundLogViewModel(game.Rounds.ElementAt(index), index, showMatch);
