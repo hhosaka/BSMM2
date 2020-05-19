@@ -11,10 +11,11 @@ namespace BSMM2Test {
 
 	[TestClass]
 	public class ViewModelTest {
+		private const string TESTFILE = "testfile.json";
 
 		[TestMethod]
 		public async Task ControlGameTest() {
-			var app = BSMMApp.Create();
+			var app = BSMMApp.Create(TESTFILE, true);
 			Assert.IsNotNull(app.Game);
 			var viewModel = new PlayersViewModel(app);
 			await viewModel.ExecuteRefresh();
@@ -23,7 +24,7 @@ namespace BSMM2Test {
 
 			MessagingCenter.Send<object>(app, Messages.REFRESH);
 
-			var app2 = BSMMApp.Create();
+			var app2 = BSMMApp.Create(TESTFILE, false);
 			Assert.AreNotEqual(Guid.Empty, app2.Game.Id);
 
 			Assert.IsTrue(app2.Remove(app2.Game));

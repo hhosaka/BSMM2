@@ -104,7 +104,7 @@ namespace BSMM2Test {
 		public void LoadSaveAppTest1() {
 			var buf = new StringBuilder();
 
-			var app = BSMMApp.Create();
+			var app = BSMMApp.Create(TESTFILE, false);
 			app.Rule = app.Rules.ElementAt(1);
 			new Serializer<BSMMApp>().Serialize(new StringWriter(buf), app);
 
@@ -115,12 +115,14 @@ namespace BSMM2Test {
 			Assert.AreEqual(result.Rule, result.Rules.ElementAt(1));
 		}
 
+		private const string TESTFILE = "testdata.json";
+
 		[TestMethod]
 		public void LoadSaveAppTest2() {
-			var app = BSMMApp.Create(true);
+			var app = BSMMApp.Create(TESTFILE, true);
 			app.Rule = app.Rules.ElementAt(0);
 			app.Save(true);
-			var app2 = BSMMApp.Create();
+			var app2 = BSMMApp.Create(TESTFILE, false);
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(0), app2.Rule);
 			Assert.AreEqual(1, app2.Games.Count());
@@ -129,13 +131,13 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveAppTest3() {
-			var app = BSMMApp.Create(true);
+			var app = BSMMApp.Create(TESTFILE, true);
 			var rule = app.Rules.ElementAt(1);
 			app.Rule = rule;
 			var title = "test";
 			app.Add(new Game(rule, new Players(app.Rule, 8), title), true);
 			app.Save(true);
-			var app2 = BSMMApp.Create();
+			var app2 = BSMMApp.Create(TESTFILE, false);
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(1), app2.Rule);
 			Assert.AreEqual(2, app2.Games.Count());

@@ -14,16 +14,15 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class BSMMApp {
-		private static readonly string APPDATAPATH = "appfile.data";
 
-		public static BSMMApp Create(bool force = false) {
+		public static BSMMApp Create(string path, bool force) {
 			var engine = new SerializeUtil();
 
 			if (force) {
 				return Initiate();
 			} else {
 				try {
-					return engine.Load<BSMMApp>(APPDATAPATH, Initiate);
+					return engine.Load<BSMMApp>(path, Initiate);
 				} catch (Exception) {
 					return Initiate();
 				}
@@ -31,12 +30,16 @@ namespace BSMM2.Models {
 
 			BSMMApp Initiate()
 				=> new BSMMApp(engine,
+						path,
 						new Rule[] {
 					new SingleMatchRule(),
 					new ThreeGameMatchRule(),
 					new ThreeOnThreeMatchRule(),
 						});
 		}
+
+		[JsonProperty]
+		private string _path;
 
 		[JsonIgnore]
 		private SerializeUtil _engine;
@@ -70,8 +73,9 @@ namespace BSMM2.Models {
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
 		}
 
-		private BSMMApp(SerializeUtil engine, Rule[] rules) : this(engine) {
+		private BSMMApp(SerializeUtil engine, string path, Rule[] rules) : this(engine) {
 			Rules = rules;
+			_path = path;
 			Rule = Rules.First();
 			_games = new List<Game>() { new Game(rules[0], new Players(rules[0], 8)) };
 			Game = _games.Last();
@@ -103,7 +107,7 @@ namespace BSMM2.Models {
 
 		public void Save(bool force) {
 			if (force || AutoSave)
-				_engine.Save(this, APPDATAPATH);
+				_engine.Save(this, _path);
 		}
 
 		public ContentPage CreateMatchPage(Match match) {
