@@ -3,6 +3,7 @@ using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -84,12 +85,6 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
 
-			var buf = new StringBuilder();
-
-			new Serializer<Game>().Serialize(new StringWriter(buf), game);
-
-			var sbuf = buf.ToString();
-
 			var engine = new SerializeUtil();
 
 			game.Save(engine);
@@ -98,6 +93,114 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.Players.GetByOrder());
+			Assert.AreEqual(0, game2.Rounds.Count());
+		}
+
+		[TestMethod]
+		public void LoadSaveTest5() {
+			var rule = new SingleMatchRule();
+			var src = new FakeGame(rule, 8, _origin);
+
+			src.StepToPlaying();
+
+			src.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+
+			var engine = new SerializeUtil();
+
+			src.Save(engine);
+			var dst = Game.Load(src.Id, engine);
+
+			Assert.AreEqual(0, dst.Rounds.Count());
+
+			dst.StepToMatching();
+
+			Assert.AreEqual(1, dst.Rounds.Count());
+
+			dst.StepToPlaying();
+			dst.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+
+			Assert.AreEqual(1, dst.Rounds.Count());
+
+			dst.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+
+			Assert.AreEqual(1, dst.Rounds.Count());
+
+			dst.StepToMatching();
+
+			Assert.AreEqual(2, dst.Rounds.Count());
+
+			dst.StepToPlaying();
+
+			Assert.AreEqual(2, dst.Rounds.Count());
+		}
+
+		[TestMethod]
+		public void LoadSaveTest6() {
+			var app = BSMMApp.Create("test.json", true);
+
+			app.Game.StepToPlaying();
+
+			Assert.AreEqual(0, app.Game.Rounds.Count());
+
+			app.Game.ActiveRound.ElementAt(0).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.ElementAt(1).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.ElementAt(2).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.ElementAt(3).SetResults(app.Game.Rule.CreatePoints(Win));
+
+			app.Game.StepToMatching();
+
+			Assert.AreEqual(1, app.Game.Rounds.Count());
+			Assert.AreEqual(1, app.Games.Count());
+
+			app.Save(true);
+
+			Assert.AreEqual(1, app.Game.Rounds.Count());
+			Assert.AreEqual(1, app.Games.Count());
+
+			var dst = BSMMApp.Create("test.json", false);
+
+			Assert.AreEqual(1, app.Games.Count());
+			Assert.AreEqual(1, dst.Game.Rounds.Count());
+		}
+
+		private class Sample {
+			public string Title { get; set; }
+			public List<string> List { get; set; }
+			public List<Round> Rounds { get; set; }
+			public List<Game> Games { get; set; }
+
+			public Sample() {
+				List = new List<string>();
+				Rounds = new List<Round>();
+				Games = new List<Game>();
+			}
+		}
+
+		[TestMethod]
+		public void LoadSaveTest4() {
+			var src = new Sample();
+			src.Title = "test";
+			src.List.Add("item1");
+			src.Rounds.Add(new Round());
+			src.Rounds.Add(new Round());
+			src.Games.Add(new Game());
+			src.Games.Add(new Game());
+
+			var buf = new StringBuilder();
+
+			new Serializer<Sample>().Serialize(new StringWriter(buf), src);
+
+			var dst = new Serializer<Sample>().Deserialize(new StringReader(buf.ToString()));
+
+			Assert.AreEqual("test", dst.Title);
+			CollectionAssert.AreEqual(new[] { "item1" }, dst.List);
+			Assert.AreEqual(2, dst.Rounds.Count);
+			Assert.AreEqual(2, dst.Games.Count);
 		}
 
 		[TestMethod]

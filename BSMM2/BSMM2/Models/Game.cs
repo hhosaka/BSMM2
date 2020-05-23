@@ -32,14 +32,17 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public List<IRound> _rounds;
 
+		[JsonIgnore]
 		public IEnumerable<IRound> Rounds
 			=> _rounds;
 
 		[JsonProperty]
 		public IRound ActiveRound { get; private set; }
 
+		[JsonIgnore]
 		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
+		[JsonIgnore]
 		public bool CanAddPlayers => true;//TODO: tentative
 
 		public bool AddPlayers(string data) {
@@ -84,6 +87,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
+		[JsonIgnore]
 		public bool CanExecuteShuffle
 			=> ActiveRound is Matching;
 
@@ -94,6 +98,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
+		[JsonIgnore]
 		public bool CanExecuteStepToPlaying
 			=> ActiveRound is Matching;
 
@@ -104,6 +109,7 @@ namespace BSMM2.Models {
 			}
 		}
 
+		[JsonIgnore]
 		public bool CanExecuteStepToMatching
 			=> (ActiveRound as Round)?.IsFinished == true;
 
@@ -119,6 +125,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
+		[JsonIgnore]
 		public bool IsMatching
 			=> ActiveRound is Matching;
 
