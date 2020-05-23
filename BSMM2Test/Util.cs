@@ -34,11 +34,11 @@ namespace BSMM2Test {
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
-		public static void Check(IEnumerable<int> expect, IRound round) {
+		public static void Check(IEnumerable<int> expect, Round round) {
 			Check(expect, DefaultOrigin, round);
 		}
 
-		public static void Check(IEnumerable<int> expect, string origin, IRound round) {
+		public static void Check(IEnumerable<int> expect, string origin, Round round) {
 			var result = round.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}

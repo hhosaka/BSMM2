@@ -117,7 +117,7 @@ namespace BSMM2Test {
 			// 初期設定確認
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			(game.ActiveRound as Matching)?.Swap(0, 1);
+			game.ActiveRound.Swap(0, 1);
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			//　シャッフルできる
@@ -125,10 +125,10 @@ namespace BSMM2Test {
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			(game.ActiveRound as Matching)?.Swap(game.ActiveRound.ElementAt(0), game.ActiveRound.ElementAt(1));
+			game.ActiveRound.Swap(game.ActiveRound.ElementAt(0), game.ActiveRound.ElementAt(1));
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
-			(game.ActiveRound as Matching)?.Swap(0, 1);
+			game.ActiveRound.Swap(0, 1);
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
 			game.Shuffle();
