@@ -42,8 +42,7 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
-		[JsonIgnore]
-		public bool CanAddPlayers => true;//TODO: tentative
+		public bool CanAddPlayers() => true;//TODO: tentative
 
 		public bool AddPlayers(string data) {
 			foreach (var name in data.Split(new[] { '\r', '\n' })) {
@@ -87,35 +86,32 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		[JsonIgnore]
-		public bool CanExecuteShuffle
+		public bool CanExecuteShuffle()
 			=> !ActiveRound.IsPlaying;
 
 		public bool Shuffle() {
-			if (CanExecuteShuffle) {
+			if (CanExecuteShuffle()) {
 				return CreateMatching();
 			}
 			return false;
 		}
 
-		[JsonIgnore]
-		public bool CanExecuteStepToPlaying
+		public bool CanExecuteStepToPlaying()
 			=> !ActiveRound.IsPlaying;
 
 		public void StepToPlaying() {
-			if (CanExecuteStepToPlaying) {
+			if (CanExecuteStepToPlaying()) {
 				ActiveRound = new Round(ActiveRound);
 				ActiveRound.Commit();
 				StartTime = DateTime.Now;
 			}
 		}
 
-		[JsonIgnore]
-		public bool CanExecuteStepToMatching
+		public bool CanExecuteStepToMatching()
 			=> ActiveRound.IsFinished;
 
 		public bool StepToMatching() {
-			if (CanExecuteStepToMatching) {
+			if (CanExecuteStepToMatching()) {
 				StartTime = null;
 				var round = ActiveRound;
 				if (CreateMatching()) {
@@ -126,8 +122,7 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		[JsonIgnore]
-		public bool IsMatching
+		public bool IsMatching()
 			=> !ActiveRound.IsPlaying;
 
 		private IEnumerable<Match> MakeRound() {

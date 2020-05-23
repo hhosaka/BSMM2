@@ -36,7 +36,7 @@ namespace BSMM2.ViewModels {
 		}
 
 		public bool IsPlaying
-			=> !Game.IsMatching;
+			=> !Game.ActiveRound.IsPlaying;
 
 		public DelegateCommand ShuffleCommand { get; }
 		public DelegateCommand StartCommand { get; }
@@ -84,7 +84,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateStepToPlayingCommand() {
 			return new DelegateCommand(
 				Execute,
-				() => Game.CanExecuteStepToPlaying);
+				() => Game.CanExecuteStepToPlaying());
 
 			async void Execute() {
 				Game.StepToPlaying();
@@ -96,7 +96,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateShuffleCommand() {
 			return new DelegateCommand(
 				Execute,
-				() => Game.CanExecuteShuffle);
+				() => Game.CanExecuteShuffle());
 
 			async void Execute() {
 				if (Game.Shuffle()) {
@@ -110,7 +110,7 @@ namespace BSMM2.ViewModels {
 		private DelegateCommand CreateStepToMatchingCommand() {
 			return new DelegateCommand(
 				Execute,
-				() => Game.CanExecuteStepToMatching);
+				() => Game.CanExecuteStepToMatching());
 
 			async void Execute() {
 				if (Game.StepToMatching()) {

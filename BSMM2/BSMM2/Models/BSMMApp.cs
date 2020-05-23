@@ -84,7 +84,7 @@ namespace BSMM2.Models {
 
 		public bool Add(Game game, bool AsCurrentGame) {
 			if (AsCurrentGame) {
-				Remove(Game);
+				_games.Remove(Game);
 			}
 			_games.Add(game);
 			Game = game;

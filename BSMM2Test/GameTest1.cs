@@ -121,7 +121,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			//　シャッフルできる
-			Assert.IsTrue(game.CanExecuteShuffle);
+			Assert.IsTrue(game.CanExecuteShuffle());
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
@@ -138,15 +138,15 @@ namespace BSMM2Test {
 			game.StepToPlaying();
 			Thread.Sleep(2);
 
-			Assert.IsFalse(game.CanExecuteStepToMatching);
+			Assert.IsFalse(game.CanExecuteStepToMatching());
 
 			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
 
-			Assert.IsFalse(game.CanExecuteStepToMatching);
+			Assert.IsFalse(game.CanExecuteStepToMatching());
 
 			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
 
-			Assert.IsTrue(game.CanExecuteStepToMatching);
+			Assert.IsTrue(game.CanExecuteStepToMatching());
 
 			game.StepToMatching();
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
@@ -159,7 +159,7 @@ namespace BSMM2Test {
 			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Lose));
 			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Lose));
 
-			Assert.IsTrue(game.CanExecuteStepToMatching);
+			Assert.IsTrue(game.CanExecuteStepToMatching());
 			Util.CheckWithOrder(new[] { 3, 1, 4, 2 }, new[] { 1, 2, 2, 4 }, game.Players.GetByOrder());
 		}
 

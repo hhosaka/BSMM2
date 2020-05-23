@@ -88,7 +88,7 @@ namespace BSMM2Test {
 		public static void Check(Game a, Game b) {
 			Assert.AreEqual(a.Title, b.Title);
 			Assert.AreEqual(a.Id, b.Id);
-			Assert.AreEqual(a.IsMatching, b.IsMatching);
+			Assert.AreEqual(a.IsMatching(), b.IsMatching());
 			Assert.AreEqual(a.StartTime, b.StartTime);
 			Assert.AreEqual(a.Rule.Name, b.Rule.Name);
 			Assert.AreEqual(a.Rule.EnableLifePoint, b.Rule.EnableLifePoint);

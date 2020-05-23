@@ -33,10 +33,10 @@ namespace BSMM2.ViewModels {
 			Players = new ObservableCollection<Player>();
 
 			NewGameCommand = new DelegateCommand(() => newGame?.Invoke());
-			RuleCommand = new DelegateCommand(() => openRule?.Invoke(), () => _app.Game.CanAddPlayers);
+			RuleCommand = new DelegateCommand(() => openRule?.Invoke(), () => _app.Game.CanAddPlayers());
 			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
 			DeleteGameCommand = new DelegateCommand(() => deleteGame?.Invoke(), () => _app.Games.Any());
-			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers);
+			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers());
 			ExportPlayersCommand = new DelegateCommand(_app.ExportPlayers);
 
 			MessagingCenter.Subscribe<object>(this, Messages.REFRESH,
