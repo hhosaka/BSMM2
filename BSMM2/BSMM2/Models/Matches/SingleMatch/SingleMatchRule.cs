@@ -29,7 +29,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public override ContentPage CreateMatchPage(Game game, IMatch match) {
+		public override ContentPage CreateMatchPage(Game game, Match match) {
 			Debug.Assert(game.Rule is SingleMatchRule);
 			return new SingleMatchPage(game.Rule as SingleMatchRule, match);
 		}

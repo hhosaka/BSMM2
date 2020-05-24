@@ -8,7 +8,7 @@ using Xamarin.Forms.Internals;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Match : INotifyPropertyChanged, IMatch {
+	public class Match : INotifyPropertyChanged {
 
 		private class DefaultResult : IResult {
 			public RESULT_T RESULT => RESULT_T.Progress;

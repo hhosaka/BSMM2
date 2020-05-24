@@ -73,7 +73,7 @@ namespace BSMM2.Models {
 			Debug.Assert(result);
 		}
 
-		public ContentPage CreateMatchPage(IMatch match) {
+		public ContentPage CreateMatchPage(Match match) {
 			return Rule.CreateMatchPage(this, match);
 		}
 

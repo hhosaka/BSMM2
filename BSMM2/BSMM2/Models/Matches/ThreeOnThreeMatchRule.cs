@@ -20,7 +20,7 @@ namespace BSMM2.Models.Matches {
 		protected override int MinimumMatchCount
 			=> 3;
 
-		public override ContentPage CreateMatchPage(Game game, IMatch match) {
+		public override ContentPage CreateMatchPage(Game game, Match match) {
 			throw new System.NotImplementedException();
 		}
 

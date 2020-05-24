@@ -70,7 +70,7 @@ namespace BSMM2Test {
 			}
 		}
 
-		public static void Check(IMatch a, IMatch b) {
+		public static void Check(Match a, Match b) {
 			Check(a.Record1.Player, b.Record1.Player);
 			Check(a.Record2.Player, b.Record2.Player);
 			Check(a.Record1.Result, b.Record1.Result);
@@ -81,7 +81,7 @@ namespace BSMM2Test {
 			var ita = a.GetEnumerator();
 			var itb = b.GetEnumerator();
 			while (ita.MoveNext() && itb.MoveNext()) {
-				Check(ita.Current as IMatch, itb.Current as IMatch);
+				Check(ita.Current as Match, itb.Current as Match);
 			}
 		}
 

@@ -8,7 +8,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	public partial class SingleMatchPage : ContentPage {
 		private SingleMatchViewModel _viewModel;
 
-		public SingleMatchPage(SingleMatchRule rule, IMatch match) {
+		public SingleMatchPage(SingleMatchRule rule, Match match) {
 			InitializeComponent();
 			Title = String.Format("{0} Result", rule.Name);
 			BindingContext = _viewModel = new SingleMatchViewModel(rule, match, Back);

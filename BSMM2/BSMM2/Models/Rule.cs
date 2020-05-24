@@ -200,7 +200,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public abstract ContentPage CreateMatchPage(Game game, IMatch match);
+		public abstract ContentPage CreateMatchPage(Game game, Match match);
 
 		public abstract Rule Clone();
 

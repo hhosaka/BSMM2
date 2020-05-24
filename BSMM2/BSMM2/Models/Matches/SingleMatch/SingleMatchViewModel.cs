@@ -17,7 +17,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		private IMatch _match;
+		private Match _match;
 
 		public bool EnableLifePoint { get; }
 		public int LifePoint1 { get; set; }
@@ -39,7 +39,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public ObservableCollection<Item> Items { get; }
 
-		public SingleMatchViewModel(SingleMatchRule rule, IMatch match, Action back) {
+		public SingleMatchViewModel(SingleMatchRule rule, Match match, Action back) {
 			_match = match;
 			EnableLifePoint = rule.EnableLifePoint;
 			var record1 = match.Record1;
