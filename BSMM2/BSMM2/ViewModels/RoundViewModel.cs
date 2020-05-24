@@ -35,9 +35,6 @@ namespace BSMM2.ViewModels {
 			set => SetProperty(ref _isTimeVisible, value);
 		}
 
-		public bool IsPlaying
-			=> !Game.ActiveRound.IsPlaying;
-
 		public DelegateCommand ShuffleCommand { get; }
 		public DelegateCommand StartCommand { get; }
 		public DelegateCommand StepToMatchingCommand { get; }

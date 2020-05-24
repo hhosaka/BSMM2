@@ -243,7 +243,7 @@ namespace BSMM2Test {
 			var app2 = BSMMApp.Create(TESTFILE, false);
 			Assert.IsTrue(app2.Rules.Count() == 3);
 			Assert.AreEqual(app2.Rules.ElementAt(1), app2.Rule);
-			Assert.AreEqual(2, app2.Games.Count());
+			Assert.AreEqual(1, app2.Games.Count());
 			Assert.AreEqual(app.Game.Id, app2.Game.Id);
 		}
 	}

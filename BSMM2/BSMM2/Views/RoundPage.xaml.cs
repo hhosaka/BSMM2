@@ -25,7 +25,7 @@ namespace BSMM2.Views {
 		}
 
 		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
-			if (args.Item is Match match && viewModel.IsPlaying)
+			if (args.Item is Match match && viewModel.Game.ActiveRound.IsPlaying)
 				await Navigation.PushModalAsync(new NavigationPage(viewModel.Game.CreateMatchPage(match)));
 
 			RoundListView.SelectedItem = null;

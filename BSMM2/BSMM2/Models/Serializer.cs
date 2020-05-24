@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace BSMM2.Services {
+namespace BSMM2.Models {
 
 	public class Serializer<T> {
 
