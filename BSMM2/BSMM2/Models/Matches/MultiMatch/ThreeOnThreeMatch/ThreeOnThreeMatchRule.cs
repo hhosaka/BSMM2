@@ -1,24 +1,24 @@
 ﻿using Newtonsoft.Json;
 using Xamarin.Forms;
 
-namespace BSMM2.Models.Matches {
+namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
 	[JsonObject]
-	public class ThreeGameMatchRule : MultiMatchRule {
+	public class ThreeOnThreeMatchRule : MultiMatchRule {
 
 		[JsonIgnore]
 		public override string Name
-			=> "Three Game Match Rule";
+			=> "Three on Three Match Rule";
 
 		[JsonIgnore]
 		public override string Description
-			=> "二本先取のゲームルールです";
+			=> "３on３ゲームのルールです";
 
 		protected override int MatchCount
-			=> 2;
+			=> 3;
 
 		protected override int MinimumMatchCount
-			=> 0;
+			=> 3;
 
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			throw new System.NotImplementedException();
@@ -26,9 +26,6 @@ namespace BSMM2.Models.Matches {
 
 		public override Rule Clone() {
 			throw new System.NotImplementedException();
-		}
-
-		public ThreeGameMatchRule() {
 		}
 	}
 }

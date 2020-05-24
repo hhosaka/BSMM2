@@ -1,4 +1,5 @@
-﻿using BSMM2.Models.Matches;
+﻿using BSMM2.Models.Matches.MultiMatch.ThreeGameMatch;
+using BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch;
 using BSMM2.Models.Matches.SingleMatch;
 using Newtonsoft.Json;
 using System;

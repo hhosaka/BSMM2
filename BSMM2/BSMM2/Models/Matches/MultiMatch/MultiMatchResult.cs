@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using static BSMM2.Models.RESULT_T;
 
-namespace BSMM2.Models.Matches {
+namespace BSMM2.Models.Matches.MultiMatch {
 
 	[JsonObject]
 	public class MultiMatchResult : IResult {
