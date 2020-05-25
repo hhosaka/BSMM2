@@ -86,15 +86,15 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 2, 3, 4 }, new[] { 1, 1, 1, 1 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 1, 2, 3, 4 }, new[] { 1, 2, 3, 3 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Lose));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Lose));
 
 			Util.CheckWithOrder(new[] { 2, 4, 1, 3 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
 
@@ -125,7 +125,7 @@ namespace BSMM2Test {
 			game.Shuffle();
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 
-			game.ActiveRound.Swap(game.ActiveRound.ElementAt(0), game.ActiveRound.ElementAt(1));
+			game.ActiveRound.Swap(game.ActiveRound.Matches.ElementAt(0), game.ActiveRound.Matches.ElementAt(1));
 			Util.Check(new[] { 3, 2, 1, 4 }, game.ActiveRound);
 
 			game.ActiveRound.Swap(0, 1);
@@ -140,11 +140,11 @@ namespace BSMM2Test {
 
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
 
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
@@ -156,8 +156,8 @@ namespace BSMM2Test {
 
 			game.StepToPlaying();
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Lose));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Lose));
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 			Util.CheckWithOrder(new[] { 3, 1, 4, 2 }, new[] { 1, 2, 2, 4 }, game.Players.GetByOrder());
@@ -192,7 +192,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
 
-			matches.ElementAt(0).SetResults(rule.CreatePoints(Win, 4, 5));
+			matches.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win, 4, 5));
 
 			Util.CheckWithOrder(new[] { 5, 1, 6, 7, 2, 3, 4, 8 }, new[] { 1, 2, 3, 3, 5, 5, 7, 7 }, game.Players.GetByOrder());
 		}
@@ -206,7 +206,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
 
-			matches.ElementAt(0).SetResults(rule.CreatePoints(new[] { Win, Lose, Win }));
+			matches.Matches.ElementAt(0).SetResults(rule.CreatePoints(new[] { Win, Lose, Win }));
 
 			Util.CheckWithOrder(new[] { 1, 5, 3, 2, 6, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 5, 7, 8 }, game.Players.GetByOrder());
 		}
@@ -232,29 +232,29 @@ namespace BSMM2Test {
 			Util.CheckWithOrder(new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, new[] { 1, 1, 1, 1, 1, 1, 1, 1 }, game.Players.GetByOrder());
 
 			// 3 win 4 lose
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 3, 4, 1, 2, 5, 6, 7, 8 }, new[] { 1, 2, 3, 3, 3, 3, 3, 3 }, game.Players.GetByOrder());
 
 			// 1 win 2 lose
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4, 5, 6, 7, 8 }, new[] { 1, 1, 3, 3, 5, 5, 5, 5 }, game.Players.GetByOrder());
 
 			// 5  6 draw
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Draw));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Draw));
 			Util.CheckWithOrder(new[] { 1, 3, 5, 6, 2, 4, 7, 8 }, new[] { 1, 1, 3, 3, 5, 5, 7, 7 }, game.Players.GetByOrder());
 
 			// 8 win 7 lose
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Lose));
 
 			Util.CheckWithOrder(new[] { 1, 3, 8, 5, 6, 2, 4, 7 }, new[] { 1, 1, 1, 4, 4, 6, 6, 6 }, game.Players.GetByOrder());
 
 			// 7 win 8 lose
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 3, 7, 5, 6, 2, 4, 8 }, new[] { 1, 1, 1, 4, 4, 6, 6, 6 }, game.Players.GetByOrder());
 
 			// 5 win 6 lose
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, new[] { 1, 1, 1, 1, 5, 5, 5, 5 }, game.Players.GetByOrder());
 
 			// 2回戦目
@@ -262,26 +262,26 @@ namespace BSMM2Test {
 			game.StepToPlaying();
 
 			// 7 win 8 lose
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Lose));
 			game.StepToMatching();//無効であることを確認
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
 			game.StepToMatching();//無効であることを確認
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 			game.StepToMatching();//無効であることを確認
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 5, 3, 1, 6, 7, 2, 4, 8 }, new[] { 1, 2, 3, 4, 4, 6, 7, 8 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
 
 			// 3回戦目
 			game.StepToMatching();
 			game.StepToPlaying();
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
 			Util.CheckWithOrder(new[] { 1, 5, 2, 6, 3, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 6, 7, 8 }, game.Players.GetByOrder());
 		}
 
@@ -299,9 +299,9 @@ namespace BSMM2Test {
 			// 対戦開始時
 			Util.CheckWithOrder(new[] { 7, 1, 2, 3, 4, 5, 6 }, new[] { 1, 2, 2, 2, 2, 2, 2 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 1, 3, 5, 7, 2, 4, 6 }, new[] { 1, 1, 1, 4, 5, 5, 5 }, game.Players.GetByOrder());
 
@@ -310,9 +310,9 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, -1 }, game.ActiveRound);
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4 }, new[] { 1, 1, 3, 3, 5, 5, 7 }, game.Players.GetByOrder());
 
@@ -321,9 +321,9 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 1, 5, 2, 3, 6, 7, 4, -1 }, game.ActiveRound);
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			var points = game.Players.GetByOrder().Select(p => p.Result.Point);
 			var opponentPoints = game.Players.GetByOrder().Select(p => p.OpponentResult.Point);
@@ -345,11 +345,11 @@ namespace BSMM2Test {
 			// 対戦開始時
 			Util.CheckWithOrder(new[] { 11, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, new[] { 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }, game.Players.GetByOrder());
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(4).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(4).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 1, 3, 5, 7, 9, 11, 2, 4, 6, 8, 10 }, new[] { 1, 1, 1, 1, 1, 6, 7, 7, 7, 7, 7 }, game.Players.GetByOrder());
 
@@ -358,11 +358,11 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 1, 3, 5, 7, 9, 11, 2, 4, 6, 8, 10, -1 }, game.ActiveRound);
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(4).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(4).SetResults(rule.CreatePoints(Win));
 
 			Util.CheckWithOrder(new[] { 1, 5, 9, 2, 3, 6, 7, 10, 11, 4, 8 }, new[] { 1, 1, 1, 4, 4, 4, 4, 8, 8, 10, 10 }, game.Players.GetByOrder());
 
@@ -371,11 +371,11 @@ namespace BSMM2Test {
 
 			Util.Check(new[] { 1, 5, 9, 2, 3, 6, 7, 10, 11, 4, 8, -1 }, game.ActiveRound);
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(4).SetResults(rule.CreatePoints(Lose));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(4).SetResults(rule.CreatePoints(Lose));
 
 			Util.CheckWithOrder(new[] { 1, 9, 5, 3, 7, 2, 6, 10, 4, 11, 8 }, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, game.Players.GetByOrder());
 
@@ -396,7 +396,7 @@ namespace BSMM2Test {
 			for (int i = 0; i < round; ++i) {
 				game.StepToMatching();
 				game.StepToPlaying();
-				game.ActiveRound.ForEach(m => m.SetResults(rule.CreatePoints(Win)));
+				game.ActiveRound.Matches.ForEach(m => m.SetResults(rule.CreatePoints(Win)));
 			}
 			return game;
 		}

@@ -70,7 +70,7 @@ namespace BSMM2.ViewModels {
 		private void Refresh() {
 			IsTimerVisible = (Game.StartTime != null);
 
-			Matches = Game.ActiveRound;
+			Matches = Game.ActiveRound.Matches;
 			Title = Game.Headline;
 			StartCommand?.RaiseCanExecuteChanged();
 			ShuffleCommand?.RaiseCanExecuteChanged();

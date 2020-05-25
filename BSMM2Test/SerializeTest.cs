@@ -55,9 +55,9 @@ namespace BSMM2Test {
 
 			game.StepToPlaying();
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
@@ -78,9 +78,9 @@ namespace BSMM2Test {
 
 			game.StepToPlaying();
 
-			game.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			game.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
@@ -103,10 +103,10 @@ namespace BSMM2Test {
 
 			src.StepToPlaying();
 
-			src.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
-			src.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			src.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			src.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			src.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
 
 			var engine = new SerializeUtil();
 
@@ -120,13 +120,13 @@ namespace BSMM2Test {
 			Assert.AreEqual(1, dst.Rounds.Count());
 
 			dst.StepToPlaying();
-			dst.ActiveRound.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
 
 			Assert.AreEqual(1, dst.Rounds.Count());
 
-			dst.ActiveRound.ElementAt(1).SetResults(rule.CreatePoints(Win));
-			dst.ActiveRound.ElementAt(2).SetResults(rule.CreatePoints(Win));
-			dst.ActiveRound.ElementAt(3).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
+			dst.ActiveRound.Matches.ElementAt(3).SetResults(rule.CreatePoints(Win));
 
 			Assert.AreEqual(1, dst.Rounds.Count());
 
@@ -147,10 +147,10 @@ namespace BSMM2Test {
 
 			Assert.AreEqual(0, app.Game.Rounds.Count());
 
-			app.Game.ActiveRound.ElementAt(0).SetResults(app.Game.Rule.CreatePoints(Win));
-			app.Game.ActiveRound.ElementAt(1).SetResults(app.Game.Rule.CreatePoints(Win));
-			app.Game.ActiveRound.ElementAt(2).SetResults(app.Game.Rule.CreatePoints(Win));
-			app.Game.ActiveRound.ElementAt(3).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.Matches.ElementAt(0).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.Matches.ElementAt(1).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.Matches.ElementAt(2).SetResults(app.Game.Rule.CreatePoints(Win));
+			app.Game.ActiveRound.Matches.ElementAt(3).SetResults(app.Game.Rule.CreatePoints(Win));
 
 			app.Game.StepToMatching();
 

@@ -39,7 +39,7 @@ namespace BSMM2Test {
 		}
 
 		public static void Check(IEnumerable<int> expect, string origin, Round round) {
-			var result = round.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
+			var result = round.Matches.SelectMany(match => match.PlayerNames.Select(name => ConvId(origin, name)));
 			CollectionAssert.AreEqual(expect.ToArray(), result.ToArray(), Message(expect, result));
 		}
 
@@ -95,7 +95,7 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.Rule.AcceptByeMatchDuplication, b.Rule.AcceptByeMatchDuplication);
 			Assert.AreEqual(a.Rule.AcceptGapMatchDuplication, b.Rule.AcceptGapMatchDuplication);
 			Check(a.Rule, a.Players, b.Players);
-			Check(a.ActiveRound, b.ActiveRound);
+			Check(a.ActiveRound.Matches, b.ActiveRound.Matches);
 		}
 
 		private static String Message(IEnumerable<int> expect, IEnumerable<int> result) {

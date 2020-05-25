@@ -19,7 +19,7 @@ namespace BSMM2.ViewModels {
 		}
 
 		public RoundLogViewModel(Round round, int index, Action<Match> showMatch) {
-			Round = round;
+			Round = round.Matches;
 			Title = String.Format("Round {0}", index + 1);
 			_showMatch = showMatch;
 		}

@@ -1,31 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BSMM2.Models {
 
-	public class Round : List<Match> {
-		public bool IsPlaying { get; set; }
+	[JsonObject]
+	public class Round {
 
+		[JsonProperty]
+		public List<Match> Matches { get; private set; }
+
+		[JsonProperty]
+		public bool IsPlaying { get; private set; }
+
+		[JsonIgnore]
 		public bool IsFinished
-			=> !this.Any(match => !match.IsFinished);
+			=> !Matches.Any(match => !match.IsFinished);
 
-		public void Swap(int m1, int m2)
-			=> Swap(this.ElementAt(m1), this.ElementAt(m2));
+		public bool Swap(int m1, int m2)
+			=> Swap(Matches.ElementAt(m1), Matches.ElementAt(m2));
 
-		public void Swap(Match m1, Match m2) {
-			if (!m1.IsByeMatch && !m2.IsByeMatch)
+		public bool Swap(Match m1, Match m2) {
+			if (!IsPlaying && !m1.IsByeMatch && !m2.IsByeMatch) {
 				m1.Swap(m2);
+				return true;
+			}
+			return false;
 		}
 
 		public void Commit() {
 			IsPlaying = true;
-			ForEach(match => match.Commit());
+			Matches.ForEach(match => match.Commit());
 		}
 
 		public Round() {
 		}
 
-		public Round(IEnumerable<Match> matches) : base(matches) {
+		public Round(IEnumerable<Match> matches) {
+			Matches = new List<Match>(matches);
 		}
 	}
 }
