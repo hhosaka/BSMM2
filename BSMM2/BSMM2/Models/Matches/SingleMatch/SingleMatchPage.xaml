@@ -8,17 +8,13 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout VerticalOptions="Center">
-			<Label Text="{Binding LifePointTitle1}"  IsVisible="{Binding EnableLifePoint}" />
-			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" IsVisible="{Binding EnableLifePoint}" />
-			<Label Text="{Binding LifePointTitle2}"  IsVisible="{Binding EnableLifePoint}" />
-			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" IsVisible="{Binding EnableLifePoint}" />
 			<Label Text="Enter the Result" />
 			<ListView x:Name="Results"
 					  SelectedItem="{Binding SelectedItem}"
 					  ItemsSource="{Binding Items}">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<TextCell Text="{Binding Label}" TextColor="Black" />
+						<TextCell Text="{Binding Key}" TextColor="Black" />
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>

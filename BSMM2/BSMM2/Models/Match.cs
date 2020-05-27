@@ -91,6 +91,9 @@ namespace BSMM2.Models {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Record2"));
 		}
 
+		public RESULT_T GetResult()
+			=> _records[0].Result.RESULT;
+
 		public void Swap(Match other) {
 			var temp = _records[0];
 			_records[0] = other._records[0];
