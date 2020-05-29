@@ -8,13 +8,27 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<Switch IsToggled="{Binding Player1}" />
-			<Switch IsToggled="{Binding Draw}" />
-			<Switch IsToggled="{Binding Player2}" />
-			<Label Text="{Binding LifePointTitle1}" />
-			<Editor Text="{Binding LifePoint1}" Keyboard="Numeric" />
-			<Label Text="{Binding LifePointTitle2}" />
-			<Editor Text="{Binding LifePoint2}" Keyboard="Numeric" />
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding ResultItem.Player1Win}" />
+
+				<Picker
+					ItemsSource ="{Binding LifePoints}"
+					SelectedItem="{Binding Player1LP}"
+					ItemDisplayBinding="{Binding Label}" />
+
+				<Label Text="{Binding Player1.Name}" FontSize="Medium" VerticalTextAlignment="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding ResultItem.Draw}" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding ResultItem.Player2Win}" />
+				<Picker
+					ItemsSource ="{Binding LifePoints}"
+					SelectedItem="{Binding Player2LP}"
+					ItemDisplayBinding="{Binding Label}" />
+				<Label Text="{Binding Player2.Name}" FontSize="Medium" VerticalTextAlignment="Center" />
+			</StackLayout>
 			<Button Text="Done" Command="{Binding DoneCommand}"  HorizontalOptions="FillAndExpand" />
 		</StackLayout>
 	</ContentPage.Content>
