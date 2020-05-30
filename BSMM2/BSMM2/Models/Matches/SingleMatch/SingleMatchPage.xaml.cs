@@ -6,18 +6,14 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleMatchPage : ContentPage {
-		private SingleMatchViewModel _viewModel;
 
 		public SingleMatchPage(SingleMatchRule rule, Match match) {
 			InitializeComponent();
-			Title = String.Format("{0} Result", rule.Name);
-			BindingContext = _viewModel = new SingleMatchViewModel(rule, match, Back);
+			Title = rule.Name;
+			BindingContext = new SingleMatchViewModel(rule, match, () => Back(null, null));
 		}
 
-		private void Back(object sender, EventArgs e)
-			=> Back();
-
-		private async void Back()
+		private async void Back(object sender, EventArgs e)
 			=> await Navigation.PopModalAsync();
 	}
 }
