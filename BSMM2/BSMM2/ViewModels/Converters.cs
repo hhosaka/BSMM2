@@ -11,7 +11,10 @@ namespace BSMM2.ViewModels {
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
 			Debug.Assert(value is IResult);
 			var result = (IResult)value;
-			return "Point=" + result.Point + "/Life=" + result.LifePoint + "/Win=" + result.WinPoint;
+			return "Point=" + result.Point + "/Life=" + ToLifePoint(result.LifePoint) + "/Win=" + result.WinPoint;
+
+			string ToLifePoint(int lifePoint)
+				=> lifePoint >= 0 ? lifePoint.ToString() : "-";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -26,15 +29,6 @@ namespace BSMM2.ViewModels {
 			string GetResult()
 				=> (value as IMatchRecord).Result.RESULT.ToString();
 		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-			=> throw new NotImplementedException();
-	}
-
-	internal class MenuActivationConverter : IValueConverter {
-
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-			=> value != null;
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 			=> throw new NotImplementedException();

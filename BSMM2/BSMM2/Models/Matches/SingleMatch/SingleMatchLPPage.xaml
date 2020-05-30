@@ -7,29 +7,40 @@
 		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
-		<StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding ResultItem.Player1Win}" />
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Switch Grid.Row="0" Grid.Column="0" IsToggled="{Binding ResultItem.Player1Win}" />
 
-				<Picker
-					ItemsSource ="{Binding LifePoints}"
-					SelectedItem="{Binding Player1LP}"
-					ItemDisplayBinding="{Binding Label}" />
+			<Picker IsVisible="false"
+				Grid.Row="0" Grid.Column="1"
+				ItemsSource ="{Binding LifePoints}"
+				SelectedItem="{Binding Player1LP}"
+				ItemDisplayBinding="{Binding Label}" />
 
-				<Label Text="{Binding Player1.Name}" FontSize="Medium" VerticalTextAlignment="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding ResultItem.Draw}" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding ResultItem.Player2Win}" />
-				<Picker
-					ItemsSource ="{Binding LifePoints}"
-					SelectedItem="{Binding Player2LP}"
-					ItemDisplayBinding="{Binding Label}" />
-				<Label Text="{Binding Player2.Name}" FontSize="Medium" VerticalTextAlignment="Center" />
-			</StackLayout>
-			<Button Text="Done" Command="{Binding DoneCommand}"  HorizontalOptions="FillAndExpand" />
-		</StackLayout>
+			<Label Text="{Binding Player1.Name}" Grid.Row="0" Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
+
+			<Switch Grid.Row="1" Grid.Column="0" IsToggled="{Binding ResultItem.Draw}" />
+			<Label Text="Draw" Grid.Row="1"  Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
+
+			<Switch IsToggled="{Binding ResultItem.Player2Win}" Grid.Row="2"  Grid.Column="0" />
+			<Picker IsVisible="false"
+				Grid.Row="2"  Grid.Column="1"
+				ItemsSource ="{Binding LifePoints}"
+				SelectedItem="{Binding Player2LP}"
+				ItemDisplayBinding="{Binding Label}" />
+			<Label Text="{Binding Player2.Name}" Grid.Row="2"  Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
+			<Button Text="Done" Grid.Row="3" Grid.ColumnSpan="3" Command="{Binding DoneCommand}"  HorizontalOptions="FillAndExpand" />
+		</Grid>
 	</ContentPage.Content>
 </ContentPage>

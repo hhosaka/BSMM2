@@ -15,7 +15,7 @@ namespace BSMM2.Models {
 
 			public int Point => 0;
 
-			public int LifePoint => 0;
+			public int LifePoint => -1;
 
 			public double WinPoint => 0;
 

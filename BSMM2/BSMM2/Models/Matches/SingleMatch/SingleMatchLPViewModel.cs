@@ -35,7 +35,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 			void Done() {
 				if (ResultItem.Value != RESULT_T.Progress) {
-					match.SetResults(rule.CreatePoints(ResultItem.Value, Player1LP.Point ?? 0, Player2LP.Point ?? 0));// TODO tentativce
+					match.SetResults(rule.CreatePoints(ResultItem.Value, Player1LP.Point, Player2LP.Point));// TODO tentativce
 					MessagingCenter.Send<object>(this, Messages.REFRESH);
 				}
 				back?.Invoke();

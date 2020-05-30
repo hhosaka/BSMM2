@@ -13,14 +13,14 @@ namespace BSMM2.Models.Matches {
 		private static LifePoints _instance;
 
 		public string Label { get; private set; }
-		public int? Point { get; private set; }
+		public int Point { get; private set; }
 
 		public static LifePoints Instance => GetInstance();
 
 		private static LifePoints GetInstance() {
 			if (_instance == null) {
 				_instance = new List<LifePoint> {
-					new LifePoint{ Label = "-", Point = null},
+					new LifePoint{ Label = "-", Point = -1},
 					new LifePoint{ Label = "5", Point = 5},
 					new LifePoint{ Label = "4", Point = 4},
 					new LifePoint{ Label = "3", Point = 3},
