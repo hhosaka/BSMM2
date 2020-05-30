@@ -23,9 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Models\Matches\SingleMatch\SingleMatchLPPage.xaml.cs">
-      <DependentUpon>SingleMatchLPPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Models\Matches\SingleMatch\SingleMatchPage.xaml.cs">
       <DependentUpon>SingleMatchPage.xaml</DependentUpon>
     </Compile>

@@ -8,7 +8,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 	using LifePoints = IEnumerable<LifePoint>;
 
-	internal class SingleMatchLPViewModel : BaseViewModel {
+	internal class SingleMatchViewModel : BaseViewModel {
 		private Match _match;
 		private Rule _rule;
 
@@ -24,7 +24,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public ICommand DoneCommand { get; }
 
-		public SingleMatchLPViewModel(SingleMatchRule rule, Match match, Action back) {
+		public SingleMatchViewModel(SingleMatchRule rule, Match match, Action back) {
 			DoneCommand = new Command(Done);
 
 			_match = match;

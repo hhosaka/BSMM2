@@ -31,11 +31,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			Debug.Assert(game.Rule is SingleMatchRule);
-			if (game.Rule.EnableLifePoint) {
-				return new SingleMatchLPPage(game.Rule as SingleMatchRule, match);
-			} else {
-				return new SingleMatchPage(game.Rule as SingleMatchRule, match);
-			}
+			return new SingleMatchPage(game.Rule as SingleMatchRule, match);
 		}
 
 		public override Rule Clone()

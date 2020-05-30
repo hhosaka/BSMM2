@@ -92,6 +92,7 @@ namespace BSMM2.Models.Matches {
 		}
 
 		private void Initial(RESULT_T result) {
+			Value = RESULT_T.Progress;
 			switch (result) {
 				case RESULT_T.Win:
 					Player1Win = true;
