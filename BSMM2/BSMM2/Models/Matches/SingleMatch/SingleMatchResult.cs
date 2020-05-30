@@ -19,7 +19,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonProperty]
 		public RESULT_T RESULT { get; }
 
-		public bool IsFinished => true;
+		public bool IsFinished => LifePoint >= 0;
 
 		public SingleMatchResult(RESULT_T result, int lifePoint = 0) {
 			RESULT = result;

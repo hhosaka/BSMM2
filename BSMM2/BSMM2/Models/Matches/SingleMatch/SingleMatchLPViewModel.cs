@@ -9,10 +9,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	using LifePoints = IEnumerable<LifePoint>;
 
 	internal class SingleMatchLPViewModel : BaseViewModel {
-		public ResultItem ResultItem { get; }
-
 		private Match _match;
+		private Rule _rule;
 
+		public bool EnableLifePoint => _rule.EnableLifePoint;
+		public ResultItem ResultItem { get; }
 		public LifePoint Player1LP { get; set; }
 		public LifePoint Player2LP { get; set; }
 		public IPlayer Player1 => _match.Record1.Player;
@@ -27,6 +28,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			DoneCommand = new Command(Done);
 
 			_match = match;
+			_rule = rule;
 
 			Player1LP = LifePoint.GetItem(match.Record1.Result.LifePoint);
 			Player2LP = LifePoint.GetItem(match.Record2.Result.LifePoint);

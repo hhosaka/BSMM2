@@ -37,7 +37,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		public int Point
 			=> MatchPoint;
 
-		public bool IsFinished => _results.Count() >= _minCount;
+		public bool IsFinished => _results.Count(result => result.IsFinished) >= _minCount;
 
 		public void Add(IResult result) {
 			_results.Add(result);

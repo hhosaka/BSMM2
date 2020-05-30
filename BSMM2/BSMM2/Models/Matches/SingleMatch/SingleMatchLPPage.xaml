@@ -22,7 +22,7 @@
 			</Grid.ColumnDefinitions>
 			<Switch Grid.Row="0" Grid.Column="0" IsToggled="{Binding ResultItem.Player1Win}" />
 
-			<Picker IsVisible="false"
+			<Picker IsVisible="{Binding EnableLifePoint}"
 				Grid.Row="0" Grid.Column="1"
 				ItemsSource ="{Binding LifePoints}"
 				SelectedItem="{Binding Player1LP}"
@@ -34,7 +34,7 @@
 			<Label Text="Draw" Grid.Row="1"  Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
 
 			<Switch IsToggled="{Binding ResultItem.Player2Win}" Grid.Row="2"  Grid.Column="0" />
-			<Picker IsVisible="false"
+			<Picker IsVisible="{Binding EnableLifePoint}"
 				Grid.Row="2"  Grid.Column="1"
 				ItemsSource ="{Binding LifePoints}"
 				SelectedItem="{Binding Player2LP}"

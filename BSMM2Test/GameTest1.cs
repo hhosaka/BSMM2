@@ -164,6 +164,37 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
+		public void GameSequence3Test() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 4);
+
+			game.Shuffle();
+			game.StepToPlaying();
+
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win));
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win, -1, -1));
+			Assert.IsFalse(game.CanExecuteStepToMatching());
+
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
+
+			Assert.IsTrue(game.CanExecuteStepToMatching());
+
+			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
+
+			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win, 5, 5));
+
+			Assert.IsTrue(game.CanExecuteStepToMatching());
+
+			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
+
+			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(Win, 0, 0));
+
+			Assert.IsTrue(game.CanExecuteStepToMatching());
+
+			Util.CheckWithOrder(new[] { 3, 1, 4, 2 }, new[] { 1, 2, 3, 4 }, game.Players.GetByOrder());
+		}
+
+		[TestMethod]
 		public void OrderTestSingleMatch()
 			=> OrderTest(new SingleMatchRule());
 

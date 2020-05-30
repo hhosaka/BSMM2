@@ -67,7 +67,7 @@ namespace BSMM2.Models {
 		public bool IsGapMatch { get; }
 
 		public bool IsFinished
-			=> !_records.Any(record => record.Result?.IsFinished != true);
+			=> !_records.Any(record => !record.Result.IsFinished);
 
 		public bool IsByeMatch
 			=> _records.Any(result => result.Player == BYE);
