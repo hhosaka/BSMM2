@@ -14,6 +14,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> CreatePoints(result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT);
 
 		public (IResult, IResult) CreatePoints(RESULT_T result1, int lp1, int lp2) {
+			if (!EnableLifePoint) {
+				lp1 = lp2 = DEFAULT_LIFE_POINT;//  TODO : bad idea
+			}
 			switch (result1) {
 				case Win:
 					return (new SingleMatchResult(Win, lp1), new SingleMatchResult(Lose, lp2));
@@ -23,6 +26,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 				case Draw:
 					return (new SingleMatchResult(Draw, lp1), new SingleMatchResult(Draw, lp2));
+
+				case Progress:
+					return (new SingleMatchResult(Progress, -1), new SingleMatchResult(Draw, -1));
 
 				default:
 					throw new ArgumentException();

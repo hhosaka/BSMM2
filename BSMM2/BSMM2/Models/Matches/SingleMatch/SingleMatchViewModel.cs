@@ -36,10 +36,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			ResultItem = new ResultItem(match, () => OnPropertyChanged(nameof(ResultItem)));
 
 			void Done() {
-				if (ResultItem.Value != RESULT_T.Progress) {
-					match.SetResults(rule.CreatePoints(ResultItem.Value, Player1LP.Point, Player2LP.Point));
-					MessagingCenter.Send<object>(this, Messages.REFRESH);
-				}
+				match.SetResults(rule.CreatePoints(ResultItem.Value, Player1LP.Point, Player2LP.Point));
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}
 		}
