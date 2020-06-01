@@ -20,6 +20,9 @@ namespace BSMM2.Models {
 
 			public bool IsFinished => false;
 
+			public string Information
+				=> throw new NotImplementedException();
+
 			public void ExportTitle(TextWriter writer) {
 				writer.Write("Point, WinPoint, LifePoint");
 			}
@@ -40,7 +43,14 @@ namespace BSMM2.Models {
 
 			public RESULT_T RESULT => RESULT_T.Progress;
 
-			public bool IsFinished => true;
+			public bool IsFinished
+				=> true;
+
+			public string Information
+				=> "Point = " + Point + " /Life = " + ToLifePoint(LifePoint) + " /Win = " + WinPoint;
+
+			private string ToLifePoint(int lifePoint)
+				=> lifePoint >= 0 ? lifePoint.ToString() : "-";
 
 			public Total(IEnumerable<IResult> source) {
 				foreach (var point in source) {

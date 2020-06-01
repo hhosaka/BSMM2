@@ -13,13 +13,21 @@ namespace BSMM2.Models {
 		private class DefaultResult : IResult {
 			public RESULT_T RESULT => RESULT_T.Progress;
 
+			[JsonIgnore]
 			public int Point => 0;
 
+			[JsonIgnore]
 			public int LifePoint => -1;
 
+			[JsonIgnore]
 			public double WinPoint => 0;
 
+			[JsonIgnore]
 			public bool IsFinished => false;
+
+			[JsonIgnore]
+			public string Information
+				=> throw new System.NotImplementedException();
 
 			public void ExportData(TextWriter writer) {
 			}

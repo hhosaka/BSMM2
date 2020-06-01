@@ -19,7 +19,12 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonProperty]
 		public RESULT_T RESULT { get; }
 
+		[JsonIgnore]
 		public bool IsFinished => RESULT != RESULT_T.Progress && LifePoint >= 0;
+
+		[JsonIgnore]
+		public string Information
+			=> throw new System.NotImplementedException();
 
 		public SingleMatchResult(RESULT_T result, int lifePoint = 0) {
 			RESULT = result;

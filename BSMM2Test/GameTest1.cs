@@ -451,5 +451,13 @@ namespace BSMM2Test {
 			Assert.AreEqual(rule.AcceptByeMatchDuplication, a.AcceptByeMatchDuplication);
 			Assert.AreEqual(rule.AcceptGapMatchDuplication, a.AcceptGapMatchDuplication);
 		}
+
+		[TestMethod]
+		public void InformationTest() {
+			var game = new FakeGame(new SingleMatchRule(), 4);
+
+			game.Shuffle();
+			Assert.AreEqual("Point = 0 /Life = 0 /Win = 0", game.Players.GetByOrder().ElementAt(0).Result.Information);
+		}
 	}
 }

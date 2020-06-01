@@ -10,5 +10,7 @@
 		double WinPoint { get; }
 
 		bool IsFinished { get; }
+
+		string Information { get; }
 	}
 }
