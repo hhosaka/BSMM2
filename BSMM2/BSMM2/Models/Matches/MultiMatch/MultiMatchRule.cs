@@ -20,6 +20,9 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			return CreatePoints(results.ToArray());
 		}
 
+		public (IResult, IResult) CreatePoint(IEnumerable<IScore> scores)
+			=> CreatePoints(scores.Select(score => (score.Result, score.LifePoint1, score.LifePoint2)));
+
 		public (IResult, IResult) CreatePoints(IEnumerable<RESULT_T> player1Results) {
 			return CreatePoints(player1Results.Select(r => (r, 5, 5)));
 		}

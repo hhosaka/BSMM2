@@ -13,6 +13,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public override (IResult, IResult) CreatePoints(RESULT_T result)
 			=> CreatePoints(result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT);
 
+		public (IResult, IResult) CreatePoint(IScore score)
+			=> CreatePoints(score.Result, score.LifePoint1, score.LifePoint2);
+
 		public (IResult, IResult) CreatePoints(RESULT_T result1, int lp1, int lp2) {
 			if (!EnableLifePoint) {
 				lp1 = lp2 = DEFAULT_LIFE_POINT;//  TODO : bad idea
@@ -42,6 +45,25 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public override Rule Clone()
 			=> new SingleMatchRule(this);
+
+		[JsonObject]
+		public class SingleMatch : Match {
+
+			[JsonProperty]
+			private SingleMatchRule _rule;
+
+			private SingleMatch() {
+			}
+
+			public SingleMatch(SingleMatchRule rule, IPlayer player1, IPlayer player2)
+				: base(rule, player1, player2) {
+				_rule = rule;
+			}
+
+			public void SetResult(IScore score) {
+				SetResults(_rule.CreatePoint(score));
+			}
+		}
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new Match(this, player1, player2);
