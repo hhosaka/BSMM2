@@ -28,6 +28,9 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 			throw new System.NotImplementedException();
 		}
 
+		public override Match CreateMatch(IPlayer player1, IPlayer player2)
+			=> new Match(this, player1, player2);
+
 		public ThreeGameMatchRule() {
 		}
 	}

@@ -18,7 +18,7 @@ namespace BSMM2Test {
 		public void RuleTest() {
 			var rule = new SingleMatchRule();
 			var players = new Players(rule, 4).GetByOrder().ToArray();// new[] { new Player("player1"), new Player("player2"), new Player("player3"), new Player("player4") };
-			var matches = new[] { new Match(players[0], players[1]), new Match(players[2], players[3]) };
+			var matches = new[] { new Match(rule, players[0], players[1]), new Match(rule, players[2], players[3]) };
 
 			Assert.IsTrue(players.SequenceEqual(players.OrderByDescending(player => player, rule.CreateOrderComparer())));
 

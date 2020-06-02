@@ -144,7 +144,7 @@ namespace BSMM2.Models {
 					var p2 = PickOpponent(stack, p1);
 					if (p2 != null) {
 						stack.Remove(p2);
-						results.Enqueue(new Match(p2, p1));
+						results.Enqueue(Rule.CreateMatch(p2, p1));
 					} else {
 						stack.Add(p1);
 					}
@@ -157,7 +157,7 @@ namespace BSMM2.Models {
 						{
 							var p = stack.First();
 							if (isByeAcceptable(p)) {
-								results.Enqueue(new Match(p, Rule));
+								results.Enqueue(Rule.CreateMatch(p));
 								return results;//1人不戦勝
 							}
 						}

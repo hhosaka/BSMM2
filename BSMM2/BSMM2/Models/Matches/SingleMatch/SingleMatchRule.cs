@@ -43,6 +43,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public override Rule Clone()
 			=> new SingleMatchRule(this);
 
+		public override Match CreateMatch(IPlayer player1, IPlayer player2)
+			=> new Match(this, player1, player2);
+
 		public override string Name
 			=> "Single Match Rule";
 

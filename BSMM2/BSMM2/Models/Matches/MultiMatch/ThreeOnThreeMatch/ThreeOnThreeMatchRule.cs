@@ -27,5 +27,8 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override Rule Clone() {
 			throw new System.NotImplementedException();
 		}
+
+		public override Match CreateMatch(IPlayer player1, IPlayer player2)
+			=> new Match(this, player1, player2);
 	}
 }
