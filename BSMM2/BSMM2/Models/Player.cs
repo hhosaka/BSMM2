@@ -23,6 +23,8 @@ namespace BSMM2.Models {
 
 			public bool IsFinished => true;
 
+			public IPoint GetPoint() => _point;
+
 			public string Information
 				=> "Point = " + Point + " /Life = " + ToLifePoint(LifePoint) + " /Win = " + WinPoint;
 
@@ -56,7 +58,7 @@ namespace BSMM2.Models {
 			public Total() {
 			}
 
-			public Total(IEnumerable<IResult> source) {
+			public Total(IEnumerable<IPoint> source) {
 				foreach (var point in source) {
 					if (point != null) {
 						Point += point.Point;
@@ -96,6 +98,12 @@ namespace BSMM2.Models {
 		public IResult Result { get; private set; }
 
 		[JsonIgnore]
+		public IPoint Point => (Result as TheResult).GetPoint();
+
+		[JsonIgnore]
+		public IPoint OpponentPoint => (OpponentResult as TheResult).GetPoint();
+
+		[JsonIgnore]
 		public IResult OpponentResult { get; private set; }
 
 		public int Order { get; set; }
@@ -107,10 +115,10 @@ namespace BSMM2.Models {
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		internal void CalcResult(Rule rule)
-			=> Result = new TheResult(new Total(_matches.Select(match => match.GetResult(this))));
+			=> Result = new TheResult(new Total(_matches.Select(match => match.GetResult(this).GetPoint())));
 
 		internal void CalcOpponentResult(Rule rule)
-			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result)));
+			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result.GetPoint())));
 
 		public Player() {// For Serializer
 			Result = _defaultResult;

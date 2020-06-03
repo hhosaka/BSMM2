@@ -6,19 +6,19 @@ namespace BSMM2.Models {
 	internal class ThePoint : IPoint {
 
 		[JsonIgnore]
-		public int Point => _result.Point;
+		public int Point => _point.Point;
 
 		[JsonIgnore]
-		public int LifePoint => _result.LifePoint;
+		public int LifePoint => _point.LifePoint;
 
 		[JsonIgnore]
-		public double WinPoint => _result.WinPoint;
+		public double WinPoint => _point.WinPoint;
 
 		[JsonProperty]
-		private IResult _result;
+		private IPoint _point;
 
-		private ThePoint(IResult result) {
-			_result = result;
+		public ThePoint(IResult result) {
+			_point = result.GetPoint();
 		}
 	}
 }

@@ -3,5 +3,6 @@
 	public interface IMatchRecord {
 		IPlayer Player { get; }
 		IResult Result { get; }
+		IPoint Point { get; }
 	}
 }

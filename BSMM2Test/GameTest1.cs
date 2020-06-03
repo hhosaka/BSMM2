@@ -358,8 +358,8 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(Win));
 			game.ActiveRound.Matches.ElementAt(2).SetResults(rule.CreatePoints(Win));
 
-			var points = game.Players.GetByOrder().Select(p => p.Result.Point);
-			var opponentPoints = game.Players.GetByOrder().Select(p => p.OpponentResult.Point);
+			var points = game.Players.GetByOrder().Select(p => p.Result.GetPoint().Point);
+			var opponentPoints = game.Players.GetByOrder().Select(p => p.OpponentResult.GetPoint().Point);
 
 			Util.CheckWithOrder(new[] { 1, 5, 2, 6, 3, 7, 4 }, new[] { 1, 2, 3, 4, 5, 6, 7 }, game.Players.GetByOrder());
 		}
@@ -417,8 +417,8 @@ namespace BSMM2Test {
 			Assert.IsTrue(game.StepToMatching());
 			game.StepToPlaying();
 
-			var points = game.Players.GetByOrder().Select(p => p.Result.Point);
-			var opponentPoints = game.Players.GetByOrder().Select(p => p.OpponentResult.Point);
+			var points = game.Players.GetByOrder().Select(p => p.Result.GetPoint().Point);
+			var opponentPoints = game.Players.GetByOrder().Select(p => p.OpponentResult.GetPoint().Point);
 
 			Util.Check(new[] { 1, 9, 5, 3, 7, 6, 2, 10, 4, 8, 11, -1 }, game.ActiveRound);
 		}

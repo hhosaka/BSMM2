@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class Match : INotifyPropertyChanged {
 
-		private class DefaultResult : IResult {
+		private class DefaultResult : IResult, IPoint {
 			public RESULT_T RESULT => RESULT_T.Progress;
 
 			[JsonIgnore]
@@ -34,6 +34,8 @@ namespace BSMM2.Models {
 
 			public void ExportTitle(TextWriter writer) {
 			}
+
+			public IPoint GetPoint() => this;
 		}
 
 		private class ByePlayer : Player {
@@ -52,6 +54,9 @@ namespace BSMM2.Models {
 
 			[JsonProperty]
 			public IResult Result { get; private set; }
+
+			[JsonIgnore]
+			public IPoint Point => Result.GetPoint();
 
 			public void SetResult(IResult result)
 				=> Result = result;
@@ -138,7 +143,7 @@ namespace BSMM2.Models {
 		public Match(Rule rule, IPlayer player1, IPlayer player2 = null) {
 			if (player2 != null) {
 				_records = new[] { new Record(player1), new Record(player2) };
-				IsGapMatch = (player1.Result?.Point != player2.Result?.Point);
+				IsGapMatch = (player1.Result?.GetPoint().Point != player2.Result?.GetPoint().Point);
 			} else {
 				_records = new[] { new Record(player1), new Record(BYE) };
 				SetResults(rule.CreatePoints(RESULT_T.Win));

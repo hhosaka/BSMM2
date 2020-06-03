@@ -3,14 +3,16 @@
 	public interface IResult : Exportable {
 		RESULT_T RESULT { get; }
 
-		int Point { get; }
+		//int Point { get; }
 
-		int LifePoint { get; }
+		//int LifePoint { get; }
 
-		double WinPoint { get; }
+		//double WinPoint { get; }
 
 		bool IsFinished { get; }
 
 		string Information { get; }
+
+		IPoint GetPoint();
 	}
 }

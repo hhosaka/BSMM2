@@ -3,7 +3,7 @@ using System.IO;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
-	internal class SingleMatchResult : IResult {
+	internal class SingleMatchResult : IResult, IPoint {
 
 		[JsonIgnore]
 		public int Point
@@ -38,5 +38,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public void ExportData(TextWriter writer) {
 			throw new System.NotImplementedException();
 		}
+
+		public IPoint GetPoint() => this;
 	}
 }

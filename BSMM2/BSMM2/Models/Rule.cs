@@ -49,7 +49,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.Result.Point - p2.Result.Point;
+				=> p1.Point.Point - p2.Point.Point;
 		}
 
 		private class LifePointComparer : IComparer {
@@ -63,7 +63,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.Result.LifePoint - p2.Result.LifePoint;
+				=> p1.Point.LifePoint - p2.Point.LifePoint;
 		}
 
 		private class OpponentMatchPointComparer : IComparer {
@@ -77,7 +77,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.OpponentResult.Point - p2.OpponentResult.Point;
+				=> p1.OpponentPoint.Point - p2.OpponentPoint.Point;
 		}
 
 		private class OpponentLifePointComparer : IComparer {
@@ -91,7 +91,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.OpponentResult.LifePoint - p2.OpponentResult.LifePoint;
+				=> p1.OpponentPoint.LifePoint - p2.OpponentPoint.LifePoint;
 		}
 
 		private class WinPointComparer : IComparer {
@@ -105,7 +105,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(p1.Result.WinPoint - p2.Result.WinPoint);
+				=> ConvDouble2Int(p1.Point.WinPoint - p2.Point.WinPoint);
 		}
 
 		private class OpponentWinPointComparer : IComparer {
@@ -119,7 +119,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(p1.OpponentResult.WinPoint - p2.OpponentResult.WinPoint);
+				=> ConvDouble2Int(p1.OpponentPoint.WinPoint - p2.OpponentPoint.WinPoint);
 		}
 
 		private class ByePlayer : IPlayer {
