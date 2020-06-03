@@ -40,33 +40,14 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			Debug.Assert(game.Rule is SingleMatchRule);
-			return new SingleMatchPage(game.Rule as SingleMatchRule, match);
+			return new SingleMatchPage((SingleMatchRule)game.Rule, (SingleMatch)match);
 		}
 
 		public override Rule Clone()
 			=> new SingleMatchRule(this);
 
-		[JsonObject]
-		public class SingleMatch : Match {
-
-			[JsonProperty]
-			private SingleMatchRule _rule;
-
-			private SingleMatch() {
-			}
-
-			public SingleMatch(SingleMatchRule rule, IPlayer player1, IPlayer player2)
-				: base(rule, player1, player2) {
-				_rule = rule;
-			}
-
-			public void SetResult(IScore score) {
-				SetResults(_rule.CreatePoint(score));
-			}
-		}
-
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
-			=> new Match(this, player1, player2);
+			=> new SingleMatch(this, player1, player2);
 
 		public override string Name
 			=> "Single Match Rule";

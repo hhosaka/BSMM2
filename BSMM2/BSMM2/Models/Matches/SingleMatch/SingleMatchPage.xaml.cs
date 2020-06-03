@@ -7,7 +7,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SingleMatchPage : ContentPage {
 
-		public SingleMatchPage(SingleMatchRule rule, Match match) {
+		public SingleMatchPage(SingleMatchRule rule, SingleMatch match) {
 			InitializeComponent();
 			Title = rule.Name;
 			BindingContext = new SingleMatchViewModel(rule, match, () => Back(null, null));

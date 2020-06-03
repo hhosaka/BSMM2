@@ -9,8 +9,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	using LifePoints = IEnumerable<LifePoint>;
 
 	internal class SingleMatchViewModel : BaseViewModel {
-		private Match _match;
-		private Rule _rule;
+		private SingleMatch _match;
+		private SingleMatchRule _rule;
 
 		public bool EnableLifePoint => _rule.EnableLifePoint;
 		public ResultItem ResultItem { get; }
@@ -24,7 +24,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public ICommand DoneCommand { get; }
 
-		public SingleMatchViewModel(SingleMatchRule rule, Match match, Action back) {
+		public SingleMatchViewModel(SingleMatchRule rule, SingleMatch match, Action back) {
 			DoneCommand = new Command(Done);
 
 			_match = match;
@@ -36,7 +36,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			ResultItem = new ResultItem(match, () => OnPropertyChanged(nameof(ResultItem)));
 
 			void Done() {
-				match.SetResults(rule.CreatePoints(ResultItem.Value, Player1LP.Point, Player2LP.Point));
+				match.SetResult(ResultItem.Value, Player1LP.Point, Player2LP.Point);
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}

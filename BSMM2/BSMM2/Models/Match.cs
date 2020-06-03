@@ -44,7 +44,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonObject]
-		private class Record : IMatchRecord {
+		public class Record : IMatchRecord {
 			private static readonly IResult _defaultResult = new DefaultResult();
 
 			[JsonProperty]
@@ -69,21 +69,27 @@ namespace BSMM2.Models {
 		public readonly IPlayer BYE = new ByePlayer();
 
 		[JsonProperty]
-		private Record[] _records;
+		public Record[] _records;
 
 		[JsonProperty]
 		public bool IsGapMatch { get; }
 
+		[JsonIgnore]
 		public bool IsFinished
 			=> !_records.Any(record => !record.Result.IsFinished);
 
+		[JsonIgnore]
 		public bool IsByeMatch
 			=> _records.Any(result => result.Player == BYE);
 
+		[JsonIgnore]
 		public IEnumerable<string> PlayerNames
 			=> _records.Select(result => result.Player.Name);
 
+		[JsonIgnore]
 		public IMatchRecord Record1 => _records[0];
+
+		[JsonIgnore]
 		public IMatchRecord Record2 => _records[1];
 
 		public event PropertyChangedEventHandler PropertyChanged;
