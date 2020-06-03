@@ -8,60 +8,26 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class Player : IPlayer {
+		private static readonly IResult _defaultResult = new TheResult(new Total());
 
-		private class DefaultResult : IResult {
-			public RESULT_T RESULT => RESULT_T.Progress;
+		private class TheResult : IResult {
+			private IPoint _point;
 
-			public int Point => 0;
+			public int Point => _point.Point;
 
-			public int LifePoint => 0;
+			public int LifePoint => _point.LifePoint;
 
-			public double WinPoint => 0;
-
-			public bool IsFinished => false;
-
-			public string Information
-				=> throw new NotImplementedException();
-
-			public void ExportTitle(TextWriter writer) {
-				writer.Write("Point, WinPoint, LifePoint");
-			}
-
-			public void ExportData(TextWriter writer) {
-				writer.Write("0, 0, 0");
-			}
-		}
-
-		private static readonly DefaultResult _defaultResult = new DefaultResult();
-
-		private class Total : IResult {
-			public int Point { get; }
-
-			public int LifePoint { get; }
-
-			public double WinPoint { get; }
+			public double WinPoint => _point.WinPoint;
 
 			public RESULT_T RESULT => RESULT_T.Progress;
 
-			public bool IsFinished
-				=> true;
+			public bool IsFinished => true;
 
 			public string Information
 				=> "Point = " + Point + " /Life = " + ToLifePoint(LifePoint) + " /Win = " + WinPoint;
 
 			private string ToLifePoint(int lifePoint)
 				=> lifePoint >= 0 ? lifePoint.ToString() : "-";
-
-			public Total(IEnumerable<IResult> source) {
-				foreach (var point in source) {
-					if (point != null) {
-						Point += point.Point;
-						LifePoint += point.LifePoint;
-						WinPoint += point.WinPoint;
-					}
-				}
-				WinPoint = source.Any() ? WinPoint / source.Count() : 0.0;
-			}
 
 			public void ExportTitle(TextWriter writer) {
 				writer.Write("Point, WinPoint, LifePoint");
@@ -73,6 +39,32 @@ namespace BSMM2.Models {
 				writer.Write(WinPoint);
 				writer.Write(", ");
 				writer.Write(LifePoint);
+			}
+
+			public TheResult(IPoint point) {
+				_point = point;
+			}
+		}
+
+		private class Total : IPoint {
+			public int Point { get; }
+
+			public int LifePoint { get; }
+
+			public double WinPoint { get; }
+
+			public Total() {
+			}
+
+			public Total(IEnumerable<IResult> source) {
+				foreach (var point in source) {
+					if (point != null) {
+						Point += point.Point;
+						LifePoint += point.LifePoint;
+						WinPoint += point.WinPoint;
+					}
+				}
+				WinPoint = source.Any() ? WinPoint / source.Count() : 0.0;
 			}
 		}
 
@@ -115,10 +107,10 @@ namespace BSMM2.Models {
 			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
 
 		internal void CalcResult(Rule rule)
-			=> Result = new Total(_matches.Select(match => match.GetResult(this)));
+			=> Result = new TheResult(new Total(_matches.Select(match => match.GetResult(this))));
 
 		internal void CalcOpponentResult(Rule rule)
-			=> OpponentResult = new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result));
+			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result)));
 
 		public Player() {// For Serializer
 			Result = _defaultResult;
