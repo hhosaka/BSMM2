@@ -172,23 +172,23 @@ namespace BSMM2Test {
 			game.Shuffle();
 			game.StepToPlaying();
 
-			MatchUtil<SingleMatch>.Get(game, 0).SetResult(Win);
-			MatchUtil<SingleMatch>.Get(game, 1).SetResult(Win, -1, -1);
+			Util.GetMatch(game, 0).SetResult(Win);
+			(Util.GetMatch(game, 1) as SingleMatch).SetResult(Win, -1, -1);
 			Assert.IsFalse(game.CanExecuteStepToMatching());
 
-			MatchUtil<SingleMatch>.Get(game, 1).SetResult(Win);
+			Util.GetMatch(game, 1).SetResult(Win);
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
 
-			MatchUtil<SingleMatch>.Get(game, 1).SetResult(Win, 5, 5);
+			(Util.GetMatch(game, 1) as SingleMatch).SetResult(Win, 5, 5);
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
 
-			MatchUtil<SingleMatch>.Get(game, 0).SetResult(Win, 0, 0);
+			(Util.GetMatch(game, 0) as SingleMatch).SetResult(Win, 0, 0);
 
 			Assert.IsTrue(game.CanExecuteStepToMatching());
 
@@ -225,7 +225,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
 
-			MatchUtil<SingleMatch>.Get(game, 0).SetResult(Win, 4, 5);
+			(Util.GetMatch(game, 0) as SingleMatch).SetResult(Win, 4, 5);
 
 			Util.CheckWithOrder(new[] { 5, 1, 6, 7, 2, 3, 4, 8 }, new[] { 1, 2, 3, 3, 5, 5, 7, 7 }, game.Players.GetByOrder());
 		}

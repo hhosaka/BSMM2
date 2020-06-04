@@ -110,15 +110,10 @@ namespace BSMM2Test {
 			}
 		}
 
-		public static Match GetMatch(Game game, int index) {
-			return game.ActiveRound.Matches.ElementAt(index);
-		}
-	}
+		public static Match GetMatch(Game game, int index)
+			=> game.ActiveRound.Matches.ElementAt(index);
 
-	internal class MatchUtil<T> where T : Match {
-
-		public static T Get(Game game, int index) {
-			return game.ActiveRound.Matches.ElementAt(index) as T;
-		}
+		public static void SetResult(Game game, int index, RESULT_T result)
+			=> GetMatch(game, index).SetResult(result);
 	}
 }
