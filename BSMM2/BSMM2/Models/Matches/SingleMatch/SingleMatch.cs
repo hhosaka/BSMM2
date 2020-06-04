@@ -16,7 +16,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			_rule = rule;
 		}
 
-		public void SetResult(RESULT_T result, int lp1 = 5, int lp2 = 5) {
+		public override void SetResult(RESULT_T result) {
+			SetResults(_rule.CreatePoint(new Score(result, 5, 5)));
+		}
+
+		public void SetResult(RESULT_T result, int lp1, int lp2) {
 			SetResults(_rule.CreatePoint(new Score(result, lp1, lp2)));
 		}
 	}

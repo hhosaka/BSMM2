@@ -8,7 +8,7 @@ using Xamarin.Forms.Internals;
 namespace BSMM2.Models {
 
 	[JsonObject]
-	public class Match : INotifyPropertyChanged {
+	public abstract class Match : INotifyPropertyChanged {
 
 		private class DefaultResult : IResult, IPoint {
 			public RESULT_T RESULT => RESULT_T.Progress;
@@ -99,11 +99,13 @@ namespace BSMM2.Models {
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		public abstract void SetResult(RESULT_T result);
+
 		public void SetResults((IResult player1, IResult player2) points) {
 			SetResults(points.player1, points.player2);
 		}
 
-		public void SetResults(IResult result1, IResult result2) {
+		protected void SetResults(IResult result1, IResult result2) {
 			_records[0].SetResult(result1);
 			_records[1].SetResult(result2);
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Record1)));

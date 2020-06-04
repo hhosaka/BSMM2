@@ -109,5 +109,16 @@ namespace BSMM2Test {
 				return builder.ToString();
 			}
 		}
+
+		public static Match GetMatch(Game game, int index) {
+			return game.ActiveRound.Matches.ElementAt(index);
+		}
+	}
+
+	internal class MatchUtil<T> where T : Match {
+
+		public static T Get(Game game, int index) {
+			return game.ActiveRound.Matches.ElementAt(index) as T;
+		}
 	}
 }
