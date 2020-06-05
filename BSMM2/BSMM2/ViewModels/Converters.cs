@@ -8,15 +8,16 @@ namespace BSMM2.ViewModels {
 	public class RoundResultConverter : IValueConverter {
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			var record = (value as IMatchRecord);
-			if (parameter is "BGCOLOR") {
-				return record.Result.IsFinished ? Color.Aqua : Color.White;
-			} else {
-				return "(" + GetResult() + ")";
-			}
+			switch (parameter) {
+				case "BGCOLOR":
+					return (bool)value ? Color.Aqua : Color.White;
 
-			string GetResult()
-				=> (value as IMatchRecord).Result.RESULT.ToString();
+				case "RESULTMARK":
+					return "(" + (value as IMatchRecord).Result.RESULT.ToString() + ")";
+
+				default:
+					throw new ArgumentException();
+			}
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

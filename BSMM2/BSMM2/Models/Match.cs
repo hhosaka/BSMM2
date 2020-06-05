@@ -110,6 +110,7 @@ namespace BSMM2.Models {
 			_records[1].SetResult(result2);
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Record1)));
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Record2)));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFinished)));
 		}
 
 		public RESULT_T GetResult()
