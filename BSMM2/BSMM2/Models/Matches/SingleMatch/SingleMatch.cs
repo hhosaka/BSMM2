@@ -8,6 +8,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonProperty]
 		private SingleMatchRule _rule;
 
+		[JsonProperty]
+		private IScore _score;
+
 		public SingleMatch() {
 		}
 
@@ -17,10 +20,12 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		}
 
 		public override void SetResult(RESULT_T result) {
+			_score = new Score(result);
 			SetResults(_rule.CreatePoint(new Score(result, 5, 5)));
 		}
 
 		public void SetResult(RESULT_T result, int lp1, int lp2) {
+			_score = new Score(result, lp1, lp2);
 			SetResults(_rule.CreatePoint(new Score(result, lp1, lp2)));
 		}
 	}

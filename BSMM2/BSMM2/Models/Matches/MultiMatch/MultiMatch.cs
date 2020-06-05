@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace BSMM2.Models.Matches.MultiMatch {
 
@@ -7,6 +8,9 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		[JsonProperty]
 		private MultiMatchRule _rule;
+
+		[JsonProperty]
+		private IEnumerable<RESULT_T> _results;
 
 		public MultiMatch() {
 		}
@@ -17,6 +21,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		}
 
 		public override void SetResult(RESULT_T result) {
+			//_results = results;//TODO
 			SetResults(_rule.CreatePoints(result));
 		}
 	}
