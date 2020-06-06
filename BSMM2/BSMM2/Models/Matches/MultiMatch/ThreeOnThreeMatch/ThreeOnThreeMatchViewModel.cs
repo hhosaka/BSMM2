@@ -58,7 +58,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
 			void Update() {
 				if (SelectedItem != null) {
-					_match.SetResults(rule.CreatePoints(SelectedItem.RESULT));
+					//_match.SetResults(rule.CreatePoints(SelectedItem.RESULT));// TODO to be implemented
 					MessagingCenter.Send<object>(this, Messages.REFRESH);
 					back?.Invoke();
 				}

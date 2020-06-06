@@ -429,7 +429,7 @@ namespace BSMM2Test {
 			for (int i = 0; i < round; ++i) {
 				game.StepToMatching();
 				game.StepToPlaying();
-				game.ActiveRound.Matches.ForEach(m => m.SetResults(rule.CreatePoints(Win)));
+				game.ActiveRound.Matches.ForEach(m => m.SetResult(Win));
 			}
 			return game;
 		}

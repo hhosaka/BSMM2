@@ -10,7 +10,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		private MultiMatchRule _rule;
 
 		[JsonProperty]
-		private IEnumerable<RESULT_T> _results;
+		private IEnumerable<IScore> _results;
 
 		public MultiMatch() {
 		}
@@ -21,7 +21,8 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		}
 
 		public override void SetResult(RESULT_T result) {
-			//_results = results;//TODO
+			_results = _rule.CreatePointsTentative(result);
+
 			SetResults(_rule.CreatePoints(result));
 		}
 	}
