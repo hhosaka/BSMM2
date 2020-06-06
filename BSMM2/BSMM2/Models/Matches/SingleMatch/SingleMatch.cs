@@ -6,7 +6,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	public class SingleMatch : Match {
 
 		[JsonProperty]
-		private SingleMatchRule _rule;
+		private SingleMatchRule Rule => _rule as SingleMatchRule;
 
 		[JsonProperty]
 		private IScore _score;
@@ -16,17 +16,16 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public SingleMatch(SingleMatchRule rule, IPlayer player1, IPlayer player2)
 			: base(rule, player1, player2) {
-			_rule = rule;
 		}
 
 		public override void SetResult(RESULT_T result) {
 			_score = new Score(result);
-			SetResults(_rule.CreatePoint(new Score(result, 5, 5)));
+			SetResults(Rule.CreatePoint(new Score(result, 5, 5)));
 		}
 
 		public void SetResult(RESULT_T result, int lp1, int lp2) {
 			_score = new Score(result, lp1, lp2);
-			SetResults(_rule.CreatePoint(new Score(result, lp1, lp2)));
+			SetResults(Rule.CreatePoint(new Score(result, lp1, lp2)));
 		}
 	}
 }

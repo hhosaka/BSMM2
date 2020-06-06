@@ -154,7 +154,9 @@ namespace BSMM2.Models {
 		public static IPlayer BYE = new ByePlayer();
 		internal IComparer[] Comparers { get; }
 
-		public abstract (IResult, IResult) CreatePoints(RESULT_T result);
+		//public abstract (IResult, IResult) CreatePoints(RESULT_T result);
+
+		public abstract IPoint CreatePoint(RESULT_T result);
 
 		public int CompareDepth => Comparers.Count();
 

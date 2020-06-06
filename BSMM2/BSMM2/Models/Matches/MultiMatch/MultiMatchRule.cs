@@ -20,7 +20,10 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			return results;
 		}
 
-		public override (IResult, IResult) CreatePoints(RESULT_T result) {
+		public override IPoint CreatePoint(RESULT_T result)
+			=> new ThePoint(result);
+
+		public (IResult, IResult) CreatePoints(RESULT_T result) {
 			var results = new List<RESULT_T>();
 			for (int i = 0; i < MatchCount; ++i) {
 				results.Add(result);

@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
 using System.Text;
+using static BSMM2.Models.RESULT_T;
 
 namespace BSMM2Test {
 
@@ -34,8 +35,8 @@ namespace BSMM2Test {
 			var game = new FakeGame(rule, 4);
 
 			game.StepToPlaying();
-			game.ActiveRound.Matches.ElementAt(0).SetResults(rule.CreatePoints(RESULT_T.Win));
-			game.ActiveRound.Matches.ElementAt(1).SetResults(rule.CreatePoints(RESULT_T.Win));
+			game.ActiveRound.Matches.ElementAt(0).SetResult(Win);
+			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
 
 			var players = game.Players.GetByOrder();
 			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, players);

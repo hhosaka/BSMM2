@@ -7,7 +7,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 	internal class MultiMatch : Match {
 
 		[JsonProperty]
-		private MultiMatchRule _rule;
+		private MultiMatchRule Rule => _rule as MultiMatchRule;
 
 		[JsonProperty]
 		private IEnumerable<IScore> _results;
@@ -17,13 +17,12 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		public MultiMatch(MultiMatchRule rule, IPlayer player1, IPlayer player2)
 			: base(rule, player1, player2) {
-			_rule = rule;
 		}
 
 		public override void SetResult(RESULT_T result) {
-			_results = _rule.CreatePointsTentative(result);
+			_results = Rule.CreatePointsTentative(result);
 
-			SetResults(_rule.CreatePoints(result));
+			SetResults(Rule.CreatePoints(result));
 		}
 	}
 }

@@ -10,8 +10,13 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	public class SingleMatchRule : Rule {
 		private const int DEFAULT_LIFE_POINT = 5;
 
-		public override (IResult, IResult) CreatePoints(RESULT_T result)
-			=> CreatePoints(result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT);
+		public override IPoint CreatePoint(RESULT_T result) {
+			return new ThePoint(result);
+			throw new NotImplementedException();
+		}
+
+		//public override (IResult, IResult) CreatePoints(RESULT_T result)
+		//	=> CreatePoints(result, DEFAULT_LIFE_POINT, DEFAULT_LIFE_POINT);
 
 		public (IResult, IResult) CreatePoint(IScore score)
 			=> CreatePoints(score.Result, score.LifePoint1, score.LifePoint2);
