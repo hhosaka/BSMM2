@@ -51,11 +51,11 @@ namespace BSMM2.Models.Matches {
 			set {
 				if (value != Player1Win) {
 					if (value) {
-						Draw = Player2Win = false;
 						Value = RESULT_T.Win;
 					} else {
 						Value = RESULT_T.Progress;
 					}
+					Draw = Player2Win = false;
 					_onPropertyChanged?.Invoke();
 				}
 			}
@@ -66,11 +66,11 @@ namespace BSMM2.Models.Matches {
 			set {
 				if (value != Draw) {
 					if (value) {
-						Player1Win = Player2Win = false;
 						Value = RESULT_T.Draw;
 					} else {
 						Value = RESULT_T.Progress;
 					}
+					Player1Win = Player2Win = false;
 					_onPropertyChanged?.Invoke();
 				}
 			}
@@ -81,11 +81,11 @@ namespace BSMM2.Models.Matches {
 			set {
 				if (value != Player2Win) {
 					if (value) {
-						Draw = Player1Win = false;
 						Value = RESULT_T.Lose;
 					} else {
 						Value = RESULT_T.Progress;
 					}
+					Draw = Player1Win = false;
 					_onPropertyChanged?.Invoke();
 				}
 			}

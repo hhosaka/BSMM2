@@ -89,10 +89,10 @@ namespace BSMM2.Models {
 			=> _matches.Any(match => match.IsGapMatch);
 
 		public bool IsAllWins
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this)?.RESULT != RESULT_T.Win);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this) != RESULT_T.Win);
 
 		public bool IsAllLoses
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this)?.RESULT != RESULT_T.Lose);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetResult(this) != RESULT_T.Lose);
 
 		[JsonIgnore]
 		public IResult Result { get; private set; }
@@ -112,10 +112,10 @@ namespace BSMM2.Models {
 			=> _matches.Add(match);
 
 		public RESULT_T? GetResult(Player player)
-			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this)?.RESULT;
+			=> _matches.FirstOrDefault(m => m.GetOpponentPlayer(this) == player)?.GetResult(this);
 
 		internal void CalcResult(Rule rule)
-			=> Result = new TheResult(new Total(_matches.Select(match => match.GetResult(this).GetPoint())));
+			=> Result = new TheResult(new Total(_matches.Select(match => match.GetPlayerRecord(this).Point)));
 
 		internal void CalcOpponentResult(Rule rule)
 			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result.GetPoint())));

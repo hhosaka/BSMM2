@@ -13,7 +13,7 @@ namespace BSMM2.ViewModels {
 					return (bool)value ? Color.Aqua : Color.White;
 
 				case "RESULTMARK":
-					return "(" + (value as IMatchRecord).Result.RESULT.ToString() + ")";
+					return "(" + (value as IMatchRecord).Result.ToString() + ")";
 
 				default:
 					throw new ArgumentException();

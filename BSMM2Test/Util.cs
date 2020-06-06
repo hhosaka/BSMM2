@@ -73,8 +73,8 @@ namespace BSMM2Test {
 		public static void Check(Match a, Match b) {
 			Check(a.Record1.Player, b.Record1.Player);
 			Check(a.Record2.Player, b.Record2.Player);
-			Check(a.Record1.Result, b.Record1.Result);
-			Check(a.Record2.Result, b.Record2.Result);
+			Assert.AreEqual(a.Record1.Result, b.Record1.Result);
+			Assert.AreEqual(a.Record2.Result, b.Record2.Result);
 		}
 
 		public static void Check(IEnumerable<Match> a, IEnumerable<Match> b) {

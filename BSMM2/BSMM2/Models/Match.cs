@@ -9,6 +9,7 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Match : INotifyPropertyChanged {
+		internal IScore Score { get; private set; }
 
 		private class DefaultResult : IResult, IPoint {
 			public RESULT_T RESULT => RESULT_T.Progress;
@@ -50,23 +51,37 @@ namespace BSMM2.Models {
 			private static readonly IResult _defaultResult = new DefaultResult();
 
 			[JsonProperty]
+			private Match _match;
+
+			[JsonProperty]
+			private bool _side;
+
+			[JsonProperty]
 			public IPlayer Player { get; private set; }
 
 			[JsonProperty]
-			public IResult Result { get; private set; }
+			public IResult _result;
+
+			[JsonProperty]
+			public RESULT_T Result => _result.RESULT;
 
 			[JsonIgnore]
-			public IPoint Point => Result.GetPoint();
+			public IPoint Point => _result.GetPoint();
+
+			[JsonIgnore]
+			public bool IsFinished => _result.IsFinished;
 
 			public void SetResult(IResult result)
-				=> Result = result;
+				=> _result = result;
 
 			private Record() {
 			}
 
-			public Record(IPlayer player) {
+			public Record(Match match, bool side, IPlayer player) {
+				_match = match;
+				_side = side;
 				Player = player;
-				Result = _defaultResult;
+				_result = _defaultResult;
 			}
 		}
 
@@ -84,7 +99,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsFinished
-			=> !_records.Any(record => !record.Result.IsFinished);
+			=> !_records.Any(record => !record.IsFinished);
 
 		[JsonIgnore]
 		public bool IsByeMatch
@@ -117,7 +132,7 @@ namespace BSMM2.Models {
 		}
 
 		public RESULT_T GetResult()
-			=> _records[0].Result.RESULT;
+			=> _records[0].Result;
 
 		public void Swap(Match other) {
 			var temp = _records[0];
@@ -128,20 +143,20 @@ namespace BSMM2.Models {
 		public void Commit()
 			=> _records.ForEach(result => result.Player.Commit(this));
 
-		private Record GetPlayerRecord(IPlayer player)
+		public Record GetPlayerRecord(IPlayer player)
 			=> _records.First(r => r.Player == player);
 
 		private Record GetOpponentRecord(IPlayer player)
 			=> _records.First(r => r.Player != player);
 
-		public IResult GetResult(IPlayer player)
-			=> GetPlayerRecord(player)?.Result;
+		public RESULT_T GetResult(IPlayer player)
+			=> GetPlayerRecord(player).Result;
 
 		public IPlayer GetOpponentPlayer(IPlayer player)
 			=> GetOpponentRecord(player)?.Player;
 
-		public IResult GetOpponentResult(IPlayer player)
-			=> GetOpponentRecord(player)?.Result;
+		public RESULT_T GetOpponentResult(IPlayer player)
+			=> GetOpponentRecord(player).Result;
 
 		public Match() {// For Serializer
 		}
@@ -150,10 +165,10 @@ namespace BSMM2.Models {
 			_rule = rule;
 
 			if (player2 != null) {
-				_records = new[] { new Record(player1), new Record(player2) };
+				_records = new[] { new Record(this, true, player1), new Record(this, false, player2) };
 				IsGapMatch = (player1.Result?.GetPoint().Point != player2.Result?.GetPoint().Point);
 			} else {
-				_records = new[] { new Record(player1), new Record(BYE) };
+				_records = new[] { new Record(this, true, player1), new Record(this, false, BYE) };
 				SetResult(RESULT_T.Win);
 			}
 		}
