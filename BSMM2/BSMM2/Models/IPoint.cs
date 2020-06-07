@@ -1,6 +1,6 @@
 ﻿namespace BSMM2.Models {
 
-	public interface IPoint : Exportable {
+	public interface IPoint {
 		int Point { get; }
 
 		int LifePoint { get; }

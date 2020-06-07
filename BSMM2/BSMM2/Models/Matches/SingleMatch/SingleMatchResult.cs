@@ -7,7 +7,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 	internal class SingleMatchResult : IResult {
 
-		private class TheResult : IPoint {
+		private class TheResult : IExportablePoint {
 			public int Point { get; }
 
 			public int LifePoint { get; }
@@ -49,7 +49,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public static IPoint Total(IEnumerable<IPoint> points) {
+		public static IExportablePoint Total(IEnumerable<IPoint> points) {
 			return new TheResult(points);
 		}
 

@@ -1,13 +1,13 @@
 ﻿namespace BSMM2.Models {
 
-	public interface IPlayer : Exportable {
+	public interface IPlayer : IExportable {
 		string Name { get; }
 
 		bool Dropped { get; }
 
-		IPoint Point { get; }
+		IExportablePoint Point { get; }
 
-		IPoint OpponentPoint { get; }
+		IExportablePoint OpponentPoint { get; }
 
 		bool HasByeMatch { get; }
 

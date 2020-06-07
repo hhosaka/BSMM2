@@ -4,7 +4,5 @@
 		RESULT_T RESULT { get; }
 
 		bool IsFinished { get; }
-
-		string Information { get; }
 	}
 }

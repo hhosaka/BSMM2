@@ -9,7 +9,6 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Match : INotifyPropertyChanged {
-		internal IScore Score { get; private set; }
 
 		private class DefaultResult : IResult, IPoint {
 			public RESULT_T RESULT => RESULT_T.Progress;

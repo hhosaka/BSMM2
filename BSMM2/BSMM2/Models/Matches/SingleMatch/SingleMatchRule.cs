@@ -26,7 +26,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new SingleMatch(this, player1, player2);
 
-		public override IPoint Point(IEnumerable<IPoint> results) {
+		public override IExportablePoint Point(IEnumerable<IPoint> results) {
 			return SingleMatchResult.Total(results.Select(result => (IPoint)result));
 		}
 

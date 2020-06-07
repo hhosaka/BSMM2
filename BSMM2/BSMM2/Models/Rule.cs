@@ -122,10 +122,6 @@ namespace BSMM2.Models {
 
 		internal IComparer[] Comparers { get; }
 
-		//public abstract (IResult, IResult) CreatePoints(RESULT_T result);
-
-		//public abstract IPoint CreatePoint(RESULT_T result);
-
 		public int CompareDepth => Comparers.Count();
 
 		[JsonIgnore]
@@ -174,7 +170,7 @@ namespace BSMM2.Models {
 
 		public abstract Rule Clone();
 
-		public abstract IPoint Point(IEnumerable<IPoint> results);
+		public abstract IExportablePoint Point(IEnumerable<IPoint> results);
 
 		public abstract IPlayer BYE { get; }
 

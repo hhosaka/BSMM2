@@ -240,7 +240,10 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
 
-			(matches.Matches.ElementAt(0) as MultiMatch).SetMultiMatchResult(new[] { new Score(Win), new Score(Lose), new Score(Win) });
+			(matches.Matches.ElementAt(0) as MultiMatch).SetMultiMatchResult(new[] {
+				new MultiMatch.Score(Win),
+				new MultiMatch.Score(Lose),
+				new MultiMatch.Score(Win) });
 
 			Util.CheckWithOrder(new[] { 1, 5, 3, 2, 6, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 5, 7, 8 }, game.Players.GetByOrder());
 		}
