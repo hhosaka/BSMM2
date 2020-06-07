@@ -42,7 +42,7 @@ namespace BSMM2.Models.Matches {
 		public RESULT_T Value { get; private set; }
 
 		public ResultItem(Match match, Action onPropertyChanged) {
-			Initial(match.GetResult());
+			Initial(match);
 			_onPropertyChanged = onPropertyChanged;
 		}
 
@@ -91,9 +91,9 @@ namespace BSMM2.Models.Matches {
 			}
 		}
 
-		private void Initial(RESULT_T result) {
+		private void Initial(Match match) {
 			Value = RESULT_T.Progress;
-			switch (result) {
+			switch (match.Record1.Result.RESULT) {
 				case RESULT_T.Win:
 					Player1Win = true;
 					break;

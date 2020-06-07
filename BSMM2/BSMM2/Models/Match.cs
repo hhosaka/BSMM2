@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using Xamarin.Forms.Internals;
 
@@ -10,7 +9,9 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public abstract class Match : INotifyPropertyChanged {
 
-		private class DefaultResult : IResult, IPoint {
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private class DefaultResult : IResult {
 			public RESULT_T RESULT => RESULT_T.Progress;
 
 			[JsonIgnore]
@@ -32,14 +33,6 @@ namespace BSMM2.Models {
 			public int? CompareTo(IPoint point, int strictness = 0) {
 				throw new System.NotImplementedException();
 			}
-
-			public void ExportData(TextWriter writer) {
-			}
-
-			public void ExportTitle(TextWriter writer) {
-			}
-
-			public IPoint GetPoint() => this;
 		}
 
 		[JsonObject]
@@ -97,8 +90,6 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public IRecord Record2 => _records[1];
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		public abstract void SetResult(RESULT_T result);
 
 		public void SetResults((IResult player1, IResult player2) points) {
@@ -113,9 +104,6 @@ namespace BSMM2.Models {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFinished)));
 		}
 
-		public RESULT_T GetResult()
-			=> _records[0].Result.RESULT;
-
 		public void Swap(Match other) {
 			var temp = _records[0];
 			_records[0] = other._records[0];
@@ -128,17 +116,8 @@ namespace BSMM2.Models {
 		public Record GetPlayerRecord(IPlayer player)
 			=> _records.First(r => r.Player == player);
 
-		private Record GetOpponentRecord(IPlayer player)
+		public Record GetOpponentRecord(IPlayer player)
 			=> _records.First(r => r.Player != player);
-
-		public RESULT_T GetResult(IPlayer player)
-			=> GetPlayerRecord(player).Result.RESULT;
-
-		public IPlayer GetOpponentPlayer(IPlayer player)
-			=> GetOpponentRecord(player)?.Player;
-
-		public RESULT_T GetOpponentResult(IPlayer player)
-			=> GetOpponentRecord(player).Result.RESULT;
 
 		public Match() {// For Serializer
 		}
