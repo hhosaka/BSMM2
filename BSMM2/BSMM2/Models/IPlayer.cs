@@ -5,13 +5,15 @@
 
 		bool Dropped { get; }
 
-		IResult Result { get; }
+		IPoint Point { get; }
 
-		IResult OpponentResult { get; }
+		IPoint OpponentPoint { get; }
 
 		bool HasByeMatch { get; }
 
 		bool HasGapMatch { get; }
+
+		string Information { get; }
 
 		void Commit(Match match);
 	}

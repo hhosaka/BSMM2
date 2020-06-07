@@ -25,7 +25,7 @@ namespace BSMM2.Models {
 		private IEnumerable<Player> Generate(int start, string prefix, int count = 1) {
 			Debug.Assert(count > 0);
 			for (int i = 0; i < count; ++i) {
-				yield return new Player(string.Format("{0}{1:000}", prefix, start + i));
+				yield return new Player(_rule, string.Format("{0}{1:000}", prefix, start + i));
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace BSMM2.Models {
 			String buf;
 			while ((buf = r.ReadLine()) != null) {
 				if (!String.IsNullOrWhiteSpace(buf))
-					yield return new Player(buf);
+					yield return new Player(_rule, buf);
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 		}
 
 		public void Add(String name)
-			=> _players.Add(new Player(name));
+			=> _players.Add(new Player(_rule, name));
 
 		public void Remove(int index)
 			=> _players.RemoveAt(index);

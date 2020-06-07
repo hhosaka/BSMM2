@@ -13,7 +13,8 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void ExportTitleTest() {
-			var player = new Player("test");
+			var rule = new SingleMatchRule();
+			var player = new Player(rule, "test");
 			var buf = new StringBuilder();
 
 			player.ExportTitle(new StringWriter(buf));
@@ -22,7 +23,8 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void ExportDataTest1() {
-			var player = new Player("test");
+			var rule = new SingleMatchRule();
+			var player = new Player(rule, "test");
 			var buf = new StringBuilder();
 
 			player.ExportData(new StringWriter(buf));

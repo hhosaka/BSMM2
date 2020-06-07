@@ -1,8 +1,6 @@
-﻿using BSMM2.Models.Matches.SingleMatch;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -122,36 +120,6 @@ namespace BSMM2.Models {
 				=> ConvDouble2Int(p1.OpponentPoint.WinPoint - p2.OpponentPoint.WinPoint);
 		}
 
-		private class ByePlayer : IPlayer {
-			public string Name => "BYE";
-
-			public bool Dropped => true;
-
-			public IResult Result { get; }
-
-			public IResult OpponentResult => Result;
-
-			public bool HasByeMatch => false;
-
-			public bool HasGapMatch => false;
-
-			public void Commit(Match match) {
-			}
-
-			public void ExportTitle(TextWriter writer) {
-				throw new NotImplementedException();
-			}
-
-			public void ExportData(TextWriter writer) {
-				throw new NotImplementedException();
-			}
-
-			public ByePlayer() {
-				Result = new SingleMatchResult(RESULT_T.Lose, 0);
-			}
-		}
-
-		public static IPlayer BYE = new ByePlayer();
 		internal IComparer[] Comparers { get; }
 
 		//public abstract (IResult, IResult) CreatePoints(RESULT_T result);
@@ -180,11 +148,9 @@ namespace BSMM2.Models {
 				} else {
 					ret = CheckDropped();
 					if (ret == 0) {
-						if (x.Result != null && y.Result != null) {
-							ret = _comparer(x, y);
-							if (ret == 0) {
-								return ToComp(x.GetResult(y));
-							}
+						ret = _comparer(x, y);
+						if (ret == 0) {
+							return ToComp(x.GetResult(y));
 						}
 					}
 				}
@@ -207,6 +173,10 @@ namespace BSMM2.Models {
 		public abstract ContentPage CreateMatchPage(Game game, Match match);
 
 		public abstract Rule Clone();
+
+		public abstract IPoint Point(IEnumerable<IPoint> results);
+
+		public abstract IPlayer BYE { get; }
 
 		public Comparer<Player> CreateOrderComparer()
 			=> new TheComparer((p1, p2) => Compare(p1, p2, true));

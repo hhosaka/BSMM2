@@ -78,6 +78,12 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		public IPoint GetPoint() => this;
 
+		public int? CompareTo(IPoint point, int strictness = 0) {
+			//if (strictness == 0) {// TODO
+			return Point - point.Point;
+			//}
+		}
+
 		public MultiMatchResult(int minCount) {
 			_minCount = minCount;
 			_results = new List<IResult>();

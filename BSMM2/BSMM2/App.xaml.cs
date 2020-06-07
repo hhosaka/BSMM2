@@ -8,7 +8,7 @@ using Xamarin.Forms.Xaml;
 namespace BSMM2 {
 
 	public partial class App : Application {
-		private const string APPDATAFILE = "appfile.data";
+		private const string APPDATAFILE = "bsmmapp.json";
 
 		public App() {
 			InitializeComponent();

@@ -36,7 +36,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			ResultItem = new ResultItem(match, () => OnPropertyChanged(nameof(ResultItem)));
 
 			void Done() {
-				match.SetSingleMatchResult(ResultItem.Value, Player1LP.Point, Player2LP.Point);
+				match.SetSingleMatchResult(ResultItem.Value,
+					EnableLifePoint ? Player1LP.Point : RESULTUtil.DEFAULT_LIFE_POINT,
+					EnableLifePoint ? Player2LP.Point : RESULTUtil.DEFAULT_LIFE_POINT);
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}

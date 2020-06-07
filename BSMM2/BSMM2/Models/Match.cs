@@ -30,6 +30,10 @@ namespace BSMM2.Models {
 			public string Information
 				=> throw new System.NotImplementedException();
 
+			public int? CompareTo(IPoint point, int strictness = 0) {
+				throw new System.NotImplementedException();
+			}
+
 			public void ExportData(TextWriter writer) {
 			}
 
@@ -39,22 +43,9 @@ namespace BSMM2.Models {
 			public IPoint GetPoint() => this;
 		}
 
-		private class ByePlayer : Player {
-			public override bool Dropped => true;
-
-			public ByePlayer() : base("BYE") {
-			}
-		}
-
 		[JsonObject]
 		public class Record : IMatchRecord {
 			private static readonly IResult _defaultResult = new DefaultResult();
-
-			[JsonProperty]
-			private Match _match;
-
-			[JsonProperty]
-			private bool _side;
 
 			[JsonProperty]
 			public IPlayer Player { get; private set; }
@@ -62,7 +53,7 @@ namespace BSMM2.Models {
 			[JsonProperty]
 			public IResult _result;
 
-			[JsonProperty]
+			[JsonIgnore]
 			public RESULT_T Result => _result.RESULT;
 
 			[JsonIgnore]
@@ -77,9 +68,7 @@ namespace BSMM2.Models {
 			private Record() {
 			}
 
-			public Record(Match match, bool side, IPlayer player) {
-				_match = match;
-				_side = side;
+			public Record(IPlayer player) {
 				Player = player;
 				_result = _defaultResult;
 			}
@@ -87,9 +76,6 @@ namespace BSMM2.Models {
 
 		[JsonProperty]
 		protected Rule _rule;
-
-		[JsonProperty]
-		public readonly IPlayer BYE = new ByePlayer();
 
 		[JsonProperty]
 		public Record[] _records;
@@ -103,7 +89,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsByeMatch
-			=> _records.Any(result => result.Player == BYE);
+			=> _records.Any(result => result.Player == _rule.BYE);
 
 		[JsonIgnore]
 		public IEnumerable<string> PlayerNames
@@ -165,10 +151,10 @@ namespace BSMM2.Models {
 			_rule = rule;
 
 			if (player2 != null) {
-				_records = new[] { new Record(this, true, player1), new Record(this, false, player2) };
-				IsGapMatch = (player1.Result.Point != player2.Result.Point);
+				_records = new[] { new Record(player1), new Record(player2) };
+				IsGapMatch = (player1.Point.Point != player2.Point.Point);
 			} else {
-				_records = new[] { new Record(this, true, player1), new Record(this, false, BYE) };
+				_records = new[] { new Record(player1), new Record(_rule.BYE) };
 				SetResult(RESULT_T.Win);
 			}
 		}

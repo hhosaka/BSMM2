@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
