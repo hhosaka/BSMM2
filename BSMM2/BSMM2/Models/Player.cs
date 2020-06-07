@@ -118,7 +118,7 @@ namespace BSMM2.Models {
 			=> Result = new TheResult(new Total(_matches.Select(match => match.GetPlayerRecord(this).Point)));
 
 		internal void CalcOpponentResult(Rule rule)
-			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result.GetPoint())));
+			=> OpponentResult = new TheResult(new Total(_matches.Select(match => match.GetOpponentPlayer(this).Result)));
 
 		public Player() {// For Serializer
 			Result = _defaultResult;

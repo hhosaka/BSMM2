@@ -14,12 +14,6 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override string Description
 			=> "３on３ゲームのルールです";
 
-		protected override int MatchCount
-			=> 3;
-
-		protected override int MinimumMatchCount
-			=> 3;
-
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			throw new System.NotImplementedException();
 		}
@@ -30,5 +24,8 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new MultiMatch(this, player1, player2);
+
+		public ThreeOnThreeMatchRule() : base(3, 3) {
+		}
 	}
 }

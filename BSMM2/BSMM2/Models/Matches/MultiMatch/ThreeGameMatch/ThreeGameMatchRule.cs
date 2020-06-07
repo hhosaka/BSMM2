@@ -14,12 +14,6 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 		public override string Description
 			=> "二本先取のゲームルールです";
 
-		protected override int MatchCount
-			=> 2;
-
-		protected override int MinimumMatchCount
-			=> 0;
-
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			throw new System.NotImplementedException();
 		}
@@ -31,7 +25,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new MultiMatch(this, player1, player2);
 
-		public ThreeGameMatchRule() {
+		public ThreeGameMatchRule() : base(2, 0) {
 		}
 	}
 }

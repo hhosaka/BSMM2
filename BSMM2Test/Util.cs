@@ -48,9 +48,9 @@ namespace BSMM2Test {
 			Assert.IsNotNull(a);
 			Assert.IsNotNull(b);
 			Assert.AreEqual(a.IsFinished, b.IsFinished);
-			Assert.AreEqual(a.GetPoint().Point, b.GetPoint().Point);
-			Assert.AreEqual(a.GetPoint().WinPoint, b.GetPoint().WinPoint);
-			Assert.AreEqual(a.GetPoint().LifePoint, b.GetPoint().LifePoint);
+			Assert.AreEqual(a.Point, b.Point);
+			Assert.AreEqual(a.WinPoint, b.WinPoint);
+			Assert.AreEqual(a.LifePoint, b.LifePoint);
 		}
 
 		public static void Check(IPlayer a, IPlayer b) {

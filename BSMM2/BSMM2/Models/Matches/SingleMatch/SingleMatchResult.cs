@@ -38,7 +38,5 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public void ExportData(TextWriter writer) {
 			throw new System.NotImplementedException();
 		}
-
-		public IPoint GetPoint() => this;
 	}
 }

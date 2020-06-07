@@ -180,7 +180,7 @@ namespace BSMM2.Models {
 
 						bool CheckGapMatch() {// 階段戦の重複は避ける
 							if (!Rule.AcceptGapMatchDuplication) {
-								if (player.Result.GetPoint().Point != opponent.Result.GetPoint().Point) {
+								if (player.Result.Point != opponent.Result.Point) {
 									return !player.HasGapMatch && !opponent.HasGapMatch;
 								}
 							}

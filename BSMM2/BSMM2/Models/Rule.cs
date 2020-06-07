@@ -156,7 +156,7 @@ namespace BSMM2.Models {
 
 		//public abstract (IResult, IResult) CreatePoints(RESULT_T result);
 
-		public abstract IPoint CreatePoint(RESULT_T result);
+		//public abstract IPoint CreatePoint(RESULT_T result);
 
 		public int CompareDepth => Comparers.Count();
 

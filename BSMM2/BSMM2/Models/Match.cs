@@ -66,7 +66,7 @@ namespace BSMM2.Models {
 			public RESULT_T Result => _result.RESULT;
 
 			[JsonIgnore]
-			public IPoint Point => _result.GetPoint();
+			public IPoint Point => _result;
 
 			[JsonIgnore]
 			public bool IsFinished => _result.IsFinished;
@@ -166,7 +166,7 @@ namespace BSMM2.Models {
 
 			if (player2 != null) {
 				_records = new[] { new Record(this, true, player1), new Record(this, false, player2) };
-				IsGapMatch = (player1.Result?.GetPoint().Point != player2.Result?.GetPoint().Point);
+				IsGapMatch = (player1.Result.Point != player2.Result.Point);
 			} else {
 				_records = new[] { new Record(this, true, player1), new Record(this, false, BYE) };
 				SetResult(RESULT_T.Win);

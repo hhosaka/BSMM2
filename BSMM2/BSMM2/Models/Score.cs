@@ -1,6 +1,6 @@
 ﻿namespace BSMM2.Models {
 
-	internal class Score : IScore {
+	public class Score : IScore {
 		public RESULT_T Result { get; }
 		public int LifePoint1 { get; }
 		public int LifePoint2 { get; }

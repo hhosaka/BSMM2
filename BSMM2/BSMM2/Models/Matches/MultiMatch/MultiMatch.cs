@@ -1,16 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Models.Matches.SingleMatch;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace BSMM2.Models.Matches.MultiMatch {
 
 	[JsonObject]
-	internal class MultiMatch : Match {
+	public class MultiMatch : SingleMatch.SingleMatch {
 
 		[JsonProperty]
 		private MultiMatchRule Rule => _rule as MultiMatchRule;
-
-		[JsonProperty]
-		private IEnumerable<IScore> _results;
 
 		public MultiMatch() {
 		}
@@ -20,9 +18,21 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		}
 
 		public override void SetResult(RESULT_T result) {
-			_results = Rule.CreatePointsTentative(result);
+			var scores = new List<Score>();
+			for (int i = 0; i < Rule.MatchCount; ++i) {
+				scores.Add(new Models.Score(result));
+			}
+			SetMultiMatchResult(scores);
+		}
 
-			SetResults(Rule.CreatePoints(result));
+		public void SetMultiMatchResult(IEnumerable<IScore> scores) {
+			var result1 = new MultiMatchResult(Rule.MinimumMatchCount);
+			var result2 = new MultiMatchResult(Rule.MinimumMatchCount);
+			foreach (var score in scores) {
+				result1.Add(new SingleMatchResult(score.Result, score.LifePoint1));
+				result2.Add(new SingleMatchResult(RESULTUtil.ToOpponents(score.Result), score.LifePoint2));
+			}
+			SetResults(result1, result2);
 		}
 	}
 }
