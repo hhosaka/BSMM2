@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
-	internal class SingleMatchResult : IResult, IPoint {
+	internal class SingleMatchResult : IResult {
 
 		private class TheResult : IPoint {
 			public int Point { get; }

@@ -44,7 +44,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonObject]
-		public class Record : IMatchRecord {
+		public class Record : IRecord {
 			private static readonly IResult _defaultResult = new DefaultResult();
 
 			[JsonProperty]
@@ -54,13 +54,10 @@ namespace BSMM2.Models {
 			public IResult _result;
 
 			[JsonIgnore]
-			public RESULT_T Result => _result.RESULT;
+			public IResult Result => _result;
 
 			[JsonIgnore]
 			public IPoint Point => _result;
-
-			[JsonIgnore]
-			public bool IsFinished => _result.IsFinished;
 
 			public void SetResult(IResult result)
 				=> _result = result;
@@ -85,7 +82,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsFinished
-			=> !_records.Any(record => !record.IsFinished);
+			=> !_records.Any(record => !record.Result.IsFinished);
 
 		[JsonIgnore]
 		public bool IsByeMatch
@@ -96,10 +93,10 @@ namespace BSMM2.Models {
 			=> _records.Select(result => result.Player.Name);
 
 		[JsonIgnore]
-		public IMatchRecord Record1 => _records[0];
+		public IRecord Record1 => _records[0];
 
 		[JsonIgnore]
-		public IMatchRecord Record2 => _records[1];
+		public IRecord Record2 => _records[1];
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -118,7 +115,7 @@ namespace BSMM2.Models {
 		}
 
 		public RESULT_T GetResult()
-			=> _records[0].Result;
+			=> _records[0].Result.RESULT;
 
 		public void Swap(Match other) {
 			var temp = _records[0];
@@ -136,13 +133,13 @@ namespace BSMM2.Models {
 			=> _records.First(r => r.Player != player);
 
 		public RESULT_T GetResult(IPlayer player)
-			=> GetPlayerRecord(player).Result;
+			=> GetPlayerRecord(player).Result.RESULT;
 
 		public IPlayer GetOpponentPlayer(IPlayer player)
 			=> GetOpponentRecord(player)?.Player;
 
 		public RESULT_T GetOpponentResult(IPlayer player)
-			=> GetOpponentRecord(player).Result;
+			=> GetOpponentRecord(player).Result.RESULT;
 
 		public Match() {// For Serializer
 		}
