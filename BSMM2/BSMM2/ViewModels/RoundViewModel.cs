@@ -61,6 +61,7 @@ namespace BSMM2.ViewModels {
 				IsBusy = true;
 				try {
 					await Task.Run(() => Refresh());
+					_app.Save(false);
 				} finally {
 					IsBusy = false;
 				}

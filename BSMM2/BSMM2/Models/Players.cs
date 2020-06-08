@@ -93,8 +93,8 @@ namespace BSMM2.Models {
 		}
 
 		public void Reset() {
-			_players.ForEach(p => p.CalcResult(_rule));
-			_players.ForEach(p => p.CalcOpponentResult(_rule));
+			_players.ForEach(p => p.CalcPoint(_rule));
+			_players.ForEach(p => p.CalcOpponentPoint(_rule));
 		}
 
 		protected virtual IEnumerable<Player> Source(IEnumerable<Player> players)

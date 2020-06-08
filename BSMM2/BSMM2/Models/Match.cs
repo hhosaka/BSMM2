@@ -11,55 +11,42 @@ namespace BSMM2.Models {
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private class DefaultResult : IResult {
-			public RESULT_T RESULT => RESULT_T.Progress;
-
-			[JsonIgnore]
-			public int Point => 0;
-
-			[JsonIgnore]
-			public int LifePoint => -1;
-
-			[JsonIgnore]
-			public double WinPoint => 0;
-
-			[JsonIgnore]
-			public bool IsFinished => false;
-
-			[JsonIgnore]
-			public string Information
-				=> throw new System.NotImplementedException();
-
-			public int? CompareTo(IPoint point, int strictness = 0) {
-				throw new System.NotImplementedException();
-			}
-		}
-
 		[JsonObject]
 		public class Record : IRecord {
+
+			private class DefaultResult : IResult {
+				public RESULT_T RESULT => RESULT_T.Progress;
+
+				[JsonIgnore]
+				public int Point => 0;
+
+				[JsonIgnore]
+				public int LifePoint => -1;
+
+				[JsonIgnore]
+				public double WinPoint => 0;
+
+				[JsonIgnore]
+				public bool IsFinished => false;
+			}
+
 			private static readonly IResult _defaultResult = new DefaultResult();
 
 			[JsonProperty]
 			public IPlayer Player { get; private set; }
 
 			[JsonProperty]
-			public IResult _result;
-
-			[JsonIgnore]
-			public IResult Result => _result;
-
-			[JsonIgnore]
-			public IPoint Point => _result;
+			public IResult Result { get; private set; }
 
 			public void SetResult(IResult result)
-				=> _result = result;
+				=> Result = result;
 
 			private Record() {
 			}
 
 			public Record(IPlayer player) {
 				Player = player;
-				_result = _defaultResult;
+				Result = _defaultResult;
 			}
 		}
 

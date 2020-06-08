@@ -33,10 +33,9 @@ namespace BSMM2.Views {
 
 			async void selectGame(Game game) {
 				Debug.Assert(game != null);
-				if (app.Select(game)) {
-					MessagingCenter.Send<object>(this, Messages.REFRESH);
-					await Navigation.PopModalAsync();
-				}
+				app.Game = game;
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
+				await Navigation.PopModalAsync();
 			}
 
 			async void deleteGame(Game game) {
@@ -49,7 +48,7 @@ namespace BSMM2.Views {
 		}
 
 		private void Log(object sender, EventArgs e) {
-			DisplayAlert("log", new SerializeUtil().Log(), "Finish");
+			DisplayAlert("log", new Storage().Log(), "Finish");
 		}
 
 		private void OpenSettingsPage(object sender, EventArgs e)

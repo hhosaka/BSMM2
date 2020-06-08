@@ -1,12 +1,11 @@
-﻿using BSMM2.Services;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.IsolatedStorage;
 
 namespace BSMM2.Models {
 
-	public class SerializeUtil {
+	public class Storage {
 		public static readonly string LOGFILE = "Serializer.log";
 		private IsolatedStorageFile _store;
 
@@ -44,7 +43,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public SerializeUtil() {
+		public Storage() {
 			_store = IsolatedStorageFile.GetUserStoreForApplication();
 		}
 	}

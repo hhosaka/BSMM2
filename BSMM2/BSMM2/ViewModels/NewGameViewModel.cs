@@ -67,7 +67,7 @@ namespace BSMM2.ViewModels {
 			_app = app;
 			Title = "Create New Game";
 			Rule = Rules.First();
-			GameName = Game.GenerateTitle();
+			GameName = Game.GameTitle;
 			PlayerMode = "Number";
 			Prefix = "Player";
 			PlayerCount = 8;

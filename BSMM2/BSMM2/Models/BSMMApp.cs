@@ -17,20 +17,20 @@ namespace BSMM2.Models {
 	public class BSMMApp {
 
 		public static BSMMApp Create(string path, bool force) {
-			var engine = new SerializeUtil();
+			var storage = new Storage();
 
 			if (force) {
 				return Initiate();
 			} else {
 				try {
-					return engine.Load<BSMMApp>(path, Initiate);
+					return storage.Load<BSMMApp>(path, Initiate);
 				} catch (Exception) {
 					return Initiate();
 				}
 			}
 
 			BSMMApp Initiate()
-				=> new BSMMApp(engine,
+				=> new BSMMApp(storage,
 						path,
 						new Rule[] {
 					new SingleMatchRule(),
@@ -43,7 +43,7 @@ namespace BSMM2.Models {
 		private string _path;
 
 		[JsonIgnore]
-		private SerializeUtil _engine;
+		private Storage _storage;
 
 		[JsonProperty]
 		private List<Game> _games;
@@ -58,30 +58,13 @@ namespace BSMM2.Models {
 		public Rule Rule { get; set; }
 
 		[JsonProperty]
-		public Game Game { get; private set; }
+		public Game Game { get; set; }
 
 		[JsonProperty]
 		public bool AutoSave { get; set; }
 
 		[JsonProperty]
 		public string MailAddress { get; set; }
-
-		public BSMMApp() : this(new SerializeUtil()) {// for Serializer
-		}
-
-		private BSMMApp(SerializeUtil engine) {
-			_engine = engine;
-			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
-		}
-
-		private BSMMApp(SerializeUtil engine, string path, Rule[] rules) : this(engine) {
-			Rules = rules;
-			_path = path;
-			Rule = Rules.First();
-			_games = new List<Game>() { new Game(rules[0], new Players(rules[0], 8)) };
-			Game = _games.Last();
-			AutoSave = true;
-		}
 
 		public bool Add(Game game, bool AsCurrentGame) {
 			if (AsCurrentGame) {
@@ -101,23 +84,13 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		public bool Select(Game game) {
-			Game = game;
-			return true;
-		}
-
 		public void Save(bool force) {
 			if (force || AutoSave)
-				_engine.Save(this, _path);
+				_storage.Save(this, _path);
 		}
 
-		public ContentPage CreateMatchPage(Match match) {
-			return Game.CreateMatchPage(match);
-		}
-
-		public async Task SendByMail(string subject, string body) {
-			await SendByMail(subject, body, new[] { MailAddress });
-		}
+		public async Task SendByMail(string subject, string body)
+			=> await SendByMail(subject, body, new[] { MailAddress });
 
 		public async Task SendByMail(string subject, string body, IEnumerable<string> recipients) {
 			try {
@@ -138,8 +111,21 @@ namespace BSMM2.Models {
 			await SendByMail(Game.Headline, buf.ToString(), new[] { MailAddress });
 		}
 
-		// TODO : TBD
-		//public DelegateCommand CreateStartCommand(Action onChanged)
-		//	=> new DelegateCommand(() => { Game.StepToPlaying(); onChanged(); }, () => Game.CanExecuteStepToPlaying);
+		private BSMMApp(Storage storage) {
+			_storage = storage;
+			MessagingCenter.Subscribe<object>(this, Messages.REFRESH, (sender) => Save(false));
+		}
+
+		public BSMMApp() : this(new Storage()) {// for Serializer
+		}
+
+		private BSMMApp(Storage storage, string path, Rule[] rules) : this(storage) {
+			Rules = rules;
+			_path = path;
+			Rule = Rules.First();
+			_games = new List<Game>() { new Game(rules[0], new Players(rules[0], 8)) };
+			Game = _games.Last();
+			AutoSave = true;
+		}
 	}
 }

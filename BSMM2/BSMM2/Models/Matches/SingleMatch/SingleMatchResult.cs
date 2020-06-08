@@ -29,10 +29,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				writer.Write(LifePoint);
 			}
 
-			public int? CompareTo(IPoint point, int strictness = 0) {
-				// TODO strictness
-				return Point - point.Point;
-			}
+			public int Value => Point;
 
 			public TheResult() {
 			}
@@ -70,25 +67,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonIgnore]
 		public bool IsFinished => RESULT != RESULT_T.Progress && LifePoint >= 0;
 
-		[JsonIgnore]
-		public string Information
-			=> throw new System.NotImplementedException();
-
 		public SingleMatchResult(RESULT_T result, int lifePoint = 0) {
 			RESULT = result;
 			LifePoint = lifePoint;
-		}
-
-		public void ExportTitle(TextWriter writer) {
-			throw new System.NotImplementedException();
-		}
-
-		public void ExportData(TextWriter writer) {
-			throw new System.NotImplementedException();
-		}
-
-		public int? CompareTo(IPoint point, int strictness = 0) {
-			throw new System.NotImplementedException();
 		}
 	}
 }

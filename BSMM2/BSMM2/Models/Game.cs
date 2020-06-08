@@ -9,9 +9,12 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class Game {
-		private static readonly int _tryCount = 100;
 
-		public static string GenerateTitle()
+		[JsonIgnore]
+		private const int TRY_COUNT = 100;
+
+		[JsonIgnore]
+		public static string GameTitle
 			=> "Game" + DateTime.Now.ToString();
 
 		[JsonProperty]
@@ -42,40 +45,20 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
-		public bool CanAddPlayers() => true;//TODO: tentative
+		public bool CanAddPlayers() => !ActiveRound.IsPlaying && !_rounds.Any();// TODO : 一回戦の結果が終わるまでは追加を認めたいのだが…
 
 		public bool AddPlayers(string data) {
 			foreach (var name in data.Split(new[] { '\r', '\n' })) {
 				if (!string.IsNullOrEmpty(name)) {
 					Players.Add(name);
-					//AddPlayer(name);
 				}
 			}
-			Shuffle();
+			Shuffle();// TODO : 一回戦の結果が終わるまでは追加を認めたいのだが…
 			return true;
 		}
 
-		public Game() {// For Serializer
-		}
-
-		public Game(Rule rule, Players players, string title = null) {
-			if (string.IsNullOrEmpty(title))
-				Title = GenerateTitle();
-			else
-				Title = title;
-
-			Id = Guid.NewGuid();
-			Players = players;
-			Rule = rule;
-			_rounds = new List<Round>();
-			StartTime = null;
-			var result = CreateMatching();
-			Debug.Assert(result);
-		}
-
-		public ContentPage CreateMatchPage(Match match) {
-			return Rule.CreateMatchPage(this, match);
-		}
+		public ContentPage CreateMatchPage(Match match)
+			=> Rule.CreateMatchPage(this, match);
 
 		private bool CreateMatching() {
 			var round = MakeRound();
@@ -121,13 +104,10 @@ namespace BSMM2.Models {
 			return false;
 		}
 
-		public bool IsMatching()
-			=> !ActiveRound.IsPlaying;
-
 		private IEnumerable<Match> MakeRound() {
 			Players.Reset();
 			for (int level = 0; level < Rule.CompareDepth; ++level) {
-				for (int i = 0; i < _tryCount; ++i) {
+				for (int i = 0; i < TRY_COUNT; ++i) {
 					var matchingList = Create(Players.GetSource(Rule, level).Where(p => !p.Dropped));
 					if (matchingList != null) {
 						return matchingList;
@@ -180,7 +160,7 @@ namespace BSMM2.Models {
 
 						bool CheckGapMatch() {// 階段戦の重複は避ける
 							if (!Rule.AcceptGapMatchDuplication) {
-								if (player.Point.CompareTo(opponent.Point) != 0) {
+								if (player.Point.Value != opponent.Point.Value) {
 									return !player.HasGapMatch && !opponent.HasGapMatch;
 								}
 							}
@@ -192,16 +172,28 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public static Game Load(Guid id, SerializeUtil engine) {
-			return engine.Load<Game>(id.ToString() + ".json", () => new Game());
+		public static Game Load(Guid id, Storage storage)
+			=> storage.Load<Game>(id.ToString() + ".json", () => new Game());
+
+		public void Save(Storage storage)
+			=> storage.Save<Game>(this, Id.ToString() + ".json");
+
+		public void Remove(Storage storage, Game game)
+			=> storage.Delete(game.Id.ToString() + ".json");
+
+		public Game() {// For Serializer
 		}
 
-		public void Save(SerializeUtil engine) {
-			engine.Save<Game>(this, Id.ToString() + ".json");
-		}
+		public Game(Rule rule, Players players, string title = "") {
+			Title = title;
 
-		public void Remove(SerializeUtil engine, Game game) {
-			engine.Delete(game.Id.ToString() + ".json");
+			Id = Guid.NewGuid();
+			Players = players;
+			Rule = rule;
+			_rounds = new List<Round>();
+			StartTime = null;
+			var result = CreateMatching();
+			Debug.Assert(result);
 		}
 	}
 }

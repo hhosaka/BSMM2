@@ -59,10 +59,10 @@ namespace BSMM2.Models {
 		public RESULT_T? GetResult(Player player)
 			=> _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetPlayerRecord(this).Result.RESULT;
 
-		internal void CalcResult(Rule rule)
-			=> Point = _rule.Point(_matches.Select(match => match.GetPlayerRecord(this).Point));
+		internal void CalcPoint(Rule rule)
+			=> Point = _rule.Point(_matches.Select(match => match.GetPlayerRecord(this).Result));
 
-		internal void CalcOpponentResult(Rule rule)
+		internal void CalcOpponentPoint(Rule rule)
 			=> OpponentPoint = _rule.Point(_matches.Select(match => match.GetOpponentRecord(this).Player.Point));
 
 		public Player() {// For Serializer

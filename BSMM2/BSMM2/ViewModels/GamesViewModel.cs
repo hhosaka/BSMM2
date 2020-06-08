@@ -1,7 +1,6 @@
 ﻿using BSMM2.Models;
 using System;
 using System.Collections.Generic;
-using Xamarin.Forms;
 
 namespace BSMM2.ViewModels {
 
@@ -30,18 +29,6 @@ namespace BSMM2.ViewModels {
 			SelectedItem = app.Game;
 			_action = action;
 			Title = title;
-		}
-
-		public void Select(Game game) {
-			if (_app.Select(game)) {
-				MessagingCenter.Send<object>(this, Messages.REFRESH);
-			}
-		}
-
-		public void Remove(Game game) {
-			if (_app.Remove(game)) {
-				MessagingCenter.Send<object>(this, Messages.REFRESH);
-			}
 		}
 	}
 }

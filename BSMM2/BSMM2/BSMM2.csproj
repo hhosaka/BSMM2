@@ -79,6 +79,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Services\" />
     <Folder Include="ViewModels\Matches\" />
     <Folder Include="Views\Matches\" />
   </ItemGroup>

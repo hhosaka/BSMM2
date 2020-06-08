@@ -84,7 +84,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
 			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
 
-			var engine = new SerializeUtil();
+			var engine = new Storage();
 
 			game.Save(engine);
 
@@ -107,7 +107,7 @@ namespace BSMM2Test {
 			src.ActiveRound.Matches.ElementAt(2).SetResult(Win);
 			src.ActiveRound.Matches.ElementAt(3).SetResult(Win);
 
-			var engine = new SerializeUtil();
+			var engine = new Storage();
 
 			src.Save(engine);
 			var dst = Game.Load(src.Id, engine);

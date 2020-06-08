@@ -58,7 +58,7 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.Name, b.Name);
 			Assert.AreEqual(a.HasByeMatch, b.HasByeMatch);
 			Assert.AreEqual(a.HasGapMatch, b.HasGapMatch);
-			Assert.AreEqual(0, a.Point.CompareTo(b.Point));
+			Assert.AreEqual(0, a.Point.Value, b.Point.Value);
 		}
 
 		public static void Check(Rule rule, Players a, Players b) {
@@ -77,6 +77,12 @@ namespace BSMM2Test {
 			Check(a.Record2.Result, b.Record2.Result);
 		}
 
+		public static void Check(Round a, Round b) {
+			Assert.AreEqual(a.IsFinished, b.IsFinished);
+			Assert.AreEqual(a.IsPlaying, b.IsPlaying);
+			Check(a.Matches, b.Matches);
+		}
+
 		public static void Check(IEnumerable<Match> a, IEnumerable<Match> b) {
 			var ita = a.GetEnumerator();
 			var itb = b.GetEnumerator();
@@ -85,17 +91,25 @@ namespace BSMM2Test {
 			}
 		}
 
+		public static void Check(IEnumerable<Round> a, IEnumerable<Round> b) {
+			var ita = a.GetEnumerator();
+			var itb = b.GetEnumerator();
+			while (ita.MoveNext() && itb.MoveNext()) {
+				Check(ita.Current as Round, itb.Current as Round);
+			}
+		}
+
 		public static void Check(Game a, Game b) {
 			Assert.AreEqual(a.Title, b.Title);
 			Assert.AreEqual(a.Id, b.Id);
-			Assert.AreEqual(a.IsMatching(), b.IsMatching());
 			Assert.AreEqual(a.StartTime, b.StartTime);
 			Assert.AreEqual(a.Rule.Name, b.Rule.Name);
 			Assert.AreEqual(a.Rule.EnableLifePoint, b.Rule.EnableLifePoint);
 			Assert.AreEqual(a.Rule.AcceptByeMatchDuplication, b.Rule.AcceptByeMatchDuplication);
 			Assert.AreEqual(a.Rule.AcceptGapMatchDuplication, b.Rule.AcceptGapMatchDuplication);
 			Check(a.Rule, a.Players, b.Players);
-			Check(a.ActiveRound.Matches, b.ActiveRound.Matches);
+			Check(a.ActiveRound, b.ActiveRound);
+			Check(a.Rounds, b.Rounds);
 		}
 
 		private static String Message(IEnumerable<int> expect, IEnumerable<int> result) {
