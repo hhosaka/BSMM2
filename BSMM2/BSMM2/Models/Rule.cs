@@ -47,7 +47,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.Point.Point - p2.Point.Point;
+				=> p1.Point.MatchPoint - p2.Point.MatchPoint;
 		}
 
 		private class LifePointComparer : IComparer {
@@ -75,7 +75,7 @@ namespace BSMM2.Models {
 			public bool Active { get; set; } = true;
 
 			public int Compare(Player p1, Player p2)
-				=> p1.OpponentPoint.Point - p2.OpponentPoint.Point;
+				=> p1.OpponentPoint.MatchPoint - p2.OpponentPoint.MatchPoint;
 		}
 
 		private class OpponentLifePointComparer : IComparer {

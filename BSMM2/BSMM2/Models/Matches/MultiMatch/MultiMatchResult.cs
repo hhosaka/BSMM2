@@ -19,10 +19,6 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		private RESULT_T _RESULT;
 
 		[JsonIgnore]
-		public int MatchPoint
-			=> RESULT == Win ? 3 : RESULT == Lose ? 0 : 1;
-
-		[JsonIgnore]
 		public int LifePoint
 			=> _results.Sum(p => p.LifePoint);
 
@@ -34,8 +30,8 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		public RESULT_T RESULT
 			=> _RESULT = GetResult();
 
-		public int Point
-			=> MatchPoint;
+		public int MatchPoint
+			=> RESULT == Win ? 3 : RESULT == Lose ? 0 : 1;
 
 		[JsonIgnore]
 		public bool IsFinished
@@ -80,7 +76,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		public int? CompareTo(IPoint point, int strictness = 0) {
 			//if (strictness == 0) {// TODO
-			return Point - point.Point;
+			return MatchPoint - point.MatchPoint;
 			//}
 		}
 

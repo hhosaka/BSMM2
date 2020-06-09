@@ -1,7 +1,7 @@
 ﻿namespace BSMM2.Models {
 
 	public interface IPoint {//TODO : Will be SingleMatchPoint
-		int Point { get; }
+		int MatchPoint { get; }
 
 		int LifePoint { get; }
 

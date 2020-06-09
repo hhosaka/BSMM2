@@ -48,7 +48,7 @@ namespace BSMM2Test {
 			Assert.IsNotNull(a);
 			Assert.IsNotNull(b);
 			Assert.AreEqual(a.IsFinished, b.IsFinished);
-			Assert.AreEqual(a.Point, b.Point);
+			Assert.AreEqual(a.MatchPoint, b.MatchPoint);
 			Assert.AreEqual(a.WinPoint, b.WinPoint);
 			Assert.AreEqual(a.LifePoint, b.LifePoint);
 		}

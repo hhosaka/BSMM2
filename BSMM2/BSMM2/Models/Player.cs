@@ -34,11 +34,11 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsAllWins
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetPlayerRecord(this).Result.RESULT != RESULT_T.Win);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetRecord(this).Result.RESULT != RESULT_T.Win);
 
 		[JsonIgnore]
 		public bool IsAllLoses
-			=> _matches.Count() > 0 && !_matches.Any(match => match.GetPlayerRecord(this).Result.RESULT != RESULT_T.Lose);
+			=> _matches.Count() > 0 && !_matches.Any(match => match.GetRecord(this).Result.RESULT != RESULT_T.Lose);
 
 		[JsonIgnore]
 		public IExportablePoint Point { get; private set; }
@@ -57,10 +57,10 @@ namespace BSMM2.Models {
 			=> _matches.Add(match);
 
 		public RESULT_T? GetResult(Player player)
-			=> _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetPlayerRecord(this).Result.RESULT;
+			=> _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetRecord(this).Result.RESULT;
 
 		internal void CalcPoint(Rule rule)
-			=> Point = _rule.Point(_matches.Select(match => match.GetPlayerRecord(this).Result));
+			=> Point = _rule.Point(_matches.Select(match => match.GetRecord(this).Result));
 
 		internal void CalcOpponentPoint(Rule rule)
 			=> OpponentPoint = _rule.Point(_matches.Select(match => match.GetOpponentRecord(this).Player.Point));

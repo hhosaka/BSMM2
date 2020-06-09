@@ -18,7 +18,7 @@ namespace BSMM2.Models {
 				public RESULT_T RESULT => RESULT_T.Progress;
 
 				[JsonIgnore]
-				public int Point => 0;
+				public int MatchPoint => 0;
 
 				[JsonIgnore]
 				public int LifePoint => -1;
@@ -100,7 +100,7 @@ namespace BSMM2.Models {
 		public void Commit()
 			=> _records.ForEach(result => result.Player.Commit(this));
 
-		public Record GetPlayerRecord(IPlayer player)
+		public Record GetRecord(IPlayer player)
 			=> _records.First(r => r.Player == player);
 
 		public Record GetOpponentRecord(IPlayer player)
@@ -114,7 +114,7 @@ namespace BSMM2.Models {
 
 			if (player2 != null) {
 				_records = new[] { new Record(player1), new Record(player2) };
-				IsGapMatch = (player1.Point.Point != player2.Point.Point);
+				IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
 			} else {
 				_records = new[] { new Record(player1), new Record(_rule.BYE) };
 				SetResult(RESULT_T.Win);

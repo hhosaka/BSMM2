@@ -8,28 +8,28 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	internal class SingleMatchResult : IResult {
 
 		private class TheResult : IExportablePoint {
-			public int Point { get; }
+			public int MatchPoint { get; }
 
 			public int LifePoint { get; }
 
 			public double WinPoint { get; }
 
 			public string Information
-				=> "Point = " + Point + " /Life = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /Win = " + WinPoint;
+				=> "Point = " + MatchPoint + " /Life = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /Win = " + WinPoint;
 
 			public void ExportTitle(TextWriter writer) {
 				writer.Write("Point, WinPoint, LifePoint");
 			}
 
 			public void ExportData(TextWriter writer) {
-				writer.Write(Point);
+				writer.Write(MatchPoint);
 				writer.Write(", ");
 				writer.Write(WinPoint);
 				writer.Write(", ");
 				writer.Write(LifePoint);
 			}
 
-			public int Value => Point;
+			public int Value => MatchPoint;
 
 			public TheResult() {
 			}
@@ -37,7 +37,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			public TheResult(IEnumerable<IPoint> source) {
 				foreach (var point in source) {
 					if (point != null) {
-						Point += point.Point;
+						MatchPoint += point.MatchPoint;
 						LifePoint += point.LifePoint;
 						WinPoint += point.WinPoint;
 					}
@@ -51,7 +51,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		}
 
 		[JsonIgnore]
-		public int Point
+		public int MatchPoint
 			=> RESULT == Models.RESULT_T.Win ? 3 : RESULT == Models.RESULT_T.Lose ? 0 : 1;
 
 		[JsonIgnore]
