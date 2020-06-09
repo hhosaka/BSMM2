@@ -13,8 +13,6 @@
 
 		bool HasGapMatch { get; }
 
-		string Information { get; }
-
 		void Commit(Match match);
 	}
 }

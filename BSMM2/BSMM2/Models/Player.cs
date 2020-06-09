@@ -49,10 +49,6 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public int Order { get; set; }
 
-		[JsonIgnore]
-		public string Information
-			=> Point.Information;
-
 		public void Commit(Match match)
 			=> _matches.Add(match);
 
