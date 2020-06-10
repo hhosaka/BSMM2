@@ -32,7 +32,6 @@ namespace BSMM2.ViewModels {
 		public string Prefix { get; set; }
 		public int PlayerCount { get; set; }
 		public string EntrySheet { get; set; }
-		public bool EnableLifePoint { get; set; }
 		public bool AsCurrentGame { get; set; }
 
 		public string TextAsCurrentGame => AppResources.TextAsCurrentGame;
