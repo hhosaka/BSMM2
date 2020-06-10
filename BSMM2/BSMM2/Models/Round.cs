@@ -8,17 +8,20 @@ namespace BSMM2.Models {
 	public class Round {
 
 		[JsonProperty]
-		public List<Match> Matches { get; private set; }
+		public List<Match> _matches;
+
+		[JsonIgnore]
+		public IEnumerable<Match> Matches => _matches;
 
 		[JsonProperty]
 		public bool IsPlaying { get; private set; }
 
 		[JsonIgnore]
 		public bool IsFinished
-			=> !Matches.Any(match => !match.IsFinished);
+			=> !_matches.Any(match => !match.IsFinished);
 
 		public bool Swap(int m1, int m2)
-			=> Swap(Matches.ElementAt(m1), Matches.ElementAt(m2));
+			=> Swap(_matches.ElementAt(m1), _matches.ElementAt(m2));
 
 		public bool Swap(Match m1, Match m2) {
 			if (!IsPlaying && !m1.IsByeMatch && !m2.IsByeMatch) {
@@ -30,14 +33,14 @@ namespace BSMM2.Models {
 
 		public void Commit() {
 			IsPlaying = true;
-			Matches.ForEach(match => match.Commit());
+			_matches.ForEach(match => match.Commit());
 		}
 
 		public Round() {
 		}
 
 		public Round(IEnumerable<Match> matches) {
-			Matches = new List<Match>(matches);
+			_matches = new List<Match>(matches);
 		}
 	}
 }

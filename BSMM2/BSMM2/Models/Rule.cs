@@ -6,14 +6,6 @@ using Xamarin.Forms;
 
 namespace BSMM2.Models {
 
-	internal interface IComparer {
-		string Name { get; }
-		string Description { get; }
-		bool Active { get; set; }
-
-		int Compare(Player p1, Player p2);
-	}
-
 	[JsonObject]
 	public abstract class Rule {
 
@@ -25,100 +17,6 @@ namespace BSMM2.Models {
 
 		[JsonProperty]
 		public bool AcceptGapMatchDuplication { get; set; }
-
-		private static int ConvDouble2Int(double value) {
-			if (value == 0.0) {
-				return 0;
-			} else if (value > 0.0) {
-				return 1;
-			} else {
-				return -1;
-			}
-		}
-
-		private class PointComparer : IComparer {
-
-			public string Name
-				=> "Match Point";
-
-			public string Description
-				=> "合計得点";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> p1.Point.MatchPoint - p2.Point.MatchPoint;
-		}
-
-		private class LifePointComparer : IComparer {
-
-			public string Name
-				=> "Life Point";
-
-			public string Description
-				=> "合計ライフポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> p1.Point.LifePoint - p2.Point.LifePoint;
-		}
-
-		private class OpponentMatchPointComparer : IComparer {
-
-			public string Name
-				=> "Opponent Match Point";
-
-			public string Description
-				=> "対戦相手の合計得点";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> p1.OpponentPoint.MatchPoint - p2.OpponentPoint.MatchPoint;
-		}
-
-		private class OpponentLifePointComparer : IComparer {
-
-			public string Name
-				=> "Opponent Life Point";
-
-			public string Description
-				=> "対戦相手の合計ライフポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> p1.OpponentPoint.LifePoint - p2.OpponentPoint.LifePoint;
-		}
-
-		private class WinPointComparer : IComparer {
-
-			public string Name
-				=> "Win Point";
-
-			public string Description
-				=> "合計勝利ポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(p1.Point.WinPoint - p2.Point.WinPoint);
-		}
-
-		private class OpponentWinPointComparer : IComparer {
-
-			public string Name
-				=> "Opponent Win Point";
-
-			public string Description
-				=> "対戦相手の合計勝利ポイント";
-
-			public bool Active { get; set; } = true;
-
-			public int Compare(Player p1, Player p2)
-				=> ConvDouble2Int(p1.OpponentPoint.WinPoint - p2.OpponentPoint.WinPoint);
-		}
 
 		internal IComparer[] Comparers { get; }
 
