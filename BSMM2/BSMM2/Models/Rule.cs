@@ -12,12 +12,6 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool EnableLifePoint { get; set; }
 
-		[JsonProperty]
-		public bool AcceptByeMatchDuplication { get; set; }
-
-		[JsonProperty]
-		public bool AcceptGapMatchDuplication { get; set; }
-
 		internal IComparer[] Comparers { get; }
 
 		public int CompareDepth => Comparers.Count();
@@ -66,6 +60,8 @@ namespace BSMM2.Models {
 
 		public abstract ContentPage CreateMatchPage(Game game, Match match);
 
+		public abstract ContentPage CreateRulePage(Game game);
+
 		public abstract Rule Clone();
 
 		public abstract IExportablePoint Point(IEnumerable<IPoint> results);
@@ -101,8 +97,6 @@ namespace BSMM2.Models {
 
 		public Rule(Rule src) : this() {
 			EnableLifePoint = src.EnableLifePoint;
-			AcceptByeMatchDuplication = src.AcceptByeMatchDuplication;
-			AcceptGapMatchDuplication = src.AcceptGapMatchDuplication;
 		}
 	}
 }

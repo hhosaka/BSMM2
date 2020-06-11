@@ -29,14 +29,17 @@ namespace BSMM2.Models {
 				}
 			}
 
-			BSMMApp Initiate()
-				=> new BSMMApp(storage,
+			BSMMApp Initiate() {
+				var game = new BSMMApp(storage,
 						path,
 						new Rule[] {
 					new SingleMatchRule(),
 					new ThreeGameMatchRule(),
 					new ThreeOnThreeMatchRule(),
 						});
+				game.Save(true);
+				return game;
+			}
 		}
 
 		[JsonProperty]

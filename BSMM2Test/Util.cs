@@ -104,9 +104,9 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.Id, b.Id);
 			Assert.AreEqual(a.StartTime, b.StartTime);
 			Assert.AreEqual(a.Rule.Name, b.Rule.Name);
+			Assert.AreEqual(a.AcceptByeMatchDuplication, b.AcceptByeMatchDuplication);
+			Assert.AreEqual(a.AcceptGapMatchDuplication, b.AcceptGapMatchDuplication);
 			Assert.AreEqual(a.Rule.EnableLifePoint, b.Rule.EnableLifePoint);
-			Assert.AreEqual(a.Rule.AcceptByeMatchDuplication, b.Rule.AcceptByeMatchDuplication);
-			Assert.AreEqual(a.Rule.AcceptGapMatchDuplication, b.Rule.AcceptGapMatchDuplication);
 			Check(a.Rule, a.Players, b.Players);
 			Check(a.ActiveRound, b.ActiveRound);
 			Check(a.Rounds, b.Rounds);

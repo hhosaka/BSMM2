@@ -20,6 +20,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			return new SingleMatchPage((SingleMatchRule)game.Rule, (SingleMatch)match);
 		}
 
+		public override ContentPage CreateRulePage(Game game) {
+			Debug.Assert(game.Rule is SingleMatchRule);
+			return new SingleMatchRulePage(game);
+		}
+
 		public override Rule Clone()
 			=> new SingleMatchRule(this);
 

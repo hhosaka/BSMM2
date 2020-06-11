@@ -21,7 +21,7 @@ namespace BSMM2.Views {
 			void NewGame()
 				=> Navigation.PushModalAsync(new NavigationPage(new NewGamePage(_app)));
 			void OpenRule()
-				=> Navigation.PushModalAsync(new NavigationPage(new RulePage(_app)));
+				=> Navigation.PushModalAsync(new NavigationPage(_app.Game.CreateRulePage()));
 			void SelectGame()
 				=> Navigation.PushModalAsync(
 					new NavigationPage(new GamesPage(_app, "Select Item", selectGame)));

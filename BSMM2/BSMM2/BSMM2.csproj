@@ -46,8 +46,8 @@
     <Compile Update="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\RulePage.xaml.cs">
-      <DependentUpon>RulePage.xaml</DependentUpon>
+    <Compile Update="Models\Matches\SingleMatch\SingleMatchRulePage.xaml.cs">
+      <DependentUpon>SingleMatchRulePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\GamesPage.xaml.cs">
       <DependentUpon>GamesPage.xaml</DependentUpon>

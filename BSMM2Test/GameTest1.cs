@@ -79,6 +79,8 @@ namespace BSMM2Test {
 
 			game.Shuffle();
 
+			Assert.IsFalse(game.CanExecuteStepToMatching());
+
 			Util.Check(new[] { 1, 2, 3, 4 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 2, 3, 4 }, new[] { 1, 1, 1, 1 }, game.Players.GetByOrder());
 
@@ -417,7 +419,7 @@ namespace BSMM2Test {
 			Util.CheckWithOrder(new[] { 1, 9, 5, 3, 7, 2, 6, 10, 4, 11, 8 }, new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }, game.Players.GetByOrder());
 
 			Assert.IsFalse(game.StepToMatching());
-			game.Rule.AcceptByeMatchDuplication = true;
+			game.AcceptByeMatchDuplication = true;
 			Assert.IsTrue(game.StepToMatching());
 			game.StepToPlaying();
 
@@ -444,16 +446,10 @@ namespace BSMM2Test {
 			var a = rule.Clone();
 			Assert.AreEqual(rule.Name, a.Name);
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
-			Assert.AreEqual(rule.AcceptByeMatchDuplication, a.AcceptByeMatchDuplication);
-			Assert.AreEqual(rule.AcceptGapMatchDuplication, a.AcceptGapMatchDuplication);
 
 			rule.EnableLifePoint = true;
-			rule.AcceptByeMatchDuplication = true;
-			rule.AcceptGapMatchDuplication = true;
 			a = rule.Clone();
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
-			Assert.AreEqual(rule.AcceptByeMatchDuplication, a.AcceptByeMatchDuplication);
-			Assert.AreEqual(rule.AcceptGapMatchDuplication, a.AcceptGapMatchDuplication);
 		}
 
 		[TestMethod]
