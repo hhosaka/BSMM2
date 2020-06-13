@@ -7,7 +7,7 @@
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuBack}" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>

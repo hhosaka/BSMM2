@@ -142,16 +142,16 @@
     <value>プレーヤー人数</value>
   </data>
   <data name="ItemResultDraw" xml:space="preserve">
-    <value>引分け</value>
+    <value>Draw</value>
   </data>
   <data name="ItemResultLose" xml:space="preserve">
-    <value>負け</value>
+    <value>Lose</value>
   </data>
   <data name="ItemResultProgress" xml:space="preserve">
-    <value>未定</value>
+    <value>Progress</value>
   </data>
   <data name="ItemResultWin" xml:space="preserve">
-    <value>勝ち</value>
+    <value>Win</value>
   </data>
   <data name="ItemRuleSingleMatch" xml:space="preserve">
     <value>一本取り</value>
@@ -168,9 +168,6 @@
   <data name="LabelAutoSave" xml:space="preserve">
     <value>自動保存</value>
   </data>
-  <data name="LabelCulture" xml:space="preserve">
-    <value>言語設定</value>
-  </data>
   <data name="LabelDrop" xml:space="preserve">
     <value>棄権する</value>
   </data>
@@ -178,7 +175,7 @@
     <value>メールアドレス</value>
   </data>
   <data name="LabelMatchLog" xml:space="preserve">
-    <value>履歴</value>
+    <value>対戦履歴</value>
   </data>
   <data name="LabelMinimumCondition" xml:space="preserve">
     <value>マッチポイントだけで比較</value>
@@ -199,7 +196,7 @@
     <value>プレイヤー登録方法</value>
   </data>
   <data name="LabelNewGamePlayerPrefix" xml:space="preserve">
-    <value>プレーヤー名プレフィックス</value>
+    <value>プレーヤー名</value>
   </data>
   <data name="LabelNewGameRule" xml:space="preserve">
     <value>試合形式</value>
@@ -265,10 +262,10 @@
     <value>ラウンド</value>
   </data>
   <data name="TabPlayer" xml:space="preserve">
-    <value>プレーヤー</value>
+    <value>Player</value>
   </data>
   <data name="TabRound" xml:space="preserve">
-    <value>ラウンド</value>
+    <value>Round</value>
   </data>
   <data name="TextLifePoint" xml:space="preserve">
     <value>ライフP</value>
