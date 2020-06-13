@@ -135,6 +135,15 @@
   <data name="ButtonStart" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="DescriptionSingleMatch" xml:space="preserve">
+    <value>Single match rule</value>
+  </data>
+  <data name="DescriptionThreeOnThreeMatch" xml:space="preserve">
+    <value>3 on 3 match rule</value>
+  </data>
+  <data name="DescriptionTreeGameMatch" xml:space="preserve">
+    <value>Three Game match rule</value>
+  </data>
   <data name="ItemPlayerModeEntrySheet" xml:space="preserve">
     <value>Entry Sheet</value>
   </data>
@@ -156,11 +165,11 @@
   <data name="ItemRuleSingleMatch" xml:space="preserve">
     <value>Single Match</value>
   </data>
+  <data name="ItemRuleThreeGameMatch" xml:space="preserve">
+    <value>Three Game Match</value>
+  </data>
   <data name="ItemRuleThreeOnThreeMatch" xml:space="preserve">
     <value>3 on 3</value>
-  </data>
-  <data name="ItemRuleThreePointMatch" xml:space="preserve">
-    <value>Three Point Match</value>
   </data>
   <data name="LabelAppTitle" xml:space="preserve">
     <value>BS Match Maker 2</value>
@@ -269,6 +278,9 @@
   </data>
   <data name="TabRound" xml:space="preserve">
     <value>Round</value>
+  </data>
+  <data name="TextBYE" xml:space="preserve">
+    <value>BYE</value>
   </data>
   <data name="TextLifePoint" xml:space="preserve">
     <value>Life Point</value>

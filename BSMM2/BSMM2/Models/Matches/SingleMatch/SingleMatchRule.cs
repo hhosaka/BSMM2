@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Resource;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,13 +37,13 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		}
 
 		public override string Name
-			=> "Single Match Rule";
+			=> AppResources.ItemRuleSingleMatch;
 
 		public override string Description
-			=> "一本取りです。";
+			=> AppResources.DescriptionSingleMatch;
 
 		public SingleMatchRule() : base() {
-			_bye = new Player(this, "BYE");
+			_bye = new Player(this, AppResources.TextBYE);
 		}
 
 		public SingleMatchRule(Rule src) : base(src) {

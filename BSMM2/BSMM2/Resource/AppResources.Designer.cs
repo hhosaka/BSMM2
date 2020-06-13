@@ -115,6 +115,33 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Single match rule に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DescriptionSingleMatch {
+            get {
+                return ResourceManager.GetString("DescriptionSingleMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3 on 3 match rule に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DescriptionThreeOnThreeMatch {
+            get {
+                return ResourceManager.GetString("DescriptionThreeOnThreeMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Three Game match rule に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DescriptionTreeGameMatch {
+            get {
+                return ResourceManager.GetString("DescriptionTreeGameMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Entry Sheet に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ItemPlayerModeEntrySheet {
@@ -178,20 +205,20 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Three Game Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemRuleThreeGameMatch {
+            get {
+                return ResourceManager.GetString("ItemRuleThreeGameMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   3 on 3 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ItemRuleThreeOnThreeMatch {
             get {
                 return ResourceManager.GetString("ItemRuleThreeOnThreeMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Three Point Match に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string ItemRuleThreePointMatch {
-            get {
-                return ResourceManager.GetString("ItemRuleThreePointMatch", resourceCulture);
             }
         }
         
@@ -516,6 +543,15 @@ namespace BSMM2.Resource {
         internal static string TabRound {
             get {
                 return ResourceManager.GetString("TabRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BYE に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextBYE {
+            get {
+                return ResourceManager.GetString("TextBYE", resourceCulture);
             }
         }
         

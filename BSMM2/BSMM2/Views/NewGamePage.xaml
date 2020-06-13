@@ -21,16 +21,12 @@
 				SelectedItem="{Binding Rule}"
 				ItemDisplayBinding="{Binding Name}" />
 
-			<Label Text="{x:Static prop:AppResources.LabelNewGamePlayerEntryMode}" />
 			<Picker x:Name="PlayerMode"
-				SelectedItem="{Binding PlayerMode}">
-				<Picker.ItemsSource>
-					<x:Array Type="{x:Type x:String}">
-						<x:String>Number</x:String>
-						<x:String>EntrySheet</x:String>
-					</x:Array>
-				</Picker.ItemsSource>
-			</Picker>
+				Title="{x:Static prop:AppResources.LabelNewGamePlayerEntryMode}"
+				ItemsSource ="{Binding PlayerModes}"
+				SelectedItem="{Binding PlayerMode}"
+				ItemDisplayBinding="{Binding Label}" />
+
 			<Label Text="{x:Static prop:AppResources.LabelNewGamePlayerPrefix}"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
 			<Editor Text="{Binding Prefix}" Margin="0" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
 			<Label Text="{x:Static prop:AppResources.LabelNewGameNumberOfPlayer}"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />

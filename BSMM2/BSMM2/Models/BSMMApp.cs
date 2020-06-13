@@ -69,6 +69,9 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public string MailAddress { get; set; }
 
+		[JsonProperty]
+		public string EntryTemplate { get; set; }
+
 		public bool Add(Game game, bool AsCurrentGame) {
 			if (AsCurrentGame) {
 				_games.Remove(Game);

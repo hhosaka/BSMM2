@@ -135,6 +135,15 @@
   <data name="ButtonStart" xml:space="preserve">
     <value>スタート</value>
   </data>
+  <data name="DescriptionSingleMatch" xml:space="preserve">
+    <value>一本取りのルールです。</value>
+  </data>
+  <data name="DescriptionThreeOnThreeMatch" xml:space="preserve">
+    <value>３ on 3のルールです。</value>
+  </data>
+  <data name="DescriptionTreeGameMatch" xml:space="preserve">
+    <value>2本先取のルールです。</value>
+  </data>
   <data name="ItemPlayerModeEntrySheet" xml:space="preserve">
     <value>エントリーシート</value>
   </data>
@@ -156,11 +165,11 @@
   <data name="ItemRuleSingleMatch" xml:space="preserve">
     <value>一本取り</value>
   </data>
+  <data name="ItemRuleThreeGameMatch" xml:space="preserve">
+    <value>二本取り</value>
+  </data>
   <data name="ItemRuleThreeOnThreeMatch" xml:space="preserve">
     <value>3 on 3</value>
-  </data>
-  <data name="ItemRuleThreePointMatch" xml:space="preserve">
-    <value>二本取り</value>
   </data>
   <data name="LabelAppTitle" xml:space="preserve">
     <value>BS Match Maker 2</value>
@@ -266,6 +275,9 @@
   </data>
   <data name="TabRound" xml:space="preserve">
     <value>Round</value>
+  </data>
+  <data name="TextBYE" xml:space="preserve">
+    <value>不戦勝</value>
   </data>
   <data name="TextLifePoint" xml:space="preserve">
     <value>ライフP</value>

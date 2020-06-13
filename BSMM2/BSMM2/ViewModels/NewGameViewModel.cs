@@ -14,14 +14,28 @@ namespace BSMM2.ViewModels {
 	internal class PlayerControlConverter : IValueConverter {
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			if (value is string v && parameter is string p)
-				return v == p;
+			if (value is PlayerCreator creator && parameter is string p)
+				return creator.Keyword == p;
 
 			return false;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 			=> throw new NotImplementedException();
+	}
+
+	public class PlayerCreator {
+		public string Label { get; }
+
+		public string Keyword { get; }
+
+		public Func<Players> Create { get; }
+
+		public PlayerCreator(string label, string keyword, Func<Players> create) {
+			Label = label;
+			Keyword = keyword;
+			Create = create;
+		}
 	}
 
 	internal class NewGameViewModel : BaseViewModel {
@@ -34,52 +48,49 @@ namespace BSMM2.ViewModels {
 		public string EntrySheet { get; set; }
 		public bool AsCurrentGame { get; set; }
 
-		public string TextAsCurrentGame => AppResources.LabelNewGameAsCurrentGame;
-		public string TextEnableLifePoint => AppResources.LabelNewGameEnableLifePoint;
-		private string _playerMode;
+		private PlayerCreator _playerMode;
 
-		public string PlayerMode {
+		public PlayerCreator PlayerMode {
 			get => _playerMode;
-			set => SetProperty<string>(ref _playerMode, value);
+			set => SetProperty<PlayerCreator>(ref _playerMode, value);
 		}
+
+		public IEnumerable<PlayerCreator> PlayerModes { get; }
 
 		public ICommand CreateCommand { get; }
 
-		private event Action _closeWindow;
-
-		private Players CreatePlayers(Rule rule) {
-			switch (PlayerMode) {
-				case "Number":
-					return new Players(rule, PlayerCount, Prefix);
-
-				case "EntrySheet": {
-						using (var reader = new StringReader(EntrySheet)) {
-							return new Players(rule, reader);
-						}
-					}
-				default:
-					throw new ArgumentException();
-			}
-		}
-
-		public NewGameViewModel(BSMMApp app, Action closeWindow) {
+		public NewGameViewModel(BSMMApp app, Action close) {
 			_app = app;
-			Title = "Create New Game";
 			Rule = Rules.First();
 			GameName = Game.GameTitle;
-			PlayerMode = "Number";
+			PlayerModes = new[]{
+				new PlayerCreator(AppResources.ItemPlayerModeNumber,"Number", CreateByNumber),
+				new PlayerCreator(AppResources.ItemPlayerModeEntrySheet,"EntrySheet",CreateByEntrySheet)
+			};
+			PlayerMode = PlayerModes.First();
 			Prefix = "Player";
 			PlayerCount = 8;
-			EntrySheet = "Player 1\nPlayer 2\nPlayer 3\n";
+			EntrySheet = app.EntryTemplate;
 			AsCurrentGame = true;
-			_closeWindow += closeWindow;
+
 			CreateCommand = new DelegateCommand(ExecuteCreate);
 
 			void ExecuteCreate() {
-				if (app.Add(new Game(Rule.Clone(), CreatePlayers(Rule), GameName), AsCurrentGame)) {
+				if (app.Add(new Game(Rule.Clone(), PlayerMode.Create(), GameName), AsCurrentGame)) {
 					MessagingCenter.Send<object>(this, Messages.REFRESH);
 				}// TODO : Error handling is required?
-				_closeWindow?.Invoke();
+				close?.Invoke();
+			}
+
+			Players CreateByNumber() {
+				return new Players(Rule, PlayerCount, Prefix);
+			}
+
+			Players CreateByEntrySheet() {
+				app.EntryTemplate = EntrySheet;
+				using (var reader = new StringReader(EntrySheet)) {
+					return new Players(Rule, reader);
+				}
 			}
 		}
 	}

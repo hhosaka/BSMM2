@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using BSMM2.Resource;
 using Newtonsoft.Json;
 using Xamarin.Forms;
 
@@ -9,11 +9,11 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 
 		[JsonIgnore]
 		public override string Name
-			=> "Three Game Match Rule";
+			=> AppResources.ItemRuleThreeGameMatch;
 
 		[JsonIgnore]
 		public override string Description
-			=> "二本先取のゲームルールです";
+			=> AppResources.DescriptionTreeGameMatch;
 
 		public override ContentPage CreateMatchPage(Game game, Match match) {
 			throw new System.NotImplementedException();
