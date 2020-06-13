@@ -4,6 +4,7 @@
 			 xmlns:prop="clr-namespace:BSMM2.Resource"
 			 x:Class="BSMM2.Views.SettingsPage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 Disappearing="OnClosing"
 			 Title="{x:Static prop:AppResources.MenuSetting}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuBack}" Clicked="Back" Order="Secondary" />
@@ -11,21 +12,11 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding AutoSave}" />
 				<Label Text="{x:Static prop:AppResources.LabelAutoSave}" VerticalOptions="Center" />
-				<CheckBox IsChecked="{Binding AutoSave}" />
 			</StackLayout>
 			<Label Text="{x:Static prop:AppResources.LabelMailAddress}" />
 			<Editor Text="{Binding MailAddress}" />
-			<Label Text="{x:Static prop:AppResources.LabelCulture}" />
-			<Picker x:Name="Culture"
-				SelectedItem="{Binding Culture}">
-				<Picker.ItemsSource>
-					<x:Array Type="{x:Type x:String}">
-						<x:String>en-US</x:String>
-						<x:String>ja-JP</x:String>
-					</x:Array>
-				</Picker.ItemsSource>
-			</Picker>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

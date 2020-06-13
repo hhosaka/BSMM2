@@ -15,5 +15,8 @@ namespace BSMM2.Views {
 
 		private async void Back(object sender, EventArgs args)
 			=> await Navigation.PopModalAsync();
+
+		private void OnClosing(object sender, EventArgs e)
+			=> MessagingCenter.Send<object>(this, Messages.REFRESH);
 	}
 }
