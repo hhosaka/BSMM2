@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			 x:Class="BSMM2.Models.Matches.SingleMatch.SingleMatchRulePage"
+			 xmlns:prop="clr-namespace:BSMM2.Resource"
+ 			 x:Class="BSMM2.Models.Matches.SingleMatch.SingleMatchRulePage"
 			 Disappearing="OnClosing"
 			 Title="{Binding Name}">
 	<ContentPage.ToolbarItems>
@@ -10,15 +11,15 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Label Text="AcceptByeMatchDuplication" VerticalOptions="Center" />
+				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptByeMatchDuplication}" VerticalOptions="Center" />
 				<CheckBox IsChecked="{Binding Game.AcceptByeMatchDuplication}" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Label Text="AcceptGapMatchDuplication" VerticalOptions="Center" />
+				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptGapMatchDuplication}" VerticalOptions="Center" />
 				<CheckBox IsChecked="{Binding Game.AcceptGapMatchDuplication}" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Label Text="Minimum Comparison" VerticalOptions="Center" />
+				<Label Text="{x:Static prop:AppResources.LabelMinimumCondition}" VerticalOptions="Center" />
 				<CheckBox IsChecked="{Binding Rule.MinimumComparison}" />
 			</StackLayout>
 		</StackLayout>

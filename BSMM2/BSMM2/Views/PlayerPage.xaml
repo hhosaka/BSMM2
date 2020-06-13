@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:prop="clr-namespace:BSMM2.Resource"
 			 x:Class="BSMM2.Views.PlayerPage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			 Disappearing="OnClosing"
@@ -9,15 +10,15 @@
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuBack}" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Label Text="Dropped" />
+				<Label Text="{x:Static prop:AppResources.LabelDrop}" />
 				<CheckBox IsChecked="{Binding Player.Dropped , Mode=TwoWay}" />
 			</StackLayout>
-			<Label Text="History:" FontSize="Large" />
+			<Label Text="{x:Static prop:AppResources.LabelMatchLog}" FontSize="Medium" />
 			<ListView x:Name="RoundListView"
 				ItemsSource="{Binding Player.Matches}"
 				VerticalOptions="FillAndExpand"

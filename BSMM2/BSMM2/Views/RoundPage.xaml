@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 xmlns:prop="clr-namespace:BSMM2.Resource"
 			 x:Class="BSMM2.Views.RoundPage"
 			  Title="{Binding Title}"
 			 x:Name="BrowseItemsPage">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Log" Command="{Binding ShowRoundsLogCommand}" Order="Secondary" />
-		<ToolbarItem Text="Help" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuRoundLog}" Command="{Binding ShowRoundsLogCommand}" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuHelp}" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
@@ -48,9 +49,9 @@
 				</ListView.ItemTemplate>
 			</ListView>
 			<StackLayout Orientation="Horizontal">
-				<Button Text="Shuffle" Command="{Binding ShuffleCommand}"  HorizontalOptions="FillAndExpand"></Button>
-				<Button Text="Start" Command="{Binding StartCommand}" HorizontalOptions="FillAndExpand"></Button>
-				<Button Text="Next Round" Command="{Binding StepToMatchingCommand}" HorizontalOptions="FillAndExpand"></Button>
+				<Button Text="{x:Static prop:AppResources.ButtonShuffle}" Command="{Binding ShuffleCommand}"  HorizontalOptions="FillAndExpand"></Button>
+				<Button Text="{x:Static prop:AppResources.ButtonStart}" Command="{Binding StartCommand}" HorizontalOptions="FillAndExpand"></Button>
+				<Button Text="{x:Static prop:AppResources.ButtonNextRound}" Command="{Binding StepToMatchingCommand}" HorizontalOptions="FillAndExpand"></Button>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

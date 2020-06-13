@@ -1,6 +1,7 @@
 ﻿using BSMM2.Models.Matches.MultiMatch.ThreeGameMatch;
 using BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch;
 using BSMM2.Models.Matches.SingleMatch;
+using BSMM2.Resource;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,15 +31,15 @@ namespace BSMM2.Models {
 			}
 
 			BSMMApp Initiate() {
-				var game = new BSMMApp(storage,
+				var app = new BSMMApp(storage,
 						path,
 						new Rule[] {
 					new SingleMatchRule(),
 					new ThreeGameMatchRule(),
 					new ThreeOnThreeMatchRule(),
 						});
-				game.Save(true);
-				return game;
+				app.Save(true);
+				return app;
 			}
 		}
 
@@ -50,6 +51,20 @@ namespace BSMM2.Models {
 
 		[JsonProperty]
 		private List<Game> _games;
+
+		[JsonProperty]
+		private string _culture;
+
+		[JsonIgnore]
+		public string Culture {
+			get => _culture;
+			set {
+				if (value != _culture) {
+					_culture = value;
+					AppResources.Culture = new System.Globalization.CultureInfo(_culture);
+				}
+			}
+		}
 
 		[JsonIgnore]
 		public IEnumerable<Game> Games => _games;

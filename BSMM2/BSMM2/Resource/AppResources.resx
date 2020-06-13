@@ -117,25 +117,178 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ButtonRemove" xml:space="preserve">
-    <value>Remove</value>
+  <data name="ButtonAdd" xml:space="preserve">
+    <value>Add</value>
   </data>
-  <data name="ButtonSelect" xml:space="preserve">
-    <value>Select</value>
+  <data name="ButtonCreate" xml:space="preserve">
+    <value>Create</value>
   </data>
-  <data name="RoundPageTitle" xml:space="preserve">
-    <value>Round</value>
+  <data name="ButtonDone" xml:space="preserve">
+    <value>Done</value>
   </data>
-  <data name="TabTitlePlayer" xml:space="preserve">
-    <value>Player</value>
+  <data name="ButtonNextRound" xml:space="preserve">
+    <value>Next Round</value>
   </data>
-  <data name="TabTitleRound" xml:space="preserve">
-    <value>Round</value>
+  <data name="ButtonShuffle" xml:space="preserve">
+    <value>Shuffle</value>
   </data>
-  <data name="TextAsCurrentGame" xml:space="preserve">
+  <data name="ButtonStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="ItemPlayerModeEntrySheet" xml:space="preserve">
+    <value>Entry Sheet</value>
+  </data>
+  <data name="ItemPlayerModeNumber" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="ItemResultDraw" xml:space="preserve">
+    <value>Draw</value>
+  </data>
+  <data name="ItemResultLose" xml:space="preserve">
+    <value>Lose</value>
+  </data>
+  <data name="ItemResultProgress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="ItemResultWin" xml:space="preserve">
+    <value>Win</value>
+  </data>
+  <data name="ItemRuleSingleMatch" xml:space="preserve">
+    <value>Single Match</value>
+  </data>
+  <data name="ItemRuleThreeOnThreeMatch" xml:space="preserve">
+    <value>3 on 3</value>
+  </data>
+  <data name="ItemRuleThreePointMatch" xml:space="preserve">
+    <value>Three Point Match</value>
+  </data>
+  <data name="LabelAppTitle" xml:space="preserve">
+    <value>BS Match Maker 2</value>
+  </data>
+  <data name="LabelAutoSave" xml:space="preserve">
+    <value>Auto Save</value>
+  </data>
+  <data name="LabelCulture" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="LabelDrop" xml:space="preserve">
+    <value>Drop</value>
+  </data>
+  <data name="LabelMailAddress" xml:space="preserve">
+    <value>MailAddress</value>
+  </data>
+  <data name="LabelMatchLog" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="LabelMinimumCondition" xml:space="preserve">
+    <value>Minimum Condition</value>
+  </data>
+  <data name="LabelNewGameAsCurrentGame" xml:space="preserve">
     <value>As Current Game</value>
   </data>
-  <data name="TextEnableLifePoint" xml:space="preserve">
+  <data name="LabelNewGameEnableLifePoint" xml:space="preserve">
     <value>Enable Life Point</value>
+  </data>
+  <data name="LabelNewGameEntrySheet" xml:space="preserve">
+    <value>Entry Sheet</value>
+  </data>
+  <data name="LabelNewGameNumberOfPlayer" xml:space="preserve">
+    <value>Number of Player</value>
+  </data>
+  <data name="LabelNewGamePlayerEntryMode" xml:space="preserve">
+    <value>Entry Mode</value>
+  </data>
+  <data name="LabelNewGamePlayerPrefix" xml:space="preserve">
+    <value>Prefix</value>
+  </data>
+  <data name="LabelNewGameRule" xml:space="preserve">
+    <value>Rule</value>
+  </data>
+  <data name="LabelNewGameTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="LabelRuleAcceptByeMatchDuplication" xml:space="preserve">
+    <value>Accept bye match duplication</value>
+  </data>
+  <data name="LabelRuleAcceptGapMatchDuplication" xml:space="preserve">
+    <value>Accept gap match duplication</value>
+  </data>
+  <data name="MenuAddPlayer" xml:space="preserve">
+    <value>Add Player</value>
+  </data>
+  <data name="MenuBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MenuClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="MenuDeleteGame" xml:space="preserve">
+    <value>Delete Game</value>
+  </data>
+  <data name="MenuExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="MenuImport" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="MenuJson" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="MenuNewGame" xml:space="preserve">
+    <value>New Game</value>
+  </data>
+  <data name="MenuRoundLog" xml:space="preserve">
+    <value>Log</value>
+  </data>
+  <data name="MenuSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MenuSelectGame" xml:space="preserve">
+    <value>Select Game</value>
+  </data>
+  <data name="MenuSendMail" xml:space="preserve">
+    <value>Send Mail</value>
+  </data>
+  <data name="MenuSetting" xml:space="preserve">
+    <value>Setting</value>
+  </data>
+  <data name="MenuSettingRule" xml:space="preserve">
+    <value>Rule</value>
+  </data>
+  <data name="PrefixGame" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="PrefixRound" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="TabPlayer" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="TabRound" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="TextLifePoint" xml:space="preserve">
+    <value>Life Point</value>
+  </data>
+  <data name="TextMatchPoint" xml:space="preserve">
+    <value>Match Point</value>
+  </data>
+  <data name="TextOpponent" xml:space="preserve">
+    <value>Opponent</value>
+  </data>
+  <data name="TextPlayer" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="TextPlayerName" xml:space="preserve">
+    <value>Pnayer Name</value>
+  </data>
+  <data name="TextResult" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="TextWinPoint" xml:space="preserve">
+    <value>Win Point</value>
   </data>
 </root>

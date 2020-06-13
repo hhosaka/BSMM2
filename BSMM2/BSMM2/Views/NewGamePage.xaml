@@ -1,26 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:prop="clr-namespace:BSMM2.Resource"
 			 x:Class="BSMM2.Views.NewGamePage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
-			 Title="{Binding Title}">
+			 Title="{x:Static prop:AppResources.MenuNewGame}">
 	<ContentPage.Resources>
 		<local:PlayerControlConverter x:Key="PlayerControlConverter" />
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuBack}" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<Label Text="Title:" />
+			<Label Text="{x:Static prop:AppResources.LabelNewGameTitle}" />
 			<Editor Text="{Binding GameName}" />
 			<Picker x:Name="Rule"
-				Title="Rule:"
+				Title="{x:Static prop:AppResources.LabelNewGameRule}"
 				ItemsSource ="{Binding Rules}"
 				SelectedItem="{Binding Rule}"
 				ItemDisplayBinding="{Binding Name}" />
 
-			<Label Text="Player Mode:" />
+			<Label Text="{x:Static prop:AppResources.LabelNewGamePlayerEntryMode}" />
 			<Picker x:Name="PlayerMode"
 				SelectedItem="{Binding PlayerMode}">
 				<Picker.ItemsSource>
@@ -30,21 +31,21 @@
 					</x:Array>
 				</Picker.ItemsSource>
 			</Picker>
-			<Label Text="Prefix:"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Label Text="{x:Static prop:AppResources.LabelNewGamePlayerPrefix}"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
 			<Editor Text="{Binding Prefix}" Margin="0" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
-			<Label Text="Number of Players:"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
+			<Label Text="{x:Static prop:AppResources.LabelNewGameNumberOfPlayer}"  IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
 			<Editor Text="{Binding PlayerCount}" Keyboard="Numeric" Margin="0" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=Number}" />
-			<Label Text="Entry Sheet:" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
+			<Label Text="{x:Static prop:AppResources.LabelNewGameEntrySheet}" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
 			<Editor Text="{Binding EntrySheet}" HeightRequest="256"  BackgroundColor="Aqua" IsVisible="{Binding PlayerMode, Converter={StaticResource PlayerControlConverter},ConverterParameter=EntrySheet}" />
 			<StackLayout Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding Rule.EnableLifePoint}" />
-				<Label Text="{Binding TextEnableLifePoint}" VerticalOptions="Center" />
+				<Label Text="{x:Static prop:AppResources.LabelNewGameEnableLifePoint}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
 				<CheckBox IsChecked="{Binding AsCurrentGame}" />
 				<Label Text="{Binding TextAsCurrentGame}" VerticalOptions="Center" />
 			</StackLayout>
-			<Button Text="Create" Command="{Binding CreateCommand}" />
+			<Button Text="{x:Static prop:AppResources.ButtonCreate}" Command="{Binding CreateCommand}" />
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

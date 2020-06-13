@@ -61,65 +61,524 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
-        ///   Remove に類似しているローカライズされた文字列を検索します。
+        ///   Add に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonRemove {
+        internal static string ButtonAdd {
             get {
-                return ResourceManager.GetString("ButtonRemove", resourceCulture);
+                return ResourceManager.GetString("ButtonAdd", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Select に類似しているローカライズされた文字列を検索します。
+        ///   Create に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonSelect {
+        internal static string ButtonCreate {
             get {
-                return ResourceManager.GetString("ButtonSelect", resourceCulture);
+                return ResourceManager.GetString("ButtonCreate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Round に類似しているローカライズされた文字列を検索します。
+        ///   Done に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string RoundPageTitle {
+        internal static string ButtonDone {
             get {
-                return ResourceManager.GetString("RoundPageTitle", resourceCulture);
+                return ResourceManager.GetString("ButtonDone", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Player に類似しているローカライズされた文字列を検索します。
+        ///   Next Round に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TabTitlePlayer {
+        internal static string ButtonNextRound {
             get {
-                return ResourceManager.GetString("TabTitlePlayer", resourceCulture);
+                return ResourceManager.GetString("ButtonNextRound", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Round に類似しているローカライズされた文字列を検索します。
+        ///   Shuffle に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TabTitleRound {
+        internal static string ButtonShuffle {
             get {
-                return ResourceManager.GetString("TabTitleRound", resourceCulture);
+                return ResourceManager.GetString("ButtonShuffle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Start に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ButtonStart {
+            get {
+                return ResourceManager.GetString("ButtonStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Entry Sheet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemPlayerModeEntrySheet {
+            get {
+                return ResourceManager.GetString("ItemPlayerModeEntrySheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Number に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemPlayerModeNumber {
+            get {
+                return ResourceManager.GetString("ItemPlayerModeNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Draw に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemResultDraw {
+            get {
+                return ResourceManager.GetString("ItemResultDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Lose に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemResultLose {
+            get {
+                return ResourceManager.GetString("ItemResultLose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Progress に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemResultProgress {
+            get {
+                return ResourceManager.GetString("ItemResultProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemResultWin {
+            get {
+                return ResourceManager.GetString("ItemResultWin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Single Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemRuleSingleMatch {
+            get {
+                return ResourceManager.GetString("ItemRuleSingleMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3 on 3 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemRuleThreeOnThreeMatch {
+            get {
+                return ResourceManager.GetString("ItemRuleThreeOnThreeMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Three Point Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemRuleThreePointMatch {
+            get {
+                return ResourceManager.GetString("ItemRuleThreePointMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BS Match Maker 2 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelAppTitle {
+            get {
+                return ResourceManager.GetString("LabelAppTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Auto Save に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelAutoSave {
+            get {
+                return ResourceManager.GetString("LabelAutoSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Culture に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelCulture {
+            get {
+                return ResourceManager.GetString("LabelCulture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Drop に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelDrop {
+            get {
+                return ResourceManager.GetString("LabelDrop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   MailAddress に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelMailAddress {
+            get {
+                return ResourceManager.GetString("LabelMailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   History に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelMatchLog {
+            get {
+                return ResourceManager.GetString("LabelMatchLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Minimum Condition に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelMinimumCondition {
+            get {
+                return ResourceManager.GetString("LabelMinimumCondition", resourceCulture);
             }
         }
         
         /// <summary>
         ///   As Current Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextAsCurrentGame {
+        internal static string LabelNewGameAsCurrentGame {
             get {
-                return ResourceManager.GetString("TextAsCurrentGame", resourceCulture);
+                return ResourceManager.GetString("LabelNewGameAsCurrentGame", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Enable Life Point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextEnableLifePoint {
+        internal static string LabelNewGameEnableLifePoint {
             get {
-                return ResourceManager.GetString("TextEnableLifePoint", resourceCulture);
+                return ResourceManager.GetString("LabelNewGameEnableLifePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Entry Sheet に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGameEntrySheet {
+            get {
+                return ResourceManager.GetString("LabelNewGameEntrySheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Number of Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGameNumberOfPlayer {
+            get {
+                return ResourceManager.GetString("LabelNewGameNumberOfPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Entry Mode に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGamePlayerEntryMode {
+            get {
+                return ResourceManager.GetString("LabelNewGamePlayerEntryMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Prefix に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGamePlayerPrefix {
+            get {
+                return ResourceManager.GetString("LabelNewGamePlayerPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Rule に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGameRule {
+            get {
+                return ResourceManager.GetString("LabelNewGameRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Title に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelNewGameTitle {
+            get {
+                return ResourceManager.GetString("LabelNewGameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Accept bye match duplication に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelRuleAcceptByeMatchDuplication {
+            get {
+                return ResourceManager.GetString("LabelRuleAcceptByeMatchDuplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Accept gap match duplication に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelRuleAcceptGapMatchDuplication {
+            get {
+                return ResourceManager.GetString("LabelRuleAcceptGapMatchDuplication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Add Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuAddPlayer {
+            get {
+                return ResourceManager.GetString("MenuAddPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Back に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuBack {
+            get {
+                return ResourceManager.GetString("MenuBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Clear に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuClear {
+            get {
+                return ResourceManager.GetString("MenuClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Delete Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuDeleteGame {
+            get {
+                return ResourceManager.GetString("MenuDeleteGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Export に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuExport {
+            get {
+                return ResourceManager.GetString("MenuExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Help に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuHelp {
+            get {
+                return ResourceManager.GetString("MenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Import に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuImport {
+            get {
+                return ResourceManager.GetString("MenuImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Json に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuJson {
+            get {
+                return ResourceManager.GetString("MenuJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   New Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuNewGame {
+            get {
+                return ResourceManager.GetString("MenuNewGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Log に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuRoundLog {
+            get {
+                return ResourceManager.GetString("MenuRoundLog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Save に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSave {
+            get {
+                return ResourceManager.GetString("MenuSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSelectGame {
+            get {
+                return ResourceManager.GetString("MenuSelectGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Send Mail に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSendMail {
+            get {
+                return ResourceManager.GetString("MenuSendMail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Setting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSetting {
+            get {
+                return ResourceManager.GetString("MenuSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Rule に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MenuSettingRule {
+            get {
+                return ResourceManager.GetString("MenuSettingRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PrefixGame {
+            get {
+                return ResourceManager.GetString("PrefixGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Round に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PrefixRound {
+            get {
+                return ResourceManager.GetString("PrefixRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TabPlayer {
+            get {
+                return ResourceManager.GetString("TabPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Round に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TabRound {
+            get {
+                return ResourceManager.GetString("TabRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Life Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextLifePoint {
+            get {
+                return ResourceManager.GetString("TextLifePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Match Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextMatchPoint {
+            get {
+                return ResourceManager.GetString("TextMatchPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Opponent に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextOpponent {
+            get {
+                return ResourceManager.GetString("TextOpponent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextPlayer {
+            get {
+                return ResourceManager.GetString("TextPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pnayer Name に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextPlayerName {
+            get {
+                return ResourceManager.GetString("TextPlayerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Result に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextResult {
+            get {
+                return ResourceManager.GetString("TextResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Win Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextWinPoint {
+            get {
+                return ResourceManager.GetString("TextWinPoint", resourceCulture);
             }
         }
     }

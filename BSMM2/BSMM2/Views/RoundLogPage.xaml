@@ -2,14 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
+			 xmlns:prop="clr-namespace:BSMM2.Resource"
 			 x:Class="BSMM2.Views.RoundLogPage"
-			  Title="{Binding Title}"
+			  Title="{x:Static prop:AppResources.MenuRoundLog}"
 			 x:Name="BrowseItemsPage">
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuBack}" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>

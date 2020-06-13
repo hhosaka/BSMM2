@@ -12,8 +12,6 @@ namespace BSMM2 {
 
 		public App() {
 			InitializeComponent();
-			//AppResources.Culture = new System.Globalization.CultureInfo("ja-JP");
-
 			MainPage = new MainPage(BSMMApp.Create(APPDATAFILE, false));// use true in case save data is broken.
 		}
 
