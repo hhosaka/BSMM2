@@ -11,7 +11,7 @@ namespace BSMM2Test {
 		public static readonly string DefaultOrigin = "Player";
 
 		public static int ConvId(string origin, string name) {
-			if (name == "BYE") {
+			if (!name.StartsWith(origin)) {
 				return -1;
 			} else {
 				Assert.AreEqual(0, name.IndexOf(origin));

@@ -61,7 +61,6 @@ namespace BSMM2.ViewModels {
 				IsBusy = true;
 				try {
 					await Task.Run(() => Refresh());
-					_app.Save(false);
 				} finally {
 					IsBusy = false;
 				}
@@ -87,6 +86,7 @@ namespace BSMM2.ViewModels {
 			async void Execute() {
 				Game.StepToPlaying();
 				StartTimer();
+				_app.Save(false);
 				await ExecuteRefresh();
 			}
 		}
@@ -98,6 +98,7 @@ namespace BSMM2.ViewModels {
 
 			async void Execute() {
 				if (Game.Shuffle()) {
+					_app.Save(false);
 					await ExecuteRefresh();
 				} else {
 					await OnFailedMatching();
@@ -112,6 +113,7 @@ namespace BSMM2.ViewModels {
 
 			async void Execute() {
 				if (Game.StepToMatching()) {
+					_app.Save(false);
 					await ExecuteRefresh();
 				} else {
 					await OnFailedMatching();
