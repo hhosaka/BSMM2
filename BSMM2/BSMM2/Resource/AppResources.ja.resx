@@ -135,6 +135,9 @@
   <data name="ButtonStart" xml:space="preserve">
     <value>スタート</value>
   </data>
+  <data name="DescriptionEntrySheet" xml:space="preserve">
+    <value>プレーヤー名を改行で列記してください。</value>
+  </data>
   <data name="DescriptionSingleMatch" xml:space="preserve">
     <value>一本取りのルールです。</value>
   </data>
@@ -151,16 +154,16 @@
     <value>プレーヤー人数</value>
   </data>
   <data name="ItemResultDraw" xml:space="preserve">
-    <value>Draw</value>
+    <value>引分け</value>
   </data>
   <data name="ItemResultLose" xml:space="preserve">
-    <value>Lose</value>
+    <value>負け</value>
   </data>
   <data name="ItemResultProgress" xml:space="preserve">
-    <value>Progress</value>
+    <value>未定</value>
   </data>
   <data name="ItemResultWin" xml:space="preserve">
-    <value>Win</value>
+    <value>勝ち</value>
   </data>
   <data name="ItemRuleSingleMatch" xml:space="preserve">
     <value>一本取り</value>

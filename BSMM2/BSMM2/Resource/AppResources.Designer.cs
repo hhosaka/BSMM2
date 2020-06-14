@@ -115,6 +115,15 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   List up player names. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DescriptionEntrySheet {
+            get {
+                return ResourceManager.GetString("DescriptionEntrySheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Single match rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DescriptionSingleMatch {

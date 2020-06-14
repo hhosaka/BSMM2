@@ -11,7 +11,8 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
-			<Editor Text="{Binding Data}" HeightRequest="256"  BackgroundColor="Aqua" />
+			<Label Text="{x:Static prop:AppResources.DescriptionEntrySheet}" />
+			<Editor Text="{Binding Data}" HeightRequest="256" />
 			<Button Text="{x:Static prop:AppResources.ButtonAdd}" Command ="{Binding AddPlayerCommand}" />
 		</StackLayout>
 	</ContentPage.Content>

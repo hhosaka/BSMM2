@@ -15,8 +15,8 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Player.Dropped , Mode=TwoWay}" />
 				<Label Text="{x:Static prop:AppResources.LabelDrop}" />
-				<CheckBox IsChecked="{Binding Player.Dropped , Mode=TwoWay}" />
 			</StackLayout>
 			<Label Text="{x:Static prop:AppResources.LabelMatchLog}" FontSize="Medium" />
 			<ListView x:Name="RoundListView"

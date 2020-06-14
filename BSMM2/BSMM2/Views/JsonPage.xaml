@@ -11,8 +11,8 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding AsCurrentGame}" />
 				<Label Text="{x:Static prop:AppResources.LabelNewGameAsCurrentGame}" />
-				<CheckBox IsChecked="{Binding AsCurrentGame}" />
 			</StackLayout>
 			<Editor Text="{Binding Buf}" HeightRequest="512" />
 			<StackLayout Orientation="Horizontal">
