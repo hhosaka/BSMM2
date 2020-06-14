@@ -279,6 +279,15 @@
   <data name="TabRound" xml:space="preserve">
     <value>Round</value>
   </data>
+  <data name="Text1stPlayer" xml:space="preserve">
+    <value>先鋒</value>
+  </data>
+  <data name="Text2ndPlayer" xml:space="preserve">
+    <value>中堅</value>
+  </data>
+  <data name="Text3rdPlayer" xml:space="preserve">
+    <value>大将</value>
+  </data>
   <data name="TextBYE" xml:space="preserve">
     <value>不戦勝</value>
   </data>

@@ -38,12 +38,13 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			=> _results.Count(result => result.IsFinished) >= _minCount;
 
 		[JsonIgnore]
-		public string Information
-			=> throw new System.NotImplementedException();
+		public IEnumerable<IBSPoint> Results => _results.Cast<IBSPoint>();
 
-		public void Add(IResult result) {
-			_results.Add(result);
-		}
+		public void Clear()
+			=> _results.Clear();
+
+		public void Add(IResult result)
+			=> _results.Add(result);
 
 		private RESULT_T GetResult() {
 			if (_results.Any()) {

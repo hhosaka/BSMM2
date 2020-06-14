@@ -556,6 +556,33 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   1st player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Text1stPlayer {
+            get {
+                return ResourceManager.GetString("Text1stPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2nd Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Text2ndPlayer {
+            get {
+                return ResourceManager.GetString("Text2ndPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3rd Player に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Text3rdPlayer {
+            get {
+                return ResourceManager.GetString("Text3rdPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   BYE に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TextBYE {

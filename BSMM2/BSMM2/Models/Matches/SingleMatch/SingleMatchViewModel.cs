@@ -30,10 +30,10 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			_match = match;
 			_rule = rule;
 
-			Player1LP = LifePoint.GetItem(((IBSPoint)match.Record1.Result).LifePoint);
-			Player2LP = LifePoint.GetItem(((IBSPoint)match.Record2.Result).LifePoint);
+			Player1LP = LifePoint.GetItem((match.Record1.Result as IBSPoint)?.LifePoint ?? -1);
+			Player2LP = LifePoint.GetItem((match.Record2.Result as IBSPoint)?.LifePoint ?? -1);
 
-			ResultItem = new ResultItem(match, () => OnPropertyChanged(nameof(ResultItem)));
+			ResultItem = new ResultItem(match.Record1.Result.RESULT, () => OnPropertyChanged(nameof(ResultItem)));
 
 			void Done() {
 				match.SetSingleMatchResult(ResultItem.Value,

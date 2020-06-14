@@ -1,7 +1,6 @@
 ﻿using BSMM2.Resource;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -16,15 +15,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonIgnore]
 		public override IPlayer BYE => _bye;
 
-		public override ContentPage CreateMatchPage(Game game, Match match) {
-			Debug.Assert(game.Rule is SingleMatchRule);
-			return new SingleMatchPage((SingleMatchRule)game.Rule, (SingleMatch)match);
-		}
+		public override ContentPage CreateMatchPage(Match match)
+			=> new SingleMatchPage(this, (SingleMatch)match);
 
-		public override ContentPage CreateRulePage(Game game) {
-			Debug.Assert(game.Rule is SingleMatchRule);
-			return new SingleMatchRulePage(game);
-		}
+		public override ContentPage CreateRulePage(Game game)
+			=> new SingleMatchRulePage(game);
 
 		public override Rule Clone()
 			=> new SingleMatchRule(this);

@@ -40,7 +40,7 @@
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
 				<Switch IsToggled="{Binding AsCurrentGame}" />
-				<Label Text="{Binding TextAsCurrentGame}" VerticalOptions="Center" />
+				<Label Text="{x:Static prop:AppResources.LabelNewGameAsCurrentGame}" VerticalOptions="Center" />
 			</StackLayout>
 			<Button Text="{x:Static prop:AppResources.ButtonCreate}" Command="{Binding CreateCommand}" />
 		</StackLayout>

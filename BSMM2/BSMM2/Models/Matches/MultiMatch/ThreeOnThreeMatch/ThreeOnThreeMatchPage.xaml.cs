@@ -11,7 +11,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public ThreeOnThreeMatchPage(ThreeOnThreeMatchRule rule, Match match) {
 			InitializeComponent();
 			Title = String.Format("{0} Result", rule.Name);
-			BindingContext = _viewModel = new ThreeOnThreeMatchViewModel(rule, match, Back);
+			BindingContext = _viewModel = new ThreeOnThreeMatchViewModel(rule, (MultiMatch)match, Back);
 		}
 
 		private void Back(object sender, EventArgs e)

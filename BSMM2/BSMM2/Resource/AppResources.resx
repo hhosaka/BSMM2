@@ -282,6 +282,15 @@
   <data name="TabRound" xml:space="preserve">
     <value>Round</value>
   </data>
+  <data name="Text1stPlayer" xml:space="preserve">
+    <value>1st player</value>
+  </data>
+  <data name="Text2ndPlayer" xml:space="preserve">
+    <value>2nd Player</value>
+  </data>
+  <data name="Text3rdPlayer" xml:space="preserve">
+    <value>3rd Player</value>
+  </data>
   <data name="TextBYE" xml:space="preserve">
     <value>BYE</value>
   </data>

@@ -79,10 +79,6 @@ namespace BSMM2.Models {
 
 		public abstract void SetResult(RESULT_T result);
 
-		public void SetResults((IResult player1, IResult player2) points) {
-			SetResults(points.player1, points.player2);
-		}
-
 		protected void SetResults(IResult result1, IResult result2) {
 			_records[0].SetResult(result1);
 			_records[1].SetResult(result2);

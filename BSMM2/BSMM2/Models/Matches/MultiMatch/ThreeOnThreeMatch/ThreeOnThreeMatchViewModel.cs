@@ -1,67 +1,74 @@
-﻿using BSMM2.ViewModels;
+﻿using BSMM2.Models.Matches.SingleMatch;
+using BSMM2.ViewModels;
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
+	using LifePoints = IEnumerable<LifePoint>;
+
 	internal class ThreeOnThreeMatchViewModel : BaseViewModel {
+		private MultiMatch _match;
+		private ThreeOnThreeMatchRule _rule;
 
-		internal class Item {
-			public string Label { get; }
-			public RESULT_T RESULT { get; }
+		public bool EnableLifePoint => _rule.EnableLifePoint;
+		public ResultItem[] ResultItem { get; }
+		public LifePoint[] Player1LP { get; }
+		public LifePoint[] Player2LP { get; }
+		public IPlayer Player1 => _match.Record1.Player;
+		public IPlayer Player2 => _match.Record2.Player;
 
-			public Item(string label, RESULT_T result) {
-				Label = label;
-				RESULT = result;
-			}
-		}
+		public LifePoints LifePoints
+			=> LifePoint.Instance;
 
-		private Match _match;
+		public ICommand DoneCommand { get; }
 
-		public bool EnableLifePoint { get; }
-		public int LifePoint1 { get; set; }
-		public int LifePoint2 { get; set; }
-		public string LifePointTitle1 { get; }
-		public string LifePointTitle2 { get; }
+		public ThreeOnThreeMatchViewModel(ThreeOnThreeMatchRule rule, MultiMatch match, Action back) {
+			DoneCommand = new Command(Done);
 
-		private Action _update;
-
-		private Item _selectedItem;
-
-		public Item SelectedItem {
-			get => _selectedItem;
-			set {
-				SetProperty(ref _selectedItem, value);
-				_update?.Invoke();
-			}
-		}
-
-		public ObservableCollection<Item> Items { get; }
-
-		public ThreeOnThreeMatchViewModel(ThreeOnThreeMatchRule rule, Match match, Action back) {
 			_match = match;
-			EnableLifePoint = rule.EnableLifePoint;
-			var record1 = match.Record1;
-			var record2 = match.Record2;
-			var items = new ObservableCollection<Item>();
-			items.Add(new Item(record1.Player.Name + " Win", RESULT_T.Win));
-			items.Add(new Item("Draw", RESULT_T.Draw));
-			items.Add(new Item(record2.Player.Name + " Win", RESULT_T.Lose));
-			Items = items;
-			_update = Update;
+			_rule = rule;
+			if (match.Record1.Result is MultiMatchResult result1) {
+				ResultItem = CreateItems();
+				Player1LP = CreateLifePoints(result1);
+				Player2LP = CreateLifePoints((MultiMatchResult)match.Record2.Result);
+			} else {
+				ResultItem = new[] {
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItem))),
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItem))),
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItem))),
+				};
+				Player1LP = new[]{
+					LifePoint.GetItem(-1),
+					LifePoint.GetItem(-1),
+					LifePoint.GetItem(-1),
 
-			LifePoint1 = ((IBSPoint)record1.Result).LifePoint;
-			LifePointTitle1 = String.Format("{0}'s remaining Life Point", record1.Player.Name);
-			LifePoint2 = ((IBSPoint)record2.Result).LifePoint;
-			LifePointTitle2 = String.Format("{0}'s remaining Life Point", record2.Player.Name);
+				};
+			}
 
-			void Update() {
-				if (SelectedItem != null) {
-					//_match.SetResults(rule.CreatePoints(SelectedItem.RESULT));// TODO to be implemented
-					MessagingCenter.Send<object>(this, Messages.REFRESH);
-					back?.Invoke();
-				}
+			ResultItem[] CreateItems() {
+				var items = new List<ResultItem>();
+				result1.Results.ForEach(result => items.Add(new ResultItem(match.Record1.Result.RESULT, () => OnPropertyChanged(nameof(ResultItem)))));
+				return items.ToArray();
+			}
+
+			LifePoint[] CreateLifePoints(MultiMatchResult results) {
+				var buf = new List<LifePoint>();
+				results.Results.ForEach(result => buf.Add(LifePoint.GetItem(result.LifePoint)));
+				return buf.ToArray();
+			}
+			void Done() {
+				var result = new MultiMatchResult(rule.MinimumMatchCount);
+				result.Add(new SingleMatchResult(ResultItem[0].Value, Player1LP[0].Point));
+
+				//match.SetSingleMatchResult(ResultItem.Value,
+				//	EnableLifePoint ? Player1LP.Point : RESULTUtil.DEFAULT_LIFE_POINT,
+				//	EnableLifePoint ? Player2LP.Point : RESULTUtil.DEFAULT_LIFE_POINT);
+				//MessagingCenter.Send<object>(this, Messages.REFRESH);
+				back?.Invoke();
 			}
 		}
 	}

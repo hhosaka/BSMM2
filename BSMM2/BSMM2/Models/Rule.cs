@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 
 		public abstract Match CreateMatch(IPlayer player1, IPlayer player2 = null);
 
-		public abstract ContentPage CreateMatchPage(Game game, Match match);
+		public abstract ContentPage CreateMatchPage(Match match);
 
 		public abstract ContentPage CreateRulePage(Game game);
 

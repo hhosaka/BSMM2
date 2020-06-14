@@ -64,7 +64,7 @@ namespace BSMM2.Models {
 		}
 
 		public ContentPage CreateMatchPage(Match match)
-			=> Rule.CreateMatchPage(this, match);
+			=> Rule.CreateMatchPage(match);
 
 		private bool CreateMatching() {
 			var round = MakeRound();

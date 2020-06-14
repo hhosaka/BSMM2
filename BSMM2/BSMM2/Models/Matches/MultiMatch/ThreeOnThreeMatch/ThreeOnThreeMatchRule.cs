@@ -21,9 +21,8 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override string Description
 			=> AppResources.DescriptionThreeOnThreeMatch;
 
-		public override ContentPage CreateMatchPage(Game game, Match match) {
-			throw new System.NotImplementedException();
-		}
+		public override ContentPage CreateMatchPage(Match match)
+			=> new ThreeOnThreeMatchPage(this, (MultiMatch)match);
 
 		public override Rule Clone() {
 			return new ThreeOnThreeMatchRule(this);
