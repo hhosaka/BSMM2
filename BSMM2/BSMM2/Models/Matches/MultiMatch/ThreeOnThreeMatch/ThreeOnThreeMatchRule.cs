@@ -8,6 +8,12 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 	public class ThreeOnThreeMatchRule : MultiMatchRule {
 
 		[JsonIgnore]
+		public override int MatchCount => 3;
+
+		[JsonIgnore]
+		public override int MinimumMatchCount => 3;
+
+		[JsonIgnore]
 		public override string Name
 			=> AppResources.ItemRuleThreeOnThreeMatch;
 
@@ -20,13 +26,16 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		}
 
 		public override Rule Clone() {
-			throw new System.NotImplementedException();
+			return new ThreeOnThreeMatchRule(this);
 		}
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new MultiMatch(this, player1, player2);
 
-		public ThreeOnThreeMatchRule() : base(3, 3) {
+		public ThreeOnThreeMatchRule() {
+		}
+
+		private ThreeOnThreeMatchRule(MultiMatchRule rule) : base(rule) {
 		}
 	}
 }

@@ -46,7 +46,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			_bye = new Player(this, AppResources.TextBYE);
 		}
 
-		public SingleMatchRule(Rule src) : base(src) {
+		protected SingleMatchRule(Rule src) : base(src) {
 		}
 	}
 }

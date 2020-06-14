@@ -5,12 +5,13 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 	[JsonObject]
 	public abstract class MultiMatchRule : SingleMatchRule {
-		public int MatchCount { get; }
-		public int MinimumMatchCount { get; }
+		public abstract int MatchCount { get; }
+		public abstract int MinimumMatchCount { get; }
 
-		protected MultiMatchRule(int matchCount, int minimumMatchCount) {
-			MatchCount = matchCount;
-			MinimumMatchCount = minimumMatchCount;
+		protected MultiMatchRule() {
+		}
+
+		protected MultiMatchRule(Rule rule) : base(rule) {
 		}
 	}
 }
