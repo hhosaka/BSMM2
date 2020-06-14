@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BSMM2.Models.Matches;
+using System;
 
 namespace BSMM2.Models {
 
@@ -27,7 +28,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> p1.Point.LifePoint - p2.Point.LifePoint;
+			=> ((p1.Point as IBSPoint)?.LifePoint ?? -1) - ((p2.Point as IBSPoint)?.LifePoint ?? -1);
 	}
 
 	public class OpponentMatchPointComparer : IComparer {
@@ -55,7 +56,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> p1.OpponentPoint.LifePoint - p2.OpponentPoint.LifePoint;
+			=> ((IBSPoint)p1.OpponentPoint).LifePoint - ((IBSPoint)p2.OpponentPoint).LifePoint;
 	}
 
 	public class WinPointComparer : IComparer {

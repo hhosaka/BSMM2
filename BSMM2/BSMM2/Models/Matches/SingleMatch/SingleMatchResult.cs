@@ -1,13 +1,14 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Resource;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
-	internal class SingleMatchResult : IResult {
+	internal class SingleMatchResult : IResult, IBSPoint {
 
-		private class TheResult : IExportablePoint {
+		private class TheResult : IExportablePoint, IBSPoint {
 			public int MatchPoint { get; }
 
 			public int LifePoint { get; }
@@ -15,7 +16,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			public double WinPoint { get; }
 
 			public string Information
-				=> "Point = " + MatchPoint + " /Life = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /Win = " + WinPoint;
+				=> AppResources.TextMatchPoint + " = " + MatchPoint + " /" +
+					AppResources.TextLifePoint + " = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /" +
+					AppResources.TextWinPoint + " = " + WinPoint;
 
 			public void ExportTitle(TextWriter writer) {
 				writer.Write("Point, WinPoint, LifePoint");
@@ -38,7 +41,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				foreach (var point in source) {
 					if (point != null) {
 						MatchPoint += point.MatchPoint;
-						LifePoint += point.LifePoint;
+						LifePoint += (point as IBSPoint)?.LifePoint ?? -1;
 						WinPoint += point.WinPoint;
 					}
 				}

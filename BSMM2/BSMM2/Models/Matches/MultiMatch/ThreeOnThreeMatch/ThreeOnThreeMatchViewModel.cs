@@ -51,9 +51,9 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 			Items = items;
 			_update = Update;
 
-			LifePoint1 = record1.Result.LifePoint;
+			LifePoint1 = ((IBSPoint)record1.Result).LifePoint;
 			LifePointTitle1 = String.Format("{0}'s remaining Life Point", record1.Player.Name);
-			LifePoint2 = record2.Result.LifePoint;
+			LifePoint2 = ((IBSPoint)record2.Result).LifePoint;
 			LifePointTitle2 = String.Format("{0}'s remaining Life Point", record2.Player.Name);
 
 			void Update() {

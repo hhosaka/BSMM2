@@ -457,7 +457,17 @@ namespace BSMM2Test {
 			var game = new FakeGame(new SingleMatchRule(), 4);
 
 			game.Shuffle();
-			Assert.AreEqual("Point = 0 /Life = 0 /Win = 0", game.Players.GetByOrder().ElementAt(0).Point.Information);
+
+			var buf = game.Players.GetByOrder().ElementAt(0).Point.Information;
+
+			var index = buf.IndexOf(" = 0 /");
+			Assert.IsTrue(index > 0);
+			index = buf.IndexOf(" = 0 /", index + 1);
+
+			Assert.IsTrue(index > 0);
+			index = buf.IndexOf(" = 0 /", index + 1);
+
+			Assert.IsTrue(index == -1);
 		}
 	}
 }
