@@ -1,10 +1,10 @@
-﻿using BSMM2.Models.Matches.SingleMatch;
-using BSMM2.ViewModels;
+﻿using BSMM2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
+using static BSMM2.Models.Matches.MultiMatch.MultiMatch;
 
 namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
@@ -45,13 +45,17 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 					LifePoint.GetItem(-1),
 					LifePoint.GetItem(-1),
 					LifePoint.GetItem(-1),
-
+				};
+				Player2LP = new[]{
+					LifePoint.GetItem(-1),
+					LifePoint.GetItem(-1),
+					LifePoint.GetItem(-1),
 				};
 			}
 
 			ResultItem[] CreateItems() {
 				var items = new List<ResultItem>();
-				result1.Results.ForEach(result => items.Add(new ResultItem(match.Record1.Result.RESULT, () => OnPropertyChanged(nameof(ResultItem)))));
+				result1.Results.ForEach(result => items.Add(new ResultItem(result.RESULT, () => OnPropertyChanged(nameof(ResultItem)))));
 				return items.ToArray();
 			}
 
@@ -61,13 +65,12 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 				return buf.ToArray();
 			}
 			void Done() {
-				var result = new MultiMatchResult(rule.MinimumMatchCount);
-				result.Add(new SingleMatchResult(ResultItem[0].Value, Player1LP[0].Point));
-
-				//match.SetSingleMatchResult(ResultItem.Value,
-				//	EnableLifePoint ? Player1LP.Point : RESULTUtil.DEFAULT_LIFE_POINT,
-				//	EnableLifePoint ? Player2LP.Point : RESULTUtil.DEFAULT_LIFE_POINT);
-				//MessagingCenter.Send<object>(this, Messages.REFRESH);
+				match.SetMultiMatchResult(new[] {
+					new Score(ResultItem[0].Value, Player1LP[0].Point, Player2LP[0].Point),
+					new Score(ResultItem[1].Value, Player1LP[1].Point, Player2LP[1].Point),
+					new Score(ResultItem[2].Value, Player1LP[2].Point, Player2LP[2].Point),
+				});
+				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}
 		}

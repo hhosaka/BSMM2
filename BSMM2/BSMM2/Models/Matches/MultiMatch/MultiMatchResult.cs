@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Models.Matches.SingleMatch;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			=> _results.Count(result => result.IsFinished) >= _minCount;
 
 		[JsonIgnore]
-		public IEnumerable<IBSPoint> Results => _results.Cast<IBSPoint>();
+		internal IEnumerable<SingleMatchResult> Results => _results.Cast<SingleMatchResult>();
 
 		public void Clear()
 			=> _results.Clear();
