@@ -8,8 +8,6 @@ using static BSMM2.Models.Matches.MultiMatch.MultiMatch;
 
 namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 
-	using LifePoints = IEnumerable<LifePoint>;
-
 	internal class ThreeOnThreeMatchViewModel : BaseViewModel {
 		private MultiMatch _match;
 		private ThreeOnThreeMatchRule _rule;
@@ -20,9 +18,6 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public LifePoint[] Player2LP { get; }
 		public IPlayer Player1 => _match.Record1.Player;
 		public IPlayer Player2 => _match.Record2.Player;
-
-		public LifePoints LifePoints
-			=> LifePoint.Instance;
 
 		public ICommand DoneCommand { get; }
 
@@ -41,12 +36,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItem))),
 					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItem))),
 				};
-				Player1LP = new[]{
-					LifePoint.GetItem(-1),
-					LifePoint.GetItem(-1),
-					LifePoint.GetItem(-1),
-				};
-				Player2LP = new[]{
+				Player1LP = Player2LP = new[]{
 					LifePoint.GetItem(-1),
 					LifePoint.GetItem(-1),
 					LifePoint.GetItem(-1),
@@ -69,7 +59,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 					new Score(ResultItem[0].Value, Player1LP[0].Point, Player2LP[0].Point),
 					new Score(ResultItem[1].Value, Player1LP[1].Point, Player2LP[1].Point),
 					new Score(ResultItem[2].Value, Player1LP[2].Point, Player2LP[2].Point),
-				});
+				}, EnableLifePoint);
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}

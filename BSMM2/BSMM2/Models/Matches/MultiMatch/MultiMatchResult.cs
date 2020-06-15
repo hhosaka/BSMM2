@@ -1,7 +1,6 @@
 ﻿using BSMM2.Models.Matches.SingleMatch;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using static BSMM2.Models.RESULT_T;
 
@@ -64,22 +63,6 @@ namespace BSMM2.Models.Matches.MultiMatch {
 				return result == 0 ? Draw : result > 0 ? Win : Lose;
 			}
 			return RESULT_T.Progress;
-		}
-
-		public void ExportTitle(TextWriter writer) {
-			throw new System.NotImplementedException();
-		}
-
-		public void ExportData(TextWriter writer) {
-			throw new System.NotImplementedException();
-		}
-
-		public IPoint GetPoint() => this;
-
-		public int? CompareTo(IPoint point, int strictness = 0) {
-			//if (strictness == 0) {// TODO
-			return MatchPoint - point.MatchPoint;
-			//}
 		}
 
 		public MultiMatchResult(int minCount) {

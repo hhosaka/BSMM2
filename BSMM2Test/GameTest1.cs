@@ -245,7 +245,7 @@ namespace BSMM2Test {
 			(matches.Matches.ElementAt(0) as MultiMatch).SetMultiMatchResult(new[] {
 				new MultiMatch.Score(Win),
 				new MultiMatch.Score(Lose),
-				new MultiMatch.Score(Win) });
+				new MultiMatch.Score(Win) }, false);
 
 			Util.CheckWithOrder(new[] { 1, 5, 3, 2, 6, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 5, 7, 8 }, game.Players.GetByOrder());
 		}

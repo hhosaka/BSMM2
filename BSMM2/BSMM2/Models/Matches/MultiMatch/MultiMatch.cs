@@ -34,15 +34,15 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			for (int i = 0; i < Rule.MatchCount; ++i) {
 				scores.Add(new Score(result));
 			}
-			SetMultiMatchResult(scores);
+			SetMultiMatchResult(scores, false);
 		}
 
-		public void SetMultiMatchResult(IEnumerable<Score> scores) {
+		public void SetMultiMatchResult(IEnumerable<Score> scores, bool enableLifePoint) {
 			var result1 = new MultiMatchResult(Rule.MinimumMatchCount);
 			var result2 = new MultiMatchResult(Rule.MinimumMatchCount);
 			foreach (var score in scores) {
-				result1.Add(new SingleMatchResult(score.Result, score.LifePoint1));
-				result2.Add(new SingleMatchResult(RESULTUtil.ToOpponents(score.Result), score.LifePoint2));
+				result1.Add(new SingleMatchResult(score.Result, enableLifePoint ? score.LifePoint1 : RESULTUtil.DEFAULT_LIFE_POINT));
+				result2.Add(new SingleMatchResult(RESULTUtil.ToOpponents(score.Result), enableLifePoint ? score.LifePoint2 : RESULTUtil.DEFAULT_LIFE_POINT));
 			}
 			SetResults(result1, result2);
 		}
