@@ -232,6 +232,33 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   1st Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Label1stMatch {
+            get {
+                return ResourceManager.GetString("Label1stMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   2nd Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Label2ndMatch {
+            get {
+                return ResourceManager.GetString("Label2ndMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   3rd Match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Label3rdMatch {
+            get {
+                return ResourceManager.GetString("Label3rdMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   BS Match Maker 2 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string LabelAppTitle {

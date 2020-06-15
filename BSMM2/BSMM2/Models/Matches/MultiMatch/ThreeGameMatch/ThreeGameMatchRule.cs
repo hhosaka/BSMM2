@@ -19,11 +19,9 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 		[JsonIgnore]
 		public override string Description => AppResources.DescriptionTreeGameMatch;
 
-		public override ContentPage CreateMatchPage(Match match)
-			=> throw new System.NotImplementedException();
+		public override ContentPage CreateMatchPage(Match match) => new ThreeGameMatchPage(this, match);
 
-		public override Rule Clone()
-			=> new ThreeGameMatchRule(this);
+		public override Rule Clone() => new ThreeGameMatchRule(this);
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new MultiMatch(this, player1, player2);
