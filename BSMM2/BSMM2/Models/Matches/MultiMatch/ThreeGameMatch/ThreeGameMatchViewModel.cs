@@ -13,11 +13,20 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 		private ThreeGameMatchRule _rule;
 
 		public bool EnableLifePoint => _rule.EnableLifePoint;
-		public ResultItem[] ResultItem { get; }
+
+		private ResultItem[] _resultItems;
+
+		public ResultItem[] ResultItem {
+			get => _resultItems;
+			set => SetProperty<ResultItem[]>(ref _resultItems, value, nameof(ResultItem));
+		}
+
 		public LifePoint[] Player1LP { get; }
 		public LifePoint[] Player2LP { get; }
 		public IPlayer Player1 => _match.Record1.Player;
 		public IPlayer Player2 => _match.Record2.Player;
+		public bool IsVisible2nd => ResultItem[0].Value != RESULT_T.Progress;
+		public bool IsVisible3rd => ResultItem[1].Value != RESULT_T.Progress;
 
 		public ICommand DoneCommand { get; }
 

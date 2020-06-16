@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.ViewModels;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,6 +24,8 @@ namespace BSMM2.Views {
 		private async Task OnMatchingFailed() {
 			await DisplayAlert("Alert", "Fail to generate match", "OK");//TODO : guide to match settings
 		}
+
+		private void OpenHelpPage(object sender, EventArgs e) => Navigation.PushModalAsync(new WebPage("https://sites.google.com/site/hhosaka183/bs-match-maker-2"));
 
 		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
 			if (args.Item is Match match && viewModel.Game.ActiveRound.IsPlaying)

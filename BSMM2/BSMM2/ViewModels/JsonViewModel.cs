@@ -45,8 +45,8 @@ namespace BSMM2.ViewModels {
 				Buf = "";
 			}
 
-			void SendByMail() {
-				app.SendByMail(app.Game.Headline, Buf);
+			async void SendByMail() {
+				await app.SendByMail(app.Game.Headline, Buf);
 			}
 		}
 	}

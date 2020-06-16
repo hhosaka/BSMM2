@@ -16,7 +16,7 @@
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuJson}" Clicked="OpenJsonPage" Order="Secondary" />
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuSetting}" Clicked="OpenSettingsPage" Order="Secondary" />
 		<!--ToolbarItem Text="Log" Clicked="Log" Order="Secondary" /-->
-		<ToolbarItem Text="{x:Static prop:AppResources.MenuHelp}" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuHelp}" Clicked="OpenHelpPage" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
