@@ -1,12 +1,26 @@
 ﻿using BSMM2.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using static BSMM2.Models.Matches.MultiMatch.MultiMatch;
 
 namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
+
+	internal class TheConverter : IValueConverter {
+
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+			if (value is ResultItem resultItem)
+				return resultItem.Value != RESULT_T.Progress;
+
+			return false;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+			=> throw new NotImplementedException();
+	}
 
 	internal class ThreeGameMatchViewModel : BaseViewModel {
 		private MultiMatch _match;
@@ -25,8 +39,6 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 		public LifePoint[] Player2LP { get; }
 		public IPlayer Player1 => _match.Record1.Player;
 		public IPlayer Player2 => _match.Record2.Player;
-		public bool IsVisible2nd => ResultItem[0].Value != RESULT_T.Progress;
-		public bool IsVisible3rd => ResultItem[1].Value != RESULT_T.Progress;
 
 		public ICommand DoneCommand { get; }
 
