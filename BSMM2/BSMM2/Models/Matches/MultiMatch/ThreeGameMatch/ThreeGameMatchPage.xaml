@@ -53,7 +53,7 @@
 				<Label Text="{Binding Player2.Name}" Grid.Row="3"  Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
 			</Grid>
 
-			<Grid Grid.Row="1" IsVisible="{Binding ResultItems[0], Converter={StaticResource TheConverter}}"  BackgroundColor="LightGray">
+			<Grid Grid.Row="1" IsVisible="{Binding ResultItems, Converter={StaticResource TheConverter},ConverterParameter=1}"  BackgroundColor="LightGray">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
@@ -86,7 +86,7 @@
 				<Label Text="{Binding Player2.Name}" Grid.Row="3"  Grid.Column="2" FontSize="Medium" VerticalTextAlignment="Center" />
 			</Grid>
 
-			<Grid Grid.Row="2" IsVisible="{Binding ResultItems[1], Converter={StaticResource TheConverter}}">
+			<Grid Grid.Row="2" IsVisible="{Binding ResultItems, Converter={StaticResource TheConverter},ConverterParameter=2}">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />

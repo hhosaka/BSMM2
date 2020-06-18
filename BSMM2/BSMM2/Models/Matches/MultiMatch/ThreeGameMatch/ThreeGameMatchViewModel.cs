@@ -12,8 +12,15 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 	internal class TheConverter : IValueConverter {
 
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-			if (value is ResultItem resultItem)
-				return resultItem.Value != RESULT_T.Progress;
+			if (value is ResultItem[] resultItems) {
+				switch (parameter.ToString()) {
+					case "1":
+						return !(resultItems[0].Value == RESULT_T.Progress && resultItems[1].Value == RESULT_T.Progress && resultItems[2].Value == RESULT_T.Progress);
+
+					case "2":
+						return !(resultItems[1].Value == RESULT_T.Progress && resultItems[2].Value == RESULT_T.Progress);
+				}
+			}
 
 			return false;
 		}
