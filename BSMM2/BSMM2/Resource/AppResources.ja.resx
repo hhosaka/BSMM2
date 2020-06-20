@@ -231,6 +231,24 @@
   <data name="LabelRuleAcceptGapMatchDuplication" xml:space="preserve">
     <value>階段戦の重複を認める</value>
   </data>
+  <data name="LabelRuleSetting" xml:space="preserve">
+    <value>ルール設定</value>
+  </data>
+  <data name="LabelUseLifePoint" xml:space="preserve">
+    <value>ライフポイントで比較</value>
+  </data>
+  <data name="LabelUseOpponentLifePoint" xml:space="preserve">
+    <value>オポネントライフポイントで比較</value>
+  </data>
+  <data name="LabelUseOpponentMatchPoint" xml:space="preserve">
+    <value>オポネントポイントで比較</value>
+  </data>
+  <data name="LabelUseOpponentWinPoint" xml:space="preserve">
+    <value>オポネント勝利ポイントで比較</value>
+  </data>
+  <data name="LabelUseWinPoint" xml:space="preserve">
+    <value>勝利ポイントで比較</value>
+  </data>
   <data name="MenuAddPlayer" xml:space="preserve">
     <value>プレーヤー追加</value>
   </data>
@@ -297,8 +315,20 @@
   <data name="Text3rdPlayer" xml:space="preserve">
     <value>大将</value>
   </data>
+  <data name="TextAlert" xml:space="preserve">
+    <value>警告</value>
+  </data>
   <data name="TextBYE" xml:space="preserve">
     <value>不戦勝</value>
+  </data>
+  <data name="TextFailToMakeMatch" xml:space="preserve">
+    <value>抽選に失敗しました。制約を変更して再抽選できます。</value>
+  </data>
+  <data name="TextGiveUp" xml:space="preserve">
+    <value>中止</value>
+  </data>
+  <data name="TextGoToRuleSetting" xml:space="preserve">
+    <value>ルール設定へ</value>
   </data>
   <data name="TextLifePoint" xml:space="preserve">
     <value>ライフP</value>

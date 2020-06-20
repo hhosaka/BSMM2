@@ -234,6 +234,24 @@
   <data name="LabelRuleAcceptGapMatchDuplication" xml:space="preserve">
     <value>Accept gap match duplication</value>
   </data>
+  <data name="LabelRuleSetting" xml:space="preserve">
+    <value>Rule Setting</value>
+  </data>
+  <data name="LabelUseLifePoint" xml:space="preserve">
+    <value>Use Life point</value>
+  </data>
+  <data name="LabelUseOpponentLifePoint" xml:space="preserve">
+    <value>Use Opponent life pont</value>
+  </data>
+  <data name="LabelUseOpponentMatchPoint" xml:space="preserve">
+    <value>Use Opponent match point</value>
+  </data>
+  <data name="LabelUseOpponentWinPoint" xml:space="preserve">
+    <value>Use Opponent win point</value>
+  </data>
+  <data name="LabelUseWinPoint" xml:space="preserve">
+    <value>Use Win point</value>
+  </data>
   <data name="MenuAddPlayer" xml:space="preserve">
     <value>Add Player</value>
   </data>
@@ -300,8 +318,20 @@
   <data name="Text3rdPlayer" xml:space="preserve">
     <value>3rd Player</value>
   </data>
+  <data name="TextAlert" xml:space="preserve">
+    <value>Alert</value>
+  </data>
   <data name="TextBYE" xml:space="preserve">
     <value>BYE</value>
+  </data>
+  <data name="TextFailToMakeMatch" xml:space="preserve">
+    <value>Fail to make match</value>
+  </data>
+  <data name="TextGiveUp" xml:space="preserve">
+    <value>Give up</value>
+  </data>
+  <data name="TextGoToRuleSetting" xml:space="preserve">
+    <value>Go to rule setting. You may modify rule setting before retry.</value>
   </data>
   <data name="TextLifePoint" xml:space="preserve">
     <value>Life Point</value>

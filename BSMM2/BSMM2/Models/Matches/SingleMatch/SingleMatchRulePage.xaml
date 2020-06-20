@@ -4,23 +4,39 @@
 			 xmlns:prop="clr-namespace:BSMM2.Resource"
  			 x:Class="BSMM2.Models.Matches.SingleMatch.SingleMatchRulePage"
 			 Disappearing="OnClosing"
-			 Title="{Binding Name}">
+			 Title="{Binding Title}">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="Back" Clicked="Back" Order="Secondary" />
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Game.AcceptByeMatchDuplication}" />
 				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptByeMatchDuplication}" VerticalOptions="Center" />
-				<CheckBox IsChecked="{Binding Game.AcceptByeMatchDuplication}" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Game.AcceptGapMatchDuplication}" />
 				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptGapMatchDuplication}" VerticalOptions="Center" />
-				<CheckBox IsChecked="{Binding Game.AcceptGapMatchDuplication}" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
+				<Switch IsToggled="{Binding Rule.Comparers[1].Active}" />
+				<Label Text="{x:Static prop:AppResources.LabelUseLifePoint}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Label Text="{x:Static prop:AppResources.LabelMinimumCondition}" VerticalOptions="Center" />
-				<CheckBox IsChecked="{Binding Rule.MinimumComparison}" />
+				<Switch IsToggled="{Binding Rule.Comparers[2].Active}" />
+				<Label Text="{x:Static prop:AppResources.LabelUseOpponentMatchPoint}" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
+				<Switch IsToggled="{Binding Rule.Comparers[3].Active}" />
+				<Label Text="{x:Static prop:AppResources.LabelUseOpponentLifePoint}" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Rule.Comparers[4].Active}" />
+				<Label Text="{x:Static prop:AppResources.LabelUseWinPoint}" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Rule.Comparers[5].Active}" />
+				<Label Text="{x:Static prop:AppResources.LabelUseOpponentWinPoint}" VerticalOptions="Center" />
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

@@ -11,7 +11,10 @@ namespace BSMM2.Models {
 		public string Description
 			=> "合計得点";
 
-		public bool Active { get; set; } = true;
+		public bool Active {
+			get => true;
+			set => throw new InvalidOperationException();
+		}
 
 		public int Compare(Player p1, Player p2)
 			=> p1.Point.MatchPoint - p2.Point.MatchPoint;

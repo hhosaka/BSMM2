@@ -16,12 +16,10 @@ namespace BSMM2.Views {
 			_app = app;
 			InitializeComponent();
 
-			BindingContext = viewModel = new PlayersViewModel(app, NewGame, OpenRule, SelectGame, DeleteGame, AddPlayer);
+			BindingContext = viewModel = new PlayersViewModel(app, NewGame, SelectGame, DeleteGame, AddPlayer);
 
 			void NewGame()
 				=> Navigation.PushModalAsync(new NavigationPage(new NewGamePage(_app)));
-			void OpenRule()
-				=> Navigation.PushModalAsync(new NavigationPage(_app.Game.CreateRulePage()));
 			void SelectGame()
 				=> Navigation.PushModalAsync(
 					new NavigationPage(new GamesPage(_app, "Select Item", selectGame)));
@@ -50,6 +48,9 @@ namespace BSMM2.Views {
 		private void Log(object sender, EventArgs e) {
 			DisplayAlert("log", new Storage().Log(), "Finish");
 		}
+
+		private void OpenRuleSettingPage(object sender, EventArgs e)
+				=> Navigation.PushModalAsync(new NavigationPage(_app.Game.CreateRulePage()));
 
 		private void OpenSettingsPage(object sender, EventArgs e)
 				=> Navigation.PushModalAsync(new NavigationPage(new SettingsPage(_app)));

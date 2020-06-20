@@ -7,7 +7,7 @@
 			 x:Name="BrowseItemsPage">
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuNewGame}" Command="{Binding NewGameCommand}" Order="Secondary" />
-		<ToolbarItem Text="{x:Static prop:AppResources.MenuSettingRule}" Command="{Binding RuleCommand}" Order="Secondary" />
+		<ToolbarItem Text="{x:Static prop:AppResources.MenuSettingRule}" Clicked="OpenRuleSettingPage" Order="Secondary" />
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuSelectGame}" Command ="{Binding SelectGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuDeleteGame}" Command ="{Binding DeleteGameCommand}" Order="Secondary" />
 		<ToolbarItem Text="{x:Static prop:AppResources.MenuAddPlayer}" Command="{Binding AddPlayerCommand}" Order="Secondary" />

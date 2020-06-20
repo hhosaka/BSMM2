@@ -29,12 +29,11 @@ namespace BSMM2.ViewModels {
 		public DelegateCommand SaveCommand { get; }
 		public DelegateCommand HelpCommand { get; }
 
-		public PlayersViewModel(BSMMApp app, Action newGame = null, Action openRule = null, Action selectGame = null, Action deleteGame = null, Action addPlayer = null) {
+		public PlayersViewModel(BSMMApp app, Action newGame = null, Action selectGame = null, Action deleteGame = null, Action addPlayer = null) {
 			_app = app;
 			Players = new ObservableCollection<Player>();
 
 			NewGameCommand = new DelegateCommand(() => newGame?.Invoke());
-			RuleCommand = new DelegateCommand(() => openRule?.Invoke(), () => _app.Game.CanAddPlayers());
 			SelectGameCommand = new DelegateCommand(() => selectGame?.Invoke(), () => _app.Games.Any());
 			DeleteGameCommand = new DelegateCommand(() => deleteGame?.Invoke(), () => _app.Games.Any());
 			AddPlayerCommand = new DelegateCommand(() => addPlayer?.Invoke(), () => _app.Game.CanAddPlayers());

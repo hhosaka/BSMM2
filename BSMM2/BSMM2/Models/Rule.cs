@@ -12,9 +12,10 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool EnableLifePoint { get; set; }
 
-		internal IComparer[] Comparers { get; }
+		private IComparer[] _comparers;
+		public IEnumerable<IComparer> Comparers => _comparers;
 
-		public int CompareDepth => Comparers.Count();
+		public int CompareDepth => _comparers.Count();
 
 		[JsonIgnore]
 		public abstract string Name { get; }
@@ -75,7 +76,7 @@ namespace BSMM2.Models {
 			=> new TheComparer((p1, p2) => Compare(p1, p2, false));
 
 		private int Compare(Player sx, Player sy, bool fully) {
-			foreach (var comparer in Comparers) {
+			foreach (var comparer in _comparers) {
 				if (fully || comparer.Active) {
 					var ret = comparer.Compare(sx, sy);
 					if (ret != 0) return ret;
@@ -85,7 +86,7 @@ namespace BSMM2.Models {
 		}
 
 		public Rule() {
-			Comparers = new IComparer[] {
+			_comparers = new IComparer[] {
 				new PointComparer(),
 				new LifePointComparer(),
 				new OpponentMatchPointComparer(),

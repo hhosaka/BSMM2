@@ -40,11 +40,12 @@ namespace BSMM2.ViewModels {
 		public DelegateCommand StepToMatchingCommand { get; }
 		public DelegateCommand ShowRoundsLogCommand { get; }
 
-		public event Func<Task> OnFailedMatching;
+		private Action _failToMakeMatch;
 
-		public RoundViewModel(BSMMApp app, Action showRoundsLog) {
+		public RoundViewModel(BSMMApp app, Action showRoundsLog, Action failToMakeMatch) {
 			Debug.Assert(app != null);
 			_app = app;
+			_failToMakeMatch = failToMakeMatch;
 			ShuffleCommand = CreateShuffleCommand();
 			StartCommand = CreateStepToPlayingCommand();
 			StepToMatchingCommand = CreateStepToMatchingCommand();
@@ -101,7 +102,7 @@ namespace BSMM2.ViewModels {
 					_app.Save(false);
 					await ExecuteRefresh();
 				} else {
-					await OnFailedMatching();
+					_failToMakeMatch();
 				}
 			}
 		}
@@ -116,7 +117,7 @@ namespace BSMM2.ViewModels {
 					_app.Save(false);
 					await ExecuteRefresh();
 				} else {
-					await OnFailedMatching();
+					_failToMakeMatch();
 				}
 			}
 		}

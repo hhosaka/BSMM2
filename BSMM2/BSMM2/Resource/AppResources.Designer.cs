@@ -412,6 +412,60 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Rule Setting に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelRuleSetting {
+            get {
+                return ResourceManager.GetString("LabelRuleSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Life point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseLifePoint {
+            get {
+                return ResourceManager.GetString("LabelUseLifePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Opponent life pont に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseOpponentLifePoint {
+            get {
+                return ResourceManager.GetString("LabelUseOpponentLifePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Opponent match point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseOpponentMatchPoint {
+            get {
+                return ResourceManager.GetString("LabelUseOpponentMatchPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Opponent win point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseOpponentWinPoint {
+            get {
+                return ResourceManager.GetString("LabelUseOpponentWinPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use Win point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseWinPoint {
+            get {
+                return ResourceManager.GetString("LabelUseWinPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Add Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MenuAddPlayer {
@@ -610,11 +664,47 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Alert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextAlert {
+            get {
+                return ResourceManager.GetString("TextAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   BYE に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string TextBYE {
             get {
                 return ResourceManager.GetString("TextBYE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Fail to make match に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextFailToMakeMatch {
+            get {
+                return ResourceManager.GetString("TextFailToMakeMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Give up に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextGiveUp {
+            get {
+                return ResourceManager.GetString("TextGiveUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Go to rule setting. You may modify rule setting before retry. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TextGoToRuleSetting {
+            get {
+                return ResourceManager.GetString("TextGoToRuleSetting", resourceCulture);
             }
         }
         
