@@ -12,9 +12,13 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool EnableLifePoint { get; set; }
 
+		[JsonProperty]
 		private IComparer[] _comparers;
+
+		[JsonIgnore]
 		public IEnumerable<IComparer> Comparers => _comparers;
 
+		[JsonIgnore]
 		public int CompareDepth => _comparers.Count();
 
 		[JsonIgnore]

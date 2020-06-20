@@ -167,6 +167,19 @@ namespace BSMM2Test {
 			Assert.AreEqual(1, dst.Game.Rounds.Count());
 		}
 
+		[TestMethod]
+		public void LoadSaveTest7() {
+			var app = BSMMApp.Create("test.json", true);
+			Assert.AreEqual(true, app.Game.Rule.Comparers.ElementAt(1).Active);
+			app.Game.Rule.Comparers.ElementAt(1).Active = false;
+			Assert.AreEqual(false, app.Game.Rule.Comparers.ElementAt(1).Active);
+
+			app.Save(true);
+			var dst = BSMMApp.Create("test.json", false);
+
+			Assert.AreEqual(false, dst.Game.Rule.Comparers.ElementAt(1).Active);
+		}
+
 		private class Sample {
 			public string Title { get; set; }
 			public List<string> List { get; set; }

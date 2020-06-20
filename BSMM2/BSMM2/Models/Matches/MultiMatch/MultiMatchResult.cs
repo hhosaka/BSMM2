@@ -7,7 +7,7 @@ using static BSMM2.Models.RESULT_T;
 namespace BSMM2.Models.Matches.MultiMatch {
 
 	[JsonObject]
-	public class MultiMatchResult : IResult, IBSPoint {
+	public class MultiMatchResult : IResult {
 
 		[JsonProperty]
 		private List<IResult> _results;
@@ -20,7 +20,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		[JsonIgnore]
 		public int LifePoint
-			=> _results.Sum(p => ((IBSPoint)p).LifePoint);
+			=> _results.Sum(p => p.LifePoint);
 
 		[JsonIgnore]
 		public double WinPoint

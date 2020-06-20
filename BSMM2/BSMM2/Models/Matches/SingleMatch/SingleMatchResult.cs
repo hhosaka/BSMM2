@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace BSMM2.Models.Matches.SingleMatch {
 
-	internal class SingleMatchResult : IResult, IBSPoint {
+	internal class SingleMatchResult : IResult {
 
-		private class TheResult : IExportablePoint, IBSPoint {
+		private class TheResult : IExportablePoint {
 			public int MatchPoint { get; }
 
 			public int LifePoint { get; }
@@ -41,7 +41,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				foreach (var point in source) {
 					if (point != null) {
 						MatchPoint += point.MatchPoint;
-						LifePoint += (point as IBSPoint)?.LifePoint ?? -1;
+						LifePoint += point.LifePoint;
 						WinPoint += point.WinPoint;
 					}
 				}

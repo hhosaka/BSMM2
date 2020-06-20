@@ -1,5 +1,4 @@
 ﻿using BSMM2.Models;
-using BSMM2.Models.Matches;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -51,9 +50,7 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.IsFinished, b.IsFinished);
 			Assert.AreEqual(a.MatchPoint, b.MatchPoint);
 			Assert.AreEqual(a.WinPoint, b.WinPoint);
-			if (a is IBSPoint a1 && b is IBSPoint b1) {
-				Assert.AreEqual(a1.LifePoint, b1.LifePoint);
-			}
+			Assert.AreEqual(a.LifePoint, b.LifePoint);
 		}
 
 		public static void Check(IPlayer a, IPlayer b) {
