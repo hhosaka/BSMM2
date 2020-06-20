@@ -3,10 +3,27 @@ using System;
 
 namespace BSMM2.Models {
 
-	[JsonObject]
-	public class PointComparer : IComparer {
+	public class BasicComparer : IComparer {
 
 		[JsonProperty]
+		public bool Active {
+			get => true;
+			set { }
+		}
+
+		public int Compare(Player p1, Player p2) {
+			if (p1 == p2) {
+				return 0;
+			} else if (p1.Dropped) {
+				return p2.Dropped ? 0 : -1;
+			} else {
+				return p2.Dropped ? 1 : 0;
+			}
+		}
+	}
+
+	public class PointComparer : IComparer {
+
 		public bool Active {
 			get => true;
 			set { }
