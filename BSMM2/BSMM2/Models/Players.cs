@@ -88,7 +88,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public IEnumerable<Player> GetSource(Rule rule, int level)
+		public IEnumerable<Player> GetSource(Rule rule)
 			=> Source(_players).OrderByDescending(p => p, rule.GetComparer(false));
 
 		public void Reset() {

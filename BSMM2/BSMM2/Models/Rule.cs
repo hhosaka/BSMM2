@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
 using Xamarin.Forms;
 
 namespace BSMM2.Models {
@@ -18,31 +17,10 @@ namespace BSMM2.Models {
 		public IEnumerable<IComparer> Comparers => _comparers;
 
 		[JsonIgnore]
-		public int CompareDepth => _comparers.Count();
-
-		[JsonIgnore]
 		public abstract string Name { get; }
 
 		[JsonIgnore]
 		public abstract string Description { get; }
-
-		private class TheComparer : Comparer<Player> {
-			private IEnumerable<IComparer> _compareres;
-			private bool _force;
-
-			public TheComparer(IEnumerable<IComparer> compareres, bool force) {
-				_compareres = compareres;
-				_force = force;
-			}
-
-			public override int Compare(Player p1, Player p2) {
-				foreach (var c in _compareres.Where(c => _force || c.Active)) {
-					var ret = c.Compare(p1, p2);
-					if (ret != 0) return ret;
-				}
-				return 0;
-			}
-		}
 
 		public abstract Match CreateMatch(IPlayer player1, IPlayer player2 = null);
 

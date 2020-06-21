@@ -1,8 +1,28 @@
 ﻿using BSMM2.Resource;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BSMM2.Models {
+
+	internal class TheComparer : Comparer<Player> {
+		private IEnumerable<IComparer> _compareres;
+		private bool _force;
+
+		public TheComparer(IEnumerable<IComparer> compareres, bool force) {
+			_compareres = compareres;
+			_force = force;
+		}
+
+		public override int Compare(Player p1, Player p2) {
+			foreach (var c in _compareres.Where(c => _force || c.Active)) {
+				var ret = c.Compare(p1, p2);
+				if (ret != 0) return ret;
+			}
+			return 0;
+		}
+	}
 
 	public class PreComparer : IComparer {
 
