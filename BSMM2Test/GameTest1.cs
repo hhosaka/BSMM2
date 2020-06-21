@@ -450,7 +450,6 @@ namespace BSMM2Test {
 			rule.EnableLifePoint = true;
 			a = rule.Clone() as SingleMatchRule;
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
-			Assert.IsNotNull(a.BYE.Name);
 			Assert.IsNotNull(a.Comparers);
 		}
 

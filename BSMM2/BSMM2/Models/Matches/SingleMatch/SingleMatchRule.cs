@@ -18,9 +18,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonIgnore]
 		public IEnumerable<IComparer> Comparers => _comparers;
 
-		[JsonIgnore]
-		public IPlayer BYE { get; }
-
 		public virtual ContentPage CreateMatchPage(Match match)
 			=> new SingleMatchPage(this, (SingleMatch)match);
 
@@ -47,7 +44,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> AppResources.DescriptionSingleMatch;
 
 		public SingleMatchRule() : base() {
-			BYE = new Player(this, AppResources.TextBYE);
 			_comparers = new IComparer[] {
 				new PreComparer(),
 				new PointComparer(),

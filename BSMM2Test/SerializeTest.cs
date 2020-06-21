@@ -217,6 +217,31 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
+		public void LoadSaveTest8() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 3, _origin);
+
+			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
+
+			game.StepToPlaying();
+
+			game.ActiveRound.Matches.ElementAt(0).SetResult(Win);
+
+			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 3, 2 }, _origin, game.Players.GetByOrder());
+
+			var engine = new Storage();
+
+			game.Save(engine);
+
+			var game2 = Game.Load(game.Id, engine);
+
+			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game2.ActiveRound);
+			Util.Check(new[] { 1, 3, 2 }, _origin, game2.Players.GetByOrder());
+			Assert.AreEqual(0, game2.Rounds.Count());
+		}
+
+		[TestMethod]
 		public void LoadSaveAppTest1() {
 			var buf = new StringBuilder();
 

@@ -8,6 +8,7 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public abstract class Match : INotifyPropertyChanged {
+		private static IPlayer BYE = new BYE();
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +66,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsByeMatch
-			=> _records.Any(result => result.Player == _rule.BYE);
+			=> _records.Any(result => result.Player == BYE);
 
 		[JsonIgnore]
 		public IEnumerable<string> PlayerNames
@@ -112,7 +113,7 @@ namespace BSMM2.Models {
 				_records = new[] { new Record(player1), new Record(player2) };
 				IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
 			} else {
-				_records = new[] { new Record(player1), new Record(_rule.BYE) };
+				_records = new[] { new Record(player1), new Record(BYE) };
 				SetResult(RESULT_T.Win);
 			}
 		}
