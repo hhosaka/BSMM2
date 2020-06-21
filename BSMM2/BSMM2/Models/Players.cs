@@ -71,8 +71,8 @@ namespace BSMM2.Models {
 				return Enumerable.Empty<Player>();
 			} else {
 				Reset();
-				var players = _players.OrderByDescending(p => p, _rule.CreateOrderComparer());
-				var comparer = _rule.CreateOrderComparer();
+				var comparer = _rule.GetComparer(true);
+				var players = _players.OrderByDescending(p => p, comparer);
 				Player prev = null;
 				int order = 0;
 				int count = 0;
@@ -88,9 +88,8 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public IEnumerable<Player> GetSource(Rule rule, int level) {
-			return Source(_players).OrderByDescending(p => p, rule.CreateSourceComparer());
-		}
+		public IEnumerable<Player> GetSource(Rule rule, int level)
+			=> Source(_players).OrderByDescending(p => p, rule.GetComparer(false));
 
 		public void Reset() {
 			_players.ForEach(p => p.CalcPoint(_rule));

@@ -21,23 +21,23 @@ namespace BSMM2Test {
 			var players = new Players(rule, 4).GetByOrder().ToArray();// new[] { new Player("player1"), new Player("player2"), new Player("player3"), new Player("player4") };
 			var matches = new[] { new SingleMatch(rule, players[0], players[1]), new SingleMatch(rule, players[2], players[3]) };
 
-			Assert.IsTrue(players.SequenceEqual(players.OrderByDescending(player => player, rule.CreateOrderComparer())));
+			Assert.IsTrue(players.SequenceEqual(players.OrderByDescending(player => player, rule.GetComparer(true))));
 
 			matches.ForEach(match => match.Commit());
 
-			CollectionAssert.Equals(players, players.OrderByDescending(p => p, rule.CreateOrderComparer()));
+			CollectionAssert.Equals(players, players.OrderByDescending(p => p, rule.GetComparer(true)));
 
 			matches[0].SetResult(Win);
 			matches[1].SetResult(Win);
 
 			CollectionAssert.Equals(new[] { players[0], players[2], players[1], players[3] },
-				players.OrderByDescending(p => p, rule.CreateOrderComparer()));
+				players.OrderByDescending(p => p, rule.GetComparer(true)));
 
 			matches[0].SetResult(Lose);
 			matches[1].SetResult(Lose);
 
 			CollectionAssert.Equals(new[] { players[1], players[3], players[0], players[2] },
-				players.OrderByDescending(p => p, rule.CreateOrderComparer()));
+				players.OrderByDescending(p => p, rule.GetComparer(true)));
 		}
 
 		[TestMethod]

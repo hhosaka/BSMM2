@@ -1,14 +1,21 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Resource;
+using Newtonsoft.Json;
 using System;
 
 namespace BSMM2.Models {
 
-	public class BasicComparer : IComparer {
+	public class PreComparer : IComparer {
 
-		[JsonProperty]
+		[JsonIgnore]
+		public string Label => throw new InvalidOperationException();
+
+		[JsonIgnore]
+		public bool Mandatory => true;
+
+		[JsonIgnore]
 		public bool Active {
 			get => true;
-			set { }
+			set => throw new InvalidOperationException();
 		}
 
 		public int Compare(Player p1, Player p2) {
@@ -22,7 +29,33 @@ namespace BSMM2.Models {
 		}
 	}
 
+	public class PostComparer : IComparer {
+
+		[JsonIgnore]
+		public string Label => throw new InvalidOperationException();
+
+		[JsonIgnore]
+		public bool Mandatory => true;
+
+		[JsonIgnore]
+		public bool Active {
+			get => true;
+			set => throw new InvalidOperationException();
+		}
+
+		public int Compare(Player p1, Player p2) {
+			var result = p1.GetResult(p2);
+			return result == RESULT_T.Win ? 1 : result == RESULT_T.Lose ? -1 : 0;
+		}
+	}
+
 	public class PointComparer : IComparer {
+
+		[JsonIgnore]
+		public string Label => throw new InvalidOperationException();
+
+		[JsonIgnore]
+		public bool Mandatory => true;
 
 		public bool Active {
 			get => true;
@@ -36,6 +69,12 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class LifePointComparer : IComparer {
 
+		[JsonIgnore]
+		public string Label => AppResources.LabelUseLifePoint;
+
+		[JsonIgnore]
+		public bool Mandatory => false;
+
 		[JsonProperty]
 		public bool Active { get; set; } = true;
 
@@ -45,6 +84,12 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class OpponentMatchPointComparer : IComparer {
+
+		[JsonIgnore]
+		public string Label => AppResources.LabelUseOpponentMatchPoint;
+
+		[JsonIgnore]
+		public bool Mandatory => false;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;
@@ -56,6 +101,12 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class OpponentLifePointComparer : IComparer {
 
+		[JsonIgnore]
+		public string Label => AppResources.LabelUseOpponentLifePoint;
+
+		[JsonIgnore]
+		public bool Mandatory => false;
+
 		[JsonProperty]
 		public bool Active { get; set; } = true;
 
@@ -66,6 +117,12 @@ namespace BSMM2.Models {
 	[JsonObject]
 	public class WinPointComparer : IComparer {
 
+		[JsonIgnore]
+		public string Label => AppResources.LabelUseWinPoint;
+
+		[JsonIgnore]
+		public bool Mandatory => false;
+
 		[JsonProperty]
 		public bool Active { get; set; } = true;
 
@@ -75,6 +132,12 @@ namespace BSMM2.Models {
 
 	[JsonObject]
 	public class OpponentWinPointComparer : IComparer {
+
+		[JsonIgnore]
+		public string Label => AppResources.LabelUseOpponentWinPoint;
+
+		[JsonIgnore]
+		public bool Mandatory => false;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;

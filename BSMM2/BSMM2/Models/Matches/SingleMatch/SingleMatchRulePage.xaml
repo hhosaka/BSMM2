@@ -19,24 +19,24 @@
 				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptGapMatchDuplication}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
-				<Switch IsToggled="{Binding Rule.Comparers[1].Active}" />
-				<Label Text="{x:Static prop:AppResources.LabelUseLifePoint}" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Rule.Comparers[2].Active}" />
+				<Label Text="{Binding Rule.Comparers[2].Label}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding Rule.Comparers[2].Active}" />
-				<Label Text="{x:Static prop:AppResources.LabelUseOpponentMatchPoint}" VerticalOptions="Center" />
+				<Switch IsToggled="{Binding Rule.Comparers[3].Active}" />
+				<Label Text="{Binding Rule.Comparers[3].Label}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
-				<Switch IsToggled="{Binding Rule.Comparers[3].Active}" />
-				<Label Text="{x:Static prop:AppResources.LabelUseOpponentLifePoint}" VerticalOptions="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
 				<Switch IsToggled="{Binding Rule.Comparers[4].Active}" />
-				<Label Text="{x:Static prop:AppResources.LabelUseWinPoint}" VerticalOptions="Center" />
+				<Label Text="{Binding Rule.Comparers[4].Label}" VerticalOptions="Center" />
 			</StackLayout>
 			<StackLayout Orientation="Horizontal">
 				<Switch IsToggled="{Binding Rule.Comparers[5].Active}" />
-				<Label Text="{x:Static prop:AppResources.LabelUseOpponentWinPoint}" VerticalOptions="Center" />
+				<Label Text="{Binding Rule.Comparers[5].Label}" VerticalOptions="Center" />
+			</StackLayout>
+			<StackLayout Orientation="Horizontal">
+				<Switch IsToggled="{Binding Rule.Comparers[6].Active}" />
+				<Label Text="{Binding Rule.Comparers[6].Label}" VerticalOptions="Center" />
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

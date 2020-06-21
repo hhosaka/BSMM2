@@ -169,15 +169,16 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest7() {
+			var index = 2;
 			var app = BSMMApp.Create("test.json", true);
-			Assert.AreEqual(true, app.Game.Rule.Comparers.ElementAt(1).Active);
-			app.Game.Rule.Comparers.ElementAt(1).Active = false;
-			Assert.AreEqual(false, app.Game.Rule.Comparers.ElementAt(1).Active);
+			Assert.AreEqual(true, app.Game.Rule.Comparers.ElementAt(index).Active);
+			app.Game.Rule.Comparers.ElementAt(index).Active = false;
+			Assert.AreEqual(false, app.Game.Rule.Comparers.ElementAt(index).Active);
 
 			app.Save(true);
 			var dst = BSMMApp.Create("test.json", false);
 
-			Assert.AreEqual(false, dst.Game.Rule.Comparers.ElementAt(1).Active);
+			Assert.AreEqual(false, dst.Game.Rule.Comparers.ElementAt(index).Active);
 		}
 
 		private class Sample {
