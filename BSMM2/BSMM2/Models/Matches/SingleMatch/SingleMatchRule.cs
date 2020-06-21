@@ -10,38 +10,58 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	public class SingleMatchRule : Rule {
 
 		[JsonProperty]
-		private IPlayer _bye;
+		public bool EnableLifePoint { get; set; }
+
+		[JsonProperty]
+		private IEnumerable<IComparer> _comparers;
 
 		[JsonIgnore]
-		public override IPlayer BYE => _bye;
+		public IEnumerable<IComparer> Comparers => _comparers;
 
-		public override ContentPage CreateMatchPage(Match match)
+		[JsonIgnore]
+		public IPlayer BYE { get; }
+
+		public virtual ContentPage CreateMatchPage(Match match)
 			=> new SingleMatchPage(this, (SingleMatch)match);
 
-		public override ContentPage CreateRulePage(Game game)
+		public ContentPage CreateRulePage(Game game)
 			=> new SingleMatchRulePage(game);
 
-		public override Rule Clone()
+		public virtual Rule Clone()
 			=> new SingleMatchRule(this);
 
-		public override Match CreateMatch(IPlayer player1, IPlayer player2)
+		public virtual Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new SingleMatch(this, player1, player2);
 
-		public override IExportablePoint Point(IEnumerable<IPoint> results) {
+		public IExportablePoint Point(IEnumerable<IPoint> results) {
 			return SingleMatchResult.Total(results.Select(result => (IPoint)result));
 		}
 
-		public override string Name
+		public virtual Comparer<Player> GetComparer(bool force)
+			=> new TheComparer(Comparers, force);
+
+		public virtual string Name
 			=> AppResources.ItemRuleSingleMatch;
 
-		public override string Description
+		public virtual string Description
 			=> AppResources.DescriptionSingleMatch;
 
 		public SingleMatchRule() : base() {
-			_bye = new Player(this, AppResources.TextBYE);
+			BYE = new Player(this, AppResources.TextBYE);
+			_comparers = new IComparer[] {
+				new PreComparer(),
+				new PointComparer(),
+				new LifePointComparer(),
+				new OpponentMatchPointComparer(),
+				new OpponentLifePointComparer(),
+				new WinPointComparer(),
+				new OpponentWinPointComparer(),
+				new PostComparer(),
+			};
 		}
 
-		protected SingleMatchRule(Rule src) : base(src) {
+		protected SingleMatchRule(SingleMatchRule src) : this() {
+			EnableLifePoint = src.EnableLifePoint;
 		}
 	}
 }

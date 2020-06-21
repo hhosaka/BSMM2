@@ -14,7 +14,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override int MinimumMatchCount => 3;
 
 		[JsonIgnore]
-		public override string Name
+		public string Name
 			=> AppResources.ItemRuleThreeOnThreeMatch;
 
 		[JsonIgnore]
@@ -24,9 +24,8 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override ContentPage CreateMatchPage(Match match)
 			=> new ThreeOnThreeMatchPage(this, (MultiMatch)match);
 
-		public override Rule Clone() {
-			return new ThreeOnThreeMatchRule(this);
-		}
+		public override Rule Clone()
+			=> new ThreeOnThreeMatchRule(this);
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new MultiMatch(this, player1, player2);

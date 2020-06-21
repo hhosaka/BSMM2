@@ -443,13 +443,15 @@ namespace BSMM2Test {
 		[TestMethod]
 		public void CloneTest() {
 			var rule = new SingleMatchRule();
-			var a = rule.Clone();
+			var a = rule.Clone() as SingleMatchRule;
 			Assert.AreEqual(rule.Name, a.Name);
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
 
 			rule.EnableLifePoint = true;
-			a = rule.Clone();
+			a = rule.Clone() as SingleMatchRule;
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
+			Assert.IsNotNull(a.BYE.Name);
+			Assert.IsNotNull(a.Comparers);
 		}
 
 		[TestMethod]

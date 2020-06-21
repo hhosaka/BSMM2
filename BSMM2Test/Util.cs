@@ -1,4 +1,5 @@
 ﻿using BSMM2.Models;
+using BSMM2.Models.Matches.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -106,7 +107,9 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.Rule.Name, b.Rule.Name);
 			Assert.AreEqual(a.AcceptByeMatchDuplication, b.AcceptByeMatchDuplication);
 			Assert.AreEqual(a.AcceptGapMatchDuplication, b.AcceptGapMatchDuplication);
-			Assert.AreEqual(a.Rule.EnableLifePoint, b.Rule.EnableLifePoint);
+			if (a.Rule is SingleMatchRule srule) {
+				Assert.AreEqual(srule.EnableLifePoint, srule.EnableLifePoint);
+			}
 			Check(a.Rule, a.Players, b.Players);
 			Check(a.ActiveRound, b.ActiveRound);
 			Check(a.Rounds, b.Rounds);

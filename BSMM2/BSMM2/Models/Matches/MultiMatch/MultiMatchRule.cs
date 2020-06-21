@@ -11,7 +11,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		protected MultiMatchRule() {
 		}
 
-		protected MultiMatchRule(Rule rule) : base(rule) {
+		protected MultiMatchRule(SingleMatchRule rule) : base(rule) {
 		}
 	}
 }
