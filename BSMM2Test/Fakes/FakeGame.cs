@@ -12,11 +12,11 @@ namespace BSMM2Test {
 			protected override IEnumerable<Player> Source(IEnumerable<Player> players)
 				=> players;
 
-			public FakePlayers(Rule rule, int count, String prefix)
+			public FakePlayers(IRule rule, int count, String prefix)
 				: base(rule, count, prefix) {
 			}
 
-			public FakePlayers(Rule rule, TextReader r)
+			public FakePlayers(IRule rule, TextReader r)
 				: base(rule, r) {
 			}
 
@@ -27,11 +27,11 @@ namespace BSMM2Test {
 		public FakeGame() {
 		}
 
-		public FakeGame(Rule rule, int count, string prefix = "Player")
+		public FakeGame(IRule rule, int count, string prefix = "Player")
 			: base(rule, new FakePlayers(rule, count, prefix), DateTime.Now.ToString()) {
 		}
 
-		public FakeGame(Rule rule, TextReader r)
+		public FakeGame(IRule rule, TextReader r)
 			: base(rule, new FakePlayers(rule, r), DateTime.Now.ToString()) {
 		}
 	}

@@ -41,8 +41,8 @@ namespace BSMM2.ViewModels {
 	internal class NewGameViewModel : BaseViewModel {
 		private BSMMApp _app;
 		public string GameName { get; set; }
-		public Rule Rule { get; set; }
-		public IEnumerable<Rule> Rules => _app.Rules;
+		public IRule Rule { get; set; }
+		public IEnumerable<IRule> Rules => _app.Rules;
 		public string Prefix { get; set; }
 		public int PlayerCount { get; set; }
 		public string EntrySheet { get; set; }

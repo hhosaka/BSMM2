@@ -10,7 +10,7 @@ namespace BSMM2.Models {
 	public class Player : IPlayer {
 
 		[JsonProperty]
-		private Rule _rule;
+		private IRule _rule;
 
 		[JsonProperty]
 		public String Name { get; set; }
@@ -55,10 +55,10 @@ namespace BSMM2.Models {
 		public RESULT_T? GetResult(Player player)
 			=> _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetRecord(this).Result.RESULT;
 
-		internal void CalcPoint(Rule rule)
+		internal void CalcPoint(IRule rule)
 			=> Point = _rule.Point(_matches.Select(match => match.GetRecord(this).Result));
 
-		internal void CalcOpponentPoint(Rule rule)
+		internal void CalcOpponentPoint(IRule rule)
 			=> OpponentPoint = _rule.Point(_matches.Select(match => match.GetOpponentRecord(this).Player.Point));
 
 		public Player() {// For Serializer
@@ -78,7 +78,7 @@ namespace BSMM2.Models {
 			Point.ExportData(writer);
 		}
 
-		public Player(Rule rule, string name) : this() {
+		public Player(IRule rule, string name) : this() {
 			_rule = rule;
 			_matches = new List<Match>();
 			Name = name;

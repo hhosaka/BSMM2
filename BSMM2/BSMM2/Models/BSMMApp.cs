@@ -32,7 +32,7 @@ namespace BSMM2.Models {
 			BSMMApp Initiate() {
 				var app = new BSMMApp(storage,
 						path,
-						new Rule[] {
+						new IRule[] {
 					new SingleMatchRule(),
 					new ThreeGameMatchRule(),
 					new ThreeOnThreeMatchRule(),
@@ -55,10 +55,10 @@ namespace BSMM2.Models {
 		public IEnumerable<Game> Games => _games;
 
 		[JsonProperty]
-		public IEnumerable<Rule> Rules { get; private set; }
+		public IEnumerable<IRule> Rules { get; private set; }
 
 		[JsonProperty]
-		public Rule Rule { get; set; }
+		public IRule Rule { get; set; }
 
 		[JsonProperty]
 		public Game Game { get; set; }
@@ -125,7 +125,7 @@ namespace BSMM2.Models {
 		public BSMMApp() : this(new Storage()) {// for Serializer
 		}
 
-		private BSMMApp(Storage storage, string path, Rule[] rules) : this(storage) {
+		private BSMMApp(Storage storage, string path, IRule[] rules) : this(storage) {
 			Rules = rules;
 			_path = path;
 			Rule = Rules.First();

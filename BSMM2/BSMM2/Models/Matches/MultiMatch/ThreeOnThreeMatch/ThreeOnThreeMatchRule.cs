@@ -24,7 +24,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override ContentPage CreateMatchPage(Match match)
 			=> new ThreeOnThreeMatchPage(this, (MultiMatch)match);
 
-		public override Rule Clone()
+		public override IRule Clone()
 			=> new ThreeOnThreeMatchRule(this);
 
 		public override Match CreateMatch(IPlayer player1, IPlayer player2)

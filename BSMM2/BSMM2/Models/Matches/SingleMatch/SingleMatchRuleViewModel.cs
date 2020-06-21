@@ -6,7 +6,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	internal class SingleMatchRuleViewModel : BaseViewModel {
 		public Game Game { get; }
 
-		public Rule Rule { get; }
+		public IRule Rule { get; }
 
 		public SingleMatchRuleViewModel(Game game) {
 			Game = game;

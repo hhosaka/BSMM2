@@ -250,7 +250,7 @@ namespace BSMM2Test {
 			Util.CheckWithOrder(new[] { 1, 5, 3, 2, 6, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 5, 7, 8 }, game.Players.GetByOrder());
 		}
 
-		private void OrderTest(Rule rule) {
+		private void OrderTest(IRule rule) {
 			OrderTest1(rule);
 			OrderTest2(rule);
 			OrderTestAcceptBye(rule);
@@ -259,7 +259,7 @@ namespace BSMM2Test {
 		//
 		// 8人対戦
 		//
-		private void OrderTest1(Rule rule) {
+		private void OrderTest1(IRule rule) {
 			var game = new FakeGame(rule, 8);
 
 			// 初期設定確認
@@ -327,7 +327,7 @@ namespace BSMM2Test {
 		//
 		// 7人対戦
 		//
-		private void OrderTest2(Rule rule) {
+		private void OrderTest2(IRule rule) {
 			var game = new FakeGame(rule, 7);
 
 			// 初期設定確認
@@ -373,7 +373,7 @@ namespace BSMM2Test {
 		//
 		// 3回戦目に全敗がいなくなるケース
 		//
-		private void OrderTestAcceptBye(Rule rule) {
+		private void OrderTestAcceptBye(IRule rule) {
 			var game = new FakeGame(rule, 11);
 
 			// 初期設定確認
@@ -429,7 +429,7 @@ namespace BSMM2Test {
 			Util.Check(new[] { 1, 9, 5, 3, 7, 6, 2, 10, 4, 8, 11, -1 }, game.ActiveRound);
 		}
 
-		private Game CreateGame(Rule rule, int count, int round) {
+		private Game CreateGame(IRule rule, int count, int round) {
 			var game = new FakeGame(rule, count);
 
 			for (int i = 0; i < round; ++i) {

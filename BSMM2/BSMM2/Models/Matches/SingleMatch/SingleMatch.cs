@@ -11,7 +11,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public SingleMatch() {
 		}
 
-		public SingleMatch(Rule rule, IPlayer player1, IPlayer player2)
+		public SingleMatch(IRule rule, IPlayer player1, IPlayer player2)
 			: base(rule, player1, player2) {
 		}
 

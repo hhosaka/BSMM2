@@ -30,7 +30,7 @@ namespace BSMM2.Models {
 		public Guid Id { get; private set; }
 
 		[JsonProperty]
-		public Rule Rule { get; private set; }
+		public IRule Rule { get; private set; }
 
 		[JsonProperty]
 		public DateTime? StartTime { get; private set; }
@@ -191,7 +191,7 @@ namespace BSMM2.Models {
 		public Page CreateRulePage()
 			=> Rule.CreateRulePage(this);
 
-		public Game(Rule rule, Players players, string title = "") {
+		public Game(IRule rule, Players players, string title = "") {
 			Title = title;
 
 			Id = Guid.NewGuid();

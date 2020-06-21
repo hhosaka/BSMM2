@@ -51,7 +51,7 @@ namespace BSMM2.Models {
 		}
 
 		[JsonProperty]
-		protected Rule _rule;
+		protected IRule _rule;
 
 		[JsonProperty]
 		public Record[] _records;
@@ -105,7 +105,7 @@ namespace BSMM2.Models {
 		public Match() {// For Serializer
 		}
 
-		public Match(Rule rule, IPlayer player1, IPlayer player2 = null) {
+		public Match(IRule rule, IPlayer player1, IPlayer player2 = null) {
 			_rule = rule;
 
 			if (player2 != null) {

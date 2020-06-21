@@ -11,7 +11,7 @@ namespace BSMM2.Models {
 		private const String DEFAULT_PREFIX = "Player";
 
 		[JsonProperty]
-		private Rule _rule;
+		private IRule _rule;
 
 		[JsonProperty]
 		private String _prefix;
@@ -40,13 +40,13 @@ namespace BSMM2.Models {
 		public Players() {
 		}
 
-		public Players(Rule rule, int count, String prefix = DEFAULT_PREFIX) {
+		public Players(IRule rule, int count, String prefix = DEFAULT_PREFIX) {
 			_rule = rule;
 			_prefix = prefix;
 			_players = Generate(1, prefix, count).ToList();
 		}
 
-		public Players(Rule rule, TextReader r, String prefix = DEFAULT_PREFIX) {
+		public Players(IRule rule, TextReader r, String prefix = DEFAULT_PREFIX) {
 			_rule = rule;
 			_prefix = prefix;
 			_players = Generate(r).ToList();
@@ -88,7 +88,7 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public IEnumerable<Player> GetSource(Rule rule)
+		public IEnumerable<Player> GetSource(IRule rule)
 			=> Source(_players).OrderByDescending(p => p, rule.GetComparer(false));
 
 		public void Reset() {

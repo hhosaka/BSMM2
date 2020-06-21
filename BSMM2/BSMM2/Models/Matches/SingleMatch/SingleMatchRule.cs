@@ -7,7 +7,7 @@ using Xamarin.Forms;
 namespace BSMM2.Models.Matches.SingleMatch {
 
 	[JsonObject]
-	public class SingleMatchRule : Rule {
+	public class SingleMatchRule : IRule {
 
 		[JsonProperty]
 		public bool EnableLifePoint { get; set; }
@@ -27,7 +27,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public ContentPage CreateRulePage(Game game)
 			=> new SingleMatchRulePage(game);
 
-		public virtual Rule Clone()
+		public virtual IRule Clone()
 			=> new SingleMatchRule(this);
 
 		public virtual Match CreateMatch(IPlayer player1, IPlayer player2)

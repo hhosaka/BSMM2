@@ -62,7 +62,7 @@ namespace BSMM2Test {
 			Assert.AreEqual(0, a.Point.Value, b.Point.Value);
 		}
 
-		public static void Check(Rule rule, Players a, Players b) {
+		public static void Check(IRule rule, Players a, Players b) {
 			Assert.AreEqual(a.Count, b.Count);
 			var ita = a.GetByOrder().GetEnumerator();
 			var itb = b.GetByOrder().GetEnumerator();
