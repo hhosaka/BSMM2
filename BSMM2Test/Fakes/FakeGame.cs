@@ -20,6 +20,10 @@ namespace BSMM2Test {
 				: base(rule, r) {
 			}
 
+			public FakePlayers(Players players)
+				: base(players) {
+			}
+
 			private FakePlayers() {// For Serializer
 			}
 		}
@@ -33,6 +37,10 @@ namespace BSMM2Test {
 
 		public FakeGame(IRule rule, TextReader r)
 			: base(rule, new FakePlayers(rule, r), DateTime.Now.ToString()) {
+		}
+
+		public FakeGame(IRule rule, Players players)
+			: base(rule, new FakePlayers(players), DateTime.Now.ToString()) {
 		}
 	}
 }

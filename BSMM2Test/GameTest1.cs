@@ -199,6 +199,35 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
+		public void CreateGameTest() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 4);
+			rule.EnableLifePoint = true;
+
+			game.Shuffle();
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+
+			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, game.Players.GetByOrder());
+
+			game.StepToMatching();
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+
+			Util.CheckWithOrder(new[] { 1, 2, 3, 4 }, new[] { 1, 2, 2, 4 }, game.Players.GetByOrder());
+			Assert.AreEqual(1, game.Rounds.Count());
+
+			var game2 = new FakeGame(rule, new Players(game.Players));
+			Assert.AreEqual(0, game2.Rounds.Count());
+
+			Util.Check(new[] { 1, 2, 3, 4 }, game2.ActiveRound);
+		}
+
+		[TestMethod]
 		public void OrderTestSingleMatch()
 			=> OrderTest(new SingleMatchRule());
 

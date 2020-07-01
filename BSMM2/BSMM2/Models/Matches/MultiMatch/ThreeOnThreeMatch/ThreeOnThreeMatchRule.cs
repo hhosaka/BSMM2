@@ -14,7 +14,7 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 		public override int MinimumMatchCount => 3;
 
 		[JsonIgnore]
-		public string Name
+		public override string Name
 			=> AppResources.ItemRuleThreeOnThreeMatch;
 
 		[JsonIgnore]

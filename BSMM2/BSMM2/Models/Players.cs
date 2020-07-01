@@ -29,15 +29,13 @@ namespace BSMM2.Models {
 			}
 		}
 
-		private IEnumerable<Player> Generate(TextReader r) {
-			String buf;
-			while ((buf = r.ReadLine()) != null) {
-				if (!String.IsNullOrWhiteSpace(buf))
-					yield return new Player(_rule, buf);
-			}
+		public Players() {
 		}
 
-		public Players() {
+		public Players(Players players) {
+			_rule = players._rule;
+			_prefix = players._prefix;
+			_players = players.GetSource().Select(player => new Player(players._rule, player.Name)).ToList();
 		}
 
 		public Players(IRule rule, int count, String prefix = DEFAULT_PREFIX) {
@@ -49,7 +47,15 @@ namespace BSMM2.Models {
 		public Players(IRule rule, TextReader r, String prefix = DEFAULT_PREFIX) {
 			_rule = rule;
 			_prefix = prefix;
-			_players = Generate(r).ToList();
+			_players = Generate().ToList();
+
+			IEnumerable<Player> Generate() {
+				String buf;
+				while ((buf = r.ReadLine()) != null) {
+					if (!String.IsNullOrWhiteSpace(buf))
+						yield return new Player(_rule, buf);
+				}
+			}
 		}
 
 		public void Add(int count = 1, String prefix = DEFAULT_PREFIX) {
@@ -88,8 +94,8 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public IEnumerable<Player> GetSource(IRule rule)
-			=> Source(_players).OrderByDescending(p => p, rule.GetComparer(false));
+		public IEnumerable<Player> GetSource(IRule rule = null)
+			=> rule != null ? Source(_players).OrderByDescending(p => p, rule.GetComparer(false)) : (IEnumerable<Player>)_players;
 
 		public void Reset() {
 			_players.ForEach(p => p.CalcPoint(_rule));

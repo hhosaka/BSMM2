@@ -65,7 +65,8 @@ namespace BSMM2.ViewModels {
 			GameName = Game.GameTitle;
 			PlayerModes = new[]{
 				new PlayerCreator(AppResources.ItemPlayerModeNumber,"Number", CreateByNumber),
-				new PlayerCreator(AppResources.ItemPlayerModeEntrySheet,"EntrySheet",CreateByEntrySheet)
+				new PlayerCreator(AppResources.ItemPlayerModeEntrySheet,"EntrySheet",CreateByEntrySheet),
+				new PlayerCreator(AppResources.ItemPlayerModeNumber,"Restart", CreateByCurrent),
 			};
 			PlayerMode = PlayerModes.First();
 			Prefix = "Player";
@@ -82,9 +83,8 @@ namespace BSMM2.ViewModels {
 				close?.Invoke();
 			}
 
-			Players CreateByNumber() {
-				return new Players(Rule, PlayerCount, Prefix);
-			}
+			Players CreateByNumber()
+				=> new Players(Rule, PlayerCount, Prefix);
 
 			Players CreateByEntrySheet() {
 				app.EntryTemplate = EntrySheet;
@@ -92,6 +92,9 @@ namespace BSMM2.ViewModels {
 					return new Players(Rule, reader);
 				}
 			}
+
+			Players CreateByCurrent()
+				=> new Players(app.Game.Players);
 		}
 	}
 }
