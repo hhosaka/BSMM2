@@ -51,7 +51,7 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public string Headline => Title + "(Round " + (Rounds?.Count() + 1 ?? 0) + ")";
 
-		public bool CanAddPlayers() => !ActiveRound.IsPlaying && !_rounds.Any();// TODO : 一回戦の結果が終わるまでは追加を認めたいのだが…
+		public bool CanAddPlayers() => !ActiveRound.IsPlaying && !_rounds.Any();
 
 		public bool AddPlayers(string data) {
 			foreach (var name in data.Split(new[] { '\r', '\n' })) {
@@ -191,8 +191,11 @@ namespace BSMM2.Models {
 		public Page CreateRulePage()
 			=> Rule.CreateRulePage(this);
 
-		public Game(IRule rule, Players players, string title = "") {
-			Title = title;
+		public Game(IRule rule, Players players, string title = null) {
+			if (title == null)
+				Title = Headline;
+			else
+				Title = title;
 
 			Id = Guid.NewGuid();
 			Players = players;

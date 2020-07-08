@@ -15,8 +15,8 @@
 	<ContentPage.Content>
 		<StackLayout>
 			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding Player.Dropped , Mode=TwoWay}" />
-				<Label Text="{x:Static prop:AppResources.LabelDrop}" />
+				<Switch IsToggled="{Binding Dropped , Mode=TwoWay}" IsEnabled="{Binding IsMatching}" />
+				<Label Text="{x:Static prop:AppResources.LabelDrop}" VerticalTextAlignment="Center" FontSize="Medium" />
 			</StackLayout>
 			<Label Text="{x:Static prop:AppResources.LabelMatchLog}" FontSize="Medium" />
 			<ListView x:Name="RoundListView"

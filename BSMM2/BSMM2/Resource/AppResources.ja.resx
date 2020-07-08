@@ -153,6 +153,9 @@
   <data name="ItemPlayerModeNumber" xml:space="preserve">
     <value>プレーヤー人数</value>
   </data>
+  <data name="ItemPlayerModeRestart" xml:space="preserve">
+    <value>再試合</value>
+  </data>
   <data name="ItemResultDraw" xml:space="preserve">
     <value>引分け</value>
   </data>

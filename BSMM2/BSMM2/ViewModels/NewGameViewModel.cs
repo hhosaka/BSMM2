@@ -66,7 +66,7 @@ namespace BSMM2.ViewModels {
 			PlayerModes = new[]{
 				new PlayerCreator(AppResources.ItemPlayerModeNumber,"Number", CreateByNumber),
 				new PlayerCreator(AppResources.ItemPlayerModeEntrySheet,"EntrySheet",CreateByEntrySheet),
-				new PlayerCreator(AppResources.ItemPlayerModeNumber,"Restart", CreateByCurrent),
+				new PlayerCreator(AppResources.ItemPlayerModeRestart,"Restart", CreateByCurrent),
 			};
 			PlayerMode = PlayerModes.First();
 			Prefix = "Player";

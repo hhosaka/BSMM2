@@ -169,6 +169,15 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Restart に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemPlayerModeRestart {
+            get {
+                return ResourceManager.GetString("ItemPlayerModeRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Draw に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ItemResultDraw {

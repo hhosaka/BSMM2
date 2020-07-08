@@ -153,6 +153,9 @@
   <data name="ItemPlayerModeNumber" xml:space="preserve">
     <value>Number</value>
   </data>
+  <data name="ItemPlayerModeRestart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
   <data name="ItemResultDraw" xml:space="preserve">
     <value>Draw</value>
   </data>
