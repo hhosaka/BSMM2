@@ -46,20 +46,20 @@ namespace BSMM2Test {
 			var buf = new StringBuilder();
 
 			players.ElementAt(0).ExportData(new StringWriter(buf));
-			Assert.AreEqual("\"Player001\", False, 3, 1, 5", buf.ToString());
+			Assert.AreEqual("\"Player001\", False, 3, 1, 0", buf.ToString());
 
 			buf.Clear();
 			players.ElementAt(2).ExportData(new StringWriter(buf));
-			Assert.AreEqual("\"Player002\", False, 0, 0, 5", buf.ToString());
+			Assert.AreEqual("\"Player002\", False, 0, 0, 0", buf.ToString());
 
 			buf.Clear();
 			game.Players.Export(new StringWriter(buf));
 
 			Assert.AreEqual("Name, Dropped, Point, WinPoint, LifePoint\r\n" +
-							"\"Player001\", False, 3, 1, 5\r\n" +
-							"\"Player003\", False, 3, 1, 5\r\n" +
-							"\"Player002\", False, 0, 0, 5\r\n" +
-							"\"Player004\", False, 0, 0, 5\r\n",
+							"\"Player001\", False, 3, 1, 0\r\n" +
+							"\"Player003\", False, 3, 1, 0\r\n" +
+							"\"Player002\", False, 0, 0, 0\r\n" +
+							"\"Player004\", False, 0, 0, 0\r\n",
 							buf.ToString());
 		}
 	}

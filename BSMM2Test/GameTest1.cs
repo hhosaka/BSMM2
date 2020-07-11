@@ -168,9 +168,8 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void GameSequence3Test() {
-			var rule = new SingleMatchRule();
+			var rule = new SingleMatchRule(true);
 			var game = new FakeGame(rule, 4);
-			rule.EnableLifePoint = true;
 
 			game.Shuffle();
 			game.StepToPlaying();
@@ -249,10 +248,10 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void ライフポイント検証() {
-			var rule = new SingleMatchRule();
+			var rule = new SingleMatchRule(true);
 			var game = CreateGame(rule, 8, 2);
 			var matches = game.ActiveRound;
-			rule.EnableLifePoint = true;
+			//rule.EnableLifePoint = true;
 
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());
@@ -274,9 +273,10 @@ namespace BSMM2Test {
 			(matches.Matches.ElementAt(0) as MultiMatch).SetMultiMatchResult(new[] {
 				new MultiMatch.Score(Win),
 				new MultiMatch.Score(Lose),
-				new MultiMatch.Score(Win) }, false);
+				new MultiMatch.Score(Win) });
 
-			Util.CheckWithOrder(new[] { 1, 5, 3, 2, 6, 7, 4, 8 }, new[] { 1, 2, 3, 4, 5, 5, 7, 8 }, game.Players.GetByOrder());
+			game.Players.GetByOrder();
+			Util.CheckWithOrder(new[] { 5, 1, 3, 6, 7, 2, 4, 8 }, new[] { 1, 2, 3, 4, 4, 6, 7, 8 }, game.Players.GetByOrder());
 		}
 
 		private void OrderTest(IRule rule) {
