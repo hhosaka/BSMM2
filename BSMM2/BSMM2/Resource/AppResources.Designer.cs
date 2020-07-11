@@ -403,6 +403,33 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Point Compare - Mandatory に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelPointCompare {
+            get {
+                return ResourceManager.GetString("LabelPointCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Post Compare - Mandatory に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelPostCompare {
+            get {
+                return ResourceManager.GetString("LabelPostCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Pre Compare - Mandatory に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelPreCompare {
+            get {
+                return ResourceManager.GetString("LabelPreCompare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Accept bye match duplication に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string LabelRuleAcceptByeMatchDuplication {

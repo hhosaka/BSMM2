@@ -3,7 +3,7 @@
 	public interface IComparer {
 		string Label { get; }
 
-		bool Mandatory { get; }
+		bool Selectable { get; }
 
 		bool Active { get; set; }
 

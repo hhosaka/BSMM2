@@ -18,26 +18,23 @@
 				<Switch IsToggled="{Binding Game.AcceptGapMatchDuplication}" />
 				<Label Text="{x:Static prop:AppResources.LabelRuleAcceptGapMatchDuplication}" VerticalOptions="Center" />
 			</StackLayout>
-			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
-				<Switch IsToggled="{Binding Rule.Comparers[2].Active}" />
-				<Label Text="{Binding Rule.Comparers[2].Label}" VerticalOptions="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding Rule.Comparers[3].Active}" />
-				<Label Text="{Binding Rule.Comparers[3].Label}" VerticalOptions="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal" IsVisible="{Binding Rule.EnableLifePoint}">
-				<Switch IsToggled="{Binding Rule.Comparers[4].Active}" />
-				<Label Text="{Binding Rule.Comparers[4].Label}" VerticalOptions="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding Rule.Comparers[5].Active}" />
-				<Label Text="{Binding Rule.Comparers[5].Label}" VerticalOptions="Center" />
-			</StackLayout>
-			<StackLayout Orientation="Horizontal">
-				<Switch IsToggled="{Binding Rule.Comparers[6].Active}" />
-				<Label Text="{Binding Rule.Comparers[6].Label}" VerticalOptions="Center" />
-			</StackLayout>
+			<ListView x:Name="ComparersView"
+				ItemsSource="{Binding Rule.Comparers}"
+				VerticalOptions="FillAndExpand"
+				HasUnevenRows="true"
+				IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+				CachingStrategy="RecycleElement">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ViewCell>
+							<StackLayout Orientation="Horizontal">
+								<Switch IsToggled="{Binding Active}" IsEnabled="{Binding Selectable}" />
+								<Label Text="{Binding Label}" VerticalTextAlignment="Center" />
+							</StackLayout>
+						</ViewCell>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

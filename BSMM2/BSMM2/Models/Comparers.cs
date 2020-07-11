@@ -32,15 +32,15 @@ namespace BSMM2.Models {
 	public class PreComparer : IComparer {
 
 		[JsonIgnore]
-		public string Label => throw new InvalidOperationException();
+		public string Label => AppResources.LabelPreCompare;
 
 		[JsonIgnore]
-		public bool Mandatory => true;
+		public bool Selectable => false;
 
 		[JsonIgnore]
 		public bool Active {
 			get => true;
-			set => throw new InvalidOperationException();
+			set { }
 		}
 
 		public int Compare(Player p1, Player p2) {
@@ -57,15 +57,15 @@ namespace BSMM2.Models {
 	public class PostComparer : IComparer {
 
 		[JsonIgnore]
-		public string Label => throw new InvalidOperationException();
+		public string Label => AppResources.LabelPostCompare;
 
 		[JsonIgnore]
-		public bool Mandatory => true;
+		public bool Selectable => false;
 
 		[JsonIgnore]
 		public bool Active {
 			get => true;
-			set => throw new InvalidOperationException();
+			set { }
 		}
 
 		public int Compare(Player p1, Player p2) {
@@ -89,10 +89,10 @@ namespace BSMM2.Models {
 	public class PointComparer : IComparer {
 
 		[JsonIgnore]
-		public string Label => throw new InvalidOperationException();
+		public string Label => AppResources.LabelPointCompare;
 
 		[JsonIgnore]
-		public bool Mandatory => true;
+		public bool Selectable => false;
 
 		public bool Active {
 			get => true;
@@ -110,7 +110,7 @@ namespace BSMM2.Models {
 		public string Label => AppResources.LabelUseLifePoint;
 
 		[JsonIgnore]
-		public bool Mandatory => false;
+		public bool Selectable => true;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;
@@ -126,7 +126,7 @@ namespace BSMM2.Models {
 		public string Label => AppResources.LabelUseOpponentMatchPoint;
 
 		[JsonIgnore]
-		public bool Mandatory => false;
+		public bool Selectable => true;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;
@@ -142,7 +142,7 @@ namespace BSMM2.Models {
 		public string Label => AppResources.LabelUseOpponentLifePoint;
 
 		[JsonIgnore]
-		public bool Mandatory => false;
+		public bool Selectable => true;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;
@@ -158,7 +158,7 @@ namespace BSMM2.Models {
 		public string Label => AppResources.LabelUseWinPoint;
 
 		[JsonIgnore]
-		public bool Mandatory => false;
+		public bool Selectable => true;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;
@@ -176,7 +176,7 @@ namespace BSMM2.Models {
 		public string Label => AppResources.LabelUseOpponentWinPoint;
 
 		[JsonIgnore]
-		public bool Mandatory => false;
+		public bool Selectable => true;
 
 		[JsonProperty]
 		public bool Active { get; set; } = true;

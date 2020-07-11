@@ -48,16 +48,27 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public SingleMatchRule(bool enableLifePoint = false) {
 			EnableLifePoint = enableLifePoint;
-			_comparers = new IComparer[] {
+			if (enableLifePoint) {
+				_comparers = new IComparer[] {
 				new PreComparer(),
 				new PointComparer(),
-				EnableLifePoint?(IComparer)new LifePointComparer():(IComparer)new  PointComparer(),
+				new LifePointComparer(),
 				new OpponentMatchPointComparer(),
-				EnableLifePoint?(IComparer)new OpponentLifePointComparer():(IComparer)new PointComparer(),
+				new OpponentLifePointComparer(),
 				new WinPointComparer(),
 				new OpponentWinPointComparer(),
 				new PostComparer(),
 			};
+			} else {
+				_comparers = new IComparer[] {
+				new PreComparer(),
+				new PointComparer(),
+				new OpponentMatchPointComparer(),
+				new WinPointComparer(),
+				new OpponentWinPointComparer(),
+				new PostComparer(),
+			};
+			}
 		}
 
 		protected SingleMatchRule(SingleMatchRule src) : this(src.EnableLifePoint) {

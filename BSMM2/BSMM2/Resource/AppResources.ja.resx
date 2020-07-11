@@ -228,6 +228,15 @@
   <data name="LabelNewGameTitle" xml:space="preserve">
     <value>タイトル</value>
   </data>
+  <data name="LabelPointCompare" xml:space="preserve">
+    <value>ポイント比較　必須</value>
+  </data>
+  <data name="LabelPostCompare" xml:space="preserve">
+    <value>事後比較　必須</value>
+  </data>
+  <data name="LabelPreCompare" xml:space="preserve">
+    <value>事前比較　必須</value>
+  </data>
   <data name="LabelRuleAcceptByeMatchDuplication" xml:space="preserve">
     <value>不戦勝の重複を認める</value>
   </data>

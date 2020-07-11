@@ -70,8 +70,9 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 				results.Results.ForEach(result => buf.Add(LifePoint.GetItem(result.LifePoint)));
 				return buf.ToArray();
 			}
+
 			void Done() {
-				if (EnableLifePoint) {
+				if (_rule.EnableLifePoint) {
 					match.SetMultiMatchResult(new[] {
 						new Score(ResultItems[0].Value, Player1LPs[0].Point, Player2LPs[0].Point),
 						new Score(ResultItems[1].Value, Player1LPs[1].Point, Player2LPs[1].Point),
