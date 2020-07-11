@@ -31,7 +31,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> new SingleMatch(this, player1, player2);
 
 		public IExportablePoint Point(IEnumerable<IPoint> results) {
-			return SingleMatchResult.Total(results.Select(result => (IPoint)result));
+			return SingleMatchResult.Total(EnableLifePoint, results.Select(result => (IPoint)result));
 		}
 
 		public virtual Comparer<Player> GetComparer(bool force)
@@ -43,21 +43,24 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public virtual string Description
 			=> AppResources.DescriptionSingleMatch;
 
-		public SingleMatchRule() : base() {
+		private SingleMatchRule() {
+		}
+
+		public SingleMatchRule(bool enableLifePoint = false) {
+			EnableLifePoint = enableLifePoint;
 			_comparers = new IComparer[] {
 				new PreComparer(),
 				new PointComparer(),
-				new LifePointComparer(),
+				EnableLifePoint?(IComparer)new LifePointComparer():(IComparer)new  PointComparer(),
 				new OpponentMatchPointComparer(),
-				new OpponentLifePointComparer(),
+				EnableLifePoint?(IComparer)new OpponentLifePointComparer():(IComparer)new PointComparer(),
 				new WinPointComparer(),
 				new OpponentWinPointComparer(),
 				new PostComparer(),
 			};
 		}
 
-		protected SingleMatchRule(SingleMatchRule src) : this() {
-			EnableLifePoint = src.EnableLifePoint;
+		protected SingleMatchRule(SingleMatchRule src) : this(src.EnableLifePoint) {
 		}
 	}
 }

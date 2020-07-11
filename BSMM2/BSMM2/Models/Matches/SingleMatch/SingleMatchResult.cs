@@ -1,5 +1,6 @@
 ﻿using BSMM2.Resource;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,11 +38,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			public TheResult() {
 			}
 
-			public TheResult(IEnumerable<IPoint> source) {
+			public TheResult(bool enableLifePoint, IEnumerable<IPoint> source) {
 				foreach (var point in source) {
 					if (point != null) {
 						MatchPoint += point.MatchPoint;
-						LifePoint += point.LifePoint;
+						if (enableLifePoint) LifePoint += point.LifePoint;
 						WinPoint += point.WinPoint;
 					}
 				}
@@ -49,8 +50,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public static IExportablePoint Total(IEnumerable<IPoint> points) {
-			return new TheResult(points);
+		public static IExportablePoint Total(bool enableLifePoint, IEnumerable<IPoint> points) {
+			return new TheResult(enableLifePoint, points);
 		}
 
 		[JsonIgnore]
@@ -62,17 +63,20 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> RESULT == Models.RESULT_T.Win ? 1.0 : RESULT == Models.RESULT_T.Lose ? 0.0 : 0.5;
 
 		[JsonProperty]
-		public int LifePoint { get; }
+		private int? _lifePoint;
+
+		[JsonIgnore]
+		public int LifePoint => _lifePoint ?? throw new InvalidOperationException();
 
 		[JsonProperty]
 		public RESULT_T RESULT { get; }
 
 		[JsonIgnore]
-		public bool IsFinished => RESULT != RESULT_T.Progress && LifePoint >= 0;
+		public bool IsFinished => RESULT != RESULT_T.Progress && (_lifePoint >= 0) != false;
 
-		public SingleMatchResult(RESULT_T result, int lifePoint = 0) {
+		public SingleMatchResult(RESULT_T result, int? lifePoint = null) {
 			RESULT = result;
-			LifePoint = lifePoint;
+			_lifePoint = lifePoint;
 		}
 	}
 }

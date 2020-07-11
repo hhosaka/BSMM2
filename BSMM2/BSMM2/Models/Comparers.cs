@@ -6,6 +6,11 @@ using System.Linq;
 
 namespace BSMM2.Models {
 
+	internal class CompUtil {
+
+		public static int Comp2Factor(bool param1, bool param2) => param1 ? param2 ? 0 : -1 : param2 ? 1 : 0;
+	}
+
 	internal class TheComparer : Comparer<Player> {
 		private IEnumerable<IComparer> _compareres;
 		private bool _force;
@@ -64,8 +69,20 @@ namespace BSMM2.Models {
 		}
 
 		public int Compare(Player p1, Player p2) {
-			var result = p1.GetResult(p2);
-			return result == RESULT_T.Win ? 1 : result == RESULT_T.Lose ? -1 : 0;
+			switch (p1.GetResult(p2)) {
+				case RESULT_T.Win:
+					return 1;
+
+				case RESULT_T.Lose:
+					return -1;
+
+				default:
+					var ret = CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
+					if (ret == 0) {
+						ret = CompUtil.Comp2Factor(p1.HasGapMatch, p2.HasGapMatch);
+					}
+					return ret;
+			}
 		}
 	}
 
@@ -146,8 +163,10 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool Active { get; set; } = true;
 
-		public int Compare(Player p1, Player p2)
-			=> (int)Math.Floor(p1.Point.WinPoint - p2.Point.WinPoint);
+		public int Compare(Player p1, Player p2) {
+			var value = p1.Point.WinPoint - p2.Point.WinPoint;
+			return (int)(value > 0.0 ? Math.Ceiling(value) : Math.Floor(value));
+		}
 	}
 
 	[JsonObject]
@@ -162,7 +181,9 @@ namespace BSMM2.Models {
 		[JsonProperty]
 		public bool Active { get; set; } = true;
 
-		public int Compare(Player p1, Player p2)
-			=> (int)Math.Floor(p1.OpponentPoint.WinPoint - p2.OpponentPoint.WinPoint);
+		public int Compare(Player p1, Player p2) {
+			var value = p1.OpponentPoint.WinPoint - p2.OpponentPoint.WinPoint;
+			return (int)(value > 0.0 ? Math.Ceiling(value) : Math.Floor(value));
+		}
 	}
 }

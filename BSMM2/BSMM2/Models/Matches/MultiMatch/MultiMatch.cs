@@ -9,10 +9,10 @@ namespace BSMM2.Models.Matches.MultiMatch {
 
 		public class Score {
 			public RESULT_T Result { get; }
-			public int LifePoint1 { get; }
-			public int LifePoint2 { get; }
+			public int? LifePoint1 { get; }
+			public int? LifePoint2 { get; }
 
-			public Score(RESULT_T result, int lp1 = 5, int lp2 = 5) {
+			public Score(RESULT_T result, int? lp1 = null, int? lp2 = null) {
 				Result = result;
 				LifePoint1 = lp1;
 				LifePoint2 = lp2;
@@ -34,15 +34,15 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			for (int i = 0; i < Rule.MatchCount; ++i) {
 				scores.Add(new Score(result));
 			}
-			SetMultiMatchResult(scores, false);
+			SetMultiMatchResult(scores);
 		}
 
-		public void SetMultiMatchResult(IEnumerable<Score> scores, bool enableLifePoint) {
+		public void SetMultiMatchResult(IEnumerable<Score> scores) {
 			var result1 = new MultiMatchResult(Rule.MinimumMatchCount);
 			var result2 = new MultiMatchResult(Rule.MinimumMatchCount);
 			foreach (var score in scores) {
-				result1.Add(new SingleMatchResult(score.Result, enableLifePoint ? score.LifePoint1 : RESULTUtil.DEFAULT_LIFE_POINT));
-				result2.Add(new SingleMatchResult(RESULTUtil.ToOpponents(score.Result), enableLifePoint ? score.LifePoint2 : RESULTUtil.DEFAULT_LIFE_POINT));
+				result1.Add(new SingleMatchResult(score.Result, score.LifePoint1));
+				result2.Add(new SingleMatchResult(RESULTUtil.ToOpponents(score.Result), score.LifePoint2));
 			}
 			SetResults(result1, result2);
 		}
