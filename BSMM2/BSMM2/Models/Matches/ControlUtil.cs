@@ -11,9 +11,10 @@ namespace BSMM2.Models.Matches {
 
 	internal class LifePoint {
 		private static LifePoints _instance;
+		private static LifePoint _null = new LifePoint();
 
 		public string Label { get; private set; }
-		public int Point { get; private set; }
+		public int? Point { get; private set; }
 
 		public static LifePoints Instance => GetInstance();
 
@@ -32,8 +33,13 @@ namespace BSMM2.Models.Matches {
 			return _instance;
 		}
 
-		public static LifePoint GetItem(int point = -1)
-			=> GetInstance().First(lp => lp.Point == point);
+		public static LifePoint GetItem(int? point) {
+			if (point == null) {
+				return _null;
+			} else {
+				return GetInstance().First(lp => lp.Point == point);
+			}
+		}
 	}
 
 	internal class ResultItem {

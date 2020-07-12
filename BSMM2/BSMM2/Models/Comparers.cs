@@ -46,10 +46,8 @@ namespace BSMM2.Models {
 		public int Compare(Player p1, Player p2) {
 			if (p1 == p2) {
 				return 0;
-			} else if (p1.Dropped) {
-				return p2.Dropped ? 0 : -1;
 			} else {
-				return p2.Dropped ? 1 : 0;
+				return CompUtil.Comp2Factor(p1.Dropped, p2.Dropped);
 			}
 		}
 	}
@@ -77,11 +75,7 @@ namespace BSMM2.Models {
 					return -1;
 
 				default:
-					var ret = CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
-					if (ret == 0) {
-						ret = CompUtil.Comp2Factor(p1.HasGapMatch, p2.HasGapMatch);
-					}
-					return ret;
+					return CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
 			}
 		}
 	}
@@ -116,7 +110,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> p1.Point.LifePoint - p2.Point.LifePoint;
+			=> (int)p1.Point.LifePoint - (int)p2.Point.LifePoint;
 	}
 
 	[JsonObject]
@@ -148,7 +142,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> p1.OpponentPoint.LifePoint - p2.OpponentPoint.LifePoint;
+			=> (int)p1.OpponentPoint.LifePoint - (int)p2.OpponentPoint.LifePoint;
 	}
 
 	[JsonObject]

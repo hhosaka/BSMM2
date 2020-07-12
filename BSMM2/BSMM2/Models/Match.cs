@@ -22,7 +22,7 @@ namespace BSMM2.Models {
 				public int MatchPoint => 0;
 
 				[JsonIgnore]
-				public int LifePoint => -1;
+				public int? LifePoint => -1;
 
 				[JsonIgnore]
 				public double WinPoint => 0;

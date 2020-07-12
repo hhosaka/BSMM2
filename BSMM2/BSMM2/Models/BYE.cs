@@ -17,7 +17,7 @@ namespace BSMM2.Models {
 
 			public double WinPoint => 0.0;
 
-			public int LifePoint => 0;
+			public int? LifePoint => 0;
 
 			public void ExportData(TextWriter writer) => throw new NotImplementedException();
 
