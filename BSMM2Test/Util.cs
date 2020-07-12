@@ -3,6 +3,7 @@ using BSMM2.Models.Matches.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -26,6 +27,11 @@ namespace BSMM2Test {
 
 		public static void CheckWithOrder(IEnumerable<int> expectedPlayers, IEnumerable<int> expectedOrder, IEnumerable<Player> players) {
 			Check(expectedPlayers, players);
+			var result = players.Select(p => p.Order);
+			CollectionAssert.AreEqual(expectedOrder.ToArray(), result.ToArray(), Message(expectedOrder, result));
+		}
+
+		public static void CheckOrder(IEnumerable<int> expectedOrder, IEnumerable<Player> players) {
 			var result = players.Select(p => p.Order);
 			CollectionAssert.AreEqual(expectedOrder.ToArray(), result.ToArray(), Message(expectedOrder, result));
 		}
@@ -132,5 +138,11 @@ namespace BSMM2Test {
 
 		public static void SetResult(Game game, int index, RESULT_T result)
 			=> GetMatch(game, index).SetResult(result);
+
+		public static string Export(Game game) {
+			var buf = new StringBuilder();
+			game.Players.Export(new StringWriter(buf));
+			return buf.ToString();
+		}
 	}
 }

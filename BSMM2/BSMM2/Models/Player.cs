@@ -52,8 +52,22 @@ namespace BSMM2.Models {
 		public void Commit(Match match)
 			=> _matches.Add(match);
 
-		public RESULT_T? GetResult(Player player)
-			=> _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetRecord(this).Result.RESULT;
+		public int? GetResult(Player player) {
+			var result = _matches.FirstOrDefault(m => m.GetOpponentRecord(this).Player == player)?.GetRecord(this).Result.RESULT;
+			switch (result) {
+				case null:
+					return null;
+
+				case RESULT_T.Win:
+					return 1;
+
+				case RESULT_T.Lose:
+					return -1;
+
+				default:
+					return 0;
+			}
+		}
 
 		internal void CalcPoint(IRule rule)
 			=> Point = _rule.Point(_matches.Select(match => match.GetRecord(this).Result));

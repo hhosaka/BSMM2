@@ -66,18 +66,8 @@ namespace BSMM2.Models {
 			set { }
 		}
 
-		public int Compare(Player p1, Player p2) {
-			switch (p1.GetResult(p2)) {
-				case RESULT_T.Win:
-					return 1;
-
-				case RESULT_T.Lose:
-					return -1;
-
-				default:
-					return CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
-			}
-		}
+		public int Compare(Player p1, Player p2)
+			=> p1.GetResult(p2) ?? 0;
 	}
 
 	public class PointComparer : IComparer {

@@ -11,13 +11,13 @@ namespace BSMM2.Models {
 		private class NullPoint : IExportablePoint {
 			public string Information => throw new NotImplementedException();
 
-			public int Value => 0;
+			public int Value => -1;
 
-			public int MatchPoint => 0;
+			public int MatchPoint => -1;
 
-			public double WinPoint => 0.0;
+			public double WinPoint => -1.0;
 
-			public int? LifePoint => 0;
+			public int? LifePoint => -1;
 
 			public void ExportData(TextWriter writer) => throw new NotImplementedException();
 

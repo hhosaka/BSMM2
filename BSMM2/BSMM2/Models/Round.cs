@@ -24,7 +24,7 @@ namespace BSMM2.Models {
 			=> Swap(_matches.ElementAt(m1), _matches.ElementAt(m2));
 
 		public bool Swap(Match m1, Match m2) {
-			if (!IsPlaying && !m1.IsByeMatch && !m2.IsByeMatch) {
+			if (!IsPlaying) {
 				m1.Swap(m2);
 				return true;
 			}

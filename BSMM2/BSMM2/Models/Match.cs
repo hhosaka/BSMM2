@@ -58,7 +58,7 @@ namespace BSMM2.Models {
 		public Record[] _records;
 
 		[JsonProperty]
-		public bool IsGapMatch { get; }
+		public bool IsGapMatch { get; private set; }
 
 		[JsonIgnore]
 		public bool IsFinished
@@ -92,6 +92,9 @@ namespace BSMM2.Models {
 			var temp = _records[0];
 			_records[0] = other._records[0];
 			other._records[0] = temp;
+
+			SetIsGapMatch();
+			other.SetIsGapMatch();
 		}
 
 		public void Commit()
@@ -106,12 +109,16 @@ namespace BSMM2.Models {
 		public Match() {// For Serializer
 		}
 
+		private void SetIsGapMatch() {
+			IsGapMatch = (_records[0].Player.Point.MatchPoint != _records[1].Player.Point.MatchPoint);
+		}
+
 		public Match(IRule rule, IPlayer player1, IPlayer player2 = null) {
 			_rule = rule;
 
 			if (player2 != null) {
 				_records = new[] { new Record(player1), new Record(player2) };
-				IsGapMatch = (player1.Point.MatchPoint != player2.Point.MatchPoint);
+				SetIsGapMatch();
 			} else {
 				_records = new[] { new Record(player1), new Record(BYE) };
 				SetResult(RESULT_T.Win);

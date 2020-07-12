@@ -242,6 +242,83 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
+		public void ByeMatchTest() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 3, _origin);
+
+			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
+
+			game.ActiveRound.Swap(0, 1);
+
+			Util.Check(new[] { 3, 2, 1, -1 }, _origin, game.ActiveRound);
+
+			game.StepToPlaying();
+
+			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
+
+			Util.Check(new[] { 3, 2, 1, -1 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 3, 1, 2 }, _origin, game.Players.GetByOrder());
+		}
+
+		[TestMethod]
+		public void GapMatchTest() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 10, _origin);
+
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, _origin, game.ActiveRound);
+
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+			Util.SetResult(game, 2, Win);
+			Util.SetResult(game, 3, Win);
+			Util.SetResult(game, 4, Win);
+
+			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, _origin, game.Players.GetByOrder());
+
+			game.StepToMatching();
+
+			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, _origin, game.ActiveRound);
+
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(0).IsGapMatch);
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(1).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(2).IsGapMatch);
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(3).IsGapMatch);
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(4).IsGapMatch);
+
+			Assert.IsTrue(game.Shuffle());
+
+			game.ActiveRound.Swap(0, 3);
+
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(0).IsGapMatch);
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(1).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(2).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(3).IsGapMatch);
+			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(4).IsGapMatch);
+
+			game.ActiveRound.Swap(1, 4);
+
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(0).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(1).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(2).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(3).IsGapMatch);
+			Assert.IsTrue(game.ActiveRound.Matches.ElementAt(4).IsGapMatch);
+
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+			Util.SetResult(game, 2, Win);
+			Util.SetResult(game, 3, Win);
+			Util.SetResult(game, 4, Win);
+
+			Assert.IsFalse(game.StepToMatching());
+
+			var buf = Util.Export(game);
+		}
+
+		[TestMethod]
 		public void LoadSaveAppTest1() {
 			var buf = new StringBuilder();
 
