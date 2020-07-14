@@ -110,10 +110,17 @@ namespace BSMM2.Models {
 			return false;
 		}
 
+		// UTの為にシャッフルしないルートを用意する
+		protected virtual IEnumerable<Player> Shuffle(IEnumerable<Player> players)
+			=> players.OrderBy(i => Guid.NewGuid());
+
 		private IEnumerable<Match> MakeRound() {
 			Players.Reset();
 			for (int i = 0; i < TRY_COUNT; ++i) {
-				var matchingList = Create(Players.GetSource(Rule).Where(p => !p.Dropped));
+				var matchingList = Create(Shuffle(Players.Source)
+					.OrderByDescending(p => p, Rule.GetComparer(false))
+					.Where(p => !p.Dropped));
+
 				if (matchingList != null) {
 					return matchingList;
 				}

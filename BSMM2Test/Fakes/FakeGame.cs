@@ -7,40 +7,22 @@ namespace BSMM2Test {
 
 	public class FakeGame : Game {
 
-		private class FakePlayers : Players {
-
-			protected override IEnumerable<Player> Source(IEnumerable<Player> players)
-				=> players;
-
-			public FakePlayers(IRule rule, int count, String prefix)
-				: base(rule, count, prefix) {
-			}
-
-			public FakePlayers(IRule rule, TextReader r)
-				: base(rule, r) {
-			}
-
-			public FakePlayers(Players players)
-				: base(players) {
-			}
-
-			private FakePlayers() {// For Serializer
-			}
-		}
+		protected override IEnumerable<Player> Shuffle(IEnumerable<Player> players)
+			=> players;
 
 		public FakeGame() {
 		}
 
 		public FakeGame(IRule rule, int count, string prefix = "Player")
-			: base(rule, new FakePlayers(rule, count, prefix), DateTime.Now.ToString()) {
+			: base(rule, new Players(rule, count, prefix), DateTime.Now.ToString()) {
 		}
 
 		public FakeGame(IRule rule, TextReader r)
-			: base(rule, new FakePlayers(rule, r), DateTime.Now.ToString()) {
+			: base(rule, new Players(rule, r), DateTime.Now.ToString()) {
 		}
 
 		public FakeGame(IRule rule, Players players)
-			: base(rule, new FakePlayers(players), DateTime.Now.ToString()) {
+			: base(rule, new Players(players), DateTime.Now.ToString()) {
 		}
 	}
 }

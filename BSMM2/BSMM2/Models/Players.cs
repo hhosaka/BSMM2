@@ -20,6 +20,9 @@ namespace BSMM2.Models {
 		private List<Player> _players;
 
 		[JsonIgnore]
+		internal IEnumerable<Player> Source => _players;
+
+		[JsonIgnore]
 		public int Count => _players.Count;
 
 		private IEnumerable<Player> Generate(int start, string prefix, int count = 1) {
@@ -35,7 +38,7 @@ namespace BSMM2.Models {
 		public Players(Players players) {
 			_rule = players._rule;
 			_prefix = players._prefix;
-			_players = players.GetSource().Select(player => new Player(players._rule, player.Name)).ToList();
+			_players = players.Source.Select(player => new Player(players._rule, player.Name)).ToList();
 		}
 
 		public Players(IRule rule, int count, String prefix = DEFAULT_PREFIX) {
@@ -94,16 +97,10 @@ namespace BSMM2.Models {
 			}
 		}
 
-		public IEnumerable<Player> GetSource(IRule rule = null)
-			=> rule != null ? Source(_players).OrderByDescending(p => p, rule.GetComparer(false)) : (IEnumerable<Player>)_players;
-
 		public void Reset() {
 			_players.ForEach(p => p.CalcPoint(_rule));
 			_players.ForEach(p => p.CalcOpponentPoint(_rule));
 		}
-
-		protected virtual IEnumerable<Player> Source(IEnumerable<Player> players)
-			=> players.OrderBy(i => Guid.NewGuid());
 
 		public void Export(TextWriter writer) {
 			_players.First()?.ExportTitle(writer);
