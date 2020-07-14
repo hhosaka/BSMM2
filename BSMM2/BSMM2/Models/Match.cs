@@ -110,7 +110,7 @@ namespace BSMM2.Models {
 		}
 
 		private void SetIsGapMatch() {
-			IsGapMatch = !IsByeMatch && _records[0].Player.Point.MatchPoint != _records[1].Player.Point.MatchPoint;
+			IsGapMatch = !IsByeMatch && (_records[0].Player as Player)?.Point.MatchPoint != (_records[1].Player as Player)?.Point.MatchPoint;
 		}
 
 		public Match(IRule rule, IPlayer player1, IPlayer player2 = null) {

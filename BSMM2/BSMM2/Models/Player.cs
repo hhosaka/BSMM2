@@ -73,7 +73,7 @@ namespace BSMM2.Models {
 			=> Point = _rule.Point(_matches.Select(match => match.GetRecord(this).Result));
 
 		internal void CalcOpponentPoint(IRule rule)
-			=> OpponentPoint = _rule.Point(_matches.Select(match => match.GetOpponentRecord(this).Player.Point));
+			=> OpponentPoint = _rule.Point(_matches.Select(match => (match.GetOpponentRecord(this).Player as Player)?.Point));
 
 		public Player() {// For Serializer
 		}

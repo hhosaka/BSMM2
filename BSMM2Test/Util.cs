@@ -67,9 +67,9 @@ namespace BSMM2Test {
 				Assert.AreEqual(pa.Dropped, pb.Dropped);
 				Assert.AreEqual(pa.ByeMatchCount, pb.ByeMatchCount);
 				Assert.AreEqual(pa.HasGapMatch, pb.HasGapMatch);
+				Check(pa.Point, pb.Point);
 			}
 			Assert.AreEqual(a.Name, b.Name);
-			Check(a.Point, b.Point);
 		}
 
 		public static void Check(IRule rule, Players a, Players b) {

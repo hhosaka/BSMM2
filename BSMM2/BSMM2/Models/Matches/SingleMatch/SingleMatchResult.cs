@@ -48,9 +48,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public static IExportablePoint Total(bool enableLifePoint, IEnumerable<IPoint> points) {
-			return new TheResult(enableLifePoint, points);
-		}
+		public static IExportablePoint Total(bool enableLifePoint, IEnumerable<IPoint> points)
+			=> new TheResult(enableLifePoint, points);
 
 		[JsonIgnore]
 		public int MatchPoint

@@ -2,7 +2,5 @@
 
 	public interface IPlayer : IExportable {
 		string Name { get; }
-
-		IExportablePoint Point { get; }
 	}
 }
