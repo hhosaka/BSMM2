@@ -246,6 +246,9 @@
   <data name="LabelRuleSetting" xml:space="preserve">
     <value>ルール設定</value>
   </data>
+  <data name="LabelUseByePoint" xml:space="preserve">
+    <value>不戦勝を考慮する</value>
+  </data>
   <data name="LabelUseLifePoint" xml:space="preserve">
     <value>ライフポイントで比較</value>
   </data>

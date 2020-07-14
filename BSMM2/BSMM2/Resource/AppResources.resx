@@ -249,6 +249,9 @@
   <data name="LabelRuleSetting" xml:space="preserve">
     <value>Rule Setting</value>
   </data>
+  <data name="LabelUseByePoint" xml:space="preserve">
+    <value>Check Bye Game</value>
+  </data>
   <data name="LabelUseLifePoint" xml:space="preserve">
     <value>Use Life point</value>
   </data>

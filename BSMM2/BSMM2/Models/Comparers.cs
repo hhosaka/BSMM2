@@ -21,53 +21,34 @@ namespace BSMM2.Models {
 		}
 
 		public override int Compare(Player p1, Player p2) {
-			foreach (var c in _compareres.Where(c => _force || c.Active)) {
-				var ret = c.Compare(p1, p2);
-				if (ret != 0) return ret;
+			if (p1 != p2) {
+				var ret = CompUtil.Comp2Factor(p1.Dropped, p2.Dropped);
+				if (ret == 0) {
+					foreach (var c in _compareres.Where(c => _force || c.Active)) {
+						ret = c.Compare(p1, p2);
+						if (ret != 0) return ret;
+					}
+					return p1.GetResult(p2) ?? 0;
+				}
+				return ret;
 			}
 			return 0;
 		}
 	}
 
-	public class PreComparer : IComparer {
+	public class ByeMatchComparer : IComparer {
 
 		[JsonIgnore]
-		public string Label => AppResources.LabelPreCompare;
+		public string Label => AppResources.LabelUseByePoint;
 
 		[JsonIgnore]
-		public bool Selectable => false;
+		public bool Selectable => true;
 
-		[JsonIgnore]
-		public bool Active {
-			get => true;
-			set { }
-		}
-
-		public int Compare(Player p1, Player p2) {
-			if (p1 == p2) {
-				return 0;
-			} else {
-				return CompUtil.Comp2Factor(p1.Dropped, p2.Dropped);
-			}
-		}
-	}
-
-	public class PostComparer : IComparer {
-
-		[JsonIgnore]
-		public string Label => AppResources.LabelPostCompare;
-
-		[JsonIgnore]
-		public bool Selectable => false;
-
-		[JsonIgnore]
-		public bool Active {
-			get => true;
-			set { }
-		}
+		[JsonProperty]
+		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> p1.GetResult(p2) ?? 0;
+			=> CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
 	}
 
 	public class PointComparer : IComparer {

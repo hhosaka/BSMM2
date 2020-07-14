@@ -50,23 +50,21 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			EnableLifePoint = enableLifePoint;
 			if (enableLifePoint) {
 				_comparers = new IComparer[] {
-				new PreComparer(),
 				new PointComparer(),
 				new LifePointComparer(),
 				new OpponentMatchPointComparer(),
 				new OpponentLifePointComparer(),
 				new WinPointComparer(),
 				new OpponentWinPointComparer(),
-				new PostComparer(),
+				new ByeMatchComparer(),
 			};
 			} else {
 				_comparers = new IComparer[] {
-				new PreComparer(),
 				new PointComparer(),
 				new OpponentMatchPointComparer(),
 				new WinPointComparer(),
 				new OpponentWinPointComparer(),
-				new PostComparer(),
+				new ByeMatchComparer(),
 			};
 			}
 		}

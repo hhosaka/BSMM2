@@ -457,6 +457,15 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Check Bye Game に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LabelUseByePoint {
+            get {
+                return ResourceManager.GetString("LabelUseByePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Use Life point に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string LabelUseLifePoint {
