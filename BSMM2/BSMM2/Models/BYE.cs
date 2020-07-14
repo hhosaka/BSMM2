@@ -11,8 +11,6 @@ namespace BSMM2.Models {
 		private class NullPoint : IExportablePoint {
 			public string Information => throw new NotImplementedException();
 
-			public int Value => 0;
-
 			public int MatchPoint => 0;
 
 			public double WinPoint => 0.0;

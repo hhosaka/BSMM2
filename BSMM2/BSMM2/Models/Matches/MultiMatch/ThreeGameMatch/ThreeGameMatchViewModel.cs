@@ -15,10 +15,10 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 			if (value is ResultItem[] resultItems) {
 				switch (parameter.ToString()) {
 					case "1":
-						return !(resultItems[0].Value == RESULT_T.Progress && resultItems[1].Value == RESULT_T.Progress && resultItems[2].Value == RESULT_T.Progress);
+						return !(resultItems[0].RESULT == RESULT_T.Progress && resultItems[1].RESULT == RESULT_T.Progress && resultItems[2].RESULT == RESULT_T.Progress);
 
 					case "2":
-						return !(resultItems[1].Value == RESULT_T.Progress && resultItems[2].Value == RESULT_T.Progress);
+						return !(resultItems[1].RESULT == RESULT_T.Progress && resultItems[2].RESULT == RESULT_T.Progress);
 				}
 			}
 
@@ -74,15 +74,15 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 			void Done() {
 				if (_rule.EnableLifePoint) {
 					match.SetMultiMatchResult(new[] {
-						new Score(ResultItems[0].Value, Player1LPs[0].Point, Player2LPs[0].Point),
-						new Score(ResultItems[1].Value, Player1LPs[1].Point, Player2LPs[1].Point),
-						new Score(ResultItems[2].Value, Player1LPs[2].Point, Player2LPs[2].Point),
+						new Score(ResultItems[0].RESULT, Player1LPs[0].Point, Player2LPs[0].Point),
+						new Score(ResultItems[1].RESULT, Player1LPs[1].Point, Player2LPs[1].Point),
+						new Score(ResultItems[2].RESULT, Player1LPs[2].Point, Player2LPs[2].Point),
 					});
 				} else {
 					match.SetMultiMatchResult(new[] {
-						new Score(ResultItems[0].Value),
-						new Score(ResultItems[1].Value),
-						new Score(ResultItems[2].Value),
+						new Score(ResultItems[0].RESULT),
+						new Score(ResultItems[1].RESULT),
+						new Score(ResultItems[2].RESULT),
 					});
 				}
 				MessagingCenter.Send<object>(this, Messages.REFRESH);

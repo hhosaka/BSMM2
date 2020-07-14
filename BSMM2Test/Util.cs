@@ -60,12 +60,18 @@ namespace BSMM2Test {
 			Assert.AreEqual(a.LifePoint, b.LifePoint);
 		}
 
+		public static void Check(IPoint a, IPoint b) {
+			Assert.AreEqual(a.MatchPoint, b.MatchPoint);
+			Assert.AreEqual(a.LifePoint, b.LifePoint);
+			Assert.AreEqual(a.WinPoint, b.WinPoint);
+		}
+
 		public static void Check(IPlayer a, IPlayer b) {
 			Assert.AreEqual(a.Dropped, b.Dropped);
 			Assert.AreEqual(a.Name, b.Name);
 			Assert.AreEqual(a.HasByeMatch, b.HasByeMatch);
 			Assert.AreEqual(a.HasGapMatch, b.HasGapMatch);
-			Assert.AreEqual(0, a.Point.Value, b.Point.Value);
+			Check(a.Point, b.Point);
 		}
 
 		public static void Check(IRule rule, Players a, Players b) {

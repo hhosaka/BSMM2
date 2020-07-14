@@ -32,8 +32,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				writer.Write(LifePoint);
 			}
 
-			public int Value => MatchPoint;
-
 			public TheResult() {
 			}
 

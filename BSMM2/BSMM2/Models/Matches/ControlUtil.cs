@@ -45,7 +45,7 @@ namespace BSMM2.Models.Matches {
 	internal class ResultItem {
 		private Action _onPropertyChanged;
 
-		public RESULT_T Value { get; private set; }
+		public RESULT_T RESULT { get; private set; }
 
 		public ResultItem(RESULT_T result, Action onPropertyChanged) {
 			Initial(result);
@@ -53,13 +53,13 @@ namespace BSMM2.Models.Matches {
 		}
 
 		public bool Player1Win {
-			get => Value == RESULT_T.Win;
+			get => RESULT == RESULT_T.Win;
 			set {
 				if (value != Player1Win) {
 					if (value) {
-						Value = RESULT_T.Win;
+						RESULT = RESULT_T.Win;
 					} else {
-						Value = RESULT_T.Progress;
+						RESULT = RESULT_T.Progress;
 					}
 					Draw = Player2Win = false;
 					_onPropertyChanged?.Invoke();
@@ -68,13 +68,13 @@ namespace BSMM2.Models.Matches {
 		}
 
 		public bool Draw {
-			get => Value == RESULT_T.Draw;
+			get => RESULT == RESULT_T.Draw;
 			set {
 				if (value != Draw) {
 					if (value) {
-						Value = RESULT_T.Draw;
+						RESULT = RESULT_T.Draw;
 					} else {
-						Value = RESULT_T.Progress;
+						RESULT = RESULT_T.Progress;
 					}
 					Player1Win = Player2Win = false;
 					_onPropertyChanged?.Invoke();
@@ -83,13 +83,13 @@ namespace BSMM2.Models.Matches {
 		}
 
 		public bool Player2Win {
-			get => Value == RESULT_T.Lose;
+			get => RESULT == RESULT_T.Lose;
 			set {
 				if (value != Player2Win) {
 					if (value) {
-						Value = RESULT_T.Lose;
+						RESULT = RESULT_T.Lose;
 					} else {
-						Value = RESULT_T.Progress;
+						RESULT = RESULT_T.Progress;
 					}
 					Draw = Player1Win = false;
 					_onPropertyChanged?.Invoke();
@@ -98,7 +98,7 @@ namespace BSMM2.Models.Matches {
 		}
 
 		private void Initial(RESULT_T result) {
-			Value = RESULT_T.Progress;
+			RESULT = RESULT_T.Progress;
 			switch (result) {
 				case RESULT_T.Win:
 					Player1Win = true;

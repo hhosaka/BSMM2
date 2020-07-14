@@ -57,15 +57,15 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 			void Done() {
 				if (EnableLifePoint) {
 					match.SetMultiMatchResult(new[] {
-						new Score(ResultItem[0].Value, Player1LP[0].Point, Player2LP[0].Point),
-						new Score(ResultItem[1].Value, Player1LP[1].Point, Player2LP[1].Point),
-						new Score(ResultItem[2].Value, Player1LP[2].Point, Player2LP[2].Point),
+						new Score(ResultItem[0].RESULT, Player1LP[0].Point, Player2LP[0].Point),
+						new Score(ResultItem[1].RESULT, Player1LP[1].Point, Player2LP[1].Point),
+						new Score(ResultItem[2].RESULT, Player1LP[2].Point, Player2LP[2].Point),
 					});
 				} else {
 					match.SetMultiMatchResult(new[] {
-						new Score(ResultItem[0].Value),
-						new Score(ResultItem[1].Value),
-						new Score(ResultItem[2].Value),
+						new Score(ResultItem[0].RESULT),
+						new Score(ResultItem[1].RESULT),
+						new Score(ResultItem[2].RESULT),
 					});
 				}
 				MessagingCenter.Send<object>(this, Messages.REFRESH);

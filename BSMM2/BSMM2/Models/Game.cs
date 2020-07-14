@@ -164,7 +164,7 @@ namespace BSMM2.Models {
 
 						bool CheckGapMatch() {// 階段戦の重複は避ける
 							if (!AcceptGapMatchDuplication) {
-								if (player.Point.Value != opponent.Point.Value) {
+								if (player.Point.MatchPoint != opponent.Point.MatchPoint) {
 									return !player.HasGapMatch && !opponent.HasGapMatch;
 								}
 							}
