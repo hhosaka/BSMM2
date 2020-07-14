@@ -12,7 +12,6 @@ namespace BSMM2Test {
 
 	[TestClass]
 	public class SerializeTest {
-		private readonly string _origin = "debug";
 
 		private readonly JsonSerializerSettings settings
 			= new JsonSerializerSettings {
@@ -22,13 +21,13 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void LoadSaveTest1() {
-			var game = new FakeGame(new SingleMatchRule(), 6, _origin);
+			var game = new FakeGame(new SingleMatchRule(), 6);
 
 			game.Shuffle();
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.ActiveRound);
 			game.ActiveRound.Swap(0, 1);
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.Players.GetByOrder());
 
 			var buf = new StringBuilder();
 
@@ -38,8 +37,8 @@ namespace BSMM2Test {
 
 			var result = new Serializer<Game>().Deserialize(new StringReader(sbuf));
 
-			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, _origin, result.ActiveRound);
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.Players.GetByOrder());
+			Util.Check(new[] { 3, 2, 1, 4, 5, 6 }, result.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, result.Players.GetByOrder());
 			Assert.AreEqual(game.Title, result.Title);
 			Assert.AreEqual(game.Id, result.Id);
 			Util.Check(game, result);
@@ -48,9 +47,9 @@ namespace BSMM2Test {
 		[TestMethod]
 		public void LoadSaveTest2() {
 			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 6, _origin);
+			var game = new FakeGame(rule, 6);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.ActiveRound);
 
 			game.StepToPlaying();
 
@@ -58,22 +57,22 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
 			game.ActiveRound.Matches.ElementAt(2).SetResult(Win);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, game.Players.GetByOrder());
 
 			var json = JsonConvert.SerializeObject(game, settings);
 			var result = JsonConvert.DeserializeObject<Game>(json, settings);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, result.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, result.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, result.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, result.Players.GetByOrder());
 		}
 
 		[TestMethod]
 		public void LoadSaveTest3() {
 			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 6, _origin);
+			var game = new FakeGame(rule, 6);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.ActiveRound);
 
 			game.StepToPlaying();
 
@@ -81,8 +80,8 @@ namespace BSMM2Test {
 			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
 			game.ActiveRound.Matches.ElementAt(2).SetResult(Win);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, game.Players.GetByOrder());
 
 			var engine = new Storage();
 
@@ -90,15 +89,15 @@ namespace BSMM2Test {
 
 			var game2 = Game.Load(game.Id, engine);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, _origin, game2.ActiveRound);
-			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, _origin, game2.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6 }, game2.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 2, 4, 6 }, game2.Players.GetByOrder());
 			Assert.AreEqual(0, game2.Rounds.Count());
 		}
 
 		[TestMethod]
 		public void LoadSaveTest5() {
 			var rule = new SingleMatchRule();
-			var src = new FakeGame(rule, 8, _origin);
+			var src = new FakeGame(rule, 8);
 
 			src.StepToPlaying();
 
@@ -219,16 +218,16 @@ namespace BSMM2Test {
 		[TestMethod]
 		public void LoadSaveTest8() {
 			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 3, _origin);
+			var game = new FakeGame(rule, 3);
 
-			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, -1 }, game.ActiveRound);
 
 			game.StepToPlaying();
 
 			game.ActiveRound.Matches.ElementAt(0).SetResult(Win);
 
-			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 1, 3, 2 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, -1 }, game.ActiveRound);
+			Util.Check(new[] { 1, 3, 2 }, game.Players.GetByOrder());
 
 			var engine = new Storage();
 
@@ -236,36 +235,36 @@ namespace BSMM2Test {
 
 			var game2 = Game.Load(game.Id, engine);
 
-			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game2.ActiveRound);
-			Util.Check(new[] { 1, 3, 2 }, _origin, game2.Players.GetByOrder());
+			Util.Check(new[] { 1, 2, 3, -1 }, game2.ActiveRound);
+			Util.Check(new[] { 1, 3, 2 }, game2.Players.GetByOrder());
 			Assert.AreEqual(0, game2.Rounds.Count());
 		}
 
 		[TestMethod]
 		public void ByeMatchTest() {
 			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 3, _origin);
+			var game = new FakeGame(rule, 3);
 
-			Util.Check(new[] { 1, 2, 3, -1 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, -1 }, game.ActiveRound);
 
 			game.ActiveRound.Swap(0, 1);
 
-			Util.Check(new[] { 3, 2, 1, -1 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 3, 2, 1, -1 }, game.ActiveRound);
 
 			game.StepToPlaying();
 
 			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
 
-			Util.Check(new[] { 3, 2, 1, -1 }, _origin, game.ActiveRound);
-			Util.Check(new[] { 3, 1, 2 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 3, 2, 1, -1 }, game.ActiveRound);
+			Util.Check(new[] { 3, 1, 2 }, game.Players.GetByOrder());
 		}
 
 		[TestMethod]
 		public void GapMatchTest() {
 			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 10, _origin);
+			var game = new FakeGame(rule, 10);
 
-			Util.Check(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, game.ActiveRound);
 
 			game.StepToPlaying();
 
@@ -275,11 +274,11 @@ namespace BSMM2Test {
 			Util.SetResult(game, 3, Win);
 			Util.SetResult(game, 4, Win);
 
-			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, _origin, game.Players.GetByOrder());
+			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, game.Players.GetByOrder());
 
 			game.StepToMatching();
 
-			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, _origin, game.ActiveRound);
+			Util.Check(new[] { 1, 3, 5, 7, 9, 2, 4, 6, 8, 10 }, game.ActiveRound);
 
 			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(0).IsGapMatch);
 			Assert.IsFalse(game.ActiveRound.Matches.ElementAt(1).IsGapMatch);

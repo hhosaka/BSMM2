@@ -201,7 +201,6 @@ namespace BSMM2Test {
 		public void CreateGameTest() {
 			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 4);
-			rule.EnableLifePoint = true;
 
 			game.Shuffle();
 			game.StepToPlaying();
@@ -224,6 +223,16 @@ namespace BSMM2Test {
 			Assert.AreEqual(0, game2.Rounds.Count());
 
 			Util.Check(new[] { 1, 2, 3, 4 }, game2.ActiveRound);
+		}
+
+		[TestMethod]
+		public void PlayerNameTest() {
+			const string origin = "debug";
+
+			var game = new FakeGame(new SingleMatchRule(), 2, origin);
+
+			Assert.AreEqual(origin + "001", game.Players.GetByOrder().ElementAt(0).Name);
+			Assert.AreEqual(origin + "002", game.Players.GetByOrder().ElementAt(1).Name);
 		}
 
 		[TestMethod]
