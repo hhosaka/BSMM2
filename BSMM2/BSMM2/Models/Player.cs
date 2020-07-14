@@ -25,8 +25,8 @@ namespace BSMM2.Models {
 		public IEnumerable<Match> Matches => _matches;
 
 		[JsonIgnore]
-		public bool HasByeMatch
-			=> _matches.Any(match => match.IsByeMatch);
+		public int ByeMatchCount
+			=> _matches.Count(match => match.IsByeMatch);
 
 		[JsonIgnore]
 		public bool HasGapMatch

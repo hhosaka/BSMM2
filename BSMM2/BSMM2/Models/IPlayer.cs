@@ -9,7 +9,7 @@
 
 		IExportablePoint OpponentPoint { get; }
 
-		bool HasByeMatch { get; }
+		int ByeMatchCount { get; }
 
 		bool HasGapMatch { get; }
 

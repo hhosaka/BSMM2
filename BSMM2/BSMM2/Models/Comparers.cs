@@ -48,7 +48,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> CompUtil.Comp2Factor(p1.HasByeMatch, p2.HasByeMatch);
+			=> p2.ByeMatchCount - p1.ByeMatchCount;
 	}
 
 	public class PointComparer : IComparer {

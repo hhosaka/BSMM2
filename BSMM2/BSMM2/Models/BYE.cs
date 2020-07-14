@@ -38,10 +38,10 @@ namespace BSMM2.Models {
 		public IExportablePoint OpponentPoint => _nullPoint;
 
 		[JsonIgnore]
-		public bool HasByeMatch => true;
+		public bool HasGapMatch => true;
 
 		[JsonIgnore]
-		public bool HasGapMatch => true;
+		public int ByeMatchCount => 0;
 
 		public void Commit(Match match) {
 		}
