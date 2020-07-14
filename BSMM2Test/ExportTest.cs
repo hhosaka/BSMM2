@@ -1,10 +1,7 @@
 ﻿using BSMM2.Models;
 using BSMM2.Models.Matches.SingleMatch;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
 using System.Linq;
-using System.Text;
-using static BSMM2.Models.RESULT_T;
 
 namespace BSMM2Test {
 
@@ -12,55 +9,64 @@ namespace BSMM2Test {
 	public class ExportTest {
 
 		[TestMethod]
-		public void ExportTitleTest() {
-			var rule = new SingleMatchRule();
-			var player = new Player(rule, "test");
-			var buf = new StringBuilder();
-
-			player.ExportTitle(new StringWriter(buf));
-			Assert.AreEqual("Name, Dropped, Point, WinPoint, LifePoint", buf.ToString());
+		public void ExportPlayerTest() {
+			var buf = Util.Export(new Player(new SingleMatchRule(), "test"));
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeCount, \r\n" +
+				"\"test\", False, 0, 0, 0, 0, 0, \r\n",
+				buf);
 		}
 
 		[TestMethod]
-		public void ExportDataTest1() {
-			var rule = new SingleMatchRule();
-			var player = new Player(rule, "test");
-			var buf = new StringBuilder();
-
-			player.ExportData(new StringWriter(buf));
-			Assert.AreEqual("\"test\", False, 0, 0, 0", buf.ToString());
+		public void ExportPlayersTest1() {
+			var game = new FakeGame(new SingleMatchRule(), 2);
+			var buf = Util.Export(game.Players);
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeCount, \r\n" +
+				"\"Player001\", False, 0, 0, 0, 0, 0, \r\n" +
+				"\"Player002\", False, 0, 0, 0, 0, 0, \r\n",
+				buf);
 		}
 
 		[TestMethod]
-		public void ExportDataTest2() {
-			var rule = new SingleMatchRule();
-			var game = new FakeGame(rule, 4);
+		public void ExportPlayersTest2() {
+			var game = new FakeGame(new SingleMatchRule(), 2);
 
 			game.StepToPlaying();
-			game.ActiveRound.Matches.ElementAt(0).SetResult(Win);
-			game.ActiveRound.Matches.ElementAt(1).SetResult(Win);
+			Util.SetResult(game, 0, RESULT_T.Win);
 
-			var players = game.Players.GetByOrder();
-			Util.CheckWithOrder(new[] { 1, 3, 2, 4 }, new[] { 1, 1, 3, 3 }, players);
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeCount, \r\n" +
+				"\"Player001\", False, 3, 1, 0, 0, 0, \r\n" +
+				"\"Player002\", False, 0, 0, 3, 1, 0, \r\n",
+				Util.Export(game.Players));
 
-			var buf = new StringBuilder();
+			game.Players.Source.ElementAt(0).Dropped = true;
 
-			players.ElementAt(0).ExportData(new StringWriter(buf));
-			Assert.AreEqual("\"Player001\", False, 3, 1, 0", buf.ToString());
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeCount, \r\n" +
+				"\"Player001\", True, 3, 1, 0, 0, 0, \r\n" +
+				"\"Player002\", False, 0, 0, 3, 1, 0, \r\n",
+				Util.Export(game.Players));
 
-			buf.Clear();
-			players.ElementAt(2).ExportData(new StringWriter(buf));
-			Assert.AreEqual("\"Player002\", False, 0, 0, 0", buf.ToString());
+			game.Players.Source.ElementAt(0).Dropped = false;
+			Util.SetResult(game, 0, RESULT_T.Draw);
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeCount, \r\n" +
+				"\"Player001\", False, 1, 0.5, 1, 0.5, 0, \r\n" +
+				"\"Player002\", False, 1, 0.5, 1, 0.5, 0, \r\n",
+				Util.Export(game.Players));
+		}
 
-			buf.Clear();
-			game.Players.Export(new StringWriter(buf));
-
-			Assert.AreEqual("Name, Dropped, Point, WinPoint, LifePoint\r\n" +
-							"\"Player001\", False, 3, 1, 0\r\n" +
-							"\"Player003\", False, 3, 1, 0\r\n" +
-							"\"Player002\", False, 0, 0, 0\r\n" +
-							"\"Player004\", False, 0, 0, 0\r\n",
-							buf.ToString());
+		[TestMethod]
+		public void ExportPlayersTest3() {
+			var game = new FakeGame(new SingleMatchRule(true), 2);
+			var buf = Util.Export(game.Players);
+			Assert.AreEqual(
+				"Name, Dropped, Match, Win, Life, Op-Match, Op-Win, Op-Lifem ByeCount, \r\n" +
+				"\"Player001\", False, 0, 0, 0, 0, 0, 0, 0, \r\n" +
+				"\"Player002\", False, 0, 0, 0, 0, 0, 0, 0, \r\n",
+				buf);
 		}
 	}
 }

@@ -148,5 +148,14 @@ namespace BSMM2Test {
 			game.Players.Export(new StringWriter(buf));
 			return buf.ToString();
 		}
+
+		public static string Export(IExportable exportable) {
+			var buf = new StringBuilder();
+			using (var writer = new StringWriter(buf)) {
+				exportable.ExportTitle(writer);
+				exportable.ExportData(writer);
+			}
+			return buf.ToString();
+		}
 	}
 }

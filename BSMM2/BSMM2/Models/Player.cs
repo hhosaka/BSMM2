@@ -78,9 +78,12 @@ namespace BSMM2.Models {
 		public Player() {// For Serializer
 		}
 
-		public void ExportTitle(TextWriter writer) {
+		public void ExportTitle(TextWriter writer, string index = "") {
 			writer.Write("Name, Dropped, ");
 			Point.ExportTitle(writer);
+			Point.ExportTitle(writer, "Op-");
+			writer.Write("ByeCount, ");
+			writer.WriteLine();
 		}
 
 		public void ExportData(TextWriter writer) {
@@ -90,13 +93,17 @@ namespace BSMM2.Models {
 			writer.Write(Dropped);
 			writer.Write(", ");
 			Point.ExportData(writer);
+			OpponentPoint.ExportData(writer);
+			writer.Write(ByeMatchCount);
+			writer.Write(", ");
+			writer.WriteLine();
 		}
 
 		public Player(IRule rule, string name) : this() {
 			_rule = rule;
 			_matches = new List<Match>();
 			Name = name;
-			Point = _rule.Point(Enumerable.Empty<IPoint>());
+			Point = OpponentPoint = _rule.Point(Enumerable.Empty<IPoint>());
 		}
 	}
 }

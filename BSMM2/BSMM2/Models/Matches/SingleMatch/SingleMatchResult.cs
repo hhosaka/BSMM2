@@ -9,6 +9,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 	internal class SingleMatchResult : IResult {
 
 		private class TheResult : IExportablePoint {
+			private bool _enableLifePoint;
+
 			public int MatchPoint { get; }
 
 			public int? LifePoint { get; }
@@ -20,8 +22,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 					AppResources.TextLifePoint + " = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /" +
 					AppResources.TextWinPoint + " = " + WinPoint;
 
-			public void ExportTitle(TextWriter writer) {
-				writer.Write("Point, WinPoint, LifePoint");
+			public void ExportTitle(TextWriter writer, string index) {
+				writer.Write(string.Format("{0}Match, {0}Win, ", index));
+				if (_enableLifePoint) writer.Write(string.Format(", {0}Life", index));
 			}
 
 			public void ExportData(TextWriter writer) {
@@ -29,13 +32,17 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				writer.Write(", ");
 				writer.Write(WinPoint);
 				writer.Write(", ");
-				writer.Write(LifePoint);
+				if (_enableLifePoint) {
+					writer.Write(LifePoint);
+					writer.Write(", ");
+				}
 			}
 
 			public TheResult() {
 			}
 
 			public TheResult(bool enableLifePoint, IEnumerable<IPoint> source) {
+				_enableLifePoint = enableLifePoint;
 				LifePoint = 0;// for enable lifepoint
 				foreach (var point in source) {
 					if (point != null) {

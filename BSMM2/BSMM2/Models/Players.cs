@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BSMM2.Models {
 
-	public class Players {
+	public class Players : IExportable {
 		private const String DEFAULT_PREFIX = "Player";
 
 		[JsonProperty]
@@ -20,7 +20,7 @@ namespace BSMM2.Models {
 		private List<Player> _players;
 
 		[JsonIgnore]
-		internal IEnumerable<Player> Source => _players;
+		public IEnumerable<Player> Source => _players;
 
 		[JsonIgnore]
 		public int Count => _players.Count;
@@ -109,6 +109,14 @@ namespace BSMM2.Models {
 				player.ExportData(writer);
 				writer.WriteLine();
 			}
+		}
+
+		public void ExportTitle(TextWriter writer, string index = "")
+			=> _players.First()?.ExportTitle(writer);
+
+		public void ExportData(TextWriter writer) {
+			Reset();
+			_players.ForEach(player => player.ExportData(writer));
 		}
 	}
 }

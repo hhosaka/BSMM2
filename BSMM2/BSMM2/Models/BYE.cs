@@ -13,6 +13,6 @@ namespace BSMM2.Models {
 
 		public void ExportData(TextWriter writer) => throw new NotImplementedException();
 
-		public void ExportTitle(TextWriter writer) => throw new NotImplementedException();
+		public void ExportTitle(TextWriter writer, string index) => throw new NotImplementedException();
 	}
 }
