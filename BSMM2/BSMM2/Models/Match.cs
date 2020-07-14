@@ -66,7 +66,7 @@ namespace BSMM2.Models {
 
 		[JsonIgnore]
 		public bool IsByeMatch
-			=> _records.Any(result => result.Player == BYE);
+			=> _records.Any(result => result.Player is BYE);
 
 		[JsonIgnore]
 		public IEnumerable<string> PlayerNames
@@ -98,7 +98,7 @@ namespace BSMM2.Models {
 		}
 
 		public void Commit()
-			=> _records.ForEach(result => result.Player.Commit(this));
+			=> _records.ForEach(result => (result.Player as Player)?.Commit(this));
 
 		public Record GetRecord(IPlayer player)
 			=> _records.First(r => r.Player == player);
@@ -110,7 +110,7 @@ namespace BSMM2.Models {
 		}
 
 		private void SetIsGapMatch() {
-			IsGapMatch = (_records[0].Player.Point.MatchPoint != _records[1].Player.Point.MatchPoint);
+			IsGapMatch = !IsByeMatch && _records[0].Player.Point.MatchPoint != _records[1].Player.Point.MatchPoint;
 		}
 
 		public Match(IRule rule, IPlayer player1, IPlayer player2 = null) {

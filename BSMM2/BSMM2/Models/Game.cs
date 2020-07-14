@@ -111,13 +111,13 @@ namespace BSMM2.Models {
 		}
 
 		// UTの為にシャッフルしないルートを用意する
-		protected virtual IEnumerable<Player> Shuffle(IEnumerable<Player> players)
+		protected virtual IEnumerable<Player> RandomizePlayer(IEnumerable<Player> players)
 			=> players.OrderBy(i => Guid.NewGuid());
 
 		private IEnumerable<Match> MakeRound() {
 			Players.Reset();
 			for (int i = 0; i < TRY_COUNT; ++i) {
-				var matchingList = Create(Shuffle(Players.Source)
+				var matchingList = Create(RandomizePlayer(Players.Source)
 					.OrderByDescending(p => p, Rule.GetComparer(false))
 					.Where(p => !p.Dropped));
 

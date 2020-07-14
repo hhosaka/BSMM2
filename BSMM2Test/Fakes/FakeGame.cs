@@ -7,7 +7,7 @@ namespace BSMM2Test {
 
 	public class FakeGame : Game {
 
-		protected override IEnumerable<Player> Shuffle(IEnumerable<Player> players)
+		protected override IEnumerable<Player> RandomizePlayer(IEnumerable<Player> players)
 			=> players;
 
 		public FakeGame() {

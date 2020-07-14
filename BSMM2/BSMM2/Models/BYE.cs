@@ -29,22 +29,10 @@ namespace BSMM2.Models {
 		public string Name => AppResources.TextBYE;
 
 		[JsonIgnore]
-		public bool Dropped => false;
-
-		[JsonIgnore]
 		public IExportablePoint Point => _nullPoint;
 
 		[JsonIgnore]
 		public IExportablePoint OpponentPoint => _nullPoint;
-
-		[JsonIgnore]
-		public bool HasGapMatch => true;
-
-		[JsonIgnore]
-		public int ByeMatchCount => 0;
-
-		public void Commit(Match match) {
-		}
 
 		public void ExportData(TextWriter writer) => throw new NotImplementedException();
 

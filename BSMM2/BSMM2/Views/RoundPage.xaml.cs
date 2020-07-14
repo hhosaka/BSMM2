@@ -29,7 +29,7 @@ namespace BSMM2.Views {
 		private void OpenHelpPage(object sender, EventArgs e) => Navigation.PushModalAsync(new WebPage("https://sites.google.com/site/hhosaka183/bs-match-maker-2"));
 
 		private async void OnMatchTapped(object sender, ItemTappedEventArgs args) {
-			if (args.Item is Match match && viewModel.Game.ActiveRound.IsPlaying)
+			if (args.Item is Match match && viewModel.Game.ActiveRound.IsPlaying && !match.IsByeMatch)
 				await Navigation.PushModalAsync(new NavigationPage(viewModel.Game.CreateMatchPage(match)));
 
 			RoundListView.SelectedItem = null;

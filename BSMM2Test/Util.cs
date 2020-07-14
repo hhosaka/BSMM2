@@ -63,10 +63,12 @@ namespace BSMM2Test {
 		}
 
 		public static void Check(IPlayer a, IPlayer b) {
-			Assert.AreEqual(a.Dropped, b.Dropped);
+			if (a is Player pa && b is Player pb) {
+				Assert.AreEqual(pa.Dropped, pb.Dropped);
+				Assert.AreEqual(pa.ByeMatchCount, pb.ByeMatchCount);
+				Assert.AreEqual(pa.HasGapMatch, pb.HasGapMatch);
+			}
 			Assert.AreEqual(a.Name, b.Name);
-			Assert.AreEqual(a.ByeMatchCount, b.ByeMatchCount);
-			Assert.AreEqual(a.HasGapMatch, b.HasGapMatch);
 			Check(a.Point, b.Point);
 		}
 
