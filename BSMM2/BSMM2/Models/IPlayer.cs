@@ -1,6 +1,6 @@
 ﻿namespace BSMM2.Models {
 
-	public interface IPlayer : IExportable {
+	public interface IPlayer {
 		string Name { get; }
 	}
 }

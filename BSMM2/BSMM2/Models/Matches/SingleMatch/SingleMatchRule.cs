@@ -30,8 +30,8 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public virtual Match CreateMatch(IPlayer player1, IPlayer player2)
 			=> new SingleMatch(this, player1, player2);
 
-		public IExportablePoint Point(IEnumerable<IPoint> results)
-			=> SingleMatchResult.Total(EnableLifePoint, results);
+		public IExportablePoint Point(IEnumerable<IPoint> points)
+			=> SingleMatchResult.Total(EnableLifePoint, points);
 
 		public virtual Comparer<Player> GetComparer(bool force)
 			=> new TheComparer(Comparers, force);

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Xamarin.Forms.Internals;
 
@@ -81,27 +80,6 @@ namespace BSMM2.Models {
 			=> OpponentPoint = _rule.Point(_matches.Select(match => (match.GetOpponentRecord(this).Player as Player)?.Point));
 
 		public Player() {// For Serializer
-		}
-
-		public void ExportTitle(TextWriter writer, string index = "") {
-			writer.Write("Name, Dropped, ");
-			Point.ExportTitle(writer);
-			Point.ExportTitle(writer, "Op-");
-			writer.Write("ByeCount, ");
-			writer.WriteLine();
-		}
-
-		public void ExportData(TextWriter writer) {
-			writer.Write("\"");
-			writer.Write(Name);
-			writer.Write("\", ");
-			writer.Write(Dropped);
-			writer.Write(", ");
-			Point.ExportData(writer);
-			OpponentPoint.ExportData(writer);
-			writer.Write(ByeMatchCount);
-			writer.Write(", ");
-			writer.WriteLine();
 		}
 
 		public IDictionary<string, string> Export(IDictionary<string, string> data) {

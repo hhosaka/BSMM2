@@ -28,8 +28,7 @@ namespace BSMM2Test {
 
 		public static void CheckWithOrder(IEnumerable<int> expectedPlayers, IEnumerable<int> expectedOrder, IEnumerable<Player> players) {
 			Check(expectedPlayers, players);
-			var result = players.Select(p => p.Order);
-			CollectionAssert.AreEqual(expectedOrder.ToArray(), result.ToArray(), Message(expectedOrder, result));
+			CheckOrder(expectedOrder, players);
 		}
 
 		public static void CheckOrder(IEnumerable<int> expectedOrder, IEnumerable<Player> players) {
@@ -146,15 +145,6 @@ namespace BSMM2Test {
 		public static string Export(Game game) {
 			var buf = new StringBuilder();
 			game.Players.Export(new StringWriter(buf));
-			return buf.ToString();
-		}
-
-		public static string Export(IExportable exportable) {
-			var buf = new StringBuilder();
-			using (var writer = new StringWriter(buf)) {
-				exportable.ExportTitle(writer);
-				exportable.ExportData(writer);
-			}
 			return buf.ToString();
 		}
 

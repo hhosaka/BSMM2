@@ -114,13 +114,5 @@ namespace BSMM2.Models {
 				writer.WriteLine();
 			}
 		}
-
-		public void ExportTitle(TextWriter writer, string prefix = "")
-			=> _players.First()?.ExportTitle(writer);
-
-		public void ExportData(TextWriter writer) {
-			Reset();
-			_players.ForEach(player => player.ExportData(writer));
-		}
 	}
 }
