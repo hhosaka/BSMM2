@@ -157,5 +157,13 @@ namespace BSMM2Test {
 			}
 			return buf.ToString();
 		}
+
+		public static string Export(Players players) {
+			var buf = new StringBuilder();
+			using (var writer = new StringWriter(buf)) {
+				players.Export(writer);
+			}
+			return buf.ToString();
+		}
 	}
 }

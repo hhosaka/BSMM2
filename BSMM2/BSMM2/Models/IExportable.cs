@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace BSMM2.Models {
 
@@ -7,5 +8,7 @@ namespace BSMM2.Models {
 		void ExportTitle(TextWriter writer, string prefix = "");
 
 		void ExportData(TextWriter writer);
+
+		IDictionary<string, string> Export(IDictionary<string, string> data);
 	}
 }

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 
-	public class Players : IExportable {
+	public class Players {
 		private const String DEFAULT_PREFIX = "Player";
 
 		[JsonProperty]
@@ -103,8 +104,15 @@ namespace BSMM2.Models {
 		}
 
 		public void Export(TextWriter writer) {
-			ExportTitle(writer);
-			ExportData(writer);
+			_players.First()?.Export(new Dictionary<string, string>()).Keys.ForEach(key => writer.Write(key + ", "));
+			writer.WriteLine();
+			Reset();
+			foreach (var player in _players) {
+				foreach (var param in player.Export(new Dictionary<string, string>())) {
+					writer.Write(param.Value + ", ");
+				}
+				writer.WriteLine();
+			}
 		}
 
 		public void ExportTitle(TextWriter writer, string prefix = "")

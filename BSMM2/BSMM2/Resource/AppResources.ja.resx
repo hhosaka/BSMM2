@@ -360,6 +360,12 @@
   <data name="TextPlayerName" xml:space="preserve">
     <value>プレーヤー名</value>
   </data>
+  <data name="TextPlayerParameterKey" xml:space="preserve">
+    <value>パラメータ</value>
+  </data>
+  <data name="TextPlayerParameterValue" xml:space="preserve">
+    <value>値</value>
+  </data>
   <data name="TextResult" xml:space="preserve">
     <value>勝敗</value>
   </data>

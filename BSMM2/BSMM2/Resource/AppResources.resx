@@ -363,6 +363,12 @@
   <data name="TextPlayerName" xml:space="preserve">
     <value>Pnayer Name</value>
   </data>
+  <data name="TextPlayerParameterKey" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="TextPlayerParameterValue" xml:space="preserve">
+    <value>Value</value>
+  </data>
   <data name="TextResult" xml:space="preserve">
     <value>Result</value>
   </data>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Xamarin.Forms.Internals;
 
 namespace BSMM2.Models {
 
@@ -101,6 +102,15 @@ namespace BSMM2.Models {
 			writer.Write(ByeMatchCount);
 			writer.Write(", ");
 			writer.WriteLine();
+		}
+
+		public IDictionary<string, string> Export(IDictionary<string, string> data) {
+			data["Name"] = string.Format("\"{0}\"", Name);
+			data["Dropped"] = Dropped.ToString();
+			Point.Export(data);
+			OpponentPoint.Export(new Dictionary<string, string>()).ForEach(pair => data["Op-" + pair.Key] = pair.Value);
+			data["ByeMatchCount"] = ByeMatchCount.ToString();
+			return data;
 		}
 
 		public Player(IRule rule, string name) : this() {

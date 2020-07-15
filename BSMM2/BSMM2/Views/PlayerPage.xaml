@@ -5,7 +5,7 @@
 			 x:Class="BSMM2.Views.PlayerPage"
 			 xmlns:local="clr-namespace:BSMM2.ViewModels"
 			 Disappearing="OnClosing"
-			  Title="{Binding Title}">
+			  Title="{Binding Name}">
 	<ContentPage.Resources>
 		<local:RoundResultConverter x:Key="Converter" />
 	</ContentPage.Resources>
@@ -14,6 +14,17 @@
 	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
 		<StackLayout>
+			<Grid x:Name="grid">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Label Text="{x:Static prop:AppResources.TextPlayerParameterKey}" Grid.Row="0" Grid.Column="0" FontSize="Medium" />
+				<Label Text="{x:Static prop:AppResources.TextPlayerParameterValue}" Grid.Row="0" Grid.Column="1" FontSize="Medium" />
+			</Grid>
 			<StackLayout Orientation="Horizontal">
 				<Switch IsToggled="{Binding Dropped , Mode=TwoWay}" IsEnabled="{Binding IsMatching}" />
 				<Label Text="{x:Static prop:AppResources.LabelDrop}" VerticalTextAlignment="Center" FontSize="Medium" />

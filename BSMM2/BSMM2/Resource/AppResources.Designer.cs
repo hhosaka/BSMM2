@@ -799,6 +799,24 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Parameter に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextPlayerParameterKey {
+            get {
+                return ResourceManager.GetString("TextPlayerParameterKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Value に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextPlayerParameterValue {
+            get {
+                return ResourceManager.GetString("TextPlayerParameterValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Result に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string TextResult {
