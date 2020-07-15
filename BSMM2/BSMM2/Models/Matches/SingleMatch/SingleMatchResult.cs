@@ -1,5 +1,4 @@
-﻿using BSMM2.Resource;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,14 +16,9 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 			public double WinPoint { get; }
 
-			public string Information
-				=> AppResources.TextMatchPoint + " = " + MatchPoint + " /" +
-					AppResources.TextLifePoint + " = " + (LifePoint >= 0 ? LifePoint.ToString() : "-") + " /" +
-					AppResources.TextWinPoint + " = " + WinPoint;
-
 			public void ExportTitle(TextWriter writer, string index) {
 				writer.Write(string.Format("{0}Match, {0}Win, ", index));
-				if (_enableLifePoint) writer.Write(string.Format(", {0}Life", index));
+				if (_enableLifePoint) writer.Write(string.Format("{0}Life, ", index));
 			}
 
 			public void ExportData(TextWriter writer) {

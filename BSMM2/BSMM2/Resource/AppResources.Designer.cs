@@ -22,7 +22,7 @@ namespace BSMM2.Resource {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class AppResources {
+    public class AppResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace BSMM2.Resource {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BSMM2.Resource.AppResources", typeof(AppResources).Assembly);
@@ -51,7 +51,7 @@ namespace BSMM2.Resource {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Add に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonAdd {
+        public static string ButtonAdd {
             get {
                 return ResourceManager.GetString("ButtonAdd", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Create に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonCreate {
+        public static string ButtonCreate {
             get {
                 return ResourceManager.GetString("ButtonCreate", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Done に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonDone {
+        public static string ButtonDone {
             get {
                 return ResourceManager.GetString("ButtonDone", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Next Round に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonNextRound {
+        public static string ButtonNextRound {
             get {
                 return ResourceManager.GetString("ButtonNextRound", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Shuffle に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonShuffle {
+        public static string ButtonShuffle {
             get {
                 return ResourceManager.GetString("ButtonShuffle", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Start に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ButtonStart {
+        public static string ButtonStart {
             get {
                 return ResourceManager.GetString("ButtonStart", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   List up player names. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string DescriptionEntrySheet {
+        public static string DescriptionEntrySheet {
             get {
                 return ResourceManager.GetString("DescriptionEntrySheet", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Single match rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string DescriptionSingleMatch {
+        public static string DescriptionSingleMatch {
             get {
                 return ResourceManager.GetString("DescriptionSingleMatch", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   3 on 3 match rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string DescriptionThreeOnThreeMatch {
+        public static string DescriptionThreeOnThreeMatch {
             get {
                 return ResourceManager.GetString("DescriptionThreeOnThreeMatch", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Three Game match rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string DescriptionTreeGameMatch {
+        public static string DescriptionTreeGameMatch {
             get {
                 return ResourceManager.GetString("DescriptionTreeGameMatch", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Entry Sheet に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemPlayerModeEntrySheet {
+        public static string ItemPlayerModeEntrySheet {
             get {
                 return ResourceManager.GetString("ItemPlayerModeEntrySheet", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Number に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemPlayerModeNumber {
+        public static string ItemPlayerModeNumber {
             get {
                 return ResourceManager.GetString("ItemPlayerModeNumber", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Restart に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemPlayerModeRestart {
+        public static string ItemPlayerModeRestart {
             get {
                 return ResourceManager.GetString("ItemPlayerModeRestart", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Draw に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemResultDraw {
+        public static string ItemResultDraw {
             get {
                 return ResourceManager.GetString("ItemResultDraw", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Lose に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemResultLose {
+        public static string ItemResultLose {
             get {
                 return ResourceManager.GetString("ItemResultLose", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Progress に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemResultProgress {
+        public static string ItemResultProgress {
             get {
                 return ResourceManager.GetString("ItemResultProgress", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Win に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemResultWin {
+        public static string ItemResultWin {
             get {
                 return ResourceManager.GetString("ItemResultWin", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Single Match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemRuleSingleMatch {
+        public static string ItemRuleSingleMatch {
             get {
                 return ResourceManager.GetString("ItemRuleSingleMatch", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Three Game Match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemRuleThreeGameMatch {
+        public static string ItemRuleThreeGameMatch {
             get {
                 return ResourceManager.GetString("ItemRuleThreeGameMatch", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   3 on 3 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ItemRuleThreeOnThreeMatch {
+        public static string ItemRuleThreeOnThreeMatch {
             get {
                 return ResourceManager.GetString("ItemRuleThreeOnThreeMatch", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   1st Match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Label1stMatch {
+        public static string Label1stMatch {
             get {
                 return ResourceManager.GetString("Label1stMatch", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   2nd Match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Label2ndMatch {
+        public static string Label2ndMatch {
             get {
                 return ResourceManager.GetString("Label2ndMatch", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   3rd Match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Label3rdMatch {
+        public static string Label3rdMatch {
             get {
                 return ResourceManager.GetString("Label3rdMatch", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   BS Match Maker 2 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelAppTitle {
+        public static string LabelAppTitle {
             get {
                 return ResourceManager.GetString("LabelAppTitle", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Auto Save に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelAutoSave {
+        public static string LabelAutoSave {
             get {
                 return ResourceManager.GetString("LabelAutoSave", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Culture に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelCulture {
+        public static string LabelCulture {
             get {
                 return ResourceManager.GetString("LabelCulture", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Drop に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelDrop {
+        public static string LabelDrop {
             get {
                 return ResourceManager.GetString("LabelDrop", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   MailAddress に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelMailAddress {
+        public static string LabelMailAddress {
             get {
                 return ResourceManager.GetString("LabelMailAddress", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   History に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelMatchLog {
+        public static string LabelMatchLog {
             get {
                 return ResourceManager.GetString("LabelMatchLog", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Minimum Condition に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelMinimumCondition {
+        public static string LabelMinimumCondition {
             get {
                 return ResourceManager.GetString("LabelMinimumCondition", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   As Current Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameAsCurrentGame {
+        public static string LabelNewGameAsCurrentGame {
             get {
                 return ResourceManager.GetString("LabelNewGameAsCurrentGame", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Enable Life Point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameEnableLifePoint {
+        public static string LabelNewGameEnableLifePoint {
             get {
                 return ResourceManager.GetString("LabelNewGameEnableLifePoint", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Entry Sheet に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameEntrySheet {
+        public static string LabelNewGameEntrySheet {
             get {
                 return ResourceManager.GetString("LabelNewGameEntrySheet", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Number of Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameNumberOfPlayer {
+        public static string LabelNewGameNumberOfPlayer {
             get {
                 return ResourceManager.GetString("LabelNewGameNumberOfPlayer", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Entry Mode に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGamePlayerEntryMode {
+        public static string LabelNewGamePlayerEntryMode {
             get {
                 return ResourceManager.GetString("LabelNewGamePlayerEntryMode", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Prefix に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGamePlayerPrefix {
+        public static string LabelNewGamePlayerPrefix {
             get {
                 return ResourceManager.GetString("LabelNewGamePlayerPrefix", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameRule {
+        public static string LabelNewGameRule {
             get {
                 return ResourceManager.GetString("LabelNewGameRule", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Title に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelNewGameTitle {
+        public static string LabelNewGameTitle {
             get {
                 return ResourceManager.GetString("LabelNewGameTitle", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Point Compare - Mandatory に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelPointCompare {
+        public static string LabelPointCompare {
             get {
                 return ResourceManager.GetString("LabelPointCompare", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Post Compare - Mandatory に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelPostCompare {
+        public static string LabelPostCompare {
             get {
                 return ResourceManager.GetString("LabelPostCompare", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Pre Compare - Mandatory に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelPreCompare {
+        public static string LabelPreCompare {
             get {
                 return ResourceManager.GetString("LabelPreCompare", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Accept bye match duplication に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelRuleAcceptByeMatchDuplication {
+        public static string LabelRuleAcceptByeMatchDuplication {
             get {
                 return ResourceManager.GetString("LabelRuleAcceptByeMatchDuplication", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Accept gap match duplication に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelRuleAcceptGapMatchDuplication {
+        public static string LabelRuleAcceptGapMatchDuplication {
             get {
                 return ResourceManager.GetString("LabelRuleAcceptGapMatchDuplication", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Rule Setting に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelRuleSetting {
+        public static string LabelRuleSetting {
             get {
                 return ResourceManager.GetString("LabelRuleSetting", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Check Bye Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseByePoint {
+        public static string LabelUseByePoint {
             get {
                 return ResourceManager.GetString("LabelUseByePoint", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Use Life point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseLifePoint {
+        public static string LabelUseLifePoint {
             get {
                 return ResourceManager.GetString("LabelUseLifePoint", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Use Opponent life pont に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseOpponentLifePoint {
+        public static string LabelUseOpponentLifePoint {
             get {
                 return ResourceManager.GetString("LabelUseOpponentLifePoint", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Use Opponent match point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseOpponentMatchPoint {
+        public static string LabelUseOpponentMatchPoint {
             get {
                 return ResourceManager.GetString("LabelUseOpponentMatchPoint", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Use Opponent win point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseOpponentWinPoint {
+        public static string LabelUseOpponentWinPoint {
             get {
                 return ResourceManager.GetString("LabelUseOpponentWinPoint", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Use Win point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string LabelUseWinPoint {
+        public static string LabelUseWinPoint {
             get {
                 return ResourceManager.GetString("LabelUseWinPoint", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Add Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuAddPlayer {
+        public static string MenuAddPlayer {
             get {
                 return ResourceManager.GetString("MenuAddPlayer", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Back に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuBack {
+        public static string MenuBack {
             get {
                 return ResourceManager.GetString("MenuBack", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Clear に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuClear {
+        public static string MenuClear {
             get {
                 return ResourceManager.GetString("MenuClear", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Delete Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuDeleteGame {
+        public static string MenuDeleteGame {
             get {
                 return ResourceManager.GetString("MenuDeleteGame", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Export に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuExport {
+        public static string MenuExport {
             get {
                 return ResourceManager.GetString("MenuExport", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Help に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuHelp {
+        public static string MenuHelp {
             get {
                 return ResourceManager.GetString("MenuHelp", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Import に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuImport {
+        public static string MenuImport {
             get {
                 return ResourceManager.GetString("MenuImport", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Json に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuJson {
+        public static string MenuJson {
             get {
                 return ResourceManager.GetString("MenuJson", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   New Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuNewGame {
+        public static string MenuNewGame {
             get {
                 return ResourceManager.GetString("MenuNewGame", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Log に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuRoundLog {
+        public static string MenuRoundLog {
             get {
                 return ResourceManager.GetString("MenuRoundLog", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Save に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSave {
+        public static string MenuSave {
             get {
                 return ResourceManager.GetString("MenuSave", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Select Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSelectGame {
+        public static string MenuSelectGame {
             get {
                 return ResourceManager.GetString("MenuSelectGame", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Send Mail に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSendMail {
+        public static string MenuSendMail {
             get {
                 return ResourceManager.GetString("MenuSendMail", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Setting に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSetting {
+        public static string MenuSetting {
             get {
                 return ResourceManager.GetString("MenuSetting", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Rule に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string MenuSettingRule {
+        public static string MenuSettingRule {
             get {
                 return ResourceManager.GetString("MenuSettingRule", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Game に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string PrefixGame {
+        public static string PrefixGame {
             get {
                 return ResourceManager.GetString("PrefixGame", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Round に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string PrefixRound {
+        public static string PrefixRound {
             get {
                 return ResourceManager.GetString("PrefixRound", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TabPlayer {
+        public static string TabPlayer {
             get {
                 return ResourceManager.GetString("TabPlayer", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Round に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TabRound {
+        public static string TabRound {
             get {
                 return ResourceManager.GetString("TabRound", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   1st player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Text1stPlayer {
+        public static string Text1stPlayer {
             get {
                 return ResourceManager.GetString("Text1stPlayer", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   2nd Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Text2ndPlayer {
+        public static string Text2ndPlayer {
             get {
                 return ResourceManager.GetString("Text2ndPlayer", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   3rd Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Text3rdPlayer {
+        public static string Text3rdPlayer {
             get {
                 return ResourceManager.GetString("Text3rdPlayer", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Alert に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextAlert {
+        public static string TextAlert {
             get {
                 return ResourceManager.GetString("TextAlert", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   BYE に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextBYE {
+        public static string TextBYE {
             get {
                 return ResourceManager.GetString("TextBYE", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Fail to make match に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextFailToMakeMatch {
+        public static string TextFailToMakeMatch {
             get {
                 return ResourceManager.GetString("TextFailToMakeMatch", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Give up に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextGiveUp {
+        public static string TextGiveUp {
             get {
                 return ResourceManager.GetString("TextGiveUp", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Go to rule setting. You may modify rule setting before retry. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextGoToRuleSetting {
+        public static string TextGoToRuleSetting {
             get {
                 return ResourceManager.GetString("TextGoToRuleSetting", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Life Point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextLifePoint {
+        public static string TextLifePoint {
             get {
                 return ResourceManager.GetString("TextLifePoint", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Match Point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextMatchPoint {
+        public static string TextMatchPoint {
             get {
                 return ResourceManager.GetString("TextMatchPoint", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Opponent に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextOpponent {
+        public static string TextOpponent {
             get {
                 return ResourceManager.GetString("TextOpponent", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Player に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextPlayer {
+        public static string TextPlayer {
             get {
                 return ResourceManager.GetString("TextPlayer", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Pnayer Name に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextPlayerName {
+        public static string TextPlayerName {
             get {
                 return ResourceManager.GetString("TextPlayerName", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Result に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextResult {
+        public static string TextResult {
             get {
                 return ResourceManager.GetString("TextResult", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace BSMM2.Resource {
         /// <summary>
         ///   Win Point に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string TextWinPoint {
+        public static string TextWinPoint {
             get {
                 return ResourceManager.GetString("TextWinPoint", resourceCulture);
             }

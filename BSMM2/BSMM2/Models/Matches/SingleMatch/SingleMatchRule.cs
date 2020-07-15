@@ -1,6 +1,7 @@
 ﻿using BSMM2.Resource;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text;
 using Xamarin.Forms;
 
 namespace BSMM2.Models.Matches.SingleMatch {
@@ -40,6 +41,24 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public virtual string Description
 			=> AppResources.DescriptionSingleMatch;
+
+		public virtual string GetDescription(Player player) {
+			var buf = new StringBuilder();
+			buf.Append(AppResources.TextMatchPoint);
+			buf.Append(" = ");
+			buf.Append(player.Point.MatchPoint);
+			buf.Append("/ ");
+			buf.Append(AppResources.TextWinPoint);
+			buf.Append(" = ");
+			buf.Append(player.Point.WinPoint);
+			if (EnableLifePoint) {
+				buf.Append("/ ");
+				buf.Append(AppResources.TextLifePoint);
+				buf.Append(" = ");
+				buf.Append(player.Point.LifePoint >= 0 ? player.Point.LifePoint.ToString() : "-");
+			}
+			return buf.ToString();
+		}
 
 		private SingleMatchRule() {
 		}

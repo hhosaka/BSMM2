@@ -49,6 +49,10 @@ namespace BSMM2.Models {
 		[JsonIgnore]
 		public int Order { get; set; }
 
+		[JsonIgnore]
+		public string Description
+			=> _rule.GetDescription(this);
+
 		public void Commit(Match match)
 			=> _matches.Add(match);
 

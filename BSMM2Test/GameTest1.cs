@@ -491,23 +491,5 @@ namespace BSMM2Test {
 			Assert.AreEqual(rule.EnableLifePoint, a.EnableLifePoint);
 			Assert.IsNotNull(a.Comparers);
 		}
-
-		[TestMethod]
-		public void InformationTest() {
-			var game = new FakeGame(new SingleMatchRule(), 4);
-
-			game.Shuffle();
-
-			var buf = game.Players.GetByOrder().ElementAt(0).Point.Information;
-
-			var index = buf.IndexOf(" = 0 /");
-			Assert.IsTrue(index > 0);
-			index = buf.IndexOf(" = 0 /", index + 1);
-
-			Assert.IsTrue(index > 0);
-			index = buf.IndexOf(" = 0 /", index + 1);
-
-			Assert.IsTrue(index == -1);
-		}
 	}
 }

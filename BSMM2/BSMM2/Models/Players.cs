@@ -103,15 +103,11 @@ namespace BSMM2.Models {
 		}
 
 		public void Export(TextWriter writer) {
-			_players.First()?.ExportTitle(writer);
-			writer.WriteLine();
-			foreach (var player in GetByOrder()) {
-				player.ExportData(writer);
-				writer.WriteLine();
-			}
+			ExportTitle(writer);
+			ExportData(writer);
 		}
 
-		public void ExportTitle(TextWriter writer, string index = "")
+		public void ExportTitle(TextWriter writer, string prefix = "")
 			=> _players.First()?.ExportTitle(writer);
 
 		public void ExportData(TextWriter writer) {

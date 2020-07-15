@@ -1,5 +1,6 @@
 ﻿using BSMM2.Models;
 using BSMM2.Models.Matches.SingleMatch;
+using BSMM2.Resource;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -63,10 +64,35 @@ namespace BSMM2Test {
 			var game = new FakeGame(new SingleMatchRule(true), 2);
 			var buf = Util.Export(game.Players);
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Life, Op-Match, Op-Win, Op-Lifem ByeCount, \r\n" +
+				"Name, Dropped, Match, Win, Life, Op-Match, Op-Win, Op-Life, ByeCount, \r\n" +
 				"\"Player001\", False, 0, 0, 0, 0, 0, 0, 0, \r\n" +
 				"\"Player002\", False, 0, 0, 0, 0, 0, 0, 0, \r\n",
 				buf);
+		}
+
+		[TestMethod]
+		public void DescriptionPlayerTest() {
+			var game = new FakeGame(new SingleMatchRule(true), 4);
+
+			game.Shuffle();
+
+			Assert.AreEqual(
+				AppResources.TextMatchPoint + " = 0/ " +
+				AppResources.TextWinPoint + " = 0/ " +
+				AppResources.TextLifePoint + " = 0",
+				game.Players.GetByOrder().ElementAt(0).Description);
+		}
+
+		[TestMethod]
+		public void DescriptionPlayerTest2() {
+			var game = new FakeGame(new SingleMatchRule(), 4);
+
+			game.Shuffle();
+
+			Assert.AreEqual(
+				AppResources.TextMatchPoint + " = 0/ " +
+				AppResources.TextWinPoint + " = 0",
+				game.Players.GetByOrder().ElementAt(0).Description);
 		}
 	}
 }
