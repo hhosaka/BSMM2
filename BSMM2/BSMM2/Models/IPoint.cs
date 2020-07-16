@@ -5,6 +5,6 @@
 
 		double WinPoint { get; }
 
-		int? LifePoint { get; }
+		int LifePoint { get; }
 	}
 }

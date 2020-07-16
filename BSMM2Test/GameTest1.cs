@@ -260,7 +260,6 @@ namespace BSMM2Test {
 			var rule = new SingleMatchRule(true);
 			var game = CreateGame(rule, 8, 2);
 			var matches = game.ActiveRound;
-			//rule.EnableLifePoint = true;
 
 			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, 8 }, game.ActiveRound);
 			Util.CheckWithOrder(new[] { 1, 5, 2, 3, 6, 7, 4, 8 }, new[] { 1, 1, 3, 3, 3, 3, 7, 7 }, game.Players.GetByOrder());

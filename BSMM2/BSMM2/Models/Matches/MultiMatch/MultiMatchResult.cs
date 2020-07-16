@@ -19,7 +19,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 		private RESULT_T _RESULT;
 
 		[JsonIgnore]
-		public int? LifePoint
+		public int LifePoint
 			=> _results.Sum(p => p.LifePoint);
 
 		[JsonIgnore]

@@ -81,7 +81,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> (int)p1.Point.LifePoint - (int)p2.Point.LifePoint;
+			=> p1.Point.LifePoint - p2.Point.LifePoint;
 	}
 
 	[JsonObject]
@@ -113,7 +113,7 @@ namespace BSMM2.Models {
 		public bool Active { get; set; } = true;
 
 		public int Compare(Player p1, Player p2)
-			=> (int)p1.OpponentPoint.LifePoint - (int)p2.OpponentPoint.LifePoint;
+			=> p1.OpponentPoint.LifePoint - p2.OpponentPoint.LifePoint;
 	}
 
 	[JsonObject]

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BSMM2.Models.Matches {
 
-	using LIFEPOINTITEM_T = System.Collections.Generic.KeyValuePair<string, int?>;
+	using LIFEPOINTITEM_T = System.Collections.Generic.KeyValuePair<string, int>;
 	using LifePoints = IEnumerable<LifePoint>;
 	using RESULTITEM_T = System.Collections.Generic.KeyValuePair<string, RESULT_T>;
 
@@ -14,7 +14,7 @@ namespace BSMM2.Models.Matches {
 		private static LifePoint _null = new LifePoint();
 
 		public string Label { get; private set; }
-		public int? Point { get; private set; }
+		public int Point { get; private set; }
 
 		public static LifePoints Instance => GetInstance();
 
@@ -33,12 +33,8 @@ namespace BSMM2.Models.Matches {
 			return _instance;
 		}
 
-		public static LifePoint GetItem(int? point) {
-			if (point == null) {
-				return _null;
-			} else {
-				return GetInstance().First(lp => lp.Point == point);
-			}
+		public static LifePoint GetItem(int point) {
+			return GetInstance().First(lp => lp.Point == point);
 		}
 	}
 
@@ -127,7 +123,7 @@ namespace BSMM2.Models.Matches {
 
 		public static ObservableCollection<LIFEPOINTITEM_T> CreateLifePointItems() {
 			var items = new ObservableCollection<LIFEPOINTITEM_T>();
-			items.Add(new LIFEPOINTITEM_T("Undefined", null));
+			items.Add(new LIFEPOINTITEM_T("Undefined", -1));
 			for (int i = 5; i >= 0; --i) {
 				items.Add(new LIFEPOINTITEM_T(i.ToString(), i));
 			}

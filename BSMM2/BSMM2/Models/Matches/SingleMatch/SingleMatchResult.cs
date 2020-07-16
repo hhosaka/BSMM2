@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace BSMM2.Models.Matches.SingleMatch {
@@ -12,7 +11,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 			public int MatchPoint { get; }
 
-			public int? LifePoint { get; }
+			public int LifePoint { get; }
 
 			public double WinPoint { get; }
 
@@ -21,22 +20,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 				data["Win"] = WinPoint.ToString();
 				if (_enableLifePoint) data["Life"] = LifePoint.ToString();
 				return data;
-			}
-
-			public void ExportTitle(TextWriter writer, string index) {
-				writer.Write(string.Format("{0}Match, {0}Win, ", index));
-				if (_enableLifePoint) writer.Write(string.Format("{0}Life, ", index));
-			}
-
-			public void ExportData(TextWriter writer) {
-				writer.Write(MatchPoint);
-				writer.Write(", ");
-				writer.Write(WinPoint);
-				writer.Write(", ");
-				if (_enableLifePoint) {
-					writer.Write(LifePoint);
-					writer.Write(", ");
-				}
 			}
 
 			public TheResult() {
@@ -71,7 +54,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			=> RESULT == Models.RESULT_T.Win ? 1.0 : RESULT == Models.RESULT_T.Lose ? 0.0 : 0.5;
 
 		[JsonProperty]
-		public int? LifePoint { get; }
+		public int LifePoint { get; }
 
 		[JsonProperty]
 		public RESULT_T RESULT { get; }
@@ -79,7 +62,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonIgnore]
 		public bool IsFinished => RESULT != RESULT_T.Progress && (LifePoint >= 0) != false;
 
-		public SingleMatchResult(RESULT_T result, int? lifePoint) {
+		public SingleMatchResult(RESULT_T result, int lifePoint) {
 			RESULT = result;
 			LifePoint = lifePoint;
 		}
