@@ -29,6 +29,9 @@ namespace BSMM2.Models {
 
 				[JsonIgnore]
 				public bool IsFinished => false;
+
+				public IDictionary<string, string> Export(IDictionary<string, string> data)
+					=> throw new System.NotImplementedException();
 			}
 
 			private static readonly IResult _defaultResult = new DefaultResult();

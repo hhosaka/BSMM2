@@ -41,10 +41,10 @@ namespace BSMM2.Models {
 			=> _matches.Count() > 0 && !_matches.Any(match => match.GetRecord(this).Result.RESULT != RESULT_T.Lose);
 
 		[JsonIgnore]
-		public IExportablePoint Point { get; private set; }
+		public IPoint Point { get; private set; }
 
 		[JsonIgnore]
-		public IExportablePoint OpponentPoint { get; private set; }
+		public IPoint OpponentPoint { get; private set; }
 
 		[JsonIgnore]
 		public int Order { get; set; }

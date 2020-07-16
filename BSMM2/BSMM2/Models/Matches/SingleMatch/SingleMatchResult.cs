@@ -7,7 +7,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 	internal class SingleMatchResult : IResult {
 
-		private class TheResult : IExportablePoint {
+		private class TheResult : IPoint {
 			private bool _enableLifePoint;
 
 			public int MatchPoint { get; }
@@ -56,8 +56,11 @@ namespace BSMM2.Models.Matches.SingleMatch {
 			}
 		}
 
-		public static IExportablePoint Total(bool enableLifePoint, IEnumerable<IPoint> points)
+		public static IPoint Total(bool enableLifePoint, IEnumerable<IPoint> points)
 			=> new TheResult(enableLifePoint, points);
+
+		public IDictionary<string, string> Export(IDictionary<string, string> data)
+			=> throw new System.NotImplementedException();
 
 		[JsonIgnore]
 		public int MatchPoint
