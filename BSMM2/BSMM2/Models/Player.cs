@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Resource;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,12 +83,17 @@ namespace BSMM2.Models {
 		public Player() {// For Serializer
 		}
 
-		public IDictionary<string, string> Export(IDictionary<string, string> data) {
-			data["Name"] = string.Format("\"{0}\"", Name);
-			data["Dropped"] = Dropped.ToString();
+		private readonly IDictionary<string, string> _dic = new Dictionary<string, string>() {
+						{AppResources.TextMatchPoint,AppResources.TextOpponentMatchPoint },
+						{AppResources.TextWinPoint,AppResources.TextOpponentWinPoint },
+						{AppResources.TextLifePoint,AppResources.TextOpponentLifePoint }};
+
+		public IExportData Export(IExportData data) {
+			data[AppResources.TextPlayerName] = Name;
+			data[AppResources.TextDropped] = Dropped;
 			Point.Export(data);
-			OpponentPoint.Export(new Dictionary<string, string>()).ForEach(pair => data["Op-" + pair.Key] = pair.Value);
-			data["ByeMatchCount"] = ByeMatchCount.ToString();
+			OpponentPoint.Export(new ExportData()).ForEach(pair => data[_dic[pair.Key]] = pair.Value);
+			data[AppResources.TextByeMatchCount] = ByeMatchCount;
 			return data;
 		}
 

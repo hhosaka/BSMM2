@@ -727,6 +727,24 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Bye Match Count に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextByeMatchCount {
+            get {
+                return ResourceManager.GetString("TextByeMatchCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dropped に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextDropped {
+            get {
+                return ResourceManager.GetString("TextDropped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Fail to make match に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string TextFailToMakeMatch {
@@ -777,6 +795,33 @@ namespace BSMM2.Resource {
         public static string TextOpponent {
             get {
                 return ResourceManager.GetString("TextOpponent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Op-Life Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextOpponentLifePoint {
+            get {
+                return ResourceManager.GetString("TextOpponentLifePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Op-Match Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextOpponentMatchPoint {
+            get {
+                return ResourceManager.GetString("TextOpponentMatchPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Op-Win Point に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextOpponentWinPoint {
+            get {
+                return ResourceManager.GetString("TextOpponentWinPoint", resourceCulture);
             }
         }
         

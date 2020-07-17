@@ -260,6 +260,78 @@ namespace BSMM2Test {
 		}
 
 		[TestMethod]
+		public void ByeMatchTest2() {
+			var rule = new SingleMatchRule();
+			var game = new FakeGame(rule, 7);
+
+			Util.Check(new[] { 1, 2, 3, 4, 5, 6, 7, -1 }, game.ActiveRound);
+
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+			Util.SetResult(game, 2, Win);
+
+			game.StepToMatching();
+
+			Util.Check(new[] { 1, 3, 5, 7, 2, 4, 6, -1 }, game.ActiveRound);
+
+			game.StepToPlaying();
+
+			Util.SetResult(game, 0, Win);
+			Util.SetResult(game, 1, Win);
+			Util.SetResult(game, 2, Win);
+
+			game.StepToMatching();
+
+			var players = game.Players.Source;
+
+			Util.Check(new[] { 1, 5, 2, 3, 6, 7, 4, -1 }, game.ActiveRound);
+
+			players.ElementAt(1).Dropped = true;
+			players.ElementAt(2).Dropped = true;
+			players.ElementAt(3).Dropped = true;
+			players.ElementAt(5).Dropped = true;
+
+			Assert.IsFalse(game.Shuffle());
+
+			game.AcceptByeMatchDuplication = true;
+
+			Assert.IsTrue(game.Shuffle());
+
+			game.AcceptByeMatchDuplication = false;
+
+			players.ElementAt(1).Dropped = false;
+			players.ElementAt(3).Dropped = false;
+
+			Assert.IsTrue(game.Shuffle());
+
+			Util.Check(new[] { 1, 5, 2, 7, 4, -1 }, game.ActiveRound);
+
+			players.ElementAt(1).Dropped = true;
+			players.ElementAt(2).Dropped = true;
+			players.ElementAt(3).Dropped = true;
+
+			Assert.IsFalse(game.Shuffle());
+
+			players.ElementAt(5).Dropped = false;
+
+			Assert.IsTrue(game.Shuffle());
+
+			Util.Check(new[] { 1, 5, 6, 7 }, game.ActiveRound);
+
+			players.ElementAt(4).Dropped = true;
+
+			Assert.IsFalse(game.Shuffle());
+
+			game.AcceptByeMatchDuplication = true;
+
+			Assert.IsTrue(game.Shuffle());
+
+			Util.Check(new[] { 1, 6, 7, -1 }, game.ActiveRound);
+		}
+
+		[TestMethod]
 		public void GapMatchTest() {
 			var rule = new SingleMatchRule();
 			var game = new FakeGame(rule, 10);
@@ -314,7 +386,9 @@ namespace BSMM2Test {
 
 			Assert.IsFalse(game.StepToMatching());
 
-			var buf = Util.Export(game);
+			game.AcceptGapMatchDuplication = true;
+
+			Assert.IsTrue(game.StepToMatching());
 		}
 
 		[TestMethod]

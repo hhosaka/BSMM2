@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BSMM2.Resource;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,10 +16,10 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 			public double WinPoint { get; }
 
-			public IDictionary<string, string> Export(IDictionary<string, string> data) {
-				data["Match"] = MatchPoint.ToString();
-				data["Win"] = WinPoint.ToString();
-				if (_enableLifePoint) data["Life"] = LifePoint.ToString();
+			public IExportData Export(IExportData data) {
+				data[AppResources.TextMatchPoint] = MatchPoint;
+				data[AppResources.TextWinPoint] = WinPoint;
+				if (_enableLifePoint) data[AppResources.TextLifePoint] = LifePoint;
 				return data;
 			}
 
@@ -42,7 +43,7 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		public static IPoint Total(bool enableLifePoint, IEnumerable<IPoint> points)
 			=> new TheResult(enableLifePoint, points);
 
-		public IDictionary<string, string> Export(IDictionary<string, string> data)
+		public IExportData Export(IExportData data)
 			=> throw new System.NotImplementedException();
 
 		[JsonIgnore]

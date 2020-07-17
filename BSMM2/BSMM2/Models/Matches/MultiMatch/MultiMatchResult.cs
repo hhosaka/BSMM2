@@ -65,7 +65,7 @@ namespace BSMM2.Models.Matches.MultiMatch {
 			return RESULT_T.Progress;
 		}
 
-		public IDictionary<string, string> Export(IDictionary<string, string> data)
+		public IExportData Export(IExportData data)
 			=> throw new System.NotImplementedException();
 
 		public MultiMatchResult(int minCount) {

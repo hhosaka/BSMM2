@@ -339,6 +339,12 @@
   <data name="TextBYE" xml:space="preserve">
     <value>BYE</value>
   </data>
+  <data name="TextByeMatchCount" xml:space="preserve">
+    <value>Bye Match Count</value>
+  </data>
+  <data name="TextDropped" xml:space="preserve">
+    <value>Dropped</value>
+  </data>
   <data name="TextFailToMakeMatch" xml:space="preserve">
     <value>Fail to make match</value>
   </data>
@@ -356,6 +362,15 @@
   </data>
   <data name="TextOpponent" xml:space="preserve">
     <value>Opponent</value>
+  </data>
+  <data name="TextOpponentLifePoint" xml:space="preserve">
+    <value>Op-Life Point</value>
+  </data>
+  <data name="TextOpponentMatchPoint" xml:space="preserve">
+    <value>Op-Match Point</value>
+  </data>
+  <data name="TextOpponentWinPoint" xml:space="preserve">
+    <value>Op-Win Point</value>
   </data>
   <data name="TextPlayer" xml:space="preserve">
     <value>Player</value>

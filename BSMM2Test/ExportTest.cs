@@ -2,7 +2,6 @@
 using BSMM2.Models.Matches.SingleMatch;
 using BSMM2.Resource;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace BSMM2Test {
@@ -12,13 +11,13 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void ExportPlayerTest() {
-			var data = new Player(new SingleMatchRule(), "test").Export(new Dictionary<string, string>());
-			Assert.AreEqual("\"test\"", data["Name"]);
-			Assert.AreEqual("False", data["Dropped"]);
-			Assert.AreEqual("0", data["Match"]);
-			Assert.AreEqual("0", data["Win"]);
-			Assert.AreEqual("0", data["Op-Match"]);
-			Assert.AreEqual("0", data["Op-Win"]);
+			var data = new Player(new SingleMatchRule(), "test").Export(new ExportData());
+			Assert.AreEqual("test", data[AppResources.TextPlayerName]);
+			Assert.AreEqual("False", data[AppResources.TextDropped].ToString());
+			Assert.AreEqual(0, data[AppResources.TextMatchPoint]);
+			Assert.AreEqual(0.0, data[AppResources.TextWinPoint]);
+			Assert.AreEqual(0, data[AppResources.TextOpponentMatchPoint]);
+			Assert.AreEqual(0.0, data[AppResources.TextOpponentWinPoint]);
 		}
 
 		[TestMethod]
@@ -26,7 +25,13 @@ namespace BSMM2Test {
 			var game = new FakeGame(new SingleMatchRule(), 2);
 			var buf = Util.Export(game.Players);
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeMatchCount, \r\n" +
+				AppResources.TextPlayerName + ", " +
+				AppResources.TextDropped + ", " +
+				AppResources.TextMatchPoint + ", " +
+				AppResources.TextWinPoint + ", " +
+				AppResources.TextOpponentMatchPoint + ", " +
+				AppResources.TextOpponentWinPoint + ", " +
+				AppResources.TextByeMatchCount + ", \r\n" +
 				"\"Player001\", False, 0, 0, 0, 0, 0, \r\n" +
 				"\"Player002\", False, 0, 0, 0, 0, 0, \r\n",
 				buf);
@@ -34,13 +39,21 @@ namespace BSMM2Test {
 
 		[TestMethod]
 		public void ExportPlayersTest2() {
+			var title = AppResources.TextPlayerName + ", " +
+				AppResources.TextDropped + ", " +
+				AppResources.TextMatchPoint + ", " +
+				AppResources.TextWinPoint + ", " +
+				AppResources.TextOpponentMatchPoint + ", " +
+				AppResources.TextOpponentWinPoint + ", " +
+				AppResources.TextByeMatchCount + ", \r\n";
+
 			var game = new FakeGame(new SingleMatchRule(), 2);
 
 			game.StepToPlaying();
 			Util.SetResult(game, 0, RESULT_T.Win);
 
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeMatchCount, \r\n" +
+				title +
 				"\"Player001\", False, 3, 1, 0, 0, 0, \r\n" +
 				"\"Player002\", False, 0, 0, 3, 1, 0, \r\n",
 				Util.Export(game.Players));
@@ -48,7 +61,7 @@ namespace BSMM2Test {
 			game.Players.Source.ElementAt(0).Dropped = true;
 
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeMatchCount, \r\n" +
+				title +
 				"\"Player001\", True, 3, 1, 0, 0, 0, \r\n" +
 				"\"Player002\", False, 0, 0, 3, 1, 0, \r\n",
 				Util.Export(game.Players));
@@ -56,7 +69,7 @@ namespace BSMM2Test {
 			game.Players.Source.ElementAt(0).Dropped = false;
 			Util.SetResult(game, 0, RESULT_T.Draw);
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Op-Match, Op-Win, ByeMatchCount, \r\n" +
+				title +
 				"\"Player001\", False, 1, 0.5, 1, 0.5, 0, \r\n" +
 				"\"Player002\", False, 1, 0.5, 1, 0.5, 0, \r\n",
 				Util.Export(game.Players));
@@ -67,8 +80,16 @@ namespace BSMM2Test {
 			var game = new FakeGame(new SingleMatchRule(true), 2);
 			var buf = Util.Export(game.Players);
 			Assert.AreEqual(
-				"Name, Dropped, Match, Win, Life, Op-Match, Op-Win, Op-Life, ByeMatchCount, \r\n" +
-				"\"Player001\", False, 0, 0, 0, 0, 0, 0, 0, \r\n" +
+				AppResources.TextPlayerName + ", " +
+				AppResources.TextDropped + ", " +
+				AppResources.TextMatchPoint + ", " +
+				AppResources.TextWinPoint + ", " +
+				AppResources.TextLifePoint + ", " +
+				AppResources.TextOpponentMatchPoint + ", " +
+				AppResources.TextOpponentWinPoint + ", " +
+				AppResources.TextOpponentLifePoint + ", " +
+				AppResources.TextByeMatchCount + ", \r\n" +
+			"\"Player001\", False, 0, 0, 0, 0, 0, 0, 0, \r\n" +
 				"\"Player002\", False, 0, 0, 0, 0, 0, 0, 0, \r\n",
 				buf);
 		}

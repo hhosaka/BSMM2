@@ -104,12 +104,20 @@ namespace BSMM2.Models {
 		}
 
 		public void Export(TextWriter writer) {
-			_players.First()?.Export(new Dictionary<string, string>()).Keys.ForEach(key => writer.Write(key + ", "));
+			_players.First()?.Export(new ExportData()).Keys.ForEach(key => writer.Write(key + ", "));
 			writer.WriteLine();
 			Reset();
 			foreach (var player in _players) {
-				foreach (var param in player.Export(new Dictionary<string, string>())) {
-					writer.Write(param.Value + ", ");
+				foreach (var param in player.Export(new ExportData())) {
+					switch (param.Value) {
+						case string str:
+							writer.Write(string.Format("\"{0}\", ", str));
+							break;
+
+						default:
+							writer.Write(param.Value + ", ");
+							break;
+					}
 				}
 				writer.WriteLine();
 			}

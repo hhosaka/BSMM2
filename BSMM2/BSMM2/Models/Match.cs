@@ -30,7 +30,7 @@ namespace BSMM2.Models {
 				[JsonIgnore]
 				public bool IsFinished => false;
 
-				public IDictionary<string, string> Export(IDictionary<string, string> data)
+				public IExportData Export(IExportData data)
 					=> throw new System.NotImplementedException();
 			}
 
