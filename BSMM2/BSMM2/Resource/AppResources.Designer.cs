@@ -835,6 +835,15 @@ namespace BSMM2.Resource {
         }
         
         /// <summary>
+        ///   Player Information に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string TextPlayerInformation {
+            get {
+                return ResourceManager.GetString("TextPlayerInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Pnayer Name に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string TextPlayerName {

@@ -372,6 +372,9 @@
   <data name="TextPlayer" xml:space="preserve">
     <value>プレーヤー</value>
   </data>
+  <data name="TextPlayerInformation" xml:space="preserve">
+    <value>プレイヤー情報</value>
+  </data>
   <data name="TextPlayerName" xml:space="preserve">
     <value>プレーヤー名</value>
   </data>

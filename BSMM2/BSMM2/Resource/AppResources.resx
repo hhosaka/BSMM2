@@ -375,6 +375,9 @@
   <data name="TextPlayer" xml:space="preserve">
     <value>Player</value>
   </data>
+  <data name="TextPlayerInformation" xml:space="preserve">
+    <value>Player Information</value>
+  </data>
   <data name="TextPlayerName" xml:space="preserve">
     <value>Pnayer Name</value>
   </data>
