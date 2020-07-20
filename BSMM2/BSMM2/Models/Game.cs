@@ -96,7 +96,7 @@ namespace BSMM2.Models {
 		}
 
 		public bool CanExecuteStepToMatching()
-			=> ActiveRound.IsFinished;
+			=> ActiveRound.IsFinished && Players.Source.Count(player => player.IsAllWins) > 1;
 
 		public bool StepToMatching() {
 			if (CanExecuteStepToMatching()) {

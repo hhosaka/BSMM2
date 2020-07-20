@@ -18,6 +18,14 @@ namespace BSMM2.Models.Matches.SingleMatch {
 		[JsonIgnore]
 		public IEnumerable<IComparer> Comparers => _comparers;
 
+		[JsonIgnore]
+		public virtual string Name
+			=> AppResources.ItemRuleSingleMatch;
+
+		[JsonIgnore]
+		public virtual string Description
+			=> AppResources.DescriptionSingleMatch;
+
 		public virtual ContentPage CreateMatchPage(Match match)
 			=> new SingleMatchPage(this, (SingleMatch)match);
 
@@ -35,12 +43,6 @@ namespace BSMM2.Models.Matches.SingleMatch {
 
 		public virtual Comparer<Player> GetComparer(bool force)
 			=> new TheComparer(Comparers, force);
-
-		public virtual string Name
-			=> AppResources.ItemRuleSingleMatch;
-
-		public virtual string Description
-			=> AppResources.DescriptionSingleMatch;
 
 		public virtual string GetDescription(Player player) {
 			var buf = new StringBuilder();

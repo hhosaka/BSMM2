@@ -55,22 +55,14 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeOnThreeMatch {
 				return buf.ToArray();
 			}
 			void Done() {
-				if (EnableLifePoint) {
-					match.SetMultiMatchResult(new[] {
-						new Score(ResultItem[0].RESULT, Player1LP[0].Point, Player2LP[0].Point),
-						new Score(ResultItem[1].RESULT, Player1LP[1].Point, Player2LP[1].Point),
-						new Score(ResultItem[2].RESULT, Player1LP[2].Point, Player2LP[2].Point),
-					});
-				} else {
-					match.SetMultiMatchResult(new[] {
-						new Score(ResultItem[0].RESULT),
-						new Score(ResultItem[1].RESULT),
-						new Score(ResultItem[2].RESULT),
-					});
-				}
-				MessagingCenter.Send<object>(this, Messages.REFRESH);
-				back?.Invoke();
+				match.SetMultiMatchResult(new[] {
+					new Score(ResultItem[0].RESULT, EnableLifePoint? Player1LP[0].Point: 0, EnableLifePoint? Player2LP[0].Point: 0),
+					new Score(ResultItem[1].RESULT, EnableLifePoint? Player1LP[1].Point: 0, EnableLifePoint? Player2LP[1].Point: 0),
+					new Score(ResultItem[2].RESULT, EnableLifePoint? Player1LP[2].Point: 0, EnableLifePoint? Player2LP[2].Point: 0),
+				});
 			}
+			MessagingCenter.Send<object>(this, Messages.REFRESH);
+			back?.Invoke();
 		}
 	}
 }

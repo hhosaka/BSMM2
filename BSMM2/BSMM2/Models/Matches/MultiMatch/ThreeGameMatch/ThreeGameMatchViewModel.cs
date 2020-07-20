@@ -54,8 +54,11 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 				Player1LPs = CreateLifePoints(result1);
 				Player2LPs = CreateLifePoints((MultiMatchResult)match.Record2.Result);
 			} else {
-				var item = new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItems)));
-				ResultItems = new[] { item, item, item };
+				ResultItems = new[] {
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItems))),
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItems))),
+					new ResultItem(RESULT_T.Progress, () => OnPropertyChanged(nameof(ResultItems)))
+				};
 				Player1LPs = Player2LPs = new[] { LifePoint.GetItem(-1), LifePoint.GetItem(-1), LifePoint.GetItem(-1) };
 			}
 
@@ -72,19 +75,11 @@ namespace BSMM2.Models.Matches.MultiMatch.ThreeGameMatch {
 			}
 
 			void Done() {
-				if (_rule.EnableLifePoint) {
-					match.SetMultiMatchResult(new[] {
-						new Score(ResultItems[0].RESULT, Player1LPs[0].Point, Player2LPs[0].Point),
-						new Score(ResultItems[1].RESULT, Player1LPs[1].Point, Player2LPs[1].Point),
-						new Score(ResultItems[2].RESULT, Player1LPs[2].Point, Player2LPs[2].Point),
-					});
-				} else {
-					match.SetMultiMatchResult(new[] {
-						new Score(ResultItems[0].RESULT),
-						new Score(ResultItems[1].RESULT),
-						new Score(ResultItems[2].RESULT),
-					});
-				}
+				match.SetMultiMatchResult(new[] {
+					new Score(ResultItems[0].RESULT, EnableLifePoint? Player1LPs[0].Point: 0, EnableLifePoint? Player2LPs[0].Point: 0),
+					new Score(ResultItems[1].RESULT, EnableLifePoint? Player1LPs[1].Point: 0, EnableLifePoint? Player2LPs[1].Point: 0),
+					new Score(ResultItems[2].RESULT, EnableLifePoint? Player1LPs[2].Point: 0, EnableLifePoint? Player2LPs[2].Point: 0),
+				});
 				MessagingCenter.Send<object>(this, Messages.REFRESH);
 				back?.Invoke();
 			}
