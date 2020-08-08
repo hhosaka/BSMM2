@@ -43,6 +43,9 @@ namespace BSMM2.Models {
 		}
 
 		[JsonProperty]
+		public Guid Id { get; private set; }
+
+		[JsonProperty]
 		private string _path;
 
 		[JsonIgnore]
@@ -126,6 +129,7 @@ namespace BSMM2.Models {
 		}
 
 		private BSMMApp(Storage storage, string path, IRule[] rules) : this(storage) {
+			Id = Guid.NewGuid();
 			Rules = rules;
 			_path = path;
 			Rule = Rules.First();

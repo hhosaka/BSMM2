@@ -162,8 +162,9 @@ namespace BSMM2Test {
 			Util.SetResult(game, 0, Lose);
 			Util.SetResult(game, 1, Lose);
 
-			Assert.IsTrue(game.CanExecuteStepToMatching());
 			Util.CheckWithOrder(new[] { 3, 1, 4, 2 }, new[] { 1, 2, 2, 4 }, game.Players.GetByOrder());
+
+			Assert.IsFalse(game.CanExecuteStepToMatching());
 		}
 
 		[TestMethod]
